@@ -1,0 +1,25 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.isLoaded {
+  opacity: 1;
+  position: relative;
+  z-index: 2;
+}

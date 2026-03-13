@@ -1,0 +1,6 @@
+@mixin default-padding {
+  padding: var(--margin);
+}
+.default-padding {
+  @include default-padding();
+}

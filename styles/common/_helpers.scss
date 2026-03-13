@@ -1,0 +1,115 @@
+// ^^^^^^^^^^^^
+// colors
+
+// text
+
+@mixin text-black {
+  color: var(--color-black);
+}
+.text-black {
+  @include text-black;
+}
+
+@mixin text-white {
+  color: var(--color-white);
+}
+.text-white {
+  @include text-white;
+}
+
+@mixin text-grey {
+  color: var(--color-grey);
+}
+.text-grey {
+  @include text-grey;
+}
+
+// only bg
+
+@mixin onlybg-black {
+  background-color: var(--color-black);
+}
+.onlybg-black {
+  @include onlybg-black;
+}
+
+@mixin onlybg-white {
+  background-color: var(--color-white);
+}
+.onlybg-white {
+  @include onlybg-white;
+}
+
+@mixin onlybg-grey {
+  background-color: var(--color-grey);
+}
+.onlybg-grey {
+  @include onlybg-grey;
+}
+
+// default bg
+
+@mixin bg-white {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  b,
+  strong {
+    color: var(--color-green);
+  }
+}
+.bg-white {
+  @include bg-white;
+}
+
+// darker bg
+
+@mixin bg-grey {
+  background-color: var(--color-grey-bg);
+  color: var(--color-lighter);
+  b,
+  strong {
+    color: var(--color-green);
+  }
+}
+.bg-grey {
+  @include bg-grey;
+}
+
+@mixin bg-darkgray {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  b,
+  strong {
+    color: var(--color-green);
+  }
+}
+.bg-darkgray {
+  @include bg-darkgray;
+}
+
+@mixin bg-black {
+  background-color: var(--color-black-bg);
+  color: var(--color-lighter);
+  b,
+  strong {
+    color: var(--color-green);
+  }
+}
+.bg-black {
+  @include bg-black;
+}
+
+// ^^^^^^^^^^^^
+// misc
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.not-bold {
+  font-weight: normal;
+}

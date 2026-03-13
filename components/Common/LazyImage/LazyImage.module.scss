@@ -1,0 +1,29 @@
+.wrapper {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.image,
+.placeholder {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.isLoaded {
+  opacity: 1;
+}
+
+.placeholder {
+  background: rgba(0, 0, 0, 0.06);
+}

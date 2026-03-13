@@ -1,0 +1,106 @@
+@mixin no-select() {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+// @mixin placeholder {
+//   ::placeholder {
+//     @content;
+//   }
+
+//   ::-webkit-input-placeholder {
+//     @content;
+//   }
+
+//   :-moz-placeholder {
+//     @content;
+//   }
+
+//   ::-moz-placeholder {
+//     @content;
+//   }
+
+//   :-ms-input-placeholder {
+//     @content;
+//   }
+// }
+
+@mixin placeholder($class: "*") {
+  #{$class}::placeholder {
+    @content;
+  }
+
+  #{$class}::-webkit-input-placeholder {
+    @content;
+  }
+
+  #{$class}:-moz-placeholder {
+    @content;
+  }
+
+  #{$class}::-moz-placeholder {
+    @content;
+  }
+
+  #{$class}:-ms-input-placeholder {
+    @content;
+  }
+}
+
+@mixin hover() {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  .ie11 & {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin hover-full() {
+  @media (hover: hover) {
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  }
+
+  .ie11 & {
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  }
+}
+
+@mixin aspect($width, $height) {
+  @supports (aspect-ratio: auto) {
+    aspect-ratio: calc($width / $height);
+  }
+
+  @supports not (aspect-ratio: auto) {
+    position: relative;
+    height: 0;
+    padding-top: calc(($height / $width) * 100%);
+
+    > * {
+      position: absolute;
+      inset: 0;
+    }
+  }
+}

@@ -1,0 +1,111 @@
+@use "sass:math";
+
+$Neue: "NeueHaasGroteskDisp", sans-serif;
+$Manuka: 'Manuka', sans-serif;
+$HelveticaNeue: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+$colors: (
+  // text
+  "black": #3f3f3f,
+  "white": #fff,
+  "lighter": #f8f8f8,
+  "darker": #2b2b2b,
+  "darker-50": rgba(43, 43, 43, 0.5),
+  "darker-30": rgba(43, 43, 43, 0.3),
+  "gray": #969696,
+  "grey": #969696,
+  
+  // colors
+  "red": #ff1222,
+  "green": #00e63c,
+  "lightgreen": #8bf981,
+  "darkgreen": #006c54,
+
+  // backgrounds
+  "grey-bg": #959595,
+  "black-bg": #292929,
+  "red-bg": #F0F0F0,
+  "lightgray-bg": #F0F0F0,
+  "lightgrey-bg": #F0F0F0,
+  "lightred-bg": #FFE3E4,
+
+  // borders
+  "black-border": #000,
+  "grey-border": #2b2b2b1a
+);
+
+@function px($size) {
+  @return math.div($size, 16) * 1rem;
+}
+
+$xs: 320px;
+$s: 500px;
+$sm: 768px;
+$md: 1024px;
+$lg: 1200px;
+$xl: 2400px;
+
+@mixin responsive($class) {
+  @if $class == xs {
+    @media (max-width: $xs) {
+      @content;
+    }
+  } @else if $class == s {
+    @media (max-width: $s) {
+      @content;
+    }
+  } @else if $class == sm {
+    @media (max-width: $sm) {
+      @content;
+    }
+  } @else if $class == md {
+    @media (max-width: $md) {
+      @content;
+    }
+  } @else if $class == lg {
+    @media (max-width: $lg) {
+      @content;
+    }
+  } @else {
+    @warn "responsive mixin supports: xs, sm, md, lg";
+  }
+}
+
+$ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+$ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+$ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+$ease-in-sine: cubic-bezier(0.47, 0, 0.745, 0.715);
+$ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+$ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+$ease-in-back: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+$ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+$ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+$ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+$ease-out-sine: cubic-bezier(0.39, 0.575, 0.565, 1);
+$ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+$ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
+$ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+$ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+$ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+$ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+$ease-in-out-sine: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+$ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
+$ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+$ease-in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  50.1%,
+  100% {
+    opacity: 0;
+  }
+}
+
+$border: px(1) solid rgba(#3f3f3f, 0.1);

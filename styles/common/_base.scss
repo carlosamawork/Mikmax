@@ -1,0 +1,321 @@
+
+:root {
+    // define color CSS variables
+    @each $name, $color in $colors {
+        #{"--color-" + $name}: $color;
+    }
+
+    // vh workaround
+    --vh: 1svh;
+
+    --margin: #{px(30)};
+    --gutter: #{px(20)};
+    --header-h: 56px;
+
+    @include responsive('sm') {
+        --margin: #{px(15)};
+        --gutter: #{px(15)};
+        --header-h: 86.66px;
+    }
+
+    // spacing
+    --default-padding-h: #{px(33)};
+    --header-height-desktop: 86.66px;
+    --header-height: var(--header-height-desktop);
+
+    @include responsive('sm') {
+        --header-height: 67px;
+        --default-padding-h: #{px(20)};
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    overscroll-behavior: none;
+    
+
+    @media (min-width: 1660px) {
+        font-size: calc(16 / 1660 * 100vw);
+    }
+
+    // default colors
+    background-color: var(--color-white);
+    color: var(--color-black);
+
+    // smooth anchors
+    scroll-behavior: none;
+}
+
+body {
+    font-family: $Neue;
+    overscroll-behavior: none;
+    line-height: calc(35 / 30);
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    background-color: var(--color-white);
+    overflow-x:hidden;
+    height: 100%;
+}
+
+html,
+body,
+#__next,
+#app {
+    min-height: calc(var(--vh) * 100);
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-direction: column;
+    display: flex;
+    width: 100%;
+    flex: 1 1;
+    
+}
+
+main > section:first-of-type > *:first-of-type {
+    padding-top: calc(var(--header-h) + var(--margin) * 2);
+}
+
+// ^^^^^^^^^^^^^^^^^^^^
+// links styling
+
+body{
+
+a {
+    transition: opacity 0.25s ease;
+    @include hover {
+        opacity: 0.7;
+    }
+}
+
+p {
+    strong,
+    b {
+        font-weight: normal;
+    }
+}
+
+.hs-error-msgs {
+    color: blue;
+    font-weight: bold;
+}
+
+h1,
+.h1 {
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 400; // 450 in figma
+    line-height: normal;
+
+    @include responsive('md') {
+        font-size: 40px;
+    }
+
+    @include responsive('sm') {
+        font-size: 35px;
+    }
+}
+
+h2,
+.h2 {
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    @include responsive('md') {
+        font-size: 40px;
+    }
+
+    @include responsive('sm') {
+        font-size: 35px;
+    }
+}
+
+h3,
+.h3 {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    @include responsive('md') {
+        font-size: 25px;
+    }
+
+    strong {
+    }
+
+    small {
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: normal;
+    }
+}
+
+h4,
+.h4 {
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px;
+    strong {
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        color: var(--rojo-1, #f00);
+    }
+
+    @include responsive('lg') {
+        font-size: 18px;
+        line-height: normal;
+    }
+
+    @include responsive('md') {
+        font-size: 16px;
+    }
+
+    @include responsive('sm') {
+        font-size: 16px;
+    }
+}
+
+p,
+.p,
+ul,
+ol {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    @include responsive('md') {
+        font-size: 14px;
+    }
+
+    strong {
+        font-weight: 700;
+    }
+}
+
+button {
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.link {
+    color: var(--grey, #969696);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+
+    @media(max-width: 767px){
+        font-size: 14px;
+    }
+}
+
+h5.caps {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400; //450 figma
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.anchor {
+    display: block;
+    position: relative;
+    top: calc(-1 * var(--header-height) - px(10));
+    visibility: hidden;
+    cursor: none;
+}
+
+.richtext {
+    p,
+    ul,
+    ol {
+        font-size: px(20);
+        line-height: 1.3;
+        font-weight: 400;
+
+        padding-bottom: px(20);
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+
+    ul {
+        list-style-type: disc;
+        padding-left: 1em;
+    }
+    ol {
+        list-style-type: decimal;
+        padding-left: 1em;
+    }
+
+    b,
+    strong {
+        font-weight: 400;
+        color: var(--red, #ff2222);
+    }
+
+    h1,
+    h2,
+    h3 {
+        padding-bottom: px(20);
+        padding-top: px(10);
+
+        &:first-child {
+            padding-top: 0;
+        }
+    }
+
+    a {
+        color: var(--red, #ff2222);
+    }
+
+    img {
+        border-radius: 10px;
+        margin-bottom: px(20);
+    }
+}
+
+.loader {
+    position: absolute;
+    display: grid;
+    align-content: center;
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    color: var(--red, #ff2222);
+    font-size: 35px;
+}
+
+
+}

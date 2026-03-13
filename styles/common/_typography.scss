@@ -1,0 +1,106 @@
+@mixin text-60 {
+  font-size: px(50);
+  line-height: px(60);
+  letter-spacing: px(-1.8);
+
+  @include responsive("sm") {
+    font-size: px(45);
+    line-height: px(50);
+    letter-spacing: px(-0.45);
+  }
+
+  @include responsive("xs") {
+    font-size: px(30);
+    line-height: px(35);
+    letter-spacing: px(-0.6);
+  }
+}
+.text-60 {
+  @include text-60;
+}
+
+@mixin text-45 {
+  font-size: px(45);
+  line-height: px(50);
+  letter-spacing: px(-0.45);
+
+  @include responsive("sm") {
+    font-size: px(30);
+    line-height: px(35);
+    letter-spacing: px(-0.6);
+  }
+}
+.text-45 {
+  @include text-45;
+}
+
+@mixin text-30 {
+  font-size: px(30);
+  line-height: px(35);
+  letter-spacing: px(-0.6);
+  @include responsive("sm") {
+    font-size: px(25);
+    line-height: px(30);
+    letter-spacing: -0.01em;
+  }
+}
+.text-30 {
+  @include text-30;
+}
+
+@mixin text-25 {
+  font-size: px(25);
+  line-height: px(30);
+  letter-spacing: -0.01em;
+  @include responsive("sm") {
+    font-size: px(20);
+    line-height: px(25);
+    letter-spacing: px(0);
+  }
+}
+.text-25 {
+  @include text-25;
+}
+
+@mixin text-20 {
+  font-size: px(20);
+  line-height: px(25);
+  letter-spacing: px(0);
+  @include responsive("sm") {
+    font-size: px(16);
+    line-height: px(20);
+    letter-spacing: px(0);
+  }
+}
+.text-20 {
+  @include text-20;
+}
+
+@mixin text-16 {
+  font-size: px(16);
+  line-height: px(20);
+  letter-spacing: px(0);
+}
+.text-16 {
+  @include text-16;
+}
+
+@mixin text-14 {
+  font-size: px(14);
+  line-height: px(15);
+  letter-spacing: px(0);
+}
+.text-14 {
+  @include text-14;
+}
+
+@mixin text-12 {
+  font-size: px(12);
+  line-height: 1;
+  letter-spacing: px(0);
+}
+.text-12 {
+  @include text-12;
+}
+
+
