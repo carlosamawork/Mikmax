@@ -35,7 +35,7 @@ export default function Landing() {
       {/* Background image + overlay */}
       <div className={s.bg} aria-hidden="true">
         <Image
-          src="/landing-hero.png"
+          src="/landing-hero.jpg"
           alt=""
           fill
           priority
