@@ -22,6 +22,16 @@
 
 .bgImage {
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.9s ease 0s;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.bgImageVisible {
+  opacity: 1;
 }
 
 .overlay {
@@ -57,7 +67,7 @@
   color: map-get($colors, 'white');
   opacity: 0;
   transform: translateY(px(8));
-  transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  transition: opacity 0.9s ease 0.7s, transform 0.9s ease 0.7s;
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;

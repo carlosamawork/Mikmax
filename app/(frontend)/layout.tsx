@@ -16,12 +16,12 @@ export async function generateMetadata() {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="es">
+    <html lang="en">
       <body>
         <Suspense fallback={<div className="loader">Loading...</div>}>
           <ShopProvider>
             {children}
-            <CookieConsent />
+            {/* <CookieConsent />
             {process.env.NODE_ENV === 'production' ? (
               <>
                 <ConsentGate category="analytics">
@@ -34,7 +34,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                   <PinterestTag />
                 </ConsentGate>
               </>
-            ) : null}
+            ) : null} */}
           </ShopProvider>
         </Suspense>
       </body>

@@ -40,7 +40,7 @@ export default function Landing() {
           fill
           priority
           sizes="100vw"
-          className={s.bgImage}
+          className={[s.bgImage, imageLoaded ? s.bgImageVisible : ''].join(' ')}
           onLoad={() => setImageLoaded(true)}
         />
         <div className={[s.overlay, imageLoaded ? s.overlayVisible : ''].join(' ')} />
