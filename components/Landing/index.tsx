@@ -64,9 +64,9 @@ export default function Landing() {
           <br />
           No decorative narrative.
           <br />
-          Made in Barcelona
+          Made in Barcelona.
           <br />
-          Hand made
+          Hand made.
         </p>
 
         {/* Logo + reconstruction text */}
@@ -100,8 +100,7 @@ export default function Landing() {
           {/* Newsletter */}
           <div className={s.newsletter}>
             <div className={s.newsletterHeader}>
-              <p className={s.keepInTouch}>Keep in touch</p>
-              <p className={s.newsletterSubtitle}>FOR BEING PART OF THE MIKMAK WORLD</p>
+              <p className={s.keepInTouch}>Subscribe to get a welcome gift<br/>for being part of the mikmax world.</p>
             </div>
             <form onSubmit={handleSubmit} className={s.form} noValidate>
               <label htmlFor="newsletter-email" className={s.srOnly}>

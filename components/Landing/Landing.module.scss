@@ -205,7 +205,6 @@
   font-size: px(12);
   line-height: px(14);
   color: map-get($colors, 'white');
-  text-transform: uppercase;
 }
 
 .form {
@@ -215,23 +214,22 @@
 .input {
   width: 100%;
   background: transparent;
-  border: none;
-  border-bottom: px(1) solid rgba(255, 255, 255, 0.3);
+  border: px(1) solid rgba(255, 255, 255, 1);
   font-family: $HelveticaNeue;
   font-size: px(12);
   line-height: px(15);
   letter-spacing: 0.5px;
-  color: #ababab;
+  color: #fff;
   text-align: center;
-  padding: px(6) 0;
+  padding: px(8) px(12);
   outline: none;
 
-  @include placeholder() {
-    color: #ababab;
+  &::placeholder {
+    color: #fff;
   }
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 1;
     cursor: not-allowed;
   }
 }
