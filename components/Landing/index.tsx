@@ -7,6 +7,7 @@ import s from './Landing.module.scss'
 export default function Landing() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [imageLoaded, setImageLoaded] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -40,11 +41,12 @@ export default function Landing() {
           priority
           sizes="100vw"
           className={s.bgImage}
+          onLoad={() => setImageLoaded(true)}
         />
-        <div className={s.overlay} />
+        <div className={[s.overlay, imageLoaded ? s.overlayVisible : ''].join(' ')} />
       </div>
 
-      <div className={s.content}>
+      <div className={[s.content, imageLoaded ? s.contentVisible : ''].join(' ')}>
         {/* Top tagline */}
         <p className={s.tagline}>
           <strong>We make functional home textiles.</strong>
