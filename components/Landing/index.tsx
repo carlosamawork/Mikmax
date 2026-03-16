@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import Image from 'next/image'
 import s from './Landing.module.scss'
 
@@ -8,6 +8,13 @@ export default function Landing() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [imageLoaded, setImageLoaded] = useState(false)
+  const imgRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    if (imgRef.current?.complete) {
+      setImageLoaded(true)
+    }
+  }, [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -40,6 +47,7 @@ export default function Landing() {
           fill
           priority
           sizes="100vw"
+          ref={imgRef}
           className={[s.bgImage, imageLoaded ? s.bgImageVisible : ''].join(' ')}
           onLoad={() => setImageLoaded(true)}
         />
