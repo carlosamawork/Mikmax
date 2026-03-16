@@ -49,6 +49,7 @@ export default function Landing() {
         <p className={s.tagline}>
           <strong>We make functional home textiles.</strong>
           <br />
+          <br />
           No seasonal styling.
           <br />
           No decorative narrative.
