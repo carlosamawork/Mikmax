@@ -57,7 +57,7 @@ export default function Landing() {
       <div className={[s.content, imageLoaded ? s.contentVisible : ''].join(' ')}>
         {/* Top tagline */}
         <p className={s.tagline}>
-          <strong>We make functional home textiles.</strong>
+          We make functional home textiles.
           <br />
           <br />
           No seasonal styling.

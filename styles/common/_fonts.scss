@@ -1,35 +1,10 @@
 @font-face {
   font-family: 'Helvetica Neue';
-  src: url('../fonts/HelveticaNeue.woff2') format('woff2'),
-       url('../fonts/HelveticaNeue.woff') format('woff');
+  src: url('../fonts/HelveticaNeueLTStd-Roman.woff2') format('woff2'),
+       url('../fonts/HelveticaNeueLTStd-Roman.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Helvetica Neue';
-  src: url('../fonts/HelveticaNeue-Italic.woff2') format('woff2'),
-       url('../fonts/HelveticaNeue-Italic.woff') format('woff');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
 
-@font-face {
-  font-family: 'Helvetica Neue';
-  src: url('../fonts/HelveticaNeue-Bold.woff2') format('woff2'),
-       url('../fonts/HelveticaNeue-Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Helvetica Neue';
-  src: url('../fonts/HelveticaNeue-BoldItalic.woff2') format('woff2'),
-       url('../fonts/HelveticaNeue-BoldItalic.woff') format('woff');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
