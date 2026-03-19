@@ -21,7 +21,7 @@ export default function Landing() {
     if (!email) return
     setStatus('loading')
     try {
-      const res = await fetch('/api/subscribeUser', {
+      const res = await fetch('/api/subscribeUser/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({email}),
