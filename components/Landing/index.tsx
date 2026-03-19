@@ -6,7 +6,7 @@ import s from './Landing.module.scss'
 
 export default function Landing() {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'exists' | 'error'>('idle')
   const [imageLoaded, setImageLoaded] = useState(false)
   const imgRef = useRef<HTMLImageElement>(null)
 
@@ -21,7 +21,7 @@ export default function Landing() {
     if (!email) return
     setStatus('loading')
     try {
-      const res = await fetch('/api/subscribeUser/', {
+      const res = await fetch('/api/subscribeUser', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({email}),
@@ -30,7 +30,9 @@ export default function Landing() {
         setStatus('success')
         setEmail('')
       } else {
-        setStatus('error')
+        const errorData = await res.json().catch(() => null)
+        const isMemberExists = errorData?.error?.title === 'Member Exists'
+        setStatus(isMemberExists ? 'exists' : 'error')
       }
     } catch {
       setStatus('error')
@@ -124,6 +126,11 @@ export default function Landing() {
             {status === 'success' && (
               <p className={s.successMsg} role="status">
                 Thank you for subscribing!
+              </p>
+            )}
+            {status === 'exists' && (
+              <p className={s.successMsg} role="status">
+                You&apos;re already subscribed!
               </p>
             )}
             {status === 'error' && (
