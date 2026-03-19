@@ -62,7 +62,23 @@ export function buildDefaultMetadata(): Metadata {
 			title: siteTitle,
 			description: siteDescription,
 			url: canonicalHome,
+			siteName: siteTitle,
+			type: 'website',
 			images: [{url: BASE_IMAGE_URL, width: BASE_IMAGE_WIDTH, height: BASE_IMAGE_HEIGHT}],
+		},
+		twitter: {
+			card: 'summary_large_image',
+			title: siteTitle,
+			description: siteDescription,
+			images: [BASE_IMAGE_URL],
+		},
+		robots: {
+			index: true,
+			follow: true,
+			googleBot: {index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1},
+		},
+		alternates: {
+			canonical: canonicalHome,
 		},
 		icons: getFavicons(),
 	}

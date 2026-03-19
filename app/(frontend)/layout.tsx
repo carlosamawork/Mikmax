@@ -1,4 +1,5 @@
 import '../globals.css'
+import type {Viewport} from 'next'
 import {buildDefaultMetadata} from '@/utils/seoHelper'
 import '../../styles/main.scss'
 import React, {Suspense} from 'react'
@@ -12,6 +13,10 @@ import CookieConsent from '@/components/Common/CookieConsent/CookieConsent'
 
 export async function generateMetadata() {
   return buildDefaultMetadata()
+}
+
+export const viewport: Viewport = {
+  themeColor: 'transparent',
 }
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
