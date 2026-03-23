@@ -90,7 +90,7 @@ export default function Landing() {
           <div className={s.whatsapp}>
             <p className={s.contactText}>To place an order or for more info contact us here.</p>
             <a
-              href="https://wa.me/"
+              href="https://wa.me/34651669942"
               target="_blank"
               rel="noopener noreferrer"
               className={s.whatsappBtn}
