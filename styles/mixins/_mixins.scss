@@ -104,3 +104,15 @@
     }
   }
 }
+
+// Mobile-first mixin (CLAUDE.md compliant). Use this in ALL new components.
+// Legacy `responsive()` (max-width) is kept only for components/Landing and
+// components/Welcome until they get deleted at the end of the sprint.
+@mixin from($bp) {
+  @if      $bp == sm  { @media (min-width: 768px)  { @content; } }
+  @else if $bp == md  { @media (min-width: 1024px) { @content; } }
+  @else if $bp == lg  { @media (min-width: 1200px) { @content; } }
+  @else if $bp == xl  { @media (min-width: 1440px) { @content; } }
+  @else if $bp == xxl { @media (min-width: 1920px) { @content; } }
+  @else               { @warn "from() supports: sm, md, lg, xl, xxl"; }
+}
