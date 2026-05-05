@@ -2,6 +2,7 @@ import {DocumentIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
 
 import {validateSlug} from '../../utils/validateSlug'
+import {blockTypeNames} from '../objects/blocks'
 
 export default defineField({
   name: 'page',
@@ -80,6 +81,15 @@ export default defineField({
       title: 'Body',
       type: 'body',
       group: 'editorial',
+    }),
+    defineField({
+      name: 'pageBuilder',
+      title: 'Page builder',
+      type: 'array',
+      of: blockTypeNames,
+      group: 'editorial',
+      description:
+        'Bloques modulares para esta página (Our Story, B2B, landings). Si la página solo necesita texto plano, usa "Body" en su lugar.',
     }),
     // SEO
     defineField({
