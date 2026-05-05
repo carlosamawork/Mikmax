@@ -2,8 +2,6 @@
 // New token system layered on top of _variables.scss.
 // All new components must use these tokens (CLAUDE.md mobile-first).
 
-@use "sass:math";
-
 // Spacing scale (8px base, mixed with 4 for fine grain)
 $space-0:  0;
 $space-1:  px(4);
