@@ -1,0 +1,81 @@
+// components/Layout/Header/Header.module.scss
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky-header;
+  width: 100%;
+  background: transparent;
+  transition: background $transition-fast, color $transition-fast;
+}
+
+.default { background: transparent; color: map-get($colors, 'darker'); }
+.variant2 { background: rgba(map-get($colors, 'white'), 0.92); color: map-get($colors, 'darker'); backdrop-filter: blur(8px); }
+.variant3 { background: map-get($colors, 'white'); color: map-get($colors, 'darker'); }
+.z        { background: map-get($colors, 'darker'); color: map-get($colors, 'white'); }
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-3 $gutter-mobile;
+
+  @include from(md) {
+    padding: $space-3 $gutter-desktop;
+  }
+}
+
+.logo {
+  font-family: $Manuka, $HelveticaNeue;
+  font-size: px(20);
+  letter-spacing: px(2);
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav {
+  display: none;
+
+  @include from(md) {
+    display: flex;
+    gap: $space-5;
+  }
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.navButton,
+.navLink {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-family: $HelveticaNeue;
+  font-size: px(15);
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.navLink:hover { text-decoration: underline; }
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.cartBtn {
+  background: transparent;
+  border: 0;
+  font-family: $HelveticaNeue;
+  font-size: px(15);
+  cursor: pointer;
+  color: inherit;
+}
