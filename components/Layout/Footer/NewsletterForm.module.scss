@@ -1,0 +1,76 @@
+// components/Layout/Footer/NewsletterForm.module.scss
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  max-width: px(420);
+}
+
+.title {
+  font-family: $HelveticaNeue;
+  font-size: px(14);
+  letter-spacing: px(0.5);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: px(13);
+  line-height: px(17);
+  margin: 0;
+  color: map-get($colors, 'darker-50');
+}
+
+.inputWrap {
+  display: flex;
+  align-items: center;
+  border-bottom: $border;
+  padding-bottom: $space-1;
+}
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  font-family: $HelveticaNeue;
+  font-size: px(15);
+  outline: none;
+}
+
+.button {
+  background: transparent;
+  border: 0;
+  font-family: $HelveticaNeue;
+  font-size: px(13);
+  cursor: pointer;
+  padding: 0 $space-2;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+}
+
+.feedback,
+.feedbackError {
+  font-size: px(13);
+  margin-top: $space-1;
+}
+
+.feedbackError {
+  color: map-get($colors, 'red');
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
