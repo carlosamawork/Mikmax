@@ -812,6 +812,19 @@ MVP+ (día 14):            + Function descuento, Our Story, Vista 2
 | Sanity Connect sobrescribe campos personalizados | Baja | Alto | Confirmado: Connect solo escribe en `store.*`. Custom fields fuera de ese namespace. |
 | Tests automatizados | — | — | No se hacen en MVP. Smoke manual + cross-browser día 10. |
 
+### Estado de sync Sanity Connect (verificación L1, 2026-05-05)
+
+- 1 colección sincronizada
+- 0 productos
+- 0 variantes
+
+**Bloqueante para Phase 3-4 (módulos de productos en Home, Shop listing, PDP).** Antes de llegar al día L4, el cliente debe:
+1. Confirmar que Sanity Connect está instalado en el Shopify Admin con dataset `production`.
+2. Crear (o publicar) productos en Shopify (mín. 1 por categoría + 2 para crear un Look + 3 para crear un Set).
+3. Verificar que el sync corre y los `productVariant` aparecen con `store.sku` y `store.gid`.
+
+**Phase 1-2 NO se bloquea** porque solo requiere schemas y datos del singleton `settings` (header/footer), que se rellenan manualmente en Sanity Studio.
+
 ---
 
 ## 13. Checklist pre-arranque (antes de día L1)
