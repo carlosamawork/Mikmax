@@ -14,6 +14,7 @@ import orderProducts from './orderProductStructure'
 import category from './categoryStructure'
 import postTag from './postTagStructure'
 import look from './lookStructure'
+import set from './setStructure'
 
 /**
  * Desk structure overrides
@@ -52,6 +53,8 @@ const hiddenDocTypes = (listItem: {getId?: () => string | undefined}) => {
     'orderable.product',
     'look',
     'orderable.look',
+    'set',
+    'orderable.set',
   ].includes(id)
 }
 
@@ -66,6 +69,7 @@ export const structure: StructureResolver = (S, context) =>
       products(S, context),
       orderProducts(S,context),
       look(S, context),
+      set(S, context),
       S.divider(),
       posts(S, context),
       orderPosts(S, context),
