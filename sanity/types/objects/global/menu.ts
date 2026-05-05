@@ -4,9 +4,9 @@ export type MenuLinkInternal = {
   _key: string
   _type: 'linkInternal'
   title?: string
-  // resolved by query (optional, depending on projection)
-  slug?: string
-  reference?: {_ref: string; _type: 'reference'}
+  // Resolved frontend href (computed by GROQ via `linkInternalHref` fragment).
+  // Falls back to "#" if the referenced doc type is unknown.
+  href?: string
 }
 
 export type MenuLinkExternal = {

@@ -18,9 +18,8 @@ export default function Footer({data}: FooterProps) {
           {links.map((link) => {
             const key = link._key
             if (link._type === 'linkInternal') {
-              const href = link.slug ? `/${link.slug}` : '#'
               return (
-                <Link key={key} href={href} className={s.navLink}>
+                <Link key={key} href={link.href ?? '#'} className={s.navLink}>
                   {link.title}
                 </Link>
               )
@@ -47,7 +46,7 @@ export default function Footer({data}: FooterProps) {
             {linksSocial.map((sLink) => (
               <li key={sLink._key}>
                 <a href={sLink.url} target="_blank" rel="noopener noreferrer">
-                  {sLink.platform}
+                  {sLink.title}
                 </a>
               </li>
             ))}
@@ -67,7 +66,7 @@ export default function Footer({data}: FooterProps) {
               if (link._type === 'linkInternal') {
                 return (
                   <li key={link._key}>
-                    <Link href={link.slug ? `/${link.slug}` : '#'}>{link.title}</Link>
+                    <Link href={link.href ?? '#'}>{link.title}</Link>
                   </li>
                 )
               }

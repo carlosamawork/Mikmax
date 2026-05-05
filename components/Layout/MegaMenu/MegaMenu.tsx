@@ -20,7 +20,7 @@ export default function MegaMenu({group}: MegaMenuProps) {
             if (item._type === 'linkInternal') {
               return (
                 <li key={item._key} role="none">
-                  <Link href={item.slug ? `/${item.slug}` : '#'} role="menuitem" className={s.itemLink}>
+                  <Link href={item.href ?? '#'} role="menuitem" className={s.itemLink}>
                     {item.title}
                   </Link>
                 </li>

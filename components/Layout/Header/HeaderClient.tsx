@@ -57,7 +57,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
             }
             if (link._type === 'linkInternal') {
               return (
-                <Link key={link._key} href={link.slug ? `/${link.slug}` : '#'} className={s.navLink}>
+                <Link key={link._key} href={link.href ?? '#'} className={s.navLink}>
                   {link.title}
                 </Link>
               )

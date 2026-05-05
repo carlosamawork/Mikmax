@@ -4,8 +4,11 @@ import type {MenuLinkInternal, MenuLinkExternal} from './menu'
 export type SocialLink = {
   _key: string
   _type: 'linkSocial'
-  platform?: string
+  title?: string
   url?: string
+  newWindow?: boolean
+  // Resolved icon image URL (asset->url).
+  icon?: string
 }
 
 export type FooterColumnData = {
