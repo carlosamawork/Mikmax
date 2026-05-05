@@ -86,6 +86,7 @@ import imageSide from './objects/module/imageSide'
 import video from './objects/module/video'
 import category from './taxonomies/categories'
 import postTag from './taxonomies/postTags'
+import bundleComponent from './objects/bundle/bundleComponent'
 
 
 // Collections
@@ -93,6 +94,7 @@ import collectionGroup from './objects/collection/group'
 import collectionLinks from './objects/collection/links'
 
 const objects = [
+  bundleComponent,
   customProductOptionColor,
   customProductOptionColorObject,
   customProductOptionSize,
