@@ -87,6 +87,7 @@ import video from './objects/module/video'
 import category from './taxonomies/categories'
 import postTag from './taxonomies/postTags'
 import bundleComponent from './objects/bundle/bundleComponent'
+import {blockSchemas} from './objects/blocks'
 
 
 // Collections
@@ -95,6 +96,7 @@ import collectionLinks from './objects/collection/links'
 
 const objects = [
   bundleComponent,
+  ...blockSchemas,
   customProductOptionColor,
   customProductOptionColorObject,
   customProductOptionSize,
