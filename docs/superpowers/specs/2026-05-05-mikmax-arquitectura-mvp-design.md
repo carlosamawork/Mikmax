@@ -825,6 +825,26 @@ MVP+ (día 14):            + Function descuento, Our Story, Vista 2
 
 **Phase 1-2 NO se bloquea** porque solo requiere schemas y datos del singleton `settings` (header/footer), que se rellenan manualmente en Sanity Studio.
 
+### Close de Phase 1 (2026-05-05)
+
+Schemas y tokens en producción de la rama `feature/mvp-arquitectura`. 8 commits. Typecheck y lint clean.
+
+- `_tokens.scss` + mixin `from()` (mobile-first)
+- `bundleComponent`, 8 blocks, `look`, `set` (con `colorLocked`)
+- `home` refactorizado a `pageBuilder` puro; `page` ampliado con `pageBuilder` opcional
+- Studio carga sin errores; entries "Looks" y "Sets" en el desk
+
+### Close de Phase 2 (2026-05-05)
+
+Layout chrome live en la rama. 8 commits. Typecheck y lint clean.
+
+- `menuSettings` schema arreglado (referencia rota `menuLinks` → `linkInternal | linkExternal | menuGroup` con `featuredProduct`)
+- Queries `getSettings`/`getHeader`/`getFooter` realineadas con el schema real (`menu`/`footer` en lugar de `headerMenu`/`footerMenu`)
+- Types reorganizados: `MenuData`, `MenuItem`, `MenuLinkInternal`, `MenuLinkExternal`, `MenuGroup`, `MenuFeaturedProduct`, `FooterColumnData`, `SocialLink` en `sanity/types/objects/global/`
+- Componentes nuevos en `components/Layout/`: `Header` (4 variants scroll-driven) + `HeaderClient`, `MegaMenu` (hover + items + featuredProduct slot), `Footer`, `NewsletterForm` (Mailchimp wired al `/api/subscribeUser` real, response shape ajustada vs. el plan), `MobileBottomNav` (sticky bottom, oculto ≥768 px), barrel `index.ts`
+- `app/(frontend)/layout.tsx` ahora `async`, fetcha `getFooter`, renderiza Header/Footer/MobileBottomNav, `<html lang="es">`
+- Conocidos para Phase 3+: cart button stub, MobileMenu drawer (Phase 7), search input (Phase 9), home page render queda roto en runtime hasta Phase 3 (página vieja referencia `home.hero` que ya no existe — esperado).
+
 ---
 
 ## 13. Checklist pre-arranque (antes de día L1)
