@@ -1,10 +1,10 @@
 // sanity/types/objects/global/settings.ts
-
-import { SEO } from '../seo';
-import type { Menu } from './menu';
+import type {SEO} from '../seo'
+import type {MenuData} from './menu'
+import type {FooterColumnData} from './footer'
 
 export type SettingsData = {
-  headerMenu: Menu;
-  footerMenu: Menu;
-  seo: SEO;
-};
+  menu?: MenuData
+  footer?: FooterColumnData
+  seo?: SEO
+}
