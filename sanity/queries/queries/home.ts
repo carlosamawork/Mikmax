@@ -44,17 +44,15 @@ export async function getHome(): Promise<HomeData> {
           fullBleed
         },
         _type == "block.featuredSection" => {
-          image{
-            ${image},
-            "alt": alt
-          },
-          headline,
-          body,
-          cta{
-            label,
+          slides[]{
+            _key,
+            image{
+              ${image},
+              "alt": alt
+            },
+            title,
             url
-          },
-          mediaPosition
+          }
         },
         _type == "block.richText" => {
           body

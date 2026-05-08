@@ -1,49 +1,63 @@
+// components/PageBuilder/blocks/FeaturedSection/FeaturedSection.tsx
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
-import PortableText from '../../PortableText/PortableText'
-import type {FeaturedSectionBlock} from '@/sanity/types'
+import type {FeaturedSectionBlock, FeaturedSectionSlide} from '@/sanity/types'
 import s from './FeaturedSection.module.scss'
 
 interface Props {
   block: FeaturedSectionBlock
 }
 
-function Cta({label, url}: {label?: string; url?: string}) {
-  if (!label || !url) return null
-  if (url.startsWith('/')) {
+function SlideMedia({slide}: {slide: FeaturedSectionSlide}) {
+  if (!slide.image?.imageUrl) return null
+  const w = slide.image.metadata?.dimensions?.width ?? 1440
+  const h = slide.image.metadata?.dimensions?.height ?? 900
+  return (
+    <LazyImage
+      src={slide.image.imageUrl}
+      alt={slide.image.alt ?? ''}
+      width={w}
+      height={h}
+      className={s.mediaImg}
+      wrapperClassName={s.media}
+    />
+  )
+}
+
+function Slide({slide}: {slide: FeaturedSectionSlide}) {
+  const inner = (
+    <>
+      <SlideMedia slide={slide} />
+      {slide.title && <p className={s.title}>{slide.title}</p>}
+    </>
+  )
+
+  if (!slide.url) {
+    return <div className={s.slide}>{inner}</div>
+  }
+  if (slide.url.startsWith('/')) {
     return (
-      <Link href={url} className={s.cta}>
-        {label}
+      <Link href={slide.url} className={s.slide}>
+        {inner}
       </Link>
     )
   }
   return (
-    <a href={url} className={s.cta} target="_blank" rel="noopener noreferrer">
-      {label}
+    <a href={slide.url} className={s.slide} target="_blank" rel="noopener noreferrer">
+      {inner}
     </a>
   )
 }
 
 export default function FeaturedSection({block}: Props) {
-  const sectionCls = `${s.section} ${block.mediaPosition === 'right' ? s.right : ''}`.trim()
+  const slides = block.slides ?? []
+  if (slides.length === 0) return null
+  const cols = slides.length >= 2 ? s.cols2 : ''
   return (
-    <section className={sectionCls}>
-      <div className={s.media}>
-        {block.image?.imageUrl && (
-          <LazyImage
-            src={block.image.imageUrl}
-            alt={block.image.alt ?? ''}
-            width={block.image.metadata?.dimensions?.width ?? 1200}
-            height={block.image.metadata?.dimensions?.height ?? 1500}
-            className={s.img}
-          />
-        )}
-      </div>
-      <div className={s.copy}>
-        {block.headline && <h2 className={s.headline}>{block.headline}</h2>}
-        {block.body?.length ? <PortableText value={block.body} /> : null}
-        <Cta label={block.cta?.label} url={block.cta?.url} />
-      </div>
+    <section className={`${s.section} ${cols}`.trim()}>
+      {slides.slice(0, 2).map((slide) => (
+        <Slide key={slide._key} slide={slide} />
+      ))}
     </section>
   )
 }

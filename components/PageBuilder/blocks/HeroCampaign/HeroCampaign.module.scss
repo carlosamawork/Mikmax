@@ -16,9 +16,11 @@
 .slide {
   position: relative;
   display: block;
+  width: 100%;
   overflow: hidden;
   background: map-get($colors, 'gray');
   aspect-ratio: 720 / 960;
+  max-height: 100svh;
 
   // Wrapper of LazyImage/LazyVideo. Nesting under .slide gives 2-class
   // specificity, overriding LazyImage's / LazyVideo's own `.wrapper` rule

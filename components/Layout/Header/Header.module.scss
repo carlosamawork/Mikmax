@@ -4,7 +4,9 @@
 @use '../../../styles/mixins/mixins' as *;
 
 .header {
-  position: sticky;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
   top: 0;
   z-index: $z-sticky-header;
   width: 100%;

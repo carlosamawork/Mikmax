@@ -9,47 +9,63 @@ export default defineType({
   icon: StarIcon,
   fields: [
     defineField({
-      name: 'image',
-      type: 'image',
-      options: {hotspot: true},
-      validation: (Rule) => Rule.required(),
-      fields: [defineField({name: 'alt', type: 'string', validation: (Rule) => Rule.required()})],
-    }),
-    defineField({name: 'headline', type: 'string', validation: (Rule) => Rule.required()}),
-    defineField({
-      name: 'body',
+      name: 'slides',
+      title: 'Slides (1 ó 2)',
       type: 'array',
-      of: [{type: 'block', styles: [{title: 'Normal', value: 'normal'}], lists: []}],
-    }),
-    defineField({
-      name: 'cta',
-      type: 'object',
-      fields: [
-        defineField({name: 'label', type: 'string'}),
-        defineField({
-          name: 'url',
-          type: 'string',
-          description: 'Acepta rutas relativas o URLs absolutas.',
-        }),
+      description:
+        'Una o dos imágenes lado a lado, cada una con un título sobreimpuesto abajo a la izquierda y un link opcional que hace clicable la imagen entera.',
+      validation: (Rule) => Rule.min(1).max(2),
+      of: [
+        {
+          name: 'featuredSlide',
+          type: 'object',
+          title: 'Slide',
+          fields: [
+            defineField({
+              name: 'image',
+              title: 'Imagen',
+              type: 'image',
+              options: {hotspot: true},
+              validation: (Rule) => Rule.required(),
+              fields: [
+                defineField({
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alt',
+                  validation: (Rule) => Rule.required(),
+                }),
+              ],
+            }),
+            defineField({
+              name: 'title',
+              title: 'Título',
+              description:
+                'Texto sobreimpuesto abajo a la izquierda (ej. "Follow us on Instagram").',
+              type: 'string',
+            }),
+            defineField({
+              name: 'url',
+              title: 'URL del slide',
+              description:
+                'Hace clicable la imagen entera. Acepta rutas relativas (`/about`) o URLs absolutas (`https://…`).',
+              type: 'string',
+            }),
+          ],
+          preview: {
+            select: {title: 'title', media: 'image'},
+            prepare({title, media}) {
+              return {title: title || '(sin título)', media}
+            },
+          },
+        },
       ],
-    }),
-    defineField({
-      name: 'mediaPosition',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Izquierda', value: 'left'},
-          {title: 'Derecha', value: 'right'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'left',
     }),
   ],
   preview: {
-    select: {headline: 'headline', media: 'image'},
-    prepare({headline, media}) {
-      return {title: 'Sección destacada', subtitle: headline, media}
+    select: {first: 'slides.0.title', second: 'slides.1.title', media: 'slides.0.image'},
+    prepare({first, second, media}) {
+      const subtitle = [first, second].filter(Boolean).join(' / ') || '(vacío)'
+      return {title: 'Sección destacada', subtitle, media}
     },
   },
 })
