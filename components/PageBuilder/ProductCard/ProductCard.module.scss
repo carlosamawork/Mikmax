@@ -43,7 +43,7 @@
   font-size: px(8);
   line-height: px(12);
   letter-spacing: 0;
-  color: #2e2e2e;
+  color: map-get($colors, 'darker');
   text-transform: uppercase;
   z-index: 1;
 }

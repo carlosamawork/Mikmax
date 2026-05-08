@@ -7,7 +7,7 @@ import s from './ProductCard.module.scss'
 interface Props {
   product: ProductCardData
   className?: string
-  // Optional override: when the dispatcher already projects compareAt, use it.
+  // Set to false to hide the "Novedades" badge even if the product has the tag.
   showTag?: boolean
 }
 
