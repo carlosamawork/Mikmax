@@ -2,13 +2,13 @@ import {groq} from 'next-sanity'
 
 // Resolves a linkInternal reference to a frontend href.
 //
-// Why no GROQ select(...): when `linkInternalHref` is interpolated inside an
-// object projection that already uses `condition => { ... }` conditional
-// spreads (e.g. `links[]{ _type == "linkInternal" => { ... } }`), GROQ's
-// parser fails on `select(... => ...)` arms with "expected '}' following
-// object body" — the outer `=>` confuses the parser. Instead we project
-// the bare `_type` and `slug` fields and let TS compute the href via the
-// `getInternalHref` helper at consumption time.
+// Why no GROQ select(...) and no `_type == "linkInternal" => {…}` conditional
+// spread: when these are nested inside an outer object projection that also
+// uses condition => {…} spreads (or another select arm), the GROQ parser
+// fails with "expected '}' following object body". We instead project the
+// bare `_type` and `slug` of the referenced doc on every link (it's null for
+// linkExternal/linkSocial because they have no `reference` field) and let
+// TypeScript compute the href via `getInternalHref` at consumption time.
 
 export type LinkInternalRef = {
   _type?: string
@@ -38,16 +38,13 @@ export function getInternalHref(ref?: LinkInternalRef | null): string {
   }
 }
 
-// Single link item projection (internal or external) with a uniform shape.
-// Use inside an array projection: `links[]{ ${linkResolved} }`.
+// Single link item projection. The bare `...` spread captures the link's own
+// fields (title, url, newWindow for external/social; nothing extra for
+// internal). The `${linkInternalHref}` adds a resolved `ref` for internal
+// links — null for external/social since they don't have a `reference` field.
 export const linkResolved = groq`
   ...,
-  _type == "linkInternal" => {
-    _key,
-    _type,
-    title,
-    ${linkInternalHref}
-  }
+  ${linkInternalHref}
 `
 
 // Social link projection.

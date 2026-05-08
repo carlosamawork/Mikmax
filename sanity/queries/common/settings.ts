@@ -11,11 +11,11 @@ import type {
 import {seo} from '../fragments/seo'
 import {linkResolved, socialLinkResolved} from '../fragments/links'
 
-// We resolve the parent/child collection tree in two flat fetches and merge
-// in TypeScript. Inlining a nested `*[parent._ref == ^._id]` sub-query inside
-// the settings projection makes the GROQ parser fail with "expected '}'
-// following object body" — likely the `^` scope crossing too many projection
-// levels — so we keep the GROQ flat and join here.
+// We do NOT use `_type == "X" => { … }` conditional spreads inside the
+// settings projection — once they're nested 2-3 levels deep with
+// interpolated fragments, the GROQ parser fails with "expected '}'
+// following object body". Instead we project every possible field flat.
+// Each item carries its `_type` and the consumer branches on it in TS.
 
 type RawParent = {
   _id: string
@@ -68,23 +68,17 @@ export async function getSettings(): Promise<SettingsData> {
     groq`*[_type == "settings"][0]{
       menu{
         links[]{
+          _key,
+          _type,
+          title,
+          label,
           ${linkResolved},
-          _type == "menuGroup" => {
-            _key,
-            _type,
-            label,
-            items[]{ ${linkResolved} },
-            "featuredProduct": featuredProduct->{
-              _id,
-              "title": store.title,
-              "handle": store.slug.current,
-              "image": store.previewImageUrl
-            }
-          },
-          _type == "menuShop" => {
-            _key,
-            _type,
-            label
+          items[]{ ${linkResolved} },
+          "featuredProduct": featuredProduct->{
+            _id,
+            "title": store.title,
+            "handle": store.slug.current,
+            "image": store.previewImageUrl
           }
         }
       },
@@ -96,25 +90,11 @@ export async function getSettings(): Promise<SettingsData> {
       footer{
         newsletter,
         columns[]{
-          ...,
-          _type == "footerColumn" => {
-            _key,
-            _type,
-            title,
-            links[]{ ${linkResolved} }
-          },
-          _type == "footerColumnShop" => {
-            _key,
-            _type,
-            title,
-            extraLinks[]{ ${linkResolved} }
-          },
-          _type == "footerColumnSocial" => {
-            _key,
-            _type,
-            title,
-            links[]{ ${socialLinkResolved} }
-          }
+          _key,
+          _type,
+          title,
+          links[]{ ${linkResolved} },
+          extraLinks[]{ ${linkResolved} }
         },
         regions[]{
           _key,
