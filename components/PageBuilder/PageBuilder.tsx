@@ -11,6 +11,7 @@ import CampaignImageVideo from './blocks/CampaignImageVideo/CampaignImageVideo'
 import RichText from './blocks/RichText/RichText'
 import FeaturedSection from './blocks/FeaturedSection/FeaturedSection'
 import ImageWithProduct from './blocks/ImageWithProduct/ImageWithProduct'
+import s from './PageBuilder.module.scss'
 
 interface PageBuilderProps {
   blocks?: PageBuilderBlock[]
@@ -20,7 +21,7 @@ export default function PageBuilder({blocks}: PageBuilderProps) {
   if (!blocks?.length) return null
 
   return (
-    <>
+    <div className={s.list}>
       {blocks.map((block) => {
         switch (block._type) {
           case 'block.heroCampaign':
@@ -52,6 +53,6 @@ export default function PageBuilder({blocks}: PageBuilderProps) {
             return null
         }
       })}
-    </>
+    </div>
   )
 }
