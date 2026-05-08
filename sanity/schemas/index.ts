@@ -13,7 +13,6 @@ const annotations = [
 
 // Document types
 import collection from './documents/collection'
-import colorTheme from './documents/colorTheme'
 import look from './documents/look'
 import set from './documents/set'
 import post from './documents/post'
@@ -22,7 +21,7 @@ import product from './documents/product'
 import productVariant from './documents/productVariant'
 
 
-const documents = [ collection, colorTheme, page, product, productVariant, post, look, set]
+const documents = [ collection, page, product, productVariant, post, look, set]
 
 // Singleton document types
 import home from './singletons/home'
@@ -36,10 +35,7 @@ import body from './blocks/body'
 const blocks = [body]
 
 // Object types
-import customProductOptionColor from './objects/customProductOption/color'
-import customProductOptionColorObject from './objects/customProductOption/colorObject'
-import customProductOptionSize from './objects/customProductOption/size'
-import customProductOptionSizeObject from './objects/customProductOption/sizeObject'
+import announcementBanner from './objects/global/announcementBanner'
 import footer from './objects/global/footer'
 import imageWithProductHotspots from './objects/hotspot/imageWithProductHotspots'
 import inventory from './objects/shopify/inventory'
@@ -49,7 +45,6 @@ import linkSocial from './objects/global/linkSocial'
 
 import links from './objects/global/links'
 import notFoundPage from './objects/global/notFoundPage'
-import heroCollection from './objects/hero/collection'
 import heroHome from './objects/hero/home'
 import heroPage from './objects/hero/page'
 import moduleAccordion from './objects/module/accordion'
@@ -59,7 +54,6 @@ import moduleCallout from './objects/module/callout'
 import moduleCallToAction from './objects/module/callToAction'
 import moduleCollection from './objects/module/collection'
 import moduleGrid from './objects/module/grid'
-import moduleCard from './objects/module/card'
 import gridItems from './objects/module/gridItem'
 import menu from './objects/global/menu'
 import moduleImage from './objects/module/image'
@@ -99,10 +93,7 @@ import collectionLinks from './objects/collection/links'
 const objects = [
   bundleComponent,
   ...blockSchemas,
-  customProductOptionColor,
-  customProductOptionColorObject,
-  customProductOptionSize,
-  customProductOptionSizeObject,
+  announcementBanner,
   footer,
   imageWithProductHotspots,
   inventory,
@@ -111,7 +102,6 @@ const objects = [
   linkInternal,
   linkSocial,
   notFoundPage,
-  heroCollection,
   heroHome,
   heroPage,
   moduleAccordion,
@@ -121,7 +111,6 @@ const objects = [
   moduleCallout,
   moduleCallToAction,
   moduleCollection,
-  moduleCard,
   moduleGrid,
   gridItems,
   moduleImage,

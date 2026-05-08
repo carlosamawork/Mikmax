@@ -5,7 +5,6 @@ import {defineField, defineType} from 'sanity'
 const GROUPS = [
   {name: 'editorial', title: 'Editorial', default: true},
   {name: 'pricing', title: 'Pricing & Discount'},
-  {name: 'theme', title: 'Theme'},
   {name: 'seo', title: 'SEO'},
 ]
 
@@ -93,13 +92,6 @@ export default defineType({
       type: 'number',
       validation: (Rule) => Rule.min(0),
       group: 'pricing',
-    }),
-    defineField({
-      name: 'colorTheme',
-      title: 'Tema',
-      type: 'reference',
-      to: [{type: 'colorTheme'}],
-      group: 'theme',
     }),
     defineField({
       name: 'seo',

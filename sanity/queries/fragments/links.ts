@@ -23,12 +23,11 @@ export const linkResolved = groq`
   }
 `
 
-// Social link projection: resolves the icon asset URL.
+// Social link projection.
 export const socialLinkResolved = groq`
   _key,
   _type,
   title,
   url,
-  newWindow,
-  "icon": icon.asset->url
+  newWindow
 `

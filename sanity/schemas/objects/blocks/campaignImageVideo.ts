@@ -40,11 +40,11 @@ export default defineType({
     }),
     defineField({name: 'headline', title: 'Headline (opc)', type: 'string'}),
     defineField({
-      name: 'link',
-      title: 'Link (opc)',
-      type: 'array',
-      of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
-      validation: (Rule) => Rule.max(1),
+      name: 'url',
+      title: 'URL (opc)',
+      type: 'string',
+      description:
+        'Hace clicable la imagen/vídeo entero. Acepta rutas relativas o URLs absolutas.',
     }),
     defineField({
       name: 'aspectRatio',

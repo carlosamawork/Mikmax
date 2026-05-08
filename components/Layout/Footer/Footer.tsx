@@ -1,83 +1,189 @@
 // components/Layout/Footer/Footer.tsx
 import s from './Footer.module.scss'
 import NewsletterForm from './NewsletterForm'
+import RegionSelector from './RegionSelector'
+import {LazyImage} from '@/components/Common'
 import type {FooterProps} from '@/types/footer'
+import type {SocialLink, FooterColumnAny} from '@/sanity/types'
 import Link from 'next/link'
 
+function FooterLinks({
+  links,
+}: {
+  links: Array<{
+    _key: string
+    _type: 'linkInternal' | 'linkExternal'
+    title?: string
+    href?: string
+    url?: string
+    newWindow?: boolean
+  }>
+}) {
+  return (
+    <ul className={s.colLinks}>
+      {links.map((link) => {
+        const key = link._key
+        if (link._type === 'linkInternal') {
+          return (
+            <li key={key}>
+              <Link href={link.href ?? '#'} className={s.colLink}>
+                {link.title}
+              </Link>
+            </li>
+          )
+        }
+        return (
+          <li key={key}>
+            <a
+              href={link.url}
+              target={link.newWindow ? '_blank' : undefined}
+              rel={link.newWindow ? 'noopener noreferrer' : undefined}
+              className={s.colLink}
+            >
+              {link.title}
+            </a>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
+function SocialColumn({title, links}: {title: string; links: SocialLink[]}) {
+  return (
+    <div className={s.col}>
+      <p className={s.colTitle}>{title}</p>
+      <ul className={s.colLinks}>
+        {links.map((link) => (
+          <li key={link._key}>
+            <a
+              href={link.url}
+              target={link.newWindow ? '_blank' : undefined}
+              rel={link.newWindow ? 'noopener noreferrer' : undefined}
+              className={s.colLink}
+            >
+              {link.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function ShopColumn({
+  title,
+  parents,
+  extraLinks,
+}: {
+  title: string
+  parents?: Array<{title?: string; handle?: string}>
+  extraLinks?: Array<{
+    _key: string
+    _type: 'linkInternal' | 'linkExternal'
+    title?: string
+    href?: string
+    url?: string
+    newWindow?: boolean
+  }>
+}) {
+  return (
+    <div className={s.col}>
+      <p className={s.colTitle}>{title}</p>
+      <ul className={s.colLinks}>
+        {(parents ?? []).map((p) => (
+          <li key={p.handle ?? p.title}>
+            <Link href={p.handle ? `/shop/${p.handle}` : '#'} className={s.colLink}>
+              {p.title}
+            </Link>
+          </li>
+        ))}
+        {(extraLinks ?? []).map((link) => {
+          if (link._type === 'linkInternal') {
+            return (
+              <li key={link._key}>
+                <Link href={link.href ?? '#'} className={s.colLink}>
+                  {link.title}
+                </Link>
+              </li>
+            )
+          }
+          return (
+            <li key={link._key}>
+              <a
+                href={link.url}
+                target={link.newWindow ? '_blank' : undefined}
+                rel={link.newWindow ? 'noopener noreferrer' : undefined}
+                className={s.colLink}
+              >
+                {link.title}
+              </a>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
+
 export default function Footer({data}: FooterProps) {
-  const links = data?.links ?? []
-  const linksTerms = data?.linksTerms ?? []
-  const linksSocial = data?.linksSocial ?? []
+  const newsletter = data?.newsletter
+  const columns: FooterColumnAny[] = data?.columns ?? []
+  const regions = data?.regions ?? []
 
   return (
     <footer className={s.footer}>
       <div className={s.top}>
-        <NewsletterForm />
+        <div className={s.newsletter}>
+          <NewsletterForm
+            title={newsletter?.title}
+            subtitle={newsletter?.body}
+            placeholder={newsletter?.placeholder}
+            buttonLabel={newsletter?.buttonLabel}
+          />
+          <span className={s.copyright}>© {new Date().getFullYear()} Mikmax</span>
+        </div>
 
-        <nav className={s.nav} aria-label="Footer navigation">
-          {links.map((link) => {
-            const key = link._key
-            if (link._type === 'linkInternal') {
+        <div className={s.columns}>
+          {columns.map((col) => {
+            if (col._type === 'footerColumnShop') {
               return (
-                <Link key={key} href={link.href ?? '#'} className={s.navLink}>
-                  {link.title}
-                </Link>
+                <ShopColumn
+                  key={col._key}
+                  title={col.title}
+                  parents={col.parents}
+                  extraLinks={col.extraLinks}
+                />
               )
             }
-            if (link._type === 'linkExternal') {
+            if (col._type === 'footerColumnSocial') {
               return (
-                <a
-                  key={key}
-                  href={link.url}
-                  target={link.newWindow ? '_blank' : undefined}
-                  rel={link.newWindow ? 'noopener noreferrer' : undefined}
-                  className={s.navLink}
-                >
-                  {link.title}
-                </a>
+                <SocialColumn key={col._key} title={col.title} links={col.links} />
               )
             }
-            return null
+            return (
+              <div key={col._key} className={s.col}>
+                <p className={s.colTitle}>{col.title}</p>
+                <FooterLinks links={col.links} />
+              </div>
+            )
           })}
-        </nav>
 
-        {linksSocial.length > 0 && (
-          <ul className={s.social} aria-label="Redes sociales">
-            {linksSocial.map((sLink) => (
-              <li key={sLink._key}>
-                <a href={sLink.url} target="_blank" rel="noopener noreferrer">
-                  {sLink.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <div className={s.country} aria-label="Country selector">
-          País: España (EUR)
+          <div className={s.regionWrap}>
+            <RegionSelector regions={regions} />
+          </div>
         </div>
       </div>
 
-      <div className={s.legal}>
-        <span>© {new Date().getFullYear()} Mikmax</span>
-        {linksTerms.length > 0 && (
-          <ul className={s.terms}>
-            {linksTerms.map((link) => {
-              if (link._type === 'linkInternal') {
-                return (
-                  <li key={link._key}>
-                    <Link href={link.href ?? '#'}>{link.title}</Link>
-                  </li>
-                )
-              }
-              return (
-                <li key={link._key}>
-                  <a href={link.url}>{link.title}</a>
-                </li>
-              )
-            })}
-          </ul>
-        )}
+      <div className={s.bigLogo} aria-hidden>
+        <LazyImage
+          src="/icons/mikmax.svg"
+          alt=""
+          width={1440}
+          height={297}
+          className={s.bigLogoImg}
+          priority
+        />
       </div>
     </footer>
   )

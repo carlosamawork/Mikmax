@@ -1,0 +1,224 @@
+// components/Layout/MobileMenu/MobileMenu.module.scss
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  background: map-get($colors, 'white');
+  overflow-y: auto;
+
+  @include from(md) {
+    display: none;
+  }
+}
+
+// ─── Top bar (logo + actions + X) ─────────────────────────────────────────────
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: px(60);
+  padding: 0 0 0 px(12);
+  background: map-get($colors, 'white');
+  border-top: 1px solid map-get($colors, 'lightgray-bg');
+  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+  flex-shrink: 0;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  width: px(119);
+  height: px(24);
+  text-decoration: none;
+  color: inherit;
+}
+
+.logoImg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+}
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: px(35);
+  height: px(35);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+.iconImg {
+  width: px(35);
+  height: px(35);
+  display: block;
+}
+
+.cartCounter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: px(35);
+  height: px(35);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: map-get($colors, 'darker');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: px(35);
+  height: px(35);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.closeX {
+  position: relative;
+  display: block;
+  width: px(15);
+  height: px(15);
+
+  span {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: map-get($colors, 'darker');
+  }
+  span:first-child { transform: rotate(45deg); }
+  span:last-child  { transform: rotate(-45deg); }
+}
+
+// ─── Search row ───────────────────────────────────────────────────────────────
+.searchRow {
+  display: flex;
+  align-items: stretch;
+  height: px(60);
+  flex-shrink: 0;
+}
+
+.searchInputWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 px(12);
+  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+  background: map-get($colors, 'white');
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
+
+  &::placeholder {
+    color: map-get($colors, 'gray');
+  }
+}
+
+.searchBtn {
+  width: px(70);
+  background: map-get($colors, 'darker');
+  color: map-get($colors, 'white');
+  border: 0;
+  cursor: pointer;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+// ─── Items list ───────────────────────────────────────────────────────────────
+.items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: px(60);
+  padding: 0 px(12);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+  cursor: pointer;
+  text-decoration: none;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
+  text-align: left;
+}
+
+.rowWhite { background: map-get($colors, 'white'); }
+.rowGrey  { background: map-get($colors, 'lightgray-bg'); }
+
+.children {
+  background: map-get($colors, 'white');
+}
+
+.childRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: px(35);
+  padding: 0 px(12);
+  background: map-get($colors, 'white');
+  border: 0;
+  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+  cursor: pointer;
+  text-decoration: none;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'gray');
+  text-align: left;
+}

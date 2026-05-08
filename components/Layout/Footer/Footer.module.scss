@@ -5,80 +5,142 @@
 
 .footer {
   width: 100%;
-  padding: $space-6 $gutter-mobile;
-  background: map-get($colors, 'lighter');
+  padding-top: px(50);
+  background: map-get($colors, 'white');
   color: map-get($colors, 'darker');
 
   @include from(md) {
-    padding: $space-7 $gutter-desktop;
+    padding-top: 0;
   }
 }
 
 .top {
   display: grid;
   grid-template-columns: 1fr;
-  gap: $space-6;
 
   @include from(md) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: $space-7;
+    grid-template-columns: minmax(0, 38.6%) 1fr;
   }
 }
 
-.nav {
+// ─── Newsletter block (left) ──────────────────────────────────────────────────
+.newsletter {
+  background: map-get($colors, 'white');
+  padding: px(10);
   display: flex;
   flex-direction: column;
-  gap: $space-2;
+  justify-content: space-between;
+  gap: px(20);
+  min-height: px(230);
+  border-top: 1px solid map-get($colors, 'lightgray-bg');
+
+  @include from(md) {
+    min-height: px(362);
+    border-top: 0;
+  }
 }
 
-.navLink {
-  font-family: $HelveticaNeue;
-  font-size: px(15);
+.copyright {
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
   line-height: px(17);
-  color: inherit;
+  letter-spacing: 0.5px;
+  color: #2d2926;
+
+  @include from(md) {
+    font-size: px(11);
+    line-height: px(15);
+  }
+}
+
+// ─── Columns block (right) ────────────────────────────────────────────────────
+.columns {
+  position: relative;
+  background: map-get($colors, 'lightgray-bg');
+  padding: px(10);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: px(25);
+  column-gap: px(24);
+
+  @include from(md) {
+    grid-template-columns: repeat(5, 1fr);
+    min-height: px(362);
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: px(25);
+}
+
+.colTitle {
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  color: map-get($colors, 'darker');
+  margin: 0;
+
+  @include from(md) {
+    font-size: px(11);
+    line-height: px(15);
+  }
+}
+
+.colLinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: px(6);
+}
+
+.colLink {
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
   text-decoration: none;
 
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.social {
-  display: flex;
-  gap: $space-3;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.country {
-  font-size: px(15);
-  color: inherit;
-}
-
-.legal {
-  display: flex;
-  flex-direction: column;
-  gap: $space-2;
-  margin-top: $space-7;
-  padding-top: $space-4;
-  border-top: $border;
-  font-size: px(13);
+  &:hover { text-decoration: underline; }
 
   @include from(md) {
-    flex-direction: row;
-    justify-content: space-between;
+    font-size: px(11);
+    line-height: px(15);
   }
 }
 
-.terms {
+// ─── Region selector ──────────────────────────────────────────────────────────
+.regionWrap {
+  grid-column: 1 / -1;
   display: flex;
-  gap: $space-4;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  justify-content: flex-end;
+  padding-top: px(20);
 
-  a {
-    color: inherit;
+  @include from(md) {
+    position: absolute;
+    bottom: px(10);
+    right: px(10);
+    padding-top: 0;
+    grid-column: auto;
   }
+}
+
+// ─── Big wordmark logo ────────────────────────────────────────────────────────
+.bigLogo {
+  display: block;
+  width: 100%;
+  background: map-get($colors, 'white');
+  padding: px(5);
+}
+
+.bigLogoImg {
+  width: 100%;
+  height: auto;
+  display: block;
 }

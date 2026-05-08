@@ -1,0 +1,62 @@
+// components/Layout/AnnouncementBanner/AnnouncementBanner.module.scss
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.banner {
+  position: relative;
+  z-index: $z-sticky-header;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: px(21);
+  padding: 0 px(8);
+  background: map-get($colors, 'white');
+  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+  color: map-get($colors, 'darker');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+
+  @include from(md) {
+    max-width: px(1072);
+    margin: 0 auto;
+    background: map-get($colors, 'lightgray-bg');
+    border-bottom: 0;
+  }
+}
+
+.body {
+  flex: 0 1 auto;
+  text-align: center;
+}
+
+.text {
+  display: inline-block;
+}
+
+.linkWrap {
+  color: inherit;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+.close {
+  position: absolute;
+  right: px(8);
+  top: 50%;
+  transform: translateY(-50%);
+  width: px(20);
+  height: px(20);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: px(16);
+  line-height: 1;
+  color: inherit;
+}

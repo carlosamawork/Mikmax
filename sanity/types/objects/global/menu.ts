@@ -32,7 +32,28 @@ export type MenuGroup = {
   featuredProduct?: MenuFeaturedProduct
 }
 
-export type MenuItem = MenuLinkInternal | MenuLinkExternal | MenuGroup
+// Auto mega-menu built from parent/child collections.
+// `tree` is filled by the settings GROQ at render time.
+export type CollectionTreeChild = {
+  title?: string
+  handle?: string
+}
+
+export type CollectionTreeParent = {
+  title?: string
+  handle?: string
+  imageUrl?: string
+  children?: CollectionTreeChild[]
+}
+
+export type MenuShop = {
+  _key: string
+  _type: 'menuShop'
+  label: string
+  tree?: CollectionTreeParent[]
+}
+
+export type MenuItem = MenuLinkInternal | MenuLinkExternal | MenuGroup | MenuShop
 
 export type MenuData = {
   links?: MenuItem[]

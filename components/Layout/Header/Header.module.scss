@@ -8,32 +8,56 @@
   top: 0;
   z-index: $z-sticky-header;
   width: 100%;
-  background: transparent;
+  background: map-get($colors, 'white');
   transition: background $transition-fast, color $transition-fast;
+
+  @include from(md) {
+    max-width: px(1072);
+    margin: 0 auto;
+    background: map-get($colors, 'lightgray-bg');
+  }
 }
 
-.default { background: transparent; color: map-get($colors, 'darker'); }
+.default { background: map-get($colors, 'white'); color: map-get($colors, 'darker'); }
 .variant2 { background: rgba(map-get($colors, 'white'), 0.92); color: map-get($colors, 'darker'); backdrop-filter: blur(8px); }
 .variant3 { background: map-get($colors, 'white'); color: map-get($colors, 'darker'); }
 .z        { background: map-get($colors, 'darker'); color: map-get($colors, 'white'); }
+
+@include from(md) {
+  .default { background: map-get($colors, 'lightgray-bg'); }
+}
 
 .inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: $space-3 $gutter-mobile;
+  height: px(60);
+  padding: 0 0 0 px(12);
 
   @include from(md) {
-    padding: $space-3 $gutter-desktop;
+    height: auto;
+    padding: px(7) px(7) px(8);
   }
 }
 
 .logo {
-  font-family: $Manuka, $HelveticaNeue;
-  font-size: px(20);
-  letter-spacing: px(2);
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   color: inherit;
+  width: px(119);
+  height: px(24);
+
+  @include from(md) {
+    width: px(97);
+    height: px(20);
+  }
+}
+
+.logoImg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .nav {
@@ -41,7 +65,7 @@
 
   @include from(md) {
     display: flex;
-    gap: $space-5;
+    gap: px(20);
   }
 }
 
@@ -56,8 +80,10 @@
   background: transparent;
   border: 0;
   padding: 0;
-  font-family: $HelveticaNeue;
-  font-size: px(15);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
   color: inherit;
   cursor: pointer;
   text-decoration: none;
@@ -68,14 +94,106 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: $space-3;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
 }
 
-.cartBtn {
+// Desktop: text labels
+.actionsDesktop {
+  display: none;
+
+  @include from(md) {
+    display: flex;
+    align-items: center;
+    gap: px(17);
+    padding-right: px(7);
+  }
+}
+
+.actionBtn {
   background: transparent;
   border: 0;
-  font-family: $HelveticaNeue;
-  font-size: px(15);
+  padding: 0;
+  font: inherit;
   cursor: pointer;
   color: inherit;
+  text-decoration: none;
+}
+
+.actionBtn:hover { text-decoration: underline; }
+
+// Mobile: icon buttons
+.actionsMobile {
+  display: flex;
+  align-items: center;
+
+  @include from(md) {
+    display: none;
+  }
+}
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: px(35);
+  height: px(35);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  text-decoration: none;
+}
+
+.iconImg {
+  width: px(35);
+  height: px(35);
+  display: block;
+}
+
+.cartCounter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: px(35);
+  height: px(35);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: map-get($colors, 'darker');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: px(4);
+  width: px(35);
+  height: px(35);
+  background: transparent;
+  border: 0;
+  padding: px(10);
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+
+  span {
+    display: block;
+    width: px(15);
+    height: 1px;
+    background: map-get($colors, 'darker');
+  }
 }

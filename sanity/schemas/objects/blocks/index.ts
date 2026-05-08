@@ -1,5 +1,4 @@
 // sanity/schemas/objects/blocks/index.ts
-import bannerDescuento from './bannerDescuento'
 import campaignImageVideo from './campaignImageVideo'
 import featuredSection from './featuredSection'
 import heroCampaign from './heroCampaign'
@@ -9,7 +8,6 @@ import richText from './richText'
 import setModule from './setModule'
 
 export const blockSchemas = [
-  bannerDescuento,
   heroCampaign,
   campaignImageVideo,
   productModule,

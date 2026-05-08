@@ -11,10 +11,6 @@ export default defineField({
   icon: DocumentIcon,
   groups: [
     {
-      name: 'theme',
-      title: 'Theme',
-    },
-    {
       default: true,
       name: 'editorial',
       title: 'Editorial',
@@ -49,14 +45,6 @@ export default defineField({
       description: 'Escoge esta opción si es una página de tipo legal',
       initialValue: false,
       group: 'editorial',
-    }),
-    // Color theme
-    defineField({
-      name: 'colorTheme',
-      title: 'Color theme',
-      type: 'reference',
-      to: [{type: 'colorTheme'}],
-      group: 'theme',
     }),
     // Show hero
     defineField({

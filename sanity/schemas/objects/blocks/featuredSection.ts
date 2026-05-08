@@ -27,10 +27,9 @@ export default defineType({
       fields: [
         defineField({name: 'label', type: 'string'}),
         defineField({
-          name: 'link',
-          type: 'array',
-          of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
-          validation: (Rule) => Rule.max(1),
+          name: 'url',
+          type: 'string',
+          description: 'Acepta rutas relativas o URLs absolutas.',
         }),
       ],
     }),

@@ -58,8 +58,26 @@ export default defineType({
     //   options: {field: 'store.slug.current'},
     // }),
     defineField({
-      name: 'body',
-      title: 'Body',
+      name: 'descripcion',
+      title: 'Descripción',
+      type: 'body',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'propiedadesMaterial',
+      title: 'Propiedades del material',
+      type: 'body',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'recomendacionesLavado',
+      title: 'Recomendaciones de lavado',
+      type: 'body',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'usoRecomendado',
+      title: 'Uso recomendado',
       type: 'body',
       group: 'editorial',
     }),
@@ -78,15 +96,6 @@ export default defineType({
       type: 'array',
       of: [{
         type: 'module.video'
-      },],
-      group: 'editorial',
-    }),
-    defineField({
-      name: 'valoraciones',
-      title: 'Valoraciones',
-      type: 'array',
-      of: [{
-        type: 'module.valoracion'
       },],
       group: 'editorial',
     }),

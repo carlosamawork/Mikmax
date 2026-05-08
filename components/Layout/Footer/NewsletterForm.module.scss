@@ -6,47 +6,78 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: $space-2;
-  max-width: px(420);
+  gap: px(8);
+  max-width: px(382); // input 316 + button 66
 }
 
 .title {
-  font-family: $HelveticaNeue;
-  font-size: px(14);
-  letter-spacing: px(0.5);
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  color: map-get($colors, 'darker');
   margin: 0;
+
+  @include from(md) {
+    font-size: px(11);
+    line-height: px(15);
+  }
 }
 
 .subtitle {
+  font-family: $MonumentGrotesk;
   font-size: px(13);
   line-height: px(17);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
   margin: 0;
-  color: map-get($colors, 'darker-50');
+
+  @include from(md) {
+    font-size: px(11);
+    line-height: px(15);
+  }
 }
 
 .inputWrap {
   display: flex;
-  align-items: center;
-  border-bottom: $border;
-  padding-bottom: $space-1;
+  align-items: stretch;
+  margin-top: px(4);
 }
 
 .input {
   flex: 1;
+  width: px(316);
+  height: px(27);
   background: transparent;
   border: 0;
-  font-family: $HelveticaNeue;
-  font-size: px(15);
+  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+  padding: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(10);
+  line-height: px(15);
+  letter-spacing: 0.5px;
   outline: none;
+  color: map-get($colors, 'darker');
+
+  &::placeholder {
+    color: #a4a4a4;
+  }
 }
 
 .button {
-  background: transparent;
+  width: px(66);
+  height: px(25);
+  background: map-get($colors, 'darker');
+  color: map-get($colors, 'white');
   border: 0;
-  font-family: $HelveticaNeue;
-  font-size: px(13);
   cursor: pointer;
-  padding: 0 $space-2;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  text-align: center;
+  align-self: flex-end;
 
   &:disabled {
     cursor: default;
@@ -56,8 +87,11 @@
 
 .feedback,
 .feedbackError {
-  font-size: px(13);
-  margin-top: $space-1;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  margin-top: px(4);
 }
 
 .feedbackError {
