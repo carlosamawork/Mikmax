@@ -845,6 +845,18 @@ Layout chrome live en la rama. 8 commits. Typecheck y lint clean.
 - `app/(frontend)/layout.tsx` ahora `async`, fetcha `getFooter`, renderiza Header/Footer/MobileBottomNav, `<html lang="es">`
 - Conocidos para Phase 3+: cart button stub, MobileMenu drawer (Phase 7), search input (Phase 9), home page render queda roto en runtime hasta Phase 3 (página vieja referencia `home.hero` que ya no existe — esperado).
 
+### Close de Phase 3 (2026-05-08)
+
+PageBuilder dispatcher + 4 server-side blocks live on `feature/mvp-arquitectura`.
+Typecheck and lint clean.
+
+- `<PageBuilder>` server component dispatches `pageBuilder` array by `_type`.
+- Block components: `HeroCampaign` (1–2 slides, image/video, title overlay, link), `CampaignImageVideo` (single media + headline + url + aspect ratio), `RichText` (PortableText with color decorators), `FeaturedSection` (image + copy + CTA, mediaPosition L/R).
+- Shared `<PortableText>` renderer handles `textBlack`/`textGray` marks and the three annotation types (`annotationProduct`, `annotationLinkExternal`, `annotationLinkEmail`).
+- Home (`app/(frontend)/page.tsx`) now consumes `getHome()` and renders `<PageBuilder>`; `<Landing>` placeholder removed from the route.
+- Known follow-ups: `ProductModule`/`LookModule`/`SetModule` deferred to Phase 4 (need `<ProductCard>` first); `Landing` component still exists in `components/` but is unused — clean up at end of MVP.
+- Production build + dev smoke test deferred until the root-owned `.next/server/` artifacts (from a stale dev server) are cleaned up by the human; typecheck and lint clean cover the static guarantees in the meantime.
+
 ---
 
 ## 13. Checklist pre-arranque (antes de día L1)
