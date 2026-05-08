@@ -1,0 +1,70 @@
+@use '../../../../styles/common/variables' as *;
+@use '../../../../styles/common/tokens' as *;
+@use '../../../../styles/mixins/mixins' as *;
+
+.wrap {
+  position: relative;
+  width: 100%;
+  display: block;
+
+  &.bleed { /* 100% width already */ }
+  &.contained {
+    padding: px(50) px(15);
+    @include from(md) {
+      padding: px(80) px(30);
+    }
+  }
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: map-get($colors, 'gray');
+
+  // Wrapper of LazyImage/LazyVideo nested for specificity (matches the
+  // pattern used by HeroCampaign — beats LazyImage/LazyVideo's own
+  // single-class .wrapper rule).
+  > :global(.wrapper),
+  > div {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.r-16-9 { aspect-ratio: 16 / 9; }
+.r-4-5 { aspect-ratio: 4 / 5; }
+.r-1-1 { aspect-ratio: 1 / 1; }
+.r-3-4 { aspect-ratio: 3 / 4; }
+.r-21-9 { aspect-ratio: 21 / 9; }
+
+.img, .video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.headline {
+  position: absolute;
+  left: px(15);
+  bottom: px(15);
+  margin: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'white');
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+}
