@@ -4,21 +4,20 @@ import NewsletterForm from './NewsletterForm'
 import RegionSelector from './RegionSelector'
 import {LazyImage} from '@/components/Common'
 import type {FooterProps} from '@/types/footer'
-import type {SocialLink, FooterColumnAny} from '@/sanity/types'
+import type {SocialLink, FooterColumnAny, LinkInternalRef} from '@/sanity/types'
+import {getInternalHref} from '@/sanity/queries/fragments/links'
 import Link from 'next/link'
 
-function FooterLinks({
-  links,
-}: {
-  links: Array<{
-    _key: string
-    _type: 'linkInternal' | 'linkExternal'
-    title?: string
-    href?: string
-    url?: string
-    newWindow?: boolean
-  }>
-}) {
+type FooterLinkItem = {
+  _key: string
+  _type: 'linkInternal' | 'linkExternal'
+  title?: string
+  ref?: LinkInternalRef
+  url?: string
+  newWindow?: boolean
+}
+
+function FooterLinks({links}: {links: FooterLinkItem[]}) {
   return (
     <ul className={s.colLinks}>
       {links.map((link) => {
@@ -26,7 +25,7 @@ function FooterLinks({
         if (link._type === 'linkInternal') {
           return (
             <li key={key}>
-              <Link href={link.href ?? '#'} className={s.colLink}>
+              <Link href={getInternalHref(link.ref)} className={s.colLink}>
                 {link.title}
               </Link>
             </li>
@@ -78,14 +77,7 @@ function ShopColumn({
 }: {
   title: string
   parents?: Array<{title?: string; handle?: string}>
-  extraLinks?: Array<{
-    _key: string
-    _type: 'linkInternal' | 'linkExternal'
-    title?: string
-    href?: string
-    url?: string
-    newWindow?: boolean
-  }>
+  extraLinks?: FooterLinkItem[]
 }) {
   return (
     <div className={s.col}>
@@ -102,7 +94,7 @@ function ShopColumn({
           if (link._type === 'linkInternal') {
             return (
               <li key={link._key}>
-                <Link href={link.href ?? '#'} className={s.colLink}>
+                <Link href={getInternalHref(link.ref)} className={s.colLink}>
                   {link.title}
                 </Link>
               </li>

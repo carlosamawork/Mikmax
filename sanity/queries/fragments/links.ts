@@ -1,23 +1,42 @@
 import {groq} from 'next-sanity'
 
-// Resolves a linkInternal reference to a frontend href based on the
-// referenced document type. Pages map to /<slug>; collections and products
-// use their Shopify-synced handle under the corresponding shop route.
+// Resolves a linkInternal reference to a frontend href.
 //
-// We use coalesce(select(cond => val), …, default) instead of a multi-arm
-// select() because GROQ's parser, when this fragment is interpolated inside
-// an object projection that already uses `condition => { … }` conditional
-// spreads (e.g. `links[]{ _type == "linkInternal" => {…} }`), gets confused
-// by the inner `=>` arms and fails with "expected '}' following object body".
-// Each single-arm select() returns either the value or null, and coalesce
-// picks the first non-null (or "#" as default).
-export const linkInternalHref = groq`"href": coalesce(
-  select(reference->_type == "home" => "/"),
-  select(reference->_type == "page" => "/" + reference->slug.current),
-  select(reference->_type == "collection" => "/shop/" + coalesce(reference->store.slug.current, reference->slug.current)),
-  select(reference->_type == "product" => "/shop/product/" + coalesce(reference->store.slug.current, reference->slug.current)),
-  "#"
-)`
+// Why no GROQ select(...): when `linkInternalHref` is interpolated inside an
+// object projection that already uses `condition => { ... }` conditional
+// spreads (e.g. `links[]{ _type == "linkInternal" => { ... } }`), GROQ's
+// parser fails on `select(... => ...)` arms with "expected '}' following
+// object body" — the outer `=>` confuses the parser. Instead we project
+// the bare `_type` and `slug` fields and let TS compute the href via the
+// `getInternalHref` helper at consumption time.
+
+export type LinkInternalRef = {
+  _type?: string
+  slug?: string
+}
+
+export const linkInternalHref = groq`
+  "ref": reference->{
+    _type,
+    "slug": coalesce(store.slug.current, slug.current)
+  }
+`
+
+export function getInternalHref(ref?: LinkInternalRef | null): string {
+  if (!ref) return '#'
+  switch (ref._type) {
+    case 'home':
+      return '/'
+    case 'page':
+      return ref.slug ? `/${ref.slug}` : '#'
+    case 'collection':
+      return ref.slug ? `/shop/${ref.slug}` : '#'
+    case 'product':
+      return ref.slug ? `/shop/product/${ref.slug}` : '#'
+    default:
+      return '#'
+  }
+}
 
 // Single link item projection (internal or external) with a uniform shape.
 // Use inside an array projection: `links[]{ ${linkResolved} }`.

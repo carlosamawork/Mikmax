@@ -10,6 +10,7 @@ import type {HeaderProps, HeaderVariant} from '@/types/header'
 import MegaMenu from '../MegaMenu/MegaMenu'
 import MegaMenuShop from '../MegaMenu/MegaMenuShop'
 import MobileMenu from '../MobileMenu/MobileMenu'
+import {getInternalHref} from '@/sanity/queries/fragments/links'
 
 type CartItem = {quantity?: number}
 type CartCtx = {cart?: CartItem[]}
@@ -119,7 +120,11 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
             }
             if (link._type === 'linkInternal') {
               return (
-                <Link key={link._key} href={link.href ?? '#'} className={s.navLink}>
+                <Link
+                  key={link._key}
+                  href={getInternalHref(link.ref)}
+                  className={s.navLink}
+                >
                   {link.title}
                 </Link>
               )

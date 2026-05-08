@@ -3,6 +3,7 @@
 
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
+import {getInternalHref} from '@/sanity/queries/fragments/links'
 import s from './MegaMenu.module.scss'
 import type {MenuGroup} from '@/sanity/types'
 
@@ -20,7 +21,11 @@ export default function MegaMenu({group}: MegaMenuProps) {
             if (item._type === 'linkInternal') {
               return (
                 <li key={item._key} role="none">
-                  <Link href={item.href ?? '#'} role="menuitem" className={s.itemLink}>
+                  <Link
+                    href={getInternalHref(item.ref)}
+                    role="menuitem"
+                    className={s.itemLink}
+                  >
                     {item.title}
                   </Link>
                 </li>

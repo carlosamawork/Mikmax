@@ -6,6 +6,7 @@ import {createPortal} from 'react-dom'
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
 import {CartContext} from '@/context/shopContext'
+import {getInternalHref} from '@/sanity/queries/fragments/links'
 import s from './MobileMenu.module.scss'
 import type {
   MenuData,
@@ -104,7 +105,7 @@ export default function MobileMenu({menu, open, onClose}: Props) {
         key: internal._key,
         type: 'page',
         title: internal.title,
-        href: internal.href,
+        href: getInternalHref(internal.ref),
       })
     } else if (link._type === 'linkExternal') {
       const external = link as MenuLinkExternal
