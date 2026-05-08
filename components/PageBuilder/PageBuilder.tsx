@@ -1,8 +1,16 @@
-import type {PageBuilderBlock, HeroCampaignBlock, CampaignImageVideoBlock, RichTextBlock, FeaturedSectionBlock} from '@/sanity/types'
+import type {
+  PageBuilderBlock,
+  HeroCampaignBlock,
+  CampaignImageVideoBlock,
+  RichTextBlock,
+  FeaturedSectionBlock,
+  ImageWithProductBlock,
+} from '@/sanity/types'
 import HeroCampaign from './blocks/HeroCampaign/HeroCampaign'
 import CampaignImageVideo from './blocks/CampaignImageVideo/CampaignImageVideo'
 import RichText from './blocks/RichText/RichText'
 import FeaturedSection from './blocks/FeaturedSection/FeaturedSection'
+import ImageWithProduct from './blocks/ImageWithProduct/ImageWithProduct'
 
 interface PageBuilderProps {
   blocks?: PageBuilderBlock[]
@@ -31,6 +39,13 @@ export default function PageBuilder({blocks}: PageBuilderProps) {
               <FeaturedSection
                 key={block._key}
                 block={block as FeaturedSectionBlock}
+              />
+            )
+          case 'block.imageWithProduct':
+            return (
+              <ImageWithProduct
+                key={block._key}
+                block={block as ImageWithProductBlock}
               />
             )
           default:

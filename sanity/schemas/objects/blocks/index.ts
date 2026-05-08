@@ -2,6 +2,7 @@
 import campaignImageVideo from './campaignImageVideo'
 import featuredSection from './featuredSection'
 import heroCampaign from './heroCampaign'
+import imageWithProduct from './imageWithProduct'
 import lookModule from './lookModule'
 import productModule from './productModule'
 import richText from './richText'
@@ -10,6 +11,7 @@ import setModule from './setModule'
 export const blockSchemas = [
   heroCampaign,
   campaignImageVideo,
+  imageWithProduct,
   productModule,
   lookModule,
   setModule,
