@@ -9,13 +9,13 @@ import type {
   FooterCollectionParent,
 } from '@/sanity/types'
 import {seo} from '../fragments/seo'
-import {linkResolved, socialLinkResolved} from '../fragments/links'
 
-// We do NOT use `_type == "X" => { … }` conditional spreads inside the
-// settings projection — once they're nested 2-3 levels deep with
-// interpolated fragments, the GROQ parser fails with "expected '}'
-// following object body". Instead we project every possible field flat.
-// Each item carries its `_type` and the consumer branches on it in TS.
+// Everything below is inlined (no fragment interpolation) on purpose. Once
+// linkResolved/linkInternalHref were interpolated 3-4 levels deep with
+// surrounding `_type == "X" => {…}` arms, the GROQ parser kept failing with
+// "expected '}' following object body" at unpredictable positions. Keeping
+// the whole settings projection literal — and projecting every possible
+// field flat — sidesteps any interpolation/conditional-spread weirdness.
 
 type RawParent = {
   _id: string
@@ -71,9 +71,18 @@ export async function getSettings(): Promise<SettingsData> {
           _key,
           _type,
           title,
+          url,
+          newWindow,
           label,
-          ${linkResolved},
-          items[]{ ${linkResolved} },
+          "ref": reference->{ _type, "slug": coalesce(store.slug.current, slug.current) },
+          items[]{
+            _key,
+            _type,
+            title,
+            url,
+            newWindow,
+            "ref": reference->{ _type, "slug": coalesce(store.slug.current, slug.current) }
+          },
           "featuredProduct": featuredProduct->{
             _id,
             "title": store.title,
@@ -93,8 +102,22 @@ export async function getSettings(): Promise<SettingsData> {
           _key,
           _type,
           title,
-          links[]{ ${linkResolved} },
-          extraLinks[]{ ${linkResolved} }
+          links[]{
+            _key,
+            _type,
+            title,
+            url,
+            newWindow,
+            "ref": reference->{ _type, "slug": coalesce(store.slug.current, slug.current) }
+          },
+          extraLinks[]{
+            _key,
+            _type,
+            title,
+            url,
+            newWindow,
+            "ref": reference->{ _type, "slug": coalesce(store.slug.current, slug.current) }
+          }
         },
         regions[]{
           _key,
