@@ -20,7 +20,8 @@ function format(n: number): string {
 export default function PriceDisplay({min, max, compareAt, className}: Props) {
   if (typeof min !== 'number') return null
 
-  const range = typeof max === 'number' && max > min ? `${format(min)} – ${format(max)}` : format(min)
+  const range =
+    typeof max === 'number' && max > min ? `${format(min)} – ${format(max)}` : format(min)
   const showCompare = typeof compareAt === 'number' && compareAt > min
 
   return (
