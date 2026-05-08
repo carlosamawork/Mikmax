@@ -1,4 +1,5 @@
-import type {PageBuilderBlock} from '@/sanity/types'
+import type {PageBuilderBlock, HeroCampaignBlock} from '@/sanity/types'
+import HeroCampaign from './blocks/HeroCampaign/HeroCampaign'
 
 interface PageBuilderProps {
   blocks?: PageBuilderBlock[]
@@ -11,10 +12,8 @@ export default function PageBuilder({blocks}: PageBuilderProps) {
     <>
       {blocks.map((block) => {
         switch (block._type) {
-          // Block components are wired in Tasks 3.6–3.9.
-          // Until then every case returns null so the home renders empty
-          // but does not crash with populated data.
           case 'block.heroCampaign':
+            return <HeroCampaign key={block._key} block={block as HeroCampaignBlock} />
           case 'block.campaignImageVideo':
           case 'block.featuredSection':
           case 'block.richText':

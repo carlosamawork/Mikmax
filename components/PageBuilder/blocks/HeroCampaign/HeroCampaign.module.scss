@@ -1,0 +1,50 @@
+@use '../../../../styles/common/variables' as *;
+@use '../../../../styles/common/tokens' as *;
+@use '../../../../styles/mixins/mixins' as *;
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  width: 100%;
+
+  @include from(md) {
+    &.cols2 { grid-template-columns: 1fr 1fr; }
+  }
+}
+
+.slide {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: map-get($colors, 'gray');
+  aspect-ratio: 720 / 960;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mediaImg, .mediaVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.title {
+  position: absolute;
+  left: px(15);
+  bottom: px(15);
+  margin: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(20);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'white');
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
