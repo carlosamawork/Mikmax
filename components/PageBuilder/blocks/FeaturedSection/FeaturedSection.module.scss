@@ -1,0 +1,88 @@
+@use '../../../../styles/common/variables' as *;
+@use '../../../../styles/common/tokens' as *;
+@use '../../../../styles/mixins/mixins' as *;
+
+.section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: px(20);
+  padding: px(50) px(15);
+
+  @include from(md) {
+    grid-template-columns: 1fr 1fr;
+    gap: px(40);
+    padding: px(80) px(30);
+    align-items: center;
+  }
+}
+
+.right {
+  @include from(md) {
+    .copy { order: 1; }
+    .media { order: 2; }
+  }
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: map-get($colors, 'gray');
+
+  // Same specificity boost as HeroCampaign / CampaignImageVideo for the
+  // LazyImage wrapper.
+  > :global(.wrapper),
+  > div {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: px(20);
+}
+
+.headline {
+  margin: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(28);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: map-get($colors, 'darker');
+
+  @include from(md) {
+    font-size: px(40);
+  }
+}
+
+.cta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  height: px(40);
+  padding: 0 px(16);
+  background: map-get($colors, 'darker');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  border: 0;
+
+  &:hover { opacity: 0.9; }
+}
