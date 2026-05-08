@@ -51,12 +51,28 @@ export default defineType({
       title: 'Aspect ratio',
       type: 'string',
       options: {
-        list: ['16:9', '4:5', '1:1', '3:4', '21:9'],
+        list: [
+          {title: 'Auto (usa proporción natural de la imagen)', value: 'auto'},
+          {title: '21:9 (panorámico)', value: '21:9'},
+          {title: '16:9', value: '16:9'},
+          {title: '3:2', value: '3:2'},
+          {title: '4:5 (vertical)', value: '4:5'},
+          {title: '1:1 (cuadrado)', value: '1:1'},
+          {title: '3:4', value: '3:4'},
+        ],
         layout: 'radio',
       },
       initialValue: '16:9',
     }),
     defineField({name: 'fullBleed', title: 'Full-bleed', type: 'boolean', initialValue: false}),
+    defineField({
+      name: 'narrow',
+      title: 'Ancho reducido',
+      type: 'boolean',
+      description:
+        'Centra el bloque con un ancho máximo (~1080 px). Útil para imágenes editoriales tipo lookbook.',
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {headline: 'headline', media: 'image'},

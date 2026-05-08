@@ -13,12 +13,23 @@ const ratioClass: Record<string, string> = {
   '1:1': 'r-1-1',
   '3:4': 'r-3-4',
   '21:9': 'r-21-9',
+  '3:2': 'r-3-2',
 }
 
 export default function CampaignImageVideo({block}: Props) {
   const ratio = block.aspectRatio ?? '16:9'
-  const ratioCls = s[ratioClass[ratio]] ?? s['r-16-9']
+  const ratioCls = ratio === 'auto' ? '' : (s[ratioClass[ratio]] ?? s['r-16-9'])
   const wrapCls = block.fullBleed ? s.bleed : s.contained
+  const narrowCls = block.narrow ? s.narrow : ''
+
+  // When aspectRatio === 'auto', derive the ratio from the image's natural
+  // dimensions so the box matches the asset exactly.
+  const autoRatioStyle: React.CSSProperties | undefined =
+    ratio === 'auto' && block.image?.metadata?.dimensions
+      ? {
+          aspectRatio: `${block.image.metadata.dimensions.width} / ${block.image.metadata.dimensions.height}`,
+        }
+      : undefined
 
   const media = (() => {
     if (block.mediaType === 'video' && block.video?.src) {
@@ -52,24 +63,26 @@ export default function CampaignImageVideo({block}: Props) {
   })()
 
   const inner = (
-    <div className={`${s.media} ${ratioCls}`}>
+    <div className={`${s.media} ${ratioCls}`.trim()} style={autoRatioStyle}>
       {media}
       {block.headline && <p className={s.headline}>{block.headline}</p>}
     </div>
   )
 
+  const sectionCls = `${s.wrap} ${wrapCls} ${narrowCls}`.trim().replace(/\s+/g, ' ')
+
   if (!block.url) {
-    return <section className={`${s.wrap} ${wrapCls}`}>{inner}</section>
+    return <section className={sectionCls}>{inner}</section>
   }
   if (block.url.startsWith('/')) {
     return (
-      <section className={`${s.wrap} ${wrapCls}`}>
+      <section className={sectionCls}>
         <Link href={block.url}>{inner}</Link>
       </section>
     )
   }
   return (
-    <section className={`${s.wrap} ${wrapCls}`}>
+    <section className={sectionCls}>
       <a href={block.url} target="_blank" rel="noopener noreferrer">
         {inner}
       </a>

@@ -41,7 +41,8 @@ export async function getHome(): Promise<HomeData> {
           headline,
           url,
           aspectRatio,
-          fullBleed
+          fullBleed,
+          narrow
         },
         _type == "block.featuredSection" => {
           slides[]{

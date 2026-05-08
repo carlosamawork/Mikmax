@@ -89,7 +89,7 @@ function ProductCell({product}: {product: ImageWithProductProduct}) {
       </div>
       <div className={s.productInfo}>
         {product.title && <p className={s.productTitle}>{product.title}</p>}
-        {(() => {
+        {/* {(() => {
           const min = formatPrice(product.price)
           const max = formatPrice(product.compareAtPrice)
           if (!min) return null
@@ -101,7 +101,7 @@ function ProductCell({product}: {product: ImageWithProductProduct}) {
             )
           }
           return <p className={s.productPrice}>{min}</p>
-        })()}
+        })()} */}
       </div>
     </Link>
   )

@@ -14,6 +14,16 @@
       padding: px(80) px(30);
     }
   }
+
+  // Narrow mode: centers the block with a max width on desktop.
+  // Useful for editorial / lookbook-style images.
+  &.narrow {
+    @include from(md) {
+      max-width: px(1080);
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
 }
 
 .media {
@@ -46,6 +56,7 @@
 .r-1-1 { aspect-ratio: 1 / 1; }
 .r-3-4 { aspect-ratio: 3 / 4; }
 .r-21-9 { aspect-ratio: 21 / 9; }
+.r-3-2 { aspect-ratio: 3 / 2; }
 
 .img, .video {
   position: absolute;
