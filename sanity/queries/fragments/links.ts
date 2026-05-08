@@ -3,11 +3,19 @@ import {groq} from 'next-sanity'
 // Resolves a linkInternal reference to a frontend href based on the
 // referenced document type. Pages map to /<slug>; collections and products
 // use their Shopify-synced handle under the corresponding shop route.
-export const linkInternalHref = groq`"href": select(
-  reference->_type == "home"       => "/",
-  reference->_type == "page"       => "/" + reference->slug.current,
-  reference->_type == "collection" => "/shop/" + coalesce(reference->store.slug.current, reference->slug.current),
-  reference->_type == "product"    => "/shop/product/" + coalesce(reference->store.slug.current, reference->slug.current),
+//
+// We use coalesce(select(cond => val), …, default) instead of a multi-arm
+// select() because GROQ's parser, when this fragment is interpolated inside
+// an object projection that already uses `condition => { … }` conditional
+// spreads (e.g. `links[]{ _type == "linkInternal" => {…} }`), gets confused
+// by the inner `=>` arms and fails with "expected '}' following object body".
+// Each single-arm select() returns either the value or null, and coalesce
+// picks the first non-null (or "#" as default).
+export const linkInternalHref = groq`"href": coalesce(
+  select(reference->_type == "home" => "/"),
+  select(reference->_type == "page" => "/" + reference->slug.current),
+  select(reference->_type == "collection" => "/shop/" + coalesce(reference->store.slug.current, reference->slug.current)),
+  select(reference->_type == "product" => "/shop/product/" + coalesce(reference->store.slug.current, reference->slug.current)),
   "#"
 )`
 
