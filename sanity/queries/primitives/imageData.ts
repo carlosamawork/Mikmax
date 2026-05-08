@@ -1,3 +1,3 @@
 export const imageData = `
-    "caption": caption,
+    "caption": caption
 `
