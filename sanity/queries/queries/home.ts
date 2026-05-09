@@ -79,18 +79,13 @@ export async function getHome(): Promise<HomeData> {
           title,
           layout,
           source,
-          source == "manual" => {
-            "products": manualProducts[]->{ ${productCardProjection} }
-          },
-          source == "collection" => {
-            "products": *[
-              _type == "product" &&
-              !store.isDeleted &&
-              ^.collection._ref in store.collections[]._ref
-            ] | order(coalesce(orderRank, store.title) asc)[0...coalesce(^.limit, 8)]{
-              ${productCardProjection}
-            }
-          }
+          "products": select(
+            source == "manual" => manualProducts[]->{ ${productCardProjection} },
+            // Collection mode requires a product↔collection link not yet present
+            // in the schema. Returns empty until Shopify Storefront-driven
+            // resolution lands in a later phase.
+            []
+          )
         },
         _type == "block.richText" => {
           body

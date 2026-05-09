@@ -17,10 +17,6 @@
   letter-spacing: 0.5px;
   color: map-get($colors, 'darker');
   margin: 0 px(15);
-
-  @include from(md) {
-    margin: 0 px(15);
-  }
 }
 
 .grid {

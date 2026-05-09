@@ -1,3 +1,4 @@
+// components/PageBuilder/blocks/ProductModule/ProductModule.tsx
 import ProductCard from '../../ProductCard/ProductCard'
 import type {ProductModuleBlock} from '@/sanity/types'
 import s from './ProductModule.module.scss'
