@@ -6,6 +6,7 @@ import type {
   FeaturedSectionBlock,
   ImageWithProductBlock,
   ProductModuleBlock,
+  LookModuleBlock,
 } from '@/sanity/types'
 import HeroCampaign from './blocks/HeroCampaign/HeroCampaign'
 import CampaignImageVideo from './blocks/CampaignImageVideo/CampaignImageVideo'
@@ -13,6 +14,7 @@ import RichText from './blocks/RichText/RichText'
 import FeaturedSection from './blocks/FeaturedSection/FeaturedSection'
 import ImageWithProduct from './blocks/ImageWithProduct/ImageWithProduct'
 import ProductModule from './blocks/ProductModule/ProductModule'
+import LookModule from './blocks/LookModule/LookModule'
 import s from './PageBuilder.module.scss'
 
 interface PageBuilderProps {
@@ -38,6 +40,8 @@ export default function PageBuilder({blocks}: PageBuilderProps) {
             return <ImageWithProduct key={block._key} block={block as ImageWithProductBlock} />
           case 'block.productModule':
             return <ProductModule key={block._key} block={block as ProductModuleBlock} />
+          case 'block.lookModule':
+            return <LookModule key={block._key} block={block as LookModuleBlock} />
           default:
             return null
         }

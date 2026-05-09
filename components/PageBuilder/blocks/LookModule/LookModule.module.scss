@@ -1,0 +1,30 @@
+// components/PageBuilder/blocks/LookModule/LookModule.module.scss
+@use '../../../../styles/common/variables' as *;
+@use '../../../../styles/common/tokens' as *;
+@use '../../../../styles/mixins/mixins' as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: px(20);
+  width: 100%;
+}
+
+.title {
+  margin: 0 px(15);
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(20);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: px(1);
+
+  @include from(md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

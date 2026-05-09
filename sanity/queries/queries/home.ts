@@ -4,7 +4,7 @@ import {client} from '..'
 import type {HomeData} from '@/sanity/types'
 import {seo} from '../fragments/seo'
 import {image} from '../fragments/image'
-import {productCardProjection} from '../fragments/cards'
+import {productCardProjection, bundleCardProjection} from '../fragments/cards'
 
 // Projection for one image+video slot (used by heroCampaign and campaignImageVideo)
 const mediaProjection = `
@@ -86,6 +86,11 @@ export async function getHome(): Promise<HomeData> {
             // resolution lands in a later phase.
             []
           )
+        },
+        _type == "block.lookModule" => {
+          title,
+          layout,
+          "looks": looks[]->{ ${bundleCardProjection} }
         },
         _type == "block.richText" => {
           body
