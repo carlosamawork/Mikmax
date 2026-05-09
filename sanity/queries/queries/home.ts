@@ -4,6 +4,7 @@ import {client} from '..'
 import type {HomeData} from '@/sanity/types'
 import {seo} from '../fragments/seo'
 import {image} from '../fragments/image'
+import {productCardProjection} from '../fragments/cards'
 
 // Projection for one image+video slot (used by heroCampaign and campaignImageVideo)
 const mediaProjection = `
@@ -73,6 +74,23 @@ export async function getHome(): Promise<HomeData> {
             "compareAtPrice": store.priceRange.maxVariantPrice
           },
           imagePosition
+        },
+        _type == "block.productModule" => {
+          title,
+          layout,
+          source,
+          source == "manual" => {
+            "products": manualProducts[]->{ ${productCardProjection} }
+          },
+          source == "collection" => {
+            "products": *[
+              _type == "product" &&
+              !store.isDeleted &&
+              ^.collection._ref in store.collections[]._ref
+            ] | order(coalesce(orderRank, store.title) asc)[0...coalesce(^.limit, 8)]{
+              ${productCardProjection}
+            }
+          }
         },
         _type == "block.richText" => {
           body

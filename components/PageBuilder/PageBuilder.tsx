@@ -5,12 +5,14 @@ import type {
   RichTextBlock,
   FeaturedSectionBlock,
   ImageWithProductBlock,
+  ProductModuleBlock,
 } from '@/sanity/types'
 import HeroCampaign from './blocks/HeroCampaign/HeroCampaign'
 import CampaignImageVideo from './blocks/CampaignImageVideo/CampaignImageVideo'
 import RichText from './blocks/RichText/RichText'
 import FeaturedSection from './blocks/FeaturedSection/FeaturedSection'
 import ImageWithProduct from './blocks/ImageWithProduct/ImageWithProduct'
+import ProductModule from './blocks/ProductModule/ProductModule'
 import s from './PageBuilder.module.scss'
 
 interface PageBuilderProps {
@@ -27,28 +29,15 @@ export default function PageBuilder({blocks}: PageBuilderProps) {
           case 'block.heroCampaign':
             return <HeroCampaign key={block._key} block={block as HeroCampaignBlock} />
           case 'block.campaignImageVideo':
-            return (
-              <CampaignImageVideo
-                key={block._key}
-                block={block as CampaignImageVideoBlock}
-              />
-            )
+            return <CampaignImageVideo key={block._key} block={block as CampaignImageVideoBlock} />
           case 'block.richText':
             return <RichText key={block._key} block={block as RichTextBlock} />
           case 'block.featuredSection':
-            return (
-              <FeaturedSection
-                key={block._key}
-                block={block as FeaturedSectionBlock}
-              />
-            )
+            return <FeaturedSection key={block._key} block={block as FeaturedSectionBlock} />
           case 'block.imageWithProduct':
-            return (
-              <ImageWithProduct
-                key={block._key}
-                block={block as ImageWithProductBlock}
-              />
-            )
+            return <ImageWithProduct key={block._key} block={block as ImageWithProductBlock} />
+          case 'block.productModule':
+            return <ProductModule key={block._key} block={block as ProductModuleBlock} />
           default:
             return null
         }
