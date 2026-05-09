@@ -74,58 +74,13 @@
   z-index: 1;
 }
 
-// ─── Product cell ─────────────────────────────────────────────────────────────
-.productCell {
-  display: block;
+// ─── Product cell wrapper ─────────────────────────────────────────────────────
+.productCellWrap {
   width: px(199);
-  text-decoration: none;
-  color: inherit;
 
   @include from(md) {
     flex: 0 0 px(357);
     width: px(357);
     align-self: flex-start;
   }
-}
-
-.productImage {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 357 / 476;
-  overflow: hidden;
-  background: map-get($colors, 'gray');
-
-  .productImageWrap {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .productImageImg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-}
-
-.productInfo {
-  display: flex;
-  flex-direction: column;
-  gap: px(8);
-  padding: px(10) px(10) px(30);
-  font-family: $MonumentGrotesk;
-  font-size: px(11);
-  line-height: px(15);
-  letter-spacing: 0.5px;
-  color: map-get($colors, 'darker');
-}
-
-.productTitle {
-  margin: 0;
-}
-
-.productPrice {
-  margin: 0;
 }

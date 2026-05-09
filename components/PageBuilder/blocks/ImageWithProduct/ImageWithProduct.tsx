@@ -1,11 +1,8 @@
 // components/PageBuilder/blocks/ImageWithProduct/ImageWithProduct.tsx
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
-import type {
-  ImageWithProductBlock,
-  ImageWithProductFeature,
-  ImageWithProductProduct,
-} from '@/sanity/types'
+import ProductCard from '../../ProductCard/ProductCard'
+import type {ImageWithProductBlock, ImageWithProductFeature} from '@/sanity/types'
 import s from './ImageWithProduct.module.scss'
 
 interface Props {
@@ -48,62 +45,9 @@ function FeatureCell({feature}: {feature: ImageWithProductFeature}) {
     )
   }
   return (
-    <a
-      href={feature.url}
-      className={s.featureCell}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <a href={feature.url} className={s.featureCell} target="_blank" rel="noopener noreferrer">
       {inner}
     </a>
-  )
-}
-
-// Placeholder until Phase 4 brings <ProductCard> proper. Renders the
-// preview image + title + simple price line. Once ProductCard exists
-// we swap this out for `<ProductCard product={...} variant="mini" />`.
-function ProductCell({product}: {product: ImageWithProductProduct}) {
-  const href = product.handle ? `/shop/product/${product.handle}` : '#'
-  const formatPrice = (n?: number) =>
-    typeof n === 'number'
-      ? new Intl.NumberFormat('es-ES', {
-          style: 'currency',
-          currency: 'EUR',
-          maximumFractionDigits: 2,
-        }).format(n)
-      : null
-
-  return (
-    <Link href={href} className={s.productCell}>
-      <div className={s.productImage}>
-        {product.imageUrl && (
-          <LazyImage
-            src={product.imageUrl}
-            alt={product.title ?? ''}
-            width={357}
-            height={476}
-            className={s.productImageImg}
-            wrapperClassName={s.productImageWrap}
-          />
-        )}
-      </div>
-      <div className={s.productInfo}>
-        {product.title && <p className={s.productTitle}>{product.title}</p>}
-        {/* {(() => {
-          const min = formatPrice(product.price)
-          const max = formatPrice(product.compareAtPrice)
-          if (!min) return null
-          if (max && max !== min) {
-            return (
-              <p className={s.productPrice}>
-                {min} – {max}
-              </p>
-            )
-          }
-          return <p className={s.productPrice}>{min}</p>
-        })()} */}
-      </div>
-    </Link>
   )
 }
 
@@ -114,7 +58,11 @@ export default function ImageWithProduct({block}: Props) {
   return (
     <section className={sectionCls}>
       {feature && <FeatureCell feature={feature} />}
-      {product && <ProductCell product={product} />}
+      {product && (
+        <div className={s.productCellWrap}>
+          <ProductCard product={product} />
+        </div>
+      )}
     </section>
   )
 }

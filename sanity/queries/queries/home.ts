@@ -65,14 +65,7 @@ export async function getHome(): Promise<HomeData> {
             title,
             url
           },
-          "product": product->{
-            _id,
-            "title": store.title,
-            "handle": store.slug.current,
-            "imageUrl": store.previewImageUrl,
-            "price": store.priceRange.minVariantPrice,
-            "compareAtPrice": store.priceRange.maxVariantPrice
-          },
+          "product": product->{ ${productCardProjection} },
           imagePosition
         },
         _type == "block.productModule" => {
