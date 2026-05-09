@@ -92,6 +92,11 @@ export async function getHome(): Promise<HomeData> {
           layout,
           "looks": looks[]->{ ${bundleCardProjection} }
         },
+        _type == "block.setModule" => {
+          title,
+          layout,
+          "sets": sets[]->{ ${bundleCardProjection} }
+        },
         _type == "block.richText" => {
           body
         }
