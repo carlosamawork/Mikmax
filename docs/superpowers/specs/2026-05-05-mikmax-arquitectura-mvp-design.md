@@ -857,6 +857,20 @@ Typecheck and lint clean.
 - Known follow-ups: `ProductModule`/`LookModule`/`SetModule` deferred to Phase 4 (need `<ProductCard>` first); `Landing` component still exists in `components/` but is unused — clean up at end of MVP.
 - Production build + dev smoke test deferred until the root-owned `.next/server/` artifacts (from a stale dev server) are cleaned up by the human; typecheck and lint clean cover the static guarantees in the meantime.
 
+### Close de Phase 4 (2026-05-09)
+
+Three product-driven home blocks + shared cards live on `feature/mvp-arquitectura`.
+Typecheck and lint clean.
+
+- `<PriceDisplay>` shared component (single price, range, compare-at strikethrough).
+- `<ProductCard>` (default Figma variant) backed by `productCardProjection` GROQ fragment.
+- `<BundleCard>` for both looks and sets (kind prop swaps the route prefix).
+- `<ProductModule>` renders the manual-products grid (grid-4col layout). Collection-mode source returns `[]` until a product↔collection link is wired (Phase 5+). Other layouts (`carousel`, `grid-mixed`) fall back to grid-4col.
+- `<LookModule>` renders the `looks[]` references in a row (row-wide layout).
+- `<SetModule>` renders the `sets[]` references in a row on a grey background, including `colorLocked` text per card (row-mini layout).
+- `<ImageWithProduct>` no longer uses its inline placeholder; it composes `<ProductCard />` directly from the same projection.
+- Known follow-ups: ProductCard `mini`/`hover`/`set` variants, `FichaButton`/`FichaModal` (quick-view), the rest of the layout enums (carousel, grid-mixed, grid-2col, grid), and the collection-mode resolver for ProductModule. Compare-at price is currently undefined at the product-card level until variant-aggregation lands.
+
 ---
 
 ## 13. Checklist pre-arranque (antes de día L1)
