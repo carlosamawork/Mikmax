@@ -25,13 +25,14 @@ export default function InfiniteScrollSentinel({
   const [hasMore, setHasMore] = useState(initialHasMore)
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLDivElement | null>(null)
+  const paramsKey = JSON.stringify(params)
 
   useEffect(() => {
     setItems([])
     setOffset(initialOffset)
     setCursor(initialCursor)
     setHasMore(initialHasMore)
-  }, [initialOffset, initialCursor, initialHasMore, handle, JSON.stringify(params)])
+  }, [initialOffset, initialCursor, initialHasMore, handle, paramsKey])
 
   useEffect(() => {
     if (!ref.current || !hasMore) return
