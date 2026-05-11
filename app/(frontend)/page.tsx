@@ -1,5 +1,6 @@
-import Landing from '@/components/Landing'
 import {buildUrl, siteTitle, siteDescription, BASE_IMAGE_URL, BASE_IMAGE_WIDTH, BASE_IMAGE_HEIGHT} from '@/utils/seoHelper'
+import {PageBuilder} from '@/components/PageBuilder'
+import {getHome} from '@/sanity/queries/queries/home'
 
 export const revalidate = 3600
 
@@ -30,7 +31,7 @@ const organizationSchema = {
   '@type': 'Organization',
   name: siteTitle,
   url: buildUrl('/'),
-  logo: buildUrl('/mikmax-logo.svg'),
+  logo: buildUrl('/icons/mikmax.svg'),
   description: siteDescription,
   foundingLocation: {
     '@type': 'Place',
@@ -58,7 +59,8 @@ const webPageSchema = {
   isPartOf: {'@type': 'WebSite', url: buildUrl('/')},
 }
 
-export default function Home() {
+export default async function Home() {
+  const data = await getHome()
   return (
     <>
       <script
@@ -73,7 +75,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{__html: JSON.stringify(webPageSchema)}}
       />
-      <Landing />
+      <PageBuilder blocks={data?.pageBuilder} />
     </>
   )
 }

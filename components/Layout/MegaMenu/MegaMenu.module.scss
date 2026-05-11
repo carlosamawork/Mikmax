@@ -1,0 +1,153 @@
+// components/Layout/MegaMenu/MegaMenu.module.scss
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-5;
+  min-width: px(720);
+  padding: $space-5;
+  background: map-get($colors, 'white');
+  color: map-get($colors, 'darker');
+  border-top: $border;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+
+  @include from(lg) {
+    grid-template-columns: 2fr 1fr;
+    min-width: px(960);
+  }
+}
+
+.itemsCol {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.label {
+  font-size: px(13);
+  letter-spacing: px(0.5);
+  text-transform: uppercase;
+  color: map-get($colors, 'gray');
+  margin: 0 0 $space-2;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: $space-3 $space-5;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.itemLink {
+  font-size: px(15);
+  text-decoration: none;
+  color: inherit;
+  &:hover { text-decoration: underline; }
+}
+
+.featured { display: block; text-decoration: none; color: inherit; }
+.featuredImage { width: 100%; height: auto; }
+.featuredTitle { display: block; margin-top: $space-2; font-size: px(14); }
+
+// ─── Shop mega-menu (auto from collection tree) ───────────────────────────────
+.shopMenu {
+  display: none;
+
+  @include from(md) {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(px(304), auto);
+    background: map-get($colors, 'white');
+    color: map-get($colors, 'darker');
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.shopCell {
+  display: flex;
+  flex-direction: column;
+  gap: px(30);
+  padding: px(10) px(10) px(50);
+}
+
+.shopCellWhite {
+  background: map-get($colors, 'white');
+}
+
+.shopCellGrey {
+  background: map-get($colors, 'lightgray-bg');
+}
+
+.shopLabel {
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
+  margin: 0;
+}
+
+.shopItems {
+  display: flex;
+  flex-direction: column;
+  gap: px(8);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.shopItemLink {
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+// Image always pinned to row 1, col 3 — never moves.
+.shopImageCell {
+  grid-row: 1;
+  grid-column: 3;
+  position: relative;
+  background: map-get($colors, 'white');
+  overflow: hidden;
+}
+
+// All parent images stacked; only one is opaque at a time → cross-fade.
+.shopImageSlot {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+
+  &[data-active='true'] {
+    opacity: 1;
+  }
+}
+
+.shopImageWrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.shopImage {
+  object-fit: cover;
+}

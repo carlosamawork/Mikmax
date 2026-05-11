@@ -1,0 +1,36 @@
+// components/PageBuilder/blocks/SetModule/SetModule.module.scss
+@use '../../../../styles/common/variables' as *;
+@use '../../../../styles/common/tokens' as *;
+@use '../../../../styles/mixins/mixins' as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: px(38);
+  width: 100%;
+  background: map-get($colors, 'lightgray-bg');
+  padding: px(5) px(5) px(20);
+
+  @include from(md) {
+    padding: px(5) px(5) px(20);
+  }
+}
+
+.title {
+  margin: 0 px(15);
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(20);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: px(40);
+
+  @include from(md) {
+    gap: px(60);
+  }
+}

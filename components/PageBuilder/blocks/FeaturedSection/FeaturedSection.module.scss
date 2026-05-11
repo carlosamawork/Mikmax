@@ -1,0 +1,61 @@
+@use '../../../../styles/common/variables' as *;
+@use '../../../../styles/common/tokens' as *;
+@use '../../../../styles/mixins/mixins' as *;
+
+.section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: px(1);
+  width: 100%;
+
+  @include from(md) {
+    padding: 0 px(5);
+
+    &.cols2 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}
+
+.slide {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: px(300);
+  overflow: hidden;
+  background: map-get($colors, 'gray');
+
+  @include from(md) {
+    height: px(450);
+  }
+
+  // LazyImage wrapper specificity boost (same pattern as HeroCampaign /
+  // CampaignImageVideo) so .media wins over LazyImage's own .wrapper.
+  .media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mediaImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.title {
+  position: absolute;
+  left: px(10);
+  bottom: px(15);
+  margin: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(20);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'white');
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}

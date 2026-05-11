@@ -1,0 +1,66 @@
+@use '../../../../styles/common/variables' as *;
+@use '../../../../styles/common/tokens' as *;
+@use '../../../../styles/mixins/mixins' as *;
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  width: 100%;
+
+  @include from(md) {
+    &.cols2 { grid-template-columns: 1fr 1fr; }
+  }
+}
+
+.slide {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  background: map-get($colors, 'gray');
+  aspect-ratio: 720 / 960;
+  max-height: 100svh;
+
+  // Wrapper of LazyImage/LazyVideo. Nesting under .slide gives 2-class
+  // specificity, overriding LazyImage's / LazyVideo's own `.wrapper` rule
+  // (single class) — otherwise import order decides who wins.
+  .media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  // <img> rendered by LazyImage (we pass mediaImg as className).
+  .mediaImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  // <video> rendered by LazyVideo. LazyVideo does not expose a class prop for
+  // the <video> element, so target by tag — class+element specificity beats
+  // LazyVideo's own single-class rule (width: 100%; height: auto).
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.title {
+  position: absolute;
+  left: px(10);
+  bottom: px(15);
+  margin: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(20);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'white');
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}

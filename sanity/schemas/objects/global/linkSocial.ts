@@ -14,15 +14,6 @@ export default defineField({
       type: 'string',
       validation: (Rule) => Rule.required(),
     },
-    {
-        title: 'Icon',
-        name: 'icon',
-        type: 'image',
-        options:{
-            hotspot: true,
-        },
-        validation: (Rule) => Rule.required(),
-    },
     // URL
     {
       name: 'url',

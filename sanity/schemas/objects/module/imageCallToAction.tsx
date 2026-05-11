@@ -13,11 +13,10 @@ export default defineField({
     },
     // Link
     {
-      name: 'links',
-      title: 'Link',
-      type: 'array',
-      of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
-      validation: (Rule) => Rule.max(1),
+      name: 'url',
+      title: 'URL',
+      type: 'string',
+      description: 'Acepta rutas relativas o URLs absolutas.',
     },
   ],
 })

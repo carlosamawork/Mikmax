@@ -1,9 +1,8 @@
-import type { FooterData } from '@/sanity/types'
-import { getSettings } from './settings';
+// sanity/queries/common/footer.ts
+import type {FooterData} from '@/sanity/types'
+import {getSettings} from './settings'
 
-export const getFooter = async (): Promise<FooterData> => {
+export async function getFooter(): Promise<FooterData> {
   const settings = await getSettings()
-  return {
-    footerMenu: settings.footerMenu,
-  }
-};
+  return {footer: settings.footer}
+}

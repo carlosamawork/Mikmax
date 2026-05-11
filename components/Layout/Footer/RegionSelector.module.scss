@@ -1,0 +1,69 @@
+// components/Layout/Footer/RegionSelector.module.scss
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  background: map-get($colors, 'white');
+  border: $border;
+  padding: $space-2 $space-3;
+  font-family: $MonumentGrotesk;
+  font-size: px(10);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  color: #2e2e2e;
+
+  @include from(md) {
+    font-size: px(11);
+  }
+}
+
+.icon {
+  display: inline-flex;
+  width: px(20);
+  height: px(20);
+  align-items: center;
+  justify-content: center;
+  background: map-get($colors, 'darker');
+  color: map-get($colors, 'white');
+}
+
+.list {
+  position: absolute;
+  bottom: calc(100% + #{$space-1});
+  right: 0;
+  list-style: none;
+  margin: 0;
+  padding: $space-1 0;
+  background: map-get($colors, 'white');
+  border: $border;
+  min-width: px(200);
+  z-index: 5;
+}
+
+.item {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: $space-2 $space-3;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  cursor: pointer;
+  color: inherit;
+
+  &:hover { background: map-get($colors, 'lighter'); }
+}
+
+.active {
+  font-weight: 500;
+}

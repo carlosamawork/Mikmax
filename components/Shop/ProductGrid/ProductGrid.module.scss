@@ -1,0 +1,36 @@
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: px(1);
+
+  @include from(md) {
+    grid-template-columns: repeat(var(--cols), 1fr);
+  }
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: px(16);
+  padding: px(80) px(15);
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(20);
+  color: map-get($colors, 'gray');
+
+  a {
+    color: map-get($colors, 'darker');
+    text-decoration: underline;
+  }
+}
+
+.skeleton {
+  width: 100%;
+  aspect-ratio: 357 / 476;
+  background: map-get($colors, 'lightgray-bg');
+}

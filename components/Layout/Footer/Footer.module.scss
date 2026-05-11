@@ -1,0 +1,146 @@
+// components/Layout/Footer/Footer.module.scss
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.footer {
+  width: 100%;
+  padding-top: px(50);
+  background: map-get($colors, 'white');
+  color: map-get($colors, 'darker');
+
+  @include from(md) {
+    padding-top: 0;
+  }
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @include from(md) {
+    grid-template-columns: minmax(0, 38.6%) 1fr;
+  }
+}
+
+// ─── Newsletter block (left) ──────────────────────────────────────────────────
+.newsletter {
+  background: map-get($colors, 'white');
+  padding: px(10);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: px(20);
+  min-height: px(230);
+  border-top: 1px solid map-get($colors, 'lightgray-bg');
+
+  @include from(md) {
+    min-height: px(362);
+    border-top: 0;
+  }
+}
+
+.copyright {
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  color: #2d2926;
+
+  @include from(md) {
+    font-size: px(11);
+    line-height: px(15);
+  }
+}
+
+// ─── Columns block (right) ────────────────────────────────────────────────────
+.columns {
+  position: relative;
+  background: map-get($colors, 'lightgray-bg');
+  padding: px(10);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: px(25);
+  column-gap: px(24);
+
+  @include from(md) {
+    grid-template-columns: repeat(5, 1fr);
+    min-height: px(362);
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: px(25);
+}
+
+.colTitle {
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  color: map-get($colors, 'darker');
+  margin: 0;
+
+  @include from(md) {
+    font-size: px(11);
+    line-height: px(15);
+  }
+}
+
+.colLinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: px(6);
+}
+
+.colLink {
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+
+  @include from(md) {
+    font-size: px(11);
+    line-height: px(15);
+  }
+}
+
+// ─── Region selector ──────────────────────────────────────────────────────────
+.regionWrap {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: px(20);
+
+  @include from(md) {
+    position: absolute;
+    bottom: px(10);
+    right: px(10);
+    padding-top: 0;
+    grid-column: auto;
+  }
+}
+
+// ─── Big wordmark logo ────────────────────────────────────────────────────────
+.bigLogo {
+  display: block;
+  width: 100%;
+  background: map-get($colors, 'white');
+  padding: px(5);
+}
+
+.bigLogoImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
