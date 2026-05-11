@@ -1,0 +1,19 @@
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.trigger {
+  background: none;
+  border: 1px solid map-get($colors, 'darker');
+  padding: px(8) px(14);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
+  cursor: pointer;
+}
+
+.count {
+  margin-left: px(4);
+  color: map-get($colors, 'gray');
+}
