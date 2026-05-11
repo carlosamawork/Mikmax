@@ -1,11 +1,5 @@
 // lib/shop/searchParams.ts
-import type {
-  ActiveFilter,
-  FilterDefinition,
-  ShopSearchParams,
-  SortKey,
-  ViewMode,
-} from '@/types/shop'
+import type {FilterDefinition, ShopSearchParams, SortKey, ViewMode} from '@/types/shop'
 
 const VALID_SORTS: SortKey[] = ['featured', 'newest', 'price-asc', 'price-desc', 'best-selling']
 const VALID_VIEWS: ViewMode[] = ['4col', '2col']
@@ -55,67 +49,6 @@ export function serializeSearchParams(params: ShopSearchParams): string {
   return s ? `?${s}` : ''
 }
 
-export function getActiveFilters(
-  params: ShopSearchParams,
-  facets: FilterDefinition[],
-): ActiveFilter[] {
-  const out: ActiveFilter[] = []
-  for (const key of FILTER_KEYS) {
-    const raw = params[key]
-    if (!raw) continue
-    const values = raw.split(',').filter(Boolean)
-    for (const v of values) {
-      out.push({
-        key,
-        label: titleFromKey(key),
-        value: v,
-        displayValue: displayValueFor(key, v, facets),
-      })
-    }
-  }
-  if (params.priceMin || params.priceMax) {
-    out.push({
-      key: 'priceMin',
-      label: 'Price',
-      value: `${params.priceMin ?? ''}-${params.priceMax ?? ''}`,
-      displayValue: `${params.priceMin ?? '0'}€ – ${params.priceMax ?? '∞'}€`,
-    })
-  }
-  return out
-}
-
-function titleFromKey(key: ListFilterKey): string {
-  const map: Record<ListFilterKey, string> = {
-    productType: 'Product',
-    color: 'Color',
-    size: 'Size',
-    pattern: 'Pattern',
-  }
-  return map[key]
-}
-
-function displayValueFor(
-  key: ListFilterKey,
-  kebabValue: string,
-  facets: FilterDefinition[],
-): string {
-  const facet = facets.find((f) => f.id === facetIdFor(key))
-  if (!facet) return prettify(kebabValue)
-  const match = facet.values.find((v) => slugify(v.label) === kebabValue)
-  return match?.label ?? prettify(kebabValue)
-}
-
-function facetIdFor(key: ListFilterKey): string {
-  // Shopify facet ids — verify in dev when wiring up.
-  const map: Record<ListFilterKey, string> = {
-    productType: 'filter.p.product_type',
-    color: 'filter.v.option.color',
-    size: 'filter.v.option.size',
-    pattern: 'filter.v.option.pattern',
-  }
-  return map[key]
-}
-
 export function slugify(label: string): string {
   return label
     .toLowerCase()
@@ -123,10 +56,6 @@ export function slugify(label: string): string {
     .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
-}
-
-function prettify(kebab: string): string {
-  return kebab.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
 /**

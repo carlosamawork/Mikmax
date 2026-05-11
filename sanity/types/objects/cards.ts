@@ -1,5 +1,3 @@
-import type {SanityImageRef} from './blocks/heroCampaign'
-
 export type ProductCardData = {
   _id: string
   title?: string
@@ -9,14 +7,20 @@ export type ProductCardData = {
   maxPrice?: number
   compareAtPrice?: number
   tags?: string
+  // Optional: set when card represents a specific variant; false renders "Agotado" overlay.
+  availableForSale?: boolean
 }
 
-export type BundleCardData = {
+export type SetCardComponent = {
+  label?: string
+  variantTitle?: string
+  imageUrl?: string
+}
+
+export type SetCardData = {
   _id: string
   title?: string
+  description?: string
   slug?: string
-  image?: SanityImageRef
-  priceFixed?: number
-  priceCompareAt?: number
-  colorLocked?: string
+  components?: SetCardComponent[]
 }

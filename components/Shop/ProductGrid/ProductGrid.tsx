@@ -46,6 +46,7 @@ export default function ProductGrid({products, view, hasActiveFilters}: Props) {
             maxPrice: p.maxPrice,
             compareAtPrice: p.compareAtPrice,
             tags: p.tags,
+            availableForSale: p.availableForSale,
           }}
         />
       ))}

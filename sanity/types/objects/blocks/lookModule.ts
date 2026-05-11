@@ -1,5 +1,5 @@
 // sanity/types/objects/blocks/lookModule.ts
-import type {BundleCardData} from '../cards'
+import type {SetCardData} from '../cards'
 
 export type LookModuleLayout = 'row-wide' | 'grid-2col'
 
@@ -9,5 +9,5 @@ export type LookModuleBlock = {
   title?: string
   layout?: LookModuleLayout
   // Resolved by GROQ from looks references.
-  looks?: BundleCardData[]
+  looks?: SetCardData[]
 }

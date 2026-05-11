@@ -1,5 +1,5 @@
 // components/PageBuilder/blocks/SetModule/SetModule.tsx
-import BundleCard from '../../BundleCard/BundleCard'
+import SetCard from '../../SetCard/SetCard'
 import type {SetModuleBlock} from '@/sanity/types'
 import s from './SetModule.module.scss'
 
@@ -13,10 +13,9 @@ export default function SetModule({block}: Props) {
 
   return (
     <section className={s.section}>
-      {block.title && <h2 className={s.title}>{block.title}</h2>}
-      <div className={s.row}>
+      <div className={s.list}>
         {sets.map((set) => (
-          <BundleCard key={set._id} bundle={set} kind="set" />
+          <SetCard key={set._id} set={set} />
         ))}
       </div>
     </section>

@@ -1,5 +1,4 @@
 import {groq} from 'next-sanity'
-import {image} from './image'
 
 // Projects fields from a `product` document for ProductCard rendering.
 // Use as: `manualProducts[]->{${productCardProjection}}` etc.
@@ -16,18 +15,17 @@ export const productCardProjection = groq`
   "tags": store.tags
 `
 
-// Projects fields from a `look` or `set` document for BundleCard rendering.
-// Use as: `looks[]->{${bundleCardProjection}}` etc.
-// Note: colorLocked is a `set`-only field; on `look` documents it resolves to undefined.
-export const bundleCardProjection = groq`
+// Projects fields from a `set` or `look` document for SetCard rendering.
+// Returns one image per component (the Shopify variant preview), the title,
+// the descriptive copy and the slug for the detail page link.
+export const setCardProjection = groq`
   _id,
   title,
+  description,
   "slug": slug.current,
-  "image": editorialImages[0].image{
-    ${image},
-    "alt": alt
-  },
-  priceFixed,
-  priceCompareAt,
-  colorLocked
+  "components": components[]{
+    label,
+    "variantTitle": productVariant->store.title,
+    "imageUrl": productVariant->store.previewImageUrl
+  }
 `

@@ -1,28 +1,30 @@
 import {Suspense} from 'react'
-import Breadcrumb from '@/components/Shop/Breadcrumb/Breadcrumb'
-import PageHeader from '@/components/Shop/PageHeader/PageHeader'
+import ShopToolbar from '@/components/Shop/ShopToolbar/ShopToolbar'
 import ProductGrid, {ProductGridSkeleton} from '@/components/Shop/ProductGrid/ProductGrid'
 import InfiniteScrollSentinel from '@/components/Shop/InfiniteScrollSentinel/InfiniteScrollSentinel'
 import FilterDrawer from '@/components/Shop/FilterDrawer/FilterDrawer'
-import {getCollectionByHandle, getOrderedHandles} from '@/sanity/queries/queries/shop'
+import {getOrderedHandles} from '@/sanity/queries/queries/shop'
 import {
   getCollectionFilters,
-  getCollectionMeta,
   getCollectionProducts,
   getAllProductsForFilters,
 } from '@/lib/shopify'
-import {buildShopifyFilters, getActiveFilters, parseSearchParams} from '@/lib/shop/searchParams'
-import {
-  ALL_HANDLE,
-  CHUNK_SIZE,
-  type BreadcrumbCrumb,
-  type ProductCardData,
-  type ShopSearchParams,
-} from '@/types/shop'
+import {buildShopifyFilters, parseSearchParams} from '@/lib/shop/searchParams'
+import {expandProductsToCards} from '@/lib/shop/expandToCards'
+import {CHUNK_SIZE, type ProductCardData, type ShopSearchParams} from '@/types/shop'
 
 interface Props {
   handle: string
   searchParams: Record<string, string | string[] | undefined>
+}
+
+type ShopifyVariantNode = {
+  id: string
+  availableForSale: boolean
+  image?: {url: string; altText?: string | null} | null
+  price: {amount: string}
+  compareAtPrice?: {amount: string} | null
+  selectedOptions: {name: string; value: string}[]
 }
 
 type ShopifyProductNode = {
@@ -36,6 +38,8 @@ type ShopifyProductNode = {
     maxVariantPrice: {amount: string}
   }
   compareAtPriceRange: {maxVariantPrice: {amount: string}}
+  options?: {name: string; values: string[]}[]
+  variants?: {nodes: ShopifyVariantNode[]}
 }
 
 export default async function ShopArchive({handle, searchParams}: Props) {
@@ -43,20 +47,15 @@ export default async function ShopArchive({handle, searchParams}: Props) {
   const sort = params.sort ?? 'featured'
   const view = params.view ?? '4col'
 
-  const [sanityCol, shopifyMeta, facetsRaw, orderedHandles] = await Promise.all([
-    getCollectionByHandle(handle),
-    getCollectionMeta(handle),
+  const [facetsRaw, orderedHandles] = await Promise.all([
     getCollectionFilters(handle, {filters: []}),
     sort === 'featured' ? getOrderedHandles() : Promise.resolve<string[]>([]),
   ])
 
-  const title = sanityCol?.title ?? shopifyMeta?.title ?? (handle === ALL_HANDLE ? 'Shop' : handle)
-  const description =
-    sanityCol?.descriptionHtml ?? shopifyMeta?.descriptionHtml ?? undefined
-  const crumbs = buildCrumbs(handle, sanityCol)
   const facets = facetsRaw
   const filters = buildShopifyFilters(params, facets)
-  const active = getActiveFilters(params, facets)
+
+  const selectedColors = params.color ? params.color.split(',').filter(Boolean) : undefined
 
   let products: ProductCardData[] = []
   let total = 0
@@ -72,9 +71,9 @@ export default async function ShopArchive({handle, searchParams}: Props) {
     const ordered = orderedHandles
       .map((h) => matchByHandle.get(h))
       .filter((p): p is ShopifyProductNode => Boolean(p))
-    total = ordered.length
-    const slice = ordered.slice(0, CHUNK_SIZE)
-    products = slice.map(toCard)
+    const allCards = expandProductsToCards(ordered, selectedColors)
+    total = allCards.length
+    products = allCards.slice(0, CHUNK_SIZE)
     hasMore = total > CHUNK_SIZE
     nextOffset = CHUNK_SIZE
   } else {
@@ -91,31 +90,20 @@ export default async function ShopArchive({handle, searchParams}: Props) {
       reverse: map.reverse,
       first: CHUNK_SIZE,
     } as Parameters<typeof getCollectionProducts>[1])
-    products = (page.nodes as ShopifyProductNode[]).map(toCard)
+    products = expandProductsToCards(page.nodes as ShopifyProductNode[], selectedColors)
     hasMore = page.pageInfo.hasNextPage
     nextCursor = page.pageInfo.endCursor ?? undefined
     const all = (await getAllProductsForFilters(handle, filters)) as ShopifyProductNode[]
-    total = all.length
+    total = expandProductsToCards(all, selectedColors).length
   }
 
   const isOpen = params.filters === 'open'
 
   return (
     <>
-      <Breadcrumb crumbs={crumbs} />
-      <PageHeader
-        title={title}
-        count={total}
-        view={view}
-        active={active}
-        description={description}
-      />
+      <ShopToolbar view={view} />
       <Suspense fallback={<ProductGridSkeleton view={view} />}>
-        <ProductGrid
-          products={products}
-          view={view}
-          hasActiveFilters={active.length > 0}
-        />
+        <ProductGrid products={products} view={view} hasActiveFilters={products.length === 0} />
       </Suspense>
       <InfiniteScrollSentinel
         handle={handle}
@@ -133,44 +121,4 @@ export default async function ShopArchive({handle, searchParams}: Props) {
       />
     </>
   )
-}
-
-function buildCrumbs(
-  handle: string,
-  col: Awaited<ReturnType<typeof getCollectionByHandle>>,
-): BreadcrumbCrumb[] {
-  const out: BreadcrumbCrumb[] = [{label: 'Home', href: '/'}]
-  if (handle === ALL_HANDLE) {
-    out.push({label: 'Shop', href: null})
-    return out
-  }
-  out.push({label: 'Shop', href: '/shop'})
-  if (col?.parent?.parent) {
-    out.push({
-      label: col.parent.parent.title,
-      href: `/shop/${col.parent.parent.handle}`,
-    })
-  }
-  if (col?.parent) {
-    out.push({label: col.parent.title, href: `/shop/${col.parent.handle}`})
-  }
-  out.push({label: col?.title ?? handle, href: null})
-  return out
-}
-
-function toCard(p: ShopifyProductNode): ProductCardData {
-  const min = Number(p.priceRange.minVariantPrice.amount)
-  const max = Number(p.priceRange.maxVariantPrice.amount)
-  const compare = Number(p.compareAtPriceRange.maxVariantPrice.amount)
-  return {
-    id: p.id,
-    handle: p.handle,
-    title: p.title,
-    imageUrl: p.featuredImage?.url,
-    imageAlt: p.featuredImage?.altText ?? undefined,
-    minPrice: Number.isFinite(min) ? min : undefined,
-    maxPrice: Number.isFinite(max) && max !== min ? max : undefined,
-    compareAtPrice: Number.isFinite(compare) && compare > 0 ? compare : undefined,
-    tags: Array.isArray(p.tags) ? p.tags.join(',') : undefined,
-  }
 }

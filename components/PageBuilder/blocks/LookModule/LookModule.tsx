@@ -1,5 +1,5 @@
 // components/PageBuilder/blocks/LookModule/LookModule.tsx
-import BundleCard from '../../BundleCard/BundleCard'
+import SetCard from '../../SetCard/SetCard'
 import type {LookModuleBlock} from '@/sanity/types'
 import s from './LookModule.module.scss'
 
@@ -14,9 +14,9 @@ export default function LookModule({block}: Props) {
   return (
     <section className={s.section}>
       {block.title && <h2 className={s.title}>{block.title}</h2>}
-      <div className={s.row}>
+      <div className={s.list}>
         {looks.map((look) => (
-          <BundleCard key={look._id} bundle={look} kind="look" />
+          <SetCard key={look._id} set={look} kind="look" />
         ))}
       </div>
     </section>

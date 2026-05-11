@@ -43,21 +43,8 @@ export type FilterDefinition = {
   values: FilterValue[]
 }
 
-// Active filter for chips UI
-export type ActiveFilter = {
-  key: keyof ShopSearchParams
-  label: string
-  value: string
-  displayValue: string
-}
-
-export type BreadcrumbCrumb = {
-  label: string
-  href: string | null  // null = inactive (current page)
-}
-
 export type ProductCardData = {
-  id: string
+  id: string             // product id, or `${productId}::${variantId}` when split by color
   handle: string
   title: string
   imageUrl?: string
@@ -66,6 +53,10 @@ export type ProductCardData = {
   maxPrice?: number
   compareAtPrice?: number
   tags?: string
+  // Set when the card represents a specific color variant of a product.
+  variantId?: string
+  colorLabel?: string
+  availableForSale?: boolean
 }
 
 export type ShopChunkResult = {

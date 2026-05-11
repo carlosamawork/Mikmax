@@ -1,0 +1,53 @@
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: px(35);
+  padding: 0 px(11);
+  margin-top: px(100);
+}
+
+.viewGroup {
+  display: flex;
+  align-items: center;
+  gap: px(20);
+}
+
+.viewLabel,
+.viewActive,
+.viewInactive,
+.filters {
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.viewLabel {
+  color: #000;
+}
+
+.viewActive {
+  color: #000;
+  cursor: pointer;
+}
+
+.viewInactive {
+  color: #a4a4a4;
+  cursor: pointer;
+}
+
+.filters {
+  color: #000;
+  cursor: pointer;
+}

@@ -1,7 +1,7 @@
 // components/Layout/AnnouncementBanner/AnnouncementBanner.tsx
 'use client'
 
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import Link from 'next/link'
 import s from './AnnouncementBanner.module.scss'
 import type {AnnouncementBanner} from '@/sanity/types'
@@ -18,6 +18,7 @@ export default function AnnouncementBanner({data}: Props) {
   const url = data?.url
 
   const [dismissed, setDismissed] = useState(true) // start hidden until SSR hydrates
+  const bannerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (!enabled) return
@@ -25,7 +26,29 @@ export default function AnnouncementBanner({data}: Props) {
     setDismissed(stored === text)
   }, [enabled, text])
 
-  if (!enabled || dismissed) return null
+  const visible = enabled && !dismissed
+
+  // Expose banner height as a CSS variable so the Header can offset itself.
+  // Dispatch a scroll event after each change so the Header's scroll listener
+  // re-runs and updates --header-top without waiting for the user to scroll.
+  useEffect(() => {
+    const root = document.documentElement
+    if (!visible) {
+      root.style.setProperty('--announcement-height', '0px')
+      window.dispatchEvent(new Event('scroll'))
+      return
+    }
+    const node = bannerRef.current
+    const h = node?.offsetHeight ?? 21
+    root.style.setProperty('--announcement-height', `${h+1}px`)
+    window.dispatchEvent(new Event('scroll'))
+    return () => {
+      root.style.setProperty('--announcement-height', '0px')
+      window.dispatchEvent(new Event('scroll'))
+    }
+  }, [visible])
+
+  if (!visible) return null
 
   function handleClose(e: React.MouseEvent) {
     e.preventDefault()
@@ -53,7 +76,7 @@ export default function AnnouncementBanner({data}: Props) {
   })()
 
   return (
-    <div className={s.banner} role="region" aria-label="Site announcement">
+    <div ref={bannerRef} className={s.banner} role="region" aria-label="Site announcement">
       <div className={s.body}>{inner}</div>
       <button
         type="button"

@@ -9,10 +9,10 @@
   gap: px(38);
   width: 100%;
   background: map-get($colors, 'lightgray-bg');
-  padding: px(40) px(15);
+  padding: px(5) px(5) px(20);
 
   @include from(md) {
-    padding: px(60) px(15);
+    padding: px(5) px(5) px(20);
   }
 }
 
@@ -25,13 +25,12 @@
   color: map-get($colors, 'darker');
 }
 
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: px(15);
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: px(40);
 
   @include from(md) {
-    grid-template-columns: repeat(4, 1fr);
-    gap: px(20);
+    gap: px(60);
   }
 }

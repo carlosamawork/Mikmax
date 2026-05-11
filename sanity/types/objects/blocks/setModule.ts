@@ -1,5 +1,5 @@
 // sanity/types/objects/blocks/setModule.ts
-import type {BundleCardData} from '../cards'
+import type {SetCardData} from '../cards'
 
 export type SetModuleLayout = 'row-mini' | 'grid'
 
@@ -9,5 +9,5 @@ export type SetModuleBlock = {
   title?: string
   layout?: SetModuleLayout
   // Resolved by GROQ from sets references.
-  sets?: BundleCardData[]
+  sets?: SetCardData[]
 }

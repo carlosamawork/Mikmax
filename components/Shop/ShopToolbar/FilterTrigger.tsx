@@ -1,8 +1,8 @@
 'use client'
 import {useRouter, usePathname, useSearchParams} from 'next/navigation'
-import s from './FilterTrigger.module.scss'
+import s from './ShopToolbar.module.scss'
 
-export default function FilterTrigger({count}: {count: number}) {
+export default function FilterTrigger() {
   const router = useRouter()
   const path = usePathname()
   const params = useSearchParams()
@@ -14,8 +14,8 @@ export default function FilterTrigger({count}: {count: number}) {
   }
 
   return (
-    <button type="button" onClick={open} className={s.trigger}>
-      Filter &amp; Sort {count > 0 && <span className={s.count}>({count})</span>}
+    <button type="button" onClick={open} className={s.filters}>
+      Filters
     </button>
   )
 }

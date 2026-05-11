@@ -9,9 +9,9 @@
 
   &.bleed { /* 100% width already */ }
   &.contained {
-    padding: px(50) px(25);
+    padding: px(0) px(25);
     @include from(md) {
-      padding: px(80) px(30);
+      padding: px(0) px(30);
     }
   }
 

@@ -23,6 +23,7 @@ function hasNovedadTag(tags?: string): boolean {
 export default function ProductCard({product, className, showTag = true}: Props) {
   const href = product.handle ? `/shop/product/${product.handle}` : '#'
   const tag = showTag && hasNovedadTag(product.tags) ? 'Novedades' : null
+  const soldOut = product.availableForSale === false
 
   return (
     <Link href={href} className={`${s.card} ${className ?? ''}`.trim()}>
@@ -37,6 +38,7 @@ export default function ProductCard({product, className, showTag = true}: Props)
           />
         )}
         {tag && <p className={s.tag}>{tag}</p>}
+        {soldOut && <p className={s.soldOut}>Agotado</p>}
       </div>
       <div className={s.info}>
         {product.title && <p className={s.title}>{product.title}</p>}

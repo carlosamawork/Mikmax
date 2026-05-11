@@ -8,13 +8,18 @@ import {
 } from '@/lib/shopify'
 import {getOrderedHandles} from '@/sanity/queries/queries/shop'
 import {buildShopifyFilters} from '@/lib/shop/searchParams'
+import {expandProductsToCards} from '@/lib/shop/expandToCards'
 import {CHUNK_SIZE} from '@/types/shop'
-import type {
-  ProductCardData,
-  ShopChunkResult,
-  ShopSearchParams,
-  SortKey,
-} from '@/types/shop'
+import type {ShopChunkResult, ShopSearchParams, SortKey} from '@/types/shop'
+
+type ShopifyVariantNode = {
+  id: string
+  availableForSale: boolean
+  image?: {url: string; altText?: string | null} | null
+  price: {amount: string}
+  compareAtPrice?: {amount: string} | null
+  selectedOptions: {name: string; value: string}[]
+}
 
 type ShopifyProductNode = {
   id: string
@@ -27,23 +32,8 @@ type ShopifyProductNode = {
     maxVariantPrice: {amount: string}
   }
   compareAtPriceRange: {maxVariantPrice: {amount: string}}
-}
-
-function shopifyToCard(p: ShopifyProductNode): ProductCardData {
-  const min = Number(p.priceRange.minVariantPrice.amount)
-  const max = Number(p.priceRange.maxVariantPrice.amount)
-  const compare = Number(p.compareAtPriceRange.maxVariantPrice.amount)
-  return {
-    id: p.id,
-    handle: p.handle,
-    title: p.title,
-    imageUrl: p.featuredImage?.url,
-    imageAlt: p.featuredImage?.altText ?? undefined,
-    minPrice: Number.isFinite(min) ? min : undefined,
-    maxPrice: Number.isFinite(max) && max !== min ? max : undefined,
-    compareAtPrice: Number.isFinite(compare) && compare > 0 ? compare : undefined,
-    tags: Array.isArray(p.tags) ? p.tags.join(',') : undefined,
-  }
+  options?: {name: string; values: string[]}[]
+  variants?: {nodes: ShopifyVariantNode[]}
 }
 
 const SORT_TO_SHOPIFY: Record<
@@ -64,8 +54,8 @@ export async function fetchShopChunk(args: {
 }): Promise<ShopChunkResult> {
   const {handle, params} = args
   const sort: SortKey = params.sort ?? 'featured'
+  const selectedColors = params.color ? params.color.split(',').filter(Boolean) : undefined
 
-  // Facets needed to translate kebab params to Shopify labels
   const facets = await getCollectionFilters(handle, {filters: []})
   const filters = buildShopifyFilters(params, facets)
 
@@ -76,15 +66,16 @@ export async function fetchShopChunk(args: {
       getAllProductsForFilters(handle, filters),
     ])
     const matchByHandle = new Map<string, ShopifyProductNode>(
-      matching.map((p: ShopifyProductNode) => [p.handle, p]),
+      (matching as ShopifyProductNode[]).map((p) => [p.handle, p]),
     )
     const ordered = orderedHandles
       .map((h) => matchByHandle.get(h))
       .filter((p): p is ShopifyProductNode => Boolean(p))
-    const slice = ordered.slice(offset, offset + CHUNK_SIZE)
+    const allCards = expandProductsToCards(ordered, selectedColors)
+    const slice = allCards.slice(offset, offset + CHUNK_SIZE)
     return {
-      products: slice.map(shopifyToCard),
-      hasMore: offset + CHUNK_SIZE < ordered.length,
+      products: slice,
+      hasMore: offset + CHUNK_SIZE < allCards.length,
       nextOffset: offset + CHUNK_SIZE,
     }
   }
@@ -96,9 +87,9 @@ export async function fetchShopChunk(args: {
     reverse: ship.reverse,
     first: CHUNK_SIZE,
     after: args.cursor ?? null,
-  } as any)
+  } as Parameters<typeof getCollectionProducts>[1])
   return {
-    products: page.nodes.map((p: ShopifyProductNode) => shopifyToCard(p)),
+    products: expandProductsToCards(page.nodes as ShopifyProductNode[], selectedColors),
     hasMore: page.pageInfo.hasNextPage,
     nextCursor: page.pageInfo.endCursor ?? undefined,
   }
@@ -110,14 +101,22 @@ export async function getFilterCount(args: {
 }): Promise<number> {
   const facets = await getCollectionFilters(args.handle, {filters: []})
   const filters = buildShopifyFilters(args.params, facets)
+  const selectedColors = args.params.color
+    ? args.params.color.split(',').filter(Boolean)
+    : undefined
   if ((args.params.sort ?? 'featured') === 'featured') {
     const [orderedHandles, matching] = await Promise.all([
       getOrderedHandles(),
       getAllProductsForFilters(args.handle, filters),
     ])
-    const set = new Set(matching.map((p: ShopifyProductNode) => p.handle))
-    return orderedHandles.filter((h) => set.has(h)).length
+    const matchByHandle = new Map<string, ShopifyProductNode>(
+      (matching as ShopifyProductNode[]).map((p) => [p.handle, p]),
+    )
+    const ordered = orderedHandles
+      .map((h) => matchByHandle.get(h))
+      .filter((p): p is ShopifyProductNode => Boolean(p))
+    return expandProductsToCards(ordered, selectedColors).length
   }
-  const all = await getAllProductsForFilters(args.handle, filters)
-  return all.length
+  const all = (await getAllProductsForFilters(args.handle, filters)) as ShopifyProductNode[]
+  return expandProductsToCards(all, selectedColors).length
 }

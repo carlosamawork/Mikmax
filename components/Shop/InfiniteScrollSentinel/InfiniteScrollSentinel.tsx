@@ -68,6 +68,7 @@ export default function InfiniteScrollSentinel({
             maxPrice: p.maxPrice,
             compareAtPrice: p.compareAtPrice,
             tags: p.tags,
+            availableForSale: p.availableForSale,
           }}
         />
       ))}

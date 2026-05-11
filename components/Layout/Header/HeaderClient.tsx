@@ -39,8 +39,17 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
   }
 
   useEffect(() => {
+    const root = document.documentElement
+    const readBannerHeight = () => {
+      const raw = getComputedStyle(root).getPropertyValue('--announcement-height')
+      const n = parseFloat(raw)
+      return Number.isFinite(n) ? n : 0
+    }
     const onScroll = () => {
       const y = window.scrollY
+      const bannerH = readBannerHeight()
+      const top = Math.max(0, bannerH - y)
+      root.style.setProperty('--header-top', `${top}px`)
       if (y < 16) setVariant('default')
       else if (y < 240) setVariant('variant2')
       else setVariant('variant3')

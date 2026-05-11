@@ -19,12 +19,12 @@
   color: map-get($colors, 'darker');
 }
 
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: px(1);
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: px(40);
 
   @include from(md) {
-    grid-template-columns: repeat(4, 1fr);
+    gap: px(60);
   }
 }
