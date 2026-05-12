@@ -182,7 +182,7 @@ defineField({
 - `colorPattern: metafield(namespace:"shopify", key:"color-pattern")` con `references.nodes` (mismos metaobjects que ya consumimos en archive: `label`, `color`, `color_taxonomy_reference`)
 - `variants(first: 100) { nodes { id, availableForSale, image, price { amount currencyCode }, compareAtPrice { amount }, selectedOptions { name value }, gallery: metafield(namespace:"custom", key:"gallery") { type value references { nodes { ... on MediaImage { image { url altText width height } } } } } } }`
 
-> **NOTA:** El tipo exacto del metafield `custom.gallery` se confirma con un probe la primera vez (igual proceso que hicimos con `shopify.color-pattern`). Lo esperado: `list.file_reference` apuntando a `MediaImage`. Si fuera otra forma se ajusta el query.
+> **NOTA (probe ejecutado 2026-05-12):** El campo `metafield(namespace:"custom", key:"gallery")` resuelve correctamente vía Storefront API tanto a nivel `Product` como `ProductVariant`, pero está `null` en los 66 productos del store en este momento (no hay ningún producto/variante con el metafield poblado, y tampoco se sabe si la definición del metafield existe en Admin o si está expuesta al Storefront API). Mantenemos el query asumiendo la forma esperada (`list.file_reference` → `MediaImage`) — cuando empiecen a poblarse, si la shape difiere se ajusta `buildProductView`. El fallback descrito en §"Edge cases" (`Variante sin custom.gallery` → solo `variant.image`s) cubre el estado actual del catálogo.
 
 **`getProductCards(handles[])`** — fetch ligero para related products. GraphQL: `products(first: 20, query: "handle:a OR handle:b OR ...")` con campos mínimos: `handle, title, featuredImage { url altText }, priceRange { minVariantPrice maxVariantPrice }`.
 
@@ -409,7 +409,7 @@ Layout vertical:
 
 Estas no son blockers del diseño pero hay que resolverlas en el plan de implementación:
 
-1. **Tipo del metafield `custom.gallery`** — probe la primera vez para confirmar shape exacto. Si no es `list.file_reference` a MediaImage, ajustar el query y el extractor en `buildProductView`.
+1. ~~**Tipo del metafield `custom.gallery`** — probe la primera vez para confirmar shape exacto. Si no es `list.file_reference` a MediaImage, ajustar el query y el extractor en `buildProductView`.~~ — Probe ejecutado 2026-05-12: el campo resuelve vía Storefront API pero está `null` en los 66 productos actuales. Mantenemos el query con la forma esperada (`list.file_reference` → `MediaImage`); ajustar cuando empiecen a poblarse si la shape real difiere.
 2. **Cart drawer** — ¿existe ya un drawer en `context/shopContext.js` / `components/`? Si no → MVP usa redirect `/cart`; backlog: construir drawer.
 3. **PortableText renderer** — verificar que el renderer existente en el proyecto cubre todos los marks/blocks usados en los 4 campos editoriales. Si no, extender.
 4. **`hiddenDocTypes`** — no aplica (no añadimos document types, solo un field).
