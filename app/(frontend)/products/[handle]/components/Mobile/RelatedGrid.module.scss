@@ -1,0 +1,14 @@
+.section {
+  padding: 20px 10px;
+}
+
+.heading {
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
