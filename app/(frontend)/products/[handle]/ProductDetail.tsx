@@ -1,10 +1,9 @@
 'use client'
 import {useEffect, useState} from 'react'
-import {usePathname, useRouter} from 'next/navigation'
 import dynamic from 'next/dynamic'
+import {usePathname, useRouter} from 'next/navigation'
 import {findEquivalentSize} from '@/lib/product/findEquivalentSize'
-import ColorSwatches from './components/shared/ColorSwatches'
-import SizeSelector from './components/shared/SizeSelector'
+import DesktopLayout from './components/Desktop/DesktopLayout'
 import ProductInfoPanel from './components/shared/ProductInfoPanel'
 import type {ProductView, ProductInitialState} from './_types'
 
@@ -24,7 +23,6 @@ export default function ProductDetail({view, initial}: Props) {
   const [isInfoOpen, setIsInfoOpen] = useState(false)
   const [lightbox, setLightbox] = useState<{open: boolean; index: number}>({open: false, index: 0})
 
-  // URL sync (shallow replace, no scroll, no history entry per change)
   useEffect(() => {
     const usp = new URLSearchParams()
     if (selectedColor && selectedColor !== view.defaultColorSlug) usp.set('color', selectedColor)
@@ -39,42 +37,28 @@ export default function ProductDetail({view, initial}: Props) {
     setSelectedSize((prev) => findEquivalentSize(view, slug, prev))
   }
 
+  function handleAddToCart() {
+    // Real implementation in Task 26 (cart drawer integration). For now, log.
+    // eslint-disable-next-line no-console
+    console.log('add to cart', {color: selectedColor, size: selectedSize})
+  }
+
   const currentColor = view.colors.find((c) => c.slug === selectedColor) ?? view.colors[0]
 
   return (
     <>
-      <div style={{padding: 20}}>
-        <pre style={{fontSize: 11, fontFamily: 'monospace'}}>
-          {JSON.stringify(
-            {
-              selectedColor,
-              selectedSize,
-              isInfoOpen,
-              lightbox,
-              currentColorImages: currentColor.images.length,
-            },
-            null,
-            2,
-          )}
-        </pre>
-        <div style={{display: 'flex', gap: 10, marginTop: 10, flexDirection: 'column'}}>
-          <ColorSwatches colors={view.colors} selected={selectedColor} onSelect={changeColor} />
-          <SizeSelector
-            sizes={currentColor.sizes}
-            selected={selectedSize}
-            currency={view.currency}
-            onSelect={setSelectedSize}
-          />
-          <div style={{display: 'flex', gap: 10}}>
-            <button type="button" onClick={() => setIsInfoOpen((v) => !v)}>
-              Toggle info (test)
-            </button>
-            <button type="button" onClick={() => setLightbox({open: true, index: 0})}>
-              Open lightbox (test)
-            </button>
-          </div>
-        </div>
-      </div>
+      <DesktopLayout
+        view={view}
+        currentColor={currentColor}
+        selectedColor={selectedColor}
+        selectedSize={selectedSize}
+        onSelectColor={changeColor}
+        onSelectSize={setSelectedSize}
+        onToggleInfo={() => setIsInfoOpen((v) => !v)}
+        isInfoOpen={isInfoOpen}
+        onAddToCart={handleAddToCart}
+        onZoom={(i) => setLightbox({open: true, index: i})}
+      />
       <ProductInfoPanel
         open={isInfoOpen}
         onClose={() => setIsInfoOpen(false)}
