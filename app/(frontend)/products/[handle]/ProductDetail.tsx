@@ -1,12 +1,25 @@
 'use client'
-import {useEffect, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import dynamic from 'next/dynamic'
 import {usePathname, useRouter} from 'next/navigation'
-import {findEquivalentSize} from '@/lib/product/findEquivalentSize'
+import {findEquivalentSize, findVariant} from '@/lib/product/findEquivalentSize'
+import {CartContext} from '@/context/shopContext'
 import DesktopLayout from './components/Desktop/DesktopLayout'
 import MobileLayout from './components/Mobile/MobileLayout'
 import ProductInfoPanel from './components/shared/ProductInfoPanel'
 import type {ProductView, ProductInitialState} from './_types'
+
+type CartItemInput = {store: {gid: string}}
+type ShopCtx = {
+  addToCart?: (
+    newItem: CartItemInput,
+    quantity: number,
+    productId: string,
+    title: string,
+    image: string | undefined,
+  ) => Promise<void> | void
+  setCartOpen?: (open: boolean) => void
+}
 
 const ImageLightbox = dynamic(() => import('./components/shared/ImageLightbox'), {ssr: false})
 
@@ -18,6 +31,7 @@ interface Props {
 export default function ProductDetail({view, initial}: Props) {
   const router = useRouter()
   const pathname = usePathname()
+  const shop = useContext<ShopCtx>(CartContext as unknown as React.Context<ShopCtx>)
 
   const [selectedColor, setSelectedColor] = useState<string>(initial.color)
   const [selectedSize, setSelectedSize] = useState<string | undefined>(initial.size)
@@ -38,13 +52,24 @@ export default function ProductDetail({view, initial}: Props) {
     setSelectedSize((prev) => findEquivalentSize(view, slug, prev))
   }
 
-  function handleAddToCart() {
-    // Real implementation in Task 26 (cart drawer integration). For now, log.
-    // eslint-disable-next-line no-console
-    console.log('add to cart', {color: selectedColor, size: selectedSize})
-  }
-
   const currentColor = view.colors.find((c) => c.slug === selectedColor) ?? view.colors[0]
+
+  async function handleAddToCart() {
+    const variant = findVariant(view, selectedColor, selectedSize)
+    if (!variant) return
+    const newItem: CartItemInput = {store: {gid: variant.variantId}}
+    const image = currentColor.images[0]?.url
+    if (typeof shop?.addToCart === 'function') {
+      await shop.addToCart(newItem, 1, view.id, view.title, image)
+      if (typeof shop.setCartOpen === 'function') {
+        shop.setCartOpen(true)
+      } else {
+        router.push('/cart')
+      }
+    } else {
+      router.push('/cart')
+    }
+  }
 
   return (
     <>
