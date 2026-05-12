@@ -1,11 +1,14 @@
 'use client'
 import {useEffect, useState} from 'react'
 import {usePathname, useRouter} from 'next/navigation'
+import dynamic from 'next/dynamic'
 import {findEquivalentSize} from '@/lib/product/findEquivalentSize'
 import ColorSwatches from './components/shared/ColorSwatches'
 import SizeSelector from './components/shared/SizeSelector'
 import ProductInfoPanel from './components/shared/ProductInfoPanel'
 import type {ProductView, ProductInitialState} from './_types'
+
+const ImageLightbox = dynamic(() => import('./components/shared/ImageLightbox'), {ssr: false})
 
 interface Props {
   view: ProductView
@@ -66,6 +69,9 @@ export default function ProductDetail({view, initial}: Props) {
             <button type="button" onClick={() => setIsInfoOpen((v) => !v)}>
               Toggle info (test)
             </button>
+            <button type="button" onClick={() => setLightbox({open: true, index: 0})}>
+              Open lightbox (test)
+            </button>
           </div>
         </div>
       </div>
@@ -73,6 +79,13 @@ export default function ProductDetail({view, initial}: Props) {
         open={isInfoOpen}
         onClose={() => setIsInfoOpen(false)}
         editorial={view.editorial}
+      />
+      <ImageLightbox
+        open={lightbox.open}
+        images={currentColor.images}
+        index={lightbox.index}
+        onClose={() => setLightbox({open: false, index: 0})}
+        onIndexChange={(i) => setLightbox({open: true, index: i})}
       />
     </>
   )
