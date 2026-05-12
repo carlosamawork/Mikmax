@@ -1,0 +1,32 @@
+.row {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.swatch {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  height: 40px;
+  min-width: 0;
+}
+
+.color {
+  flex: 0 0 64.86%;
+  border: 1px solid #fff;
+}
+
+.bar {
+  flex: 0 0 35.14%;
+  background: transparent;
+  margin: 0 3.85%;
+}
+
+.barSelected {
+  background: black;
+}

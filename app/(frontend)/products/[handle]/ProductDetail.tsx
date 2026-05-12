@@ -2,6 +2,7 @@
 import {useEffect, useState} from 'react'
 import {usePathname, useRouter} from 'next/navigation'
 import {findEquivalentSize} from '@/lib/product/findEquivalentSize'
+import ColorSwatches from './components/shared/ColorSwatches'
 import type {ProductView, ProductInitialState} from './_types'
 
 interface Props {
@@ -50,16 +51,16 @@ export default function ProductDetail({view, initial}: Props) {
           2,
         )}
       </pre>
-      <div style={{display: 'flex', gap: 10, marginTop: 10}}>
-        <button type="button" onClick={() => changeColor(view.colors[1]?.slug ?? view.colors[0].slug)}>
-          Switch color (test)
-        </button>
-        <button type="button" onClick={() => setSelectedSize(currentColor.sizes[0]?.label)}>
-          Pick first size (test)
-        </button>
-        <button type="button" onClick={() => setIsInfoOpen((v) => !v)}>
-          Toggle info (test)
-        </button>
+      <div style={{display: 'flex', gap: 10, marginTop: 10, flexDirection: 'column'}}>
+        <ColorSwatches colors={view.colors} selected={selectedColor} onSelect={changeColor} />
+        <div style={{display: 'flex', gap: 10}}>
+          <button type="button" onClick={() => setSelectedSize(currentColor.sizes[0]?.label)}>
+            Pick first size (test)
+          </button>
+          <button type="button" onClick={() => setIsInfoOpen((v) => !v)}>
+            Toggle info (test)
+          </button>
+        </div>
       </div>
     </div>
   )
