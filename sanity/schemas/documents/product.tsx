@@ -100,6 +100,15 @@ export default defineType({
       group: 'editorial',
     }),
     defineField({
+      name: 'relatedProducts',
+      title: 'Related products',
+      description: 'Manual curation. Max 10. Order matters: shown left-to-right in the PDP.',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'product'}]}],
+      group: 'editorial',
+      validation: (Rule) => Rule.max(10),
+    }),
+    defineField({
       name: 'orderRank',
       title: 'Orden',
       type: 'string',
