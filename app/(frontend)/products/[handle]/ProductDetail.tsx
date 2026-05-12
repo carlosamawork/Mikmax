@@ -4,6 +4,7 @@ import {usePathname, useRouter} from 'next/navigation'
 import {findEquivalentSize} from '@/lib/product/findEquivalentSize'
 import ColorSwatches from './components/shared/ColorSwatches'
 import SizeSelector from './components/shared/SizeSelector'
+import ProductInfoPanel from './components/shared/ProductInfoPanel'
 import type {ProductView, ProductInitialState} from './_types'
 
 interface Props {
@@ -38,34 +39,41 @@ export default function ProductDetail({view, initial}: Props) {
   const currentColor = view.colors.find((c) => c.slug === selectedColor) ?? view.colors[0]
 
   return (
-    <div style={{padding: 20}}>
-      <pre style={{fontSize: 11, fontFamily: 'monospace'}}>
-        {JSON.stringify(
-          {
-            selectedColor,
-            selectedSize,
-            isInfoOpen,
-            lightbox,
-            currentColorImages: currentColor.images.length,
-          },
-          null,
-          2,
-        )}
-      </pre>
-      <div style={{display: 'flex', gap: 10, marginTop: 10, flexDirection: 'column'}}>
-        <ColorSwatches colors={view.colors} selected={selectedColor} onSelect={changeColor} />
-        <SizeSelector
-          sizes={currentColor.sizes}
-          selected={selectedSize}
-          currency={view.currency}
-          onSelect={setSelectedSize}
-        />
-        <div style={{display: 'flex', gap: 10}}>
-          <button type="button" onClick={() => setIsInfoOpen((v) => !v)}>
-            Toggle info (test)
-          </button>
+    <>
+      <div style={{padding: 20}}>
+        <pre style={{fontSize: 11, fontFamily: 'monospace'}}>
+          {JSON.stringify(
+            {
+              selectedColor,
+              selectedSize,
+              isInfoOpen,
+              lightbox,
+              currentColorImages: currentColor.images.length,
+            },
+            null,
+            2,
+          )}
+        </pre>
+        <div style={{display: 'flex', gap: 10, marginTop: 10, flexDirection: 'column'}}>
+          <ColorSwatches colors={view.colors} selected={selectedColor} onSelect={changeColor} />
+          <SizeSelector
+            sizes={currentColor.sizes}
+            selected={selectedSize}
+            currency={view.currency}
+            onSelect={setSelectedSize}
+          />
+          <div style={{display: 'flex', gap: 10}}>
+            <button type="button" onClick={() => setIsInfoOpen((v) => !v)}>
+              Toggle info (test)
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      <ProductInfoPanel
+        open={isInfoOpen}
+        onClose={() => setIsInfoOpen(false)}
+        editorial={view.editorial}
+      />
+    </>
   )
 }
