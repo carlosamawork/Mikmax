@@ -1,0 +1,126 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.toolbar {
+  position: fixed;
+  bottom: px(3);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background: map-get($colors, 'white');
+  display: flex;
+  align-items: stretch;
+  z-index: 20;
+  height: px(80);
+  font-family: $MonumentGrotesk;
+
+  @include from(md) {
+    max-width: px(1072);
+  }
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  width: px(306);
+  flex-shrink: 0;
+}
+
+.title, .priceBg {
+  height: px(40);
+  display: flex;
+  align-items: center;
+  padding: px(10);
+  font-size: px(11);
+  letter-spacing: px(0.5);
+}
+.title { background: map-get($colors, 'white'); }
+.priceBg { background: map-get($colors, 'lightgray-bg'); }
+
+.variantBlock {
+  width: px(313);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.variantRow {
+  display: flex;
+  align-items: stretch;
+  height: px(40);
+  width: 100%;
+}
+
+.variantLabel {
+  width: px(44);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: px(9);
+  background: map-get($colors, 'white');
+}
+
+.variantLabelSize {
+  background: #f7f7f7;
+}
+
+.infoBlock {
+  width: px(184);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.infoTitle {
+  height: px(40);
+  display: flex;
+  align-items: center;
+  padding: px(10);
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  text-align: left;
+  background: map-get($colors, 'white');
+}
+
+.infoMeta {
+  flex: 1;
+  padding: px(10);
+  background: map-get($colors, 'lightgray-bg');
+  font-size: px(9);
+  line-height: px(11);
+  text-align: left;
+}
+
+.cta {
+  flex: 1 0 px(246);
+  height: px(80);
+  border: none;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'white');
+  cursor: pointer;
+}
+
+.ctaActive { background: map-get($colors, 'black-border'); }
+.ctaInactive { background: map-get($colors, 'gray-light'); cursor: not-allowed; }
+
+.favorite {
+  width: px(25);
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  border: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: px(10) 0;
+
+  svg {
+    width: px(12);
+    height: px(11);
+  }
+}

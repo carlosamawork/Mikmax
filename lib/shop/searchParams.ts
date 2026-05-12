@@ -49,6 +49,52 @@ export function serializeSearchParams(params: ShopSearchParams): string {
   return s ? `?${s}` : ''
 }
 
+/**
+ * Returns the TaxonomyValue GIDs corresponding to the color base values
+ * selected in `params.color`, by reading the raw `input` JSON of each matching
+ * facet value. The input shape is provided by Shopify and typically looks like
+ * `{taxonomyMetafield: {namespace, key, value: "gid://shopify/TaxonomyValue/N"}}`
+ * or contains nested arrays of GIDs.
+ */
+export function extractSelectedColorGids(
+  params: ShopSearchParams,
+  facets: FilterDefinition[],
+): string[] {
+  if (!params.color) return []
+  const facet = facets.find((f) => f.id === FACET_IDS.color)
+  if (!facet) return []
+  const gids: string[] = []
+  const slugs = params.color.split(',').filter(Boolean)
+  for (const slug of slugs) {
+    const match = facet.values.find((v) => slugify(v.label) === slug)
+    if (!match?.input) continue
+    try {
+      const parsed = JSON.parse(match.input)
+      collectGids(parsed, gids)
+    } catch {
+      /* skip malformed inputs */
+    }
+  }
+  return gids
+}
+
+function collectGids(node: unknown, out: string[]): void {
+  if (!node) return
+  if (typeof node === 'string') {
+    if (node.startsWith('gid://')) out.push(node)
+    return
+  }
+  if (Array.isArray(node)) {
+    for (const item of node) collectGids(item, out)
+    return
+  }
+  if (typeof node === 'object') {
+    for (const value of Object.values(node as Record<string, unknown>)) {
+      collectGids(value, out)
+    }
+  }
+}
+
 export function slugify(label: string): string {
   return label
     .toLowerCase()
@@ -58,34 +104,57 @@ export function slugify(label: string): string {
     .replace(/^-|-$/g, '')
 }
 
+// Facet ids in Shopify's collection.products.filters response.
+// `color` uses the variant taxonomy_metafield `shopify.color-pattern` so it
+// filters by "base color" (taxonomy values like Pink / Beige / White) at
+// variant level — each variant points to one taxonomy color.
+const FACET_IDS = {
+  productType: 'filter.p.product_type',
+  color: 'filter.v.t.shopify.color-pattern',
+  size: 'filter.v.option.size',
+  pattern: 'filter.v.option.pattern',
+} as const
+
 /**
- * Builds the Shopify productFilter[] payload from URL params.
- * Values are matched against `facets` to recover the original label casing.
+ * Builds the Shopify productFilter[] payload from URL params by re-using the
+ * raw `input` JSON that Shopify exposes on each facet value. This avoids
+ * hand-crafting the productFilter shape for every facet type (variantOption,
+ * productMetafield, productType, etc.) and is robust to taxonomy changes.
+ *
+ * Price and availability are not facet-backed so they're constructed inline.
  */
 export function buildShopifyFilters(
   params: ShopSearchParams,
   facets: FilterDefinition[],
 ): unknown[] {
   const filters: unknown[] = []
-  const optionMap: Record<'color' | 'size' | 'pattern', string> = {
-    color: 'Color',
-    size: 'Size',
-    pattern: 'Pattern',
-  }
-  if (params.productType) {
-    for (const v of params.productType.split(',')) {
-      const display = facetLabel('filter.p.product_type', v, facets)
-      filters.push({productType: display})
+  const pushInputs = (facetId: string, csv: string | undefined) => {
+    if (!csv) return
+    const facet = facets.find((f) => f.id === facetId)
+    if (!facet) return
+    for (const slug of csv.split(',').filter(Boolean)) {
+      const match = facet.values.find(
+        (v) => slugify(v.label) === slug || v.id === `base-${slug}`,
+      )
+      if (!match?.input) continue
+      try {
+        const parsed = JSON.parse(match.input)
+        // Grouped base-color values come as an array of specific Shopify
+        // inputs; fan them out so the productFilter list contains each.
+        if (Array.isArray(parsed)) filters.push(...parsed)
+        else filters.push(parsed)
+      } catch {
+        // Skip malformed inputs silently — Shopify is the source of truth.
+      }
     }
   }
-  for (const opt of ['color', 'size', 'pattern'] as const) {
-    const raw = params[opt]
-    if (!raw) continue
-    for (const v of raw.split(',')) {
-      const display = facetLabel(`filter.v.option.${opt}`, v, facets)
-      filters.push({variantOption: {name: optionMap[opt], value: display}})
-    }
-  }
+  pushInputs(FACET_IDS.productType, params.productType)
+  // Color is intentionally NOT sent to Shopify: the productFilters API ANDs
+  // multiple taxonomyMetafield filters, which makes "Beige OR White" return
+  // zero products. We filter cards by color GID in JS instead (OR semantics).
+  pushInputs(FACET_IDS.size, params.size)
+  pushInputs(FACET_IDS.pattern, params.pattern)
+
   if (params.priceMin || params.priceMax) {
     filters.push({
       price: {
@@ -96,10 +165,4 @@ export function buildShopifyFilters(
   }
   if (params.available === 'true') filters.push({available: true})
   return filters
-}
-
-function facetLabel(facetId: string, kebabValue: string, facets: FilterDefinition[]): string {
-  const facet = facets.find((f) => f.id === facetId)
-  const match = facet?.values.find((v) => slugify(v.label) === kebabValue)
-  return match?.label ?? kebabValue
 }

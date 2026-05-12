@@ -12,8 +12,11 @@ import MegaMenuShop from '../MegaMenu/MegaMenuShop'
 import MobileMenu from '../MobileMenu/MobileMenu'
 import {getInternalHref} from '@/sanity/queries/fragments/links'
 
-type CartItem = {quantity?: number}
-type CartCtx = {cart?: CartItem[]}
+type CartItem = {variantQuantity?: number}
+type CartCtx = {
+  cart?: CartItem[]
+  setCartOpen?: (open: boolean) => void
+}
 
 export default function HeaderClient({menu, initialVariant = 'default'}: HeaderProps) {
   const [variant, setVariant] = useState<HeaderVariant>(initialVariant)
@@ -22,7 +25,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const ctx = useContext<CartCtx>(CartContext as React.Context<CartCtx>)
   const cartCount = (ctx?.cart ?? []).reduce(
-    (acc: number, item: CartItem) => acc + (item.quantity ?? 0),
+    (acc: number, item: CartItem) => acc + (item.variantQuantity ?? 0),
     0,
   )
 
@@ -48,7 +51,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
     const onScroll = () => {
       const y = window.scrollY
       const bannerH = readBannerHeight()
-      const top = Math.max(0, bannerH - y)
+      const top = Math.max(3, bannerH - y)
       root.style.setProperty('--header-top', `${top}px`)
       if (y < 16) setVariant('default')
       else if (y < 240) setVariant('variant2')
@@ -155,13 +158,18 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
         <div className={s.actions}>
           {/* Desktop: text labels */}
           <div className={s.actionsDesktop}>
-            <button type="button" className={s.actionBtn} aria-label="Search">
+            {/* <button type="button" className={s.actionBtn} aria-label="Search">
               Search
             </button>
             <Link href="/login" className={s.actionBtn}>
               Login
-            </Link>
-            <button type="button" className={s.actionBtn} aria-label="Cart">
+            </Link> */}
+            <button
+              type="button"
+              className={s.actionBtn}
+              aria-label="Cart"
+              onClick={() => ctx?.setCartOpen?.(true)}
+            >
               Cart [ {cartCount} ]
             </button>
           </div>
@@ -188,7 +196,12 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
                 priority
               />
             </Link>
-            <button type="button" className={s.cartCounter} aria-label="Cart">
+            <button
+              type="button"
+              className={s.cartCounter}
+              aria-label="Cart"
+              onClick={() => ctx?.setCartOpen?.(true)}
+            >
               [ {cartCount} ]
             </button>
             <button

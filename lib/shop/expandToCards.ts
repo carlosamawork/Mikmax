@@ -1,6 +1,28 @@
 // lib/shop/expandToCards.ts
-import {slugify} from './searchParams'
 import type {ProductCardData} from '@/types/shop'
+
+type MetaobjectFieldNode = {
+  key: string
+  value: string | null
+  reference?: {
+    id: string
+    handle?: string | null
+    fields?: {key: string; value: string | null}[]
+  } | null
+}
+
+type ColorPatternMetaobjectNode = {
+  id: string
+  handle?: string | null
+  type?: string | null
+  fields: MetaobjectFieldNode[]
+}
+
+type ProductColorPatternMetafield = {
+  type: string
+  value: string | null
+  references?: {nodes: ColorPatternMetaobjectNode[]} | null
+} | null
 
 type ShopifyVariantNode = {
   id: string
@@ -24,23 +46,74 @@ type ShopifyProductNode = {
   compareAtPriceRange: {maxVariantPrice: {amount: string}}
   options?: {name: string; values: string[]}[]
   variants?: {nodes: ShopifyVariantNode[]}
+  colorPattern?: ProductColorPatternMetafield
+}
+
+/**
+ * Reads the base-color TaxonomyValue GIDs stored on a `shopify--color-pattern`
+ * metaobject. The relevant field is `color_taxonomy_reference`, a JSON array of
+ * TaxonomyValue GIDs (the base colors: Beige, Brown, Green, ...).
+ */
+function readMetaobjectBaseGids(metaobject: ColorPatternMetaobjectNode): string[] {
+  const field = metaobject.fields.find((f) => f.key === 'color_taxonomy_reference')
+  if (!field?.value) return []
+  try {
+    const parsed = JSON.parse(field.value)
+    if (Array.isArray(parsed)) return parsed.filter((s): s is string => typeof s === 'string')
+    if (typeof parsed === 'string') return [parsed]
+  } catch {
+    if (field.value.startsWith('gid://')) return [field.value]
+  }
+  return []
+}
+
+/**
+ * Finds the base-color TaxonomyValue GIDs for a given variant color value, by
+ * matching the variant's `selectedOptions` "Color" value against the `label`
+ * field of the product's color-pattern metaobjects.
+ */
+function findVariantBaseGids(p: ShopifyProductNode, colorValue: string): string[] {
+  const refs = p.colorPattern?.references?.nodes ?? []
+  const target = colorValue.trim().toLowerCase()
+  const match = refs.find((m) => {
+    const labelField = m.fields.find((f) => f.key === 'label')
+    return labelField?.value?.trim().toLowerCase() === target
+  })
+  return match ? readMetaobjectBaseGids(match) : []
+}
+
+/**
+ * Aggregates all base-color GIDs across every color metaobject of a product.
+ * Used for products without a "Color" option (single product-level card).
+ */
+function findAnyProductBaseGids(p: ShopifyProductNode): string[] {
+  const refs = p.colorPattern?.references?.nodes ?? []
+  const out: string[] = []
+  for (const m of refs) out.push(...readMetaobjectBaseGids(m))
+  return out
 }
 
 /**
  * Expands a list of Shopify products into archive cards.
- * Rule: one card per (product × color value). Products without a "Color" option
- * become a single card. When `selectedColors` is provided (kebab-case slugs),
- * cards are filtered to those matching.
+ * Rule: one card per (product × color value). Products without a "Color"
+ * option become a single card. When `selectedColorGids` is provided, only
+ * cards whose base color matches any of those TaxonomyValue GIDs are emitted.
  */
 export function expandProductsToCards(
   products: ShopifyProductNode[],
-  selectedColors?: string[],
+  selectedColorGids?: string[],
 ): ProductCardData[] {
   const cards: ProductCardData[] = []
+  const hasFilter = !!(selectedColorGids && selectedColorGids.length > 0)
+  const selectedSet = new Set(selectedColorGids ?? [])
   for (const p of products) {
     const colorOption = p.options?.find((o) => o.name.toLowerCase() === 'color')
     const variants = p.variants?.nodes ?? []
     if (!colorOption || variants.length === 0) {
+      if (hasFilter) {
+        const gids = findAnyProductBaseGids(p)
+        if (!gids.some((g) => selectedSet.has(g))) continue
+      }
       cards.push(productOnlyCard(p))
       continue
     }
@@ -56,12 +129,17 @@ export function expandProductsToCards(
       }
     }
     if (byColor.size === 0) {
+      if (hasFilter) {
+        const gids = findAnyProductBaseGids(p)
+        if (!gids.some((g) => selectedSet.has(g))) continue
+      }
       cards.push(productOnlyCard(p))
       continue
     }
     Array.from(byColor.entries()).forEach(([colorValue, variant]) => {
-      if (selectedColors && selectedColors.length > 0) {
-        if (!selectedColors.includes(slugify(colorValue))) return
+      if (hasFilter) {
+        const gids = findVariantBaseGids(p, colorValue)
+        if (!gids.some((g) => selectedSet.has(g))) return
       }
       cards.push(variantCard(p, colorValue, variant))
     })

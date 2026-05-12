@@ -7,7 +7,7 @@
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  top: var(--header-top, 0);
+  top: 0;
   z-index: $z-sticky-header;
   width: 100%;
   background: map-get($colors, 'white');
@@ -16,6 +16,7 @@
   @include from(md) {
     max-width: px(1072);
     background: map-get($colors, 'lightgray-bg');
+    top: var(--header-top, 0);
   }
 }
 

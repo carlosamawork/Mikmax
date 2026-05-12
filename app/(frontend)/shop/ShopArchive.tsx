@@ -4,13 +4,14 @@ import ProductGrid, {ProductGridSkeleton} from '@/components/Shop/ProductGrid/Pr
 import InfiniteScrollSentinel from '@/components/Shop/InfiniteScrollSentinel/InfiniteScrollSentinel'
 import FilterDrawer from '@/components/Shop/FilterDrawer/FilterDrawer'
 import {getOrderedHandles} from '@/sanity/queries/queries/shop'
+import {getCollectionFilters, getAllProductsForFilters} from '@/lib/shopify'
 import {
-  getCollectionFilters,
-  getCollectionProducts,
-  getAllProductsForFilters,
-} from '@/lib/shopify'
-import {buildShopifyFilters, parseSearchParams} from '@/lib/shop/searchParams'
+  buildShopifyFilters,
+  extractSelectedColorGids,
+  parseSearchParams,
+} from '@/lib/shop/searchParams'
 import {expandProductsToCards} from '@/lib/shop/expandToCards'
+import {applyCardFilters, sortCards} from '@/lib/shop/filterAndSortCards'
 import {CHUNK_SIZE, type ProductCardData, type ShopSearchParams} from '@/types/shop'
 
 interface Props {
@@ -25,6 +26,13 @@ type ShopifyVariantNode = {
   price: {amount: string}
   compareAtPrice?: {amount: string} | null
   selectedOptions: {name: string; value: string}[]
+  colorPattern?: {
+    type: string
+    value: string | null
+    references?: {
+      nodes: Array<{id: string; name?: string; handle?: string}>
+    } | null
+  } | null
 }
 
 type ShopifyProductNode = {
@@ -42,60 +50,70 @@ type ShopifyProductNode = {
   variants?: {nodes: ShopifyVariantNode[]}
 }
 
+const SORT_MAP: Record<
+  'newest' | 'price-asc' | 'price-desc' | 'best-selling',
+  {sortKey: string; reverse: boolean}
+> = {
+  newest: {sortKey: 'CREATED', reverse: true},
+  'price-asc': {sortKey: 'PRICE', reverse: false},
+  'price-desc': {sortKey: 'PRICE', reverse: true},
+  'best-selling': {sortKey: 'BEST_SELLING', reverse: false},
+}
+
 export default async function ShopArchive({handle, searchParams}: Props) {
   const params: ShopSearchParams = parseSearchParams(searchParams)
   const sort = params.sort ?? 'featured'
   const view = params.view ?? '4col'
 
-  const [facetsRaw, orderedHandles] = await Promise.all([
-    getCollectionFilters(handle, {filters: []}),
-    sort === 'featured' ? getOrderedHandles() : Promise.resolve<string[]>([]),
+  // Shopify exposes a variant taxonomy_metafield facet `filter.v.t.shopify.color-pattern`
+  // whose values are the base color names (Pink, White, Beige…). We use those
+  // directly — no grouping needed. For card-level filtering we resolve each
+  // selected slug to its TaxonomyValue GID and compare with the per-variant
+  // metafield.
+  const facets = await getCollectionFilters(handle, {filters: []})
+  const filters = buildShopifyFilters(params, facets)
+  const selectedColorGids = extractSelectedColorGids(params, facets)
+
+  // Pre-fetch order matters for non-card-level sorts (featured, newest,
+  // best-selling). For price sorts we re-sort cards in JS later, so the initial
+  // product order doesn't matter — but we still pass it through for safety.
+  const shopifySort =
+    sort === 'featured'
+      ? undefined
+      : SORT_MAP[sort as keyof typeof SORT_MAP]
+  const orderedHandlesPromise =
+    sort === 'featured' ? getOrderedHandles() : Promise.resolve<string[]>([])
+  const matchingPromise = getAllProductsForFilters(
+    handle,
+    filters,
+    shopifySort ?? {},
+  ) as Promise<ShopifyProductNode[]>
+
+  const [orderedHandles, matching] = await Promise.all([
+    orderedHandlesPromise,
+    matchingPromise,
   ])
 
-  const facets = facetsRaw
-  const filters = buildShopifyFilters(params, facets)
-
-  const selectedColors = params.color ? params.color.split(',').filter(Boolean) : undefined
-
-  let products: ProductCardData[] = []
-  let total = 0
-  let hasMore = false
-  let nextOffset: number | undefined
-  let nextCursor: string | undefined
-
+  let orderedProducts: ShopifyProductNode[]
   if (sort === 'featured') {
-    const matching = (await getAllProductsForFilters(handle, filters)) as ShopifyProductNode[]
     const matchByHandle = new Map<string, ShopifyProductNode>(
       matching.map((p) => [p.handle, p]),
     )
-    const ordered = orderedHandles
+    orderedProducts = orderedHandles
       .map((h) => matchByHandle.get(h))
       .filter((p): p is ShopifyProductNode => Boolean(p))
-    const allCards = expandProductsToCards(ordered, selectedColors)
-    total = allCards.length
-    products = allCards.slice(0, CHUNK_SIZE)
-    hasMore = total > CHUNK_SIZE
-    nextOffset = CHUNK_SIZE
   } else {
-    const SORT_MAP: Record<string, {sortKey: string; reverse: boolean}> = {
-      newest: {sortKey: 'CREATED', reverse: true},
-      'price-asc': {sortKey: 'PRICE', reverse: false},
-      'price-desc': {sortKey: 'PRICE', reverse: true},
-      'best-selling': {sortKey: 'BEST_SELLING', reverse: false},
-    }
-    const map = SORT_MAP[sort]
-    const page = await getCollectionProducts(handle, {
-      filters,
-      sortKey: map.sortKey,
-      reverse: map.reverse,
-      first: CHUNK_SIZE,
-    } as Parameters<typeof getCollectionProducts>[1])
-    products = expandProductsToCards(page.nodes as ShopifyProductNode[], selectedColors)
-    hasMore = page.pageInfo.hasNextPage
-    nextCursor = page.pageInfo.endCursor ?? undefined
-    const all = (await getAllProductsForFilters(handle, filters)) as ShopifyProductNode[]
-    total = expandProductsToCards(all, selectedColors).length
+    orderedProducts = matching
   }
+
+  const expanded = expandProductsToCards(orderedProducts, selectedColorGids)
+  const filtered = applyCardFilters(expanded, params)
+  const sorted = sortCards(filtered, sort)
+
+  const total = sorted.length
+  const products: ProductCardData[] = sorted.slice(0, CHUNK_SIZE)
+  const hasMore = total > CHUNK_SIZE
+  const nextOffset = CHUNK_SIZE
 
   const isOpen = params.filters === 'open'
 
@@ -109,7 +127,6 @@ export default async function ShopArchive({handle, searchParams}: Props) {
         handle={handle}
         params={params}
         initialOffset={nextOffset}
-        initialCursor={nextCursor}
         hasMore={hasMore}
       />
       <FilterDrawer

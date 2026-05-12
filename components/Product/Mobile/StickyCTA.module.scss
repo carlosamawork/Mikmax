@@ -1,0 +1,25 @@
+@use '@/styles/common/variables' as *;
+
+.cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: px(60);
+  border: none;
+  color: map-get($colors, 'white');
+  font-size: px(12);
+  letter-spacing: px(0.5);
+  z-index: 20;
+  cursor: pointer;
+  font-family: $MonumentGrotesk;
+}
+
+.ctaActive {
+  background: map-get($colors, 'black-border');
+}
+
+.ctaInactive {
+  background: map-get($colors, 'gray-light');
+  cursor: not-allowed;
+}

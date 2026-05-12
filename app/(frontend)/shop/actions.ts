@@ -1,14 +1,11 @@
 // app/(frontend)/shop/actions.ts
 'use server'
 
-import {
-  getCollectionFilters,
-  getCollectionProducts,
-  getAllProductsForFilters,
-} from '@/lib/shopify'
+import {getCollectionFilters, getAllProductsForFilters} from '@/lib/shopify'
 import {getOrderedHandles} from '@/sanity/queries/queries/shop'
-import {buildShopifyFilters} from '@/lib/shop/searchParams'
+import {buildShopifyFilters, extractSelectedColorGids} from '@/lib/shop/searchParams'
 import {expandProductsToCards} from '@/lib/shop/expandToCards'
+import {applyCardFilters, sortCards} from '@/lib/shop/filterAndSortCards'
 import {CHUNK_SIZE} from '@/types/shop'
 import type {ShopChunkResult, ShopSearchParams, SortKey} from '@/types/shop'
 
@@ -19,6 +16,13 @@ type ShopifyVariantNode = {
   price: {amount: string}
   compareAtPrice?: {amount: string} | null
   selectedOptions: {name: string; value: string}[]
+  colorPattern?: {
+    type: string
+    value: string | null
+    references?: {
+      nodes: Array<{id: string; name?: string; handle?: string}>
+    } | null
+  } | null
 }
 
 type ShopifyProductNode = {
@@ -36,8 +40,8 @@ type ShopifyProductNode = {
   variants?: {nodes: ShopifyVariantNode[]}
 }
 
-const SORT_TO_SHOPIFY: Record<
-  Exclude<SortKey, 'featured'>,
+const SORT_MAP: Record<
+  'newest' | 'price-asc' | 'price-desc' | 'best-selling',
   {sortKey: string; reverse: boolean}
 > = {
   newest: {sortKey: 'CREATED', reverse: true},
@@ -46,52 +50,48 @@ const SORT_TO_SHOPIFY: Record<
   'best-selling': {sortKey: 'BEST_SELLING', reverse: false},
 }
 
+async function buildAllCards(handle: string, params: ShopSearchParams) {
+  const facets = await getCollectionFilters(handle, {filters: []})
+  const filters = buildShopifyFilters(params, facets)
+  const selectedColorGids = extractSelectedColorGids(params, facets)
+  const sort: SortKey = params.sort ?? 'featured'
+  const shopifySort = sort === 'featured' ? undefined : SORT_MAP[sort as keyof typeof SORT_MAP]
+
+  const [orderedHandles, matching] = await Promise.all([
+    sort === 'featured' ? getOrderedHandles() : Promise.resolve<string[]>([]),
+    getAllProductsForFilters(handle, filters, shopifySort ?? {}) as Promise<ShopifyProductNode[]>,
+  ])
+
+  let orderedProducts: ShopifyProductNode[]
+  if (sort === 'featured') {
+    const matchByHandle = new Map<string, ShopifyProductNode>(
+      matching.map((p) => [p.handle, p]),
+    )
+    orderedProducts = orderedHandles
+      .map((h) => matchByHandle.get(h))
+      .filter((p): p is ShopifyProductNode => Boolean(p))
+  } else {
+    orderedProducts = matching
+  }
+
+  const expanded = expandProductsToCards(orderedProducts, selectedColorGids)
+  const filtered = applyCardFilters(expanded, params)
+  return sortCards(filtered, sort)
+}
+
 export async function fetchShopChunk(args: {
   handle: string
   params: ShopSearchParams
   offset?: number
   cursor?: string
 }): Promise<ShopChunkResult> {
-  const {handle, params} = args
-  const sort: SortKey = params.sort ?? 'featured'
-  const selectedColors = params.color ? params.color.split(',').filter(Boolean) : undefined
-
-  const facets = await getCollectionFilters(handle, {filters: []})
-  const filters = buildShopifyFilters(params, facets)
-
-  if (sort === 'featured') {
-    const offset = args.offset ?? 0
-    const [orderedHandles, matching] = await Promise.all([
-      getOrderedHandles(),
-      getAllProductsForFilters(handle, filters),
-    ])
-    const matchByHandle = new Map<string, ShopifyProductNode>(
-      (matching as ShopifyProductNode[]).map((p) => [p.handle, p]),
-    )
-    const ordered = orderedHandles
-      .map((h) => matchByHandle.get(h))
-      .filter((p): p is ShopifyProductNode => Boolean(p))
-    const allCards = expandProductsToCards(ordered, selectedColors)
-    const slice = allCards.slice(offset, offset + CHUNK_SIZE)
-    return {
-      products: slice,
-      hasMore: offset + CHUNK_SIZE < allCards.length,
-      nextOffset: offset + CHUNK_SIZE,
-    }
-  }
-
-  const ship = SORT_TO_SHOPIFY[sort]
-  const page = await getCollectionProducts(handle, {
-    filters,
-    sortKey: ship.sortKey,
-    reverse: ship.reverse,
-    first: CHUNK_SIZE,
-    after: args.cursor ?? null,
-  } as Parameters<typeof getCollectionProducts>[1])
+  const offset = args.offset ?? 0
+  const cards = await buildAllCards(args.handle, args.params)
+  const slice = cards.slice(offset, offset + CHUNK_SIZE)
   return {
-    products: expandProductsToCards(page.nodes as ShopifyProductNode[], selectedColors),
-    hasMore: page.pageInfo.hasNextPage,
-    nextCursor: page.pageInfo.endCursor ?? undefined,
+    products: slice,
+    hasMore: offset + CHUNK_SIZE < cards.length,
+    nextOffset: offset + CHUNK_SIZE,
   }
 }
 
@@ -99,24 +99,6 @@ export async function getFilterCount(args: {
   handle: string
   params: ShopSearchParams
 }): Promise<number> {
-  const facets = await getCollectionFilters(args.handle, {filters: []})
-  const filters = buildShopifyFilters(args.params, facets)
-  const selectedColors = args.params.color
-    ? args.params.color.split(',').filter(Boolean)
-    : undefined
-  if ((args.params.sort ?? 'featured') === 'featured') {
-    const [orderedHandles, matching] = await Promise.all([
-      getOrderedHandles(),
-      getAllProductsForFilters(args.handle, filters),
-    ])
-    const matchByHandle = new Map<string, ShopifyProductNode>(
-      (matching as ShopifyProductNode[]).map((p) => [p.handle, p]),
-    )
-    const ordered = orderedHandles
-      .map((h) => matchByHandle.get(h))
-      .filter((p): p is ShopifyProductNode => Boolean(p))
-    return expandProductsToCards(ordered, selectedColors).length
-  }
-  const all = (await getAllProductsForFilters(args.handle, filters)) as ShopifyProductNode[]
-  return expandProductsToCards(all, selectedColors).length
+  const cards = await buildAllCards(args.handle, args.params)
+  return cards.length
 }

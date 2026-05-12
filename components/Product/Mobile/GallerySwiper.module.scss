@@ -1,0 +1,52 @@
+@use '@/styles/common/variables' as *;
+
+.swiper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: map-get($colors, 'lightgray-bg');
+  overflow: hidden;
+}
+
+.imageWrapper {
+  position: absolute;
+  inset: 0;
+}
+
+.galleryImg {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  width: px(30);
+  height: px(50);
+  font-size: px(22);
+  cursor: pointer;
+}
+
+.navPrev {
+  left: 0;
+}
+
+.navNext {
+  right: 0;
+}
+
+.zoomBtn {
+  position: absolute;
+  bottom: px(10);
+  right: 0;
+  width: px(25);
+  height: px(25);
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  border: none;
+  cursor: pointer;
+}

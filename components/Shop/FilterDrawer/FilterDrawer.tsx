@@ -14,7 +14,7 @@ import s from './FilterDrawer.module.scss'
 
 const FACET_ID = {
   productType: 'filter.p.product_type',
-  color: 'filter.v.option.color',
+  color: 'filter.v.t.shopify.color-pattern',
   size: 'filter.v.option.size',
   pattern: 'filter.v.option.pattern',
 }
