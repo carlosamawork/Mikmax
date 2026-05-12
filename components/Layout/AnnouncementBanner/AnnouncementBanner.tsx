@@ -40,7 +40,7 @@ export default function AnnouncementBanner({data}: Props) {
     }
     const node = bannerRef.current
     const h = node?.offsetHeight ?? 21
-    root.style.setProperty('--announcement-height', `${h+1}px`)
+    root.style.setProperty('--announcement-height', `${h+3}px`)
     window.dispatchEvent(new Event('scroll'))
     return () => {
       root.style.setProperty('--announcement-height', '0px')

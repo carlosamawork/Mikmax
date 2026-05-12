@@ -10,7 +10,9 @@ import FacebookPixel from '@/components/Common/Analytics/facebook'
 import Hotjar from '@/components/Common/Analytics/hotjar'
 import PinterestTag from '@/components/Common/Analytics/pinterest'
 import CookieConsent from '@/components/Common/CookieConsent/CookieConsent'
-import {Header, Footer, AnnouncementBanner} from '@/components/Layout'
+import {Header, AnnouncementBanner} from '@/components/Layout'
+import FooterGate from '@/components/Layout/Footer/FooterGate'
+import CartDrawer from '@/components/Layout/CartDrawer/CartDrawer'
 import {getFooter} from '@/sanity/queries/common/footer'
 import {getBanner} from '@/sanity/queries/common/banner'
 
@@ -33,7 +35,8 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             <AnnouncementBanner data={bannerData} />
             <Header />
             {children}
-            <Footer data={footerData?.footer} />
+            <FooterGate data={footerData?.footer} />
+            <CartDrawer />
             {/* <CookieConsent />
             {process.env.NODE_ENV === 'production' ? (
               <>

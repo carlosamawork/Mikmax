@@ -1,0 +1,17 @@
+@use '@/styles/common/variables' as *;
+
+.section {
+  padding: px(20) px(10);
+  font-family: $MonumentGrotesk;
+}
+
+.heading {
+  font-size: px(13);
+  margin-bottom: px(12);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: px(8);
+}

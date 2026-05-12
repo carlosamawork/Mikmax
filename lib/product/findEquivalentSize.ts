@@ -1,4 +1,4 @@
-import type {ProductColor, ProductView} from '@/app/(frontend)/products/[handle]/_types'
+import type {ProductColor, ProductView} from '@/types/product'
 
 /**
  * When switching color, keep the previously-selected size if it exists and is

@@ -7,23 +7,31 @@ export const PRODUCT_BY_HANDLE_QUERY = groq`
      && store.slug.current == $handle
      && !(_id in path('drafts.**'))][0] {
     _id,
-    descripcion,
     propiedadesMaterial,
     recomendacionesLavado,
     usoRecomendado,
-    "relatedProductHandles": relatedProducts[]->store.slug.current,
+    "relatedItems": relatedProducts[]{
+      "handle": product->store.slug.current,
+      "variantColor": variant->store.option1,
+      "variantImageUrl": variant->store.previewImageUrl
+    },
     "title": store.title,
     "slug": store.slug.current
   }
 `
 
+export type SanityRelatedItem = {
+  handle: string | null
+  variantColor: string | null
+  variantImageUrl: string | null
+}
+
 export type SanityProductDoc = {
   _id: string
-  descripcion: unknown[] | null
   propiedadesMaterial: unknown[] | null
   recomendacionesLavado: unknown[] | null
   usoRecomendado: unknown[] | null
-  relatedProductHandles: string[] | null
+  relatedItems: SanityRelatedItem[] | null
   title: string
   slug: string
 }

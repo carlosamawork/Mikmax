@@ -2032,7 +2032,6 @@ export default function DesktopToolbar({
       <button type="button" className={s.infoBlock} onClick={onToggleInfo}>
         <div className={s.infoTitle}>{isInfoOpen ? 'Close Information' : 'Product Information'}</div>
         <div className={s.infoMeta}>
-          Estimated delivery : 1-3 November<br />
           Complimentary gift wrapping<br />
           30-day returns
         </div>
@@ -2566,7 +2565,6 @@ export default function MobileToolbar({
           <PriceLabel min={view.minPrice} max={view.maxPrice} currency={view.currency} />
         </div>
         <div className={s.delivery}>
-          Estimated delivery : 1-3 November<br />
           Complimentary gift wrapping<br />
           30- day returns
         </div>

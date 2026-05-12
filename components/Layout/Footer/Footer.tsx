@@ -125,7 +125,7 @@ export default function Footer({data}: FooterProps) {
 
   return (
     <footer className={s.footer}>
-      <div className={s.top}>
+      {/* <div className={s.top}>
         <div className={s.newsletter}>
           <NewsletterForm
             title={newsletter?.title}
@@ -165,7 +165,7 @@ export default function Footer({data}: FooterProps) {
             <RegionSelector regions={regions} />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className={s.bigLogo} aria-hidden>
         <LazyImage

@@ -1,5 +1,5 @@
 // lib/product/resolveInitialState.ts
-import type {ProductView, ProductInitialState} from '@/app/(frontend)/products/[handle]/_types'
+import type {ProductView, ProductInitialState} from '@/types/product'
 
 function pickFirst(v: string | string[] | undefined): string | undefined {
   if (Array.isArray(v)) return v[0]

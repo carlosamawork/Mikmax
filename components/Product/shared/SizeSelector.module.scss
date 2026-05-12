@@ -1,0 +1,142 @@
+@use '@/styles/common/variables' as *;
+
+.wrap {
+  position: relative;
+  width: 100%;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: px(10);
+  width: 100%;
+  height: px(40);
+  background: #f7f7f7;
+  border: none;
+  padding: 0 px(10);
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  cursor: pointer;
+}
+
+.label { color: map-get($colors, 'black-border'); font-size: px(9); }
+.value { color: map-get($colors, 'black-border'); }
+.price { margin-left: auto; }
+.placeholder { color: map-get($colors, 'gray-light'); }
+
+.caret {
+  margin-left: px(8);
+  width: px(10);
+  height: px(6);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.caretOpen { transform: rotate(180deg); }
+
+.panel {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background: map-get($colors, 'white');
+  z-index: 10;
+
+  @media (max-width: 1024px) {
+    position: relative;
+    bottom: auto;
+    border: 1px solid map-get($colors, 'lightgray-bg');
+    border-top: none;
+  }
+}
+
+// Wide variant used inside DesktopToolbar.
+// The SizeSelector wrap is 269px wide inside the 313px size row;
+// the panel must span the full toolbar width (1072px max).
+// left=-350 reaches the toolbar's left edge (over "Size:" label + titleBlock).
+// right=-453 reaches the toolbar's right edge (over infoBlock + CTA + favorite).
+.panelWide {
+  left: px(-350);
+  right: px(-453);
+}
+
+.subtitle {
+  display: grid;
+  grid-template-columns: px(44) 1fr;
+  align-items: center;
+  height: px(40);
+  background: map-get($colors, 'white');
+}
+
+.subtitleIndex {
+  text-align: center;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  background: #f7f7f7;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subtitleText {
+  padding: 0 px(10);
+  font-size: px(11);
+  letter-spacing: px(0.5);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: px(44) auto auto 1fr auto;
+  align-items: stretch;
+  background: map-get($colors, 'white');
+  border-top: 1px solid map-get($colors, 'lightgray-bg');
+}
+
+.rowDisabled {
+  opacity: 0.4;
+}
+
+.rowSelected {
+  background: #f7f7f7;
+
+  .rowIndex {
+    background: map-get($colors, 'white');
+  }
+
+  .selectBtn {
+    background: map-get($colors, 'white');
+  }
+}
+
+.rowIndex {
+  background: #f7f7f7;
+  align-self: stretch;
+}
+
+.rowLabel {
+  font-size: px(11);
+  padding: px(14) px(10);
+  align-self: center;
+}
+
+.rowPrice {
+  font-size: px(11);
+  padding: px(14) px(10);
+  align-self: center;
+}
+
+.selectBtn {
+  background: map-get($colors, 'lightgray-bg');
+  border: none;
+  padding: 0 px(20);
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  cursor: pointer;
+  align-self: stretch;
+  min-width: px(80);
+  justify-self: end;
+  max-width: px(80);
+
+
+  &:disabled { cursor: not-allowed; }
+}

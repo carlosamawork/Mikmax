@@ -1,0 +1,27 @@
+@use '@/styles/common/variables' as *;
+
+.breadcrumb {
+  padding: px(8) px(7);
+}
+
+.list {
+  display: flex;
+  gap: px(15);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: px(9);
+  letter-spacing: px(0.5);
+  text-transform: uppercase;
+  color: map-get($colors, 'gray-light');
+  font-family: $MonumentGrotesk;
+
+  li[aria-current='page'] {
+    color: map-get($colors, 'black-border');
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}

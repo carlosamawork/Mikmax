@@ -5,7 +5,7 @@ import type {
   ColorSize,
   GalleryImage,
   ProductMiniCard,
-} from '@/app/(frontend)/products/[handle]/_types'
+} from '@/types/product'
 import type {SanityProductDoc} from '@/sanity/queries/queries/product'
 
 function slugify(label: string): string {
@@ -98,6 +98,7 @@ type ShopifyProductDetail = {
   id: string
   handle: string
   title: string
+  descriptionHtml?: string | null
   productType?: string
   vendor?: string
   tags?: string[]
@@ -125,14 +126,25 @@ type RelatedShopifyCard = {
   }
 }
 
+type SanityRelatedItem = {
+  handle: string
+  variantColor: string | null
+  variantImageUrl: string | null
+}
+
 export function buildProductView(
   sanity: SanityProductDoc | null,
   shopify: ShopifyProductDetail,
   related: RelatedShopifyCard[],
+  relatedItems: SanityRelatedItem[] = [],
 ): ProductView {
   const metaobjects = shopify.colorPattern?.references?.nodes ?? []
   const variants = shopify.variants?.nodes ?? []
   const colorOption = shopify.options?.find((o) => o.name.toLowerCase() === 'color')
+  // The "size" option may be named differently per locale (Size / Talla / Medida …).
+  // Pick the first option whose name is not "Color".
+  const sizeOption = shopify.options?.find((o) => o.name.toLowerCase() !== 'color')
+  const sizeOptionName = sizeOption?.name
 
   const colorsMap = new Map<string, ProductColor>()
 
@@ -148,7 +160,9 @@ export function buildProductView(
     }
     const sizes: ColorSize[] = variants.map((v) => ({
       variantId: v.id,
-      label: v.selectedOptions.find((o) => o.name.toLowerCase() === 'size')?.value ?? 'Default',
+      label:
+        (sizeOptionName && v.selectedOptions.find((o) => o.name === sizeOptionName)?.value) ||
+        'Default',
       price: Number(v.price.amount),
       compareAtPrice: v.compareAtPrice ? Number(v.compareAtPrice.amount) : undefined,
       availableForSale: v.availableForSale,
@@ -179,7 +193,8 @@ export function buildProductView(
       }
       const color = colorsMap.get(slug)!
       const sizeValue =
-        v.selectedOptions.find((o) => o.name.toLowerCase() === 'size')?.value ?? 'Default'
+        (sizeOptionName && v.selectedOptions.find((o) => o.name === sizeOptionName)?.value) ||
+        'Default'
       color.sizes.push({
         variantId: v.id,
         label: sizeValue,
@@ -209,25 +224,41 @@ export function buildProductView(
     colors.find((c) => c.sizes.some((s) => s.availableForSale))?.slug ?? colors[0]?.slug ?? ''
 
   const editorial: ProductView['editorial'] = {
-    descripcion: (sanity?.descripcion ?? null) as ProductView['editorial']['descripcion'],
+    descripcion: shopify.descriptionHtml?.trim() ? shopify.descriptionHtml : null,
     propiedadesMaterial: (sanity?.propiedadesMaterial ?? null) as ProductView['editorial']['propiedadesMaterial'],
     recomendacionesLavado: (sanity?.recomendacionesLavado ?? null) as ProductView['editorial']['recomendacionesLavado'],
     usoRecomendado: (sanity?.usoRecomendado ?? null) as ProductView['editorial']['usoRecomendado'],
   }
-  const hasEditorial = Object.values(editorial).some(
-    (v) => Array.isArray(v) && v.length > 0,
+  const hasEditorial = !!(
+    editorial.descripcion ||
+    editorial.propiedadesMaterial?.length ||
+    editorial.recomendacionesLavado?.length ||
+    editorial.usoRecomendado?.length
   )
+
+  // Index the Sanity related-items metadata (variantColor + variantImageUrl) by handle
+  // so we can enrich the Shopify card with the variant chosen by the editor.
+  const sanityByHandle = new Map<string, SanityRelatedItem>()
+  for (const it of relatedItems) {
+    if (it.handle) sanityByHandle.set(it.handle, it)
+  }
 
   const relatedCards: ProductMiniCard[] = related
     .filter((p) => p.handle !== shopify.handle)
-    .map((p) => ({
-      handle: p.handle,
-      title: p.title,
-      imageUrl: p.featuredImage?.url,
-      imageAlt: p.featuredImage?.altText ?? undefined,
-      minPrice: Number(p.priceRange.minVariantPrice.amount),
-      maxPrice: Number(p.priceRange.maxVariantPrice.amount),
-    }))
+    .map((p) => {
+      const sanityItem = sanityByHandle.get(p.handle)
+      const variantColor = sanityItem?.variantColor ?? null
+      const variantImageUrl = sanityItem?.variantImageUrl ?? null
+      return {
+        handle: p.handle,
+        title: p.title,
+        imageUrl: variantImageUrl ?? p.featuredImage?.url,
+        imageAlt: p.featuredImage?.altText ?? undefined,
+        minPrice: Number(p.priceRange.minVariantPrice.amount),
+        maxPrice: Number(p.priceRange.maxVariantPrice.amount),
+        colorSlug: variantColor ? slugify(variantColor) : undefined,
+      }
+    })
 
   return {
     id: shopify.id,

@@ -1,0 +1,72 @@
+@use '@/styles/common/variables' as *;
+
+.scroller {
+  display: flex;
+  align-items: stretch;
+  gap: 1px;
+  height: 100vh;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.imageTile {
+  position: relative;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.imageWrapper {
+  height: 100%;
+  display: block;
+}
+
+.galleryImg {
+  height: 100% !important;
+  width: auto !important;
+  display: block;
+  object-fit: cover;
+}
+
+.zoomBtn {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: px(20);
+  height: px(20);
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  border: none;
+  cursor: pointer;
+  font-size: px(14);
+}
+
+.relatedSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 100%;
+  gap: px(20);
+}
+
+.relatedHeading {
+  padding: 0 px(40);
+  font-size: px(18);
+  font-family: 'Helvetica Neue', sans-serif;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.relatedRow {
+  display: flex;
+  align-items: stretch;
+  gap: 1px;
+  flex-shrink: 0;
+}
+
+.relatedTile {
+  width: px(268);
+  flex-shrink: 0;
+}

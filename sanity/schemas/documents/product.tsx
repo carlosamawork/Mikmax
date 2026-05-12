@@ -58,12 +58,6 @@ export default defineType({
     //   options: {field: 'store.slug.current'},
     // }),
     defineField({
-      name: 'descripcion',
-      title: 'Descripción',
-      type: 'body',
-      group: 'editorial',
-    }),
-    defineField({
       name: 'propiedadesMaterial',
       title: 'Propiedades del material',
       type: 'body',
@@ -82,29 +76,13 @@ export default defineType({
       group: 'editorial',
     }),
     defineField({
-      name: 'images',
-      title: 'Imágenes adicionales',
-      type: 'array',
-      of: [{
-        type: 'module.image'
-      },],
-      group: 'editorial',
-    }),
-    defineField({
-      name: 'videos',
-      title: 'Videos',
-      type: 'array',
-      of: [{
-        type: 'module.video'
-      },],
-      group: 'editorial',
-    }),
-    defineField({
       name: 'relatedProducts',
       title: 'Related products',
-      description: 'Manual curation. Max 10. Order matters: shown left-to-right in the PDP.',
+      description:
+        'Manual curation. Max 10. For each item pick a product AND its color variant. ' +
+        'If the product has no color option, leave the variant empty.',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'product'}]}],
+      of: [{type: 'productWithVariant'}],
       group: 'editorial',
       validation: (Rule) => Rule.max(10),
     }),

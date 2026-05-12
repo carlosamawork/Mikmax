@@ -5,26 +5,13 @@ import {getSanityProduct} from '@/sanity/queries/queries/product'
 import {buildProductView} from '@/lib/product/buildProductView'
 import {resolveInitialState} from '@/lib/product/resolveInitialState'
 import {BASE_URL, siteTitle} from '@/utils/seoHelper'
-import ProductDetail from './ProductDetail'
+import ProductDetail from '@/components/Product/ProductDetail'
 
 export const revalidate = 300
 
-function extractPlainText(blocks: unknown[] | null | undefined): string {
-  if (!Array.isArray(blocks)) return ''
-  const out: string[] = []
-  for (const b of blocks) {
-    if (b && typeof b === 'object' && 'children' in b) {
-      const children = (b as {children: unknown[]}).children
-      if (Array.isArray(children)) {
-        for (const c of children) {
-          if (c && typeof c === 'object' && 'text' in c) {
-            out.push((c as {text: string}).text)
-          }
-        }
-      }
-    }
-  }
-  return out.join(' ').trim()
+function stripHtml(html: string | null | undefined): string {
+  if (!html) return ''
+  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
 }
 
 export async function generateMetadata({
@@ -40,8 +27,8 @@ export async function generateMetadata({
   if (!shopifyProduct) return {title: `Product not found | ${siteTitle}`}
 
   const desc =
-    extractPlainText(sanityDoc?.descripcion as unknown[] | null).slice(0, 160) ||
     shopifyProduct.seo?.description ||
+    stripHtml(shopifyProduct.descriptionHtml).slice(0, 160) ||
     shopifyProduct.title
 
   const canonical = `${BASE_URL.origin}/products/${handle}`
@@ -82,10 +69,14 @@ export default async function ProductPage({
   ])
   if (!shopifyProduct) notFound()
 
-  const relatedHandles = sanityDoc?.relatedProductHandles ?? []
+  const relatedItems = (sanityDoc?.relatedItems ?? []).filter(
+    (it): it is {handle: string; variantColor: string | null; variantImageUrl: string | null} =>
+      typeof it.handle === 'string' && it.handle.length > 0,
+  )
+  const relatedHandles = relatedItems.map((it) => it.handle)
   const relatedCards = relatedHandles.length ? await getProductCards(relatedHandles) : []
 
-  const view = buildProductView(sanityDoc, shopifyProduct, relatedCards)
+  const view = buildProductView(sanityDoc, shopifyProduct, relatedCards, relatedItems)
   const initial = resolveInitialState(view, search)
 
   return <ProductDetail view={view} initial={initial} />
