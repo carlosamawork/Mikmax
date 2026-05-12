@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import {usePathname, useRouter} from 'next/navigation'
 import {findEquivalentSize} from '@/lib/product/findEquivalentSize'
 import DesktopLayout from './components/Desktop/DesktopLayout'
+import MobileLayout from './components/Mobile/MobileLayout'
 import ProductInfoPanel from './components/shared/ProductInfoPanel'
 import type {ProductView, ProductInitialState} from './_types'
 
@@ -48,6 +49,18 @@ export default function ProductDetail({view, initial}: Props) {
   return (
     <>
       <DesktopLayout
+        view={view}
+        currentColor={currentColor}
+        selectedColor={selectedColor}
+        selectedSize={selectedSize}
+        onSelectColor={changeColor}
+        onSelectSize={setSelectedSize}
+        onToggleInfo={() => setIsInfoOpen((v) => !v)}
+        isInfoOpen={isInfoOpen}
+        onAddToCart={handleAddToCart}
+        onZoom={(i) => setLightbox({open: true, index: i})}
+      />
+      <MobileLayout
         view={view}
         currentColor={currentColor}
         selectedColor={selectedColor}
