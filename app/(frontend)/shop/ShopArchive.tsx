@@ -4,7 +4,12 @@ import ProductGrid, {ProductGridSkeleton} from '@/components/Shop/ProductGrid/Pr
 import InfiniteScrollSentinel from '@/components/Shop/InfiniteScrollSentinel/InfiniteScrollSentinel'
 import FilterDrawer from '@/components/Shop/FilterDrawer/FilterDrawer'
 import {getOrderedHandles} from '@/sanity/queries/queries/shop'
-import {getCollectionFilters, getAllProductsForFilters} from '@/lib/shopify'
+import {
+  getCollectionFilters,
+  getAllProductsForFilters,
+  getAllShopFilters,
+  getAllShopProducts,
+} from '@/lib/shopify'
 import {
   buildShopifyFilters,
   extractSelectedColorGids,
@@ -12,7 +17,7 @@ import {
 } from '@/lib/shop/searchParams'
 import {expandProductsToCards} from '@/lib/shop/expandToCards'
 import {applyCardFilters, sortCards} from '@/lib/shop/filterAndSortCards'
-import {CHUNK_SIZE, type ProductCardData, type ShopSearchParams} from '@/types/shop'
+import {ALL_HANDLE, CHUNK_SIZE, type ProductCardData, type ShopSearchParams} from '@/types/shop'
 
 interface Props {
   handle: string
@@ -60,6 +65,17 @@ const SORT_MAP: Record<
   'best-selling': {sortKey: 'BEST_SELLING', reverse: false},
 }
 
+// SearchSortKeys (used by the top-level `search` endpoint for /shop) only
+// supports RELEVANCE and PRICE for products. Non-price sorts fall back to
+// RELEVANCE; price sorts are re-applied client-side via sortCards anyway.
+const SEARCH_SORT_MAP: Partial<Record<
+  'newest' | 'price-asc' | 'price-desc' | 'best-selling',
+  {sortKey: string; reverse: boolean}
+>> = {
+  'price-asc': {sortKey: 'PRICE', reverse: false},
+  'price-desc': {sortKey: 'PRICE', reverse: true},
+}
+
 export default async function ShopArchive({handle, searchParams}: Props) {
   const params: ShopSearchParams = parseSearchParams(searchParams)
   const sort = params.sort ?? 'featured'
@@ -70,7 +86,10 @@ export default async function ShopArchive({handle, searchParams}: Props) {
   // directly — no grouping needed. For card-level filtering we resolve each
   // selected slug to its TaxonomyValue GID and compare with the per-variant
   // metafield.
-  const facets = await getCollectionFilters(handle, {filters: []})
+  const isAll = handle === ALL_HANDLE
+  const facets = isAll
+    ? await getAllShopFilters({filters: []})
+    : await getCollectionFilters(handle, {filters: []})
   const filters = buildShopifyFilters(params, facets)
   const selectedColorGids = extractSelectedColorGids(params, facets)
 
@@ -81,13 +100,17 @@ export default async function ShopArchive({handle, searchParams}: Props) {
     sort === 'featured'
       ? undefined
       : SORT_MAP[sort as keyof typeof SORT_MAP]
+  const searchSort =
+    sort === 'featured'
+      ? undefined
+      : SEARCH_SORT_MAP[sort as keyof typeof SEARCH_SORT_MAP]
   const orderedHandlesPromise =
     sort === 'featured' ? getOrderedHandles() : Promise.resolve<string[]>([])
-  const matchingPromise = getAllProductsForFilters(
-    handle,
-    filters,
-    shopifySort ?? {},
-  ) as Promise<ShopifyProductNode[]>
+  const matchingPromise = (isAll
+    ? getAllShopProducts(filters, searchSort ?? {})
+    : getAllProductsForFilters(handle, filters, shopifySort ?? {})) as Promise<
+    ShopifyProductNode[]
+  >
 
   const [orderedHandles, matching] = await Promise.all([
     orderedHandlesPromise,
