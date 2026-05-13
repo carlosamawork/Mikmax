@@ -6,7 +6,6 @@ import {serializeSearchParams} from '@/lib/shop/searchParams'
 import {getFilterCount} from '@/app/(frontend)/shop/actions'
 import FilterAccordion from './FilterAccordion'
 import SortRadios from './SortRadios'
-import CheckboxList from './CheckboxList'
 import ColorSwatches from './ColorSwatches'
 import SizeChips from './SizeChips'
 import PriceRange from './PriceRange'
@@ -151,17 +150,17 @@ export default function FilterDrawer({handle, open, facets, defaults, initialCou
             <SortRadios value={state.sort ?? 'featured'} onChange={setSort} />
           </FilterAccordion>
 
-          {facet(FACET_ID.productType) && (
+          {facet(FACET_ID.size) && (
             <FilterAccordion
-              id="productType"
-              title="Product"
-              open={accordion === 'productType'}
+              id="size"
+              title="Size"
+              open={accordion === 'size'}
               onToggle={toggleAccordion}
             >
-              <CheckboxList
-                values={facet(FACET_ID.productType)!.values}
-                selected={selected.productType}
-                onToggle={(v) => toggleListValue('productType', v)}
+              <SizeChips
+                values={facet(FACET_ID.size)!.values}
+                selected={selected.size}
+                onToggle={(v) => toggleListValue('size', v)}
               />
             </FilterAccordion>
           )}
@@ -177,36 +176,6 @@ export default function FilterDrawer({handle, open, facets, defaults, initialCou
                 values={facet(FACET_ID.color)!.values}
                 selected={selected.color}
                 onToggle={(v) => toggleListValue('color', v)}
-              />
-            </FilterAccordion>
-          )}
-
-          {facet(FACET_ID.pattern) && (
-            <FilterAccordion
-              id="pattern"
-              title="Pattern"
-              open={accordion === 'pattern'}
-              onToggle={toggleAccordion}
-            >
-              <CheckboxList
-                values={facet(FACET_ID.pattern)!.values}
-                selected={selected.pattern}
-                onToggle={(v) => toggleListValue('pattern', v)}
-              />
-            </FilterAccordion>
-          )}
-
-          {facet(FACET_ID.size) && (
-            <FilterAccordion
-              id="size"
-              title="Size"
-              open={accordion === 'size'}
-              onToggle={toggleAccordion}
-            >
-              <SizeChips
-                values={facet(FACET_ID.size)!.values}
-                selected={selected.size}
-                onToggle={(v) => toggleListValue('size', v)}
               />
             </FilterAccordion>
           )}

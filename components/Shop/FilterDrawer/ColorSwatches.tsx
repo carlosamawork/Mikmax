@@ -46,19 +46,7 @@ export default function ColorSwatches({values, selected, onToggle}: Props) {
                 style={{display: 'none'}}
                 disabled={v.count === 0 && !checked}
               />
-              <span
-                style={{
-                  width: 22,
-                  height: 22,
-                  borderRadius: '50%',
-                  background: bg,
-                  border: '1px solid #c4c4c4',
-                  outline: checked ? '2px solid #111' : 'none',
-                  outlineOffset: 2,
-                  display: 'inline-block',
-                }}
-              />
-              <span>{v.label}</span>
+              <span style={{fontWeight: checked ? '700' : '400',}}>{v.label}</span>
               <span style={{color: '#9ca3af', marginLeft: 'auto', fontSize: 11}}>{v.count}</span>
             </label>
           </li>
