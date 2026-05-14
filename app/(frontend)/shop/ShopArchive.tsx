@@ -144,14 +144,15 @@ export default async function ShopArchive({handle, searchParams}: Props) {
     <>
       <ShopToolbar view={view} />
       <Suspense fallback={<ProductGridSkeleton view={view} />}>
-        <ProductGrid products={products} view={view} hasActiveFilters={products.length === 0} />
+        <ProductGrid products={products} view={view} hasActiveFilters={products.length === 0}>
+          <InfiniteScrollSentinel
+            handle={handle}
+            params={params}
+            initialOffset={nextOffset}
+            hasMore={hasMore}
+          />
+        </ProductGrid>
       </Suspense>
-      <InfiniteScrollSentinel
-        handle={handle}
-        params={params}
-        initialOffset={nextOffset}
-        hasMore={hasMore}
-      />
       <FilterDrawer
         handle={handle}
         open={isOpen}

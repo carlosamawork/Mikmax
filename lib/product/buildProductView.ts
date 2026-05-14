@@ -132,11 +132,17 @@ type SanityRelatedItem = {
   variantImageUrl: string | null
 }
 
+type SanityRelatedByColorGroup = {
+  color: string | null
+  products: SanityRelatedItem[]
+}
+
 export function buildProductView(
   sanity: SanityProductDoc | null,
   shopify: ShopifyProductDetail,
   related: RelatedShopifyCard[],
   relatedItems: SanityRelatedItem[] = [],
+  relatedByColor: SanityRelatedByColorGroup[] = [],
 ): ProductView {
   const metaobjects = shopify.colorPattern?.references?.nodes ?? []
   const variants = shopify.variants?.nodes ?? []
@@ -236,29 +242,48 @@ export function buildProductView(
     editorial.usoRecomendado?.length
   )
 
-  // Index the Sanity related-items metadata (variantColor + variantImageUrl) by handle
-  // so we can enrich the Shopify card with the variant chosen by the editor.
-  const sanityByHandle = new Map<string, SanityRelatedItem>()
-  for (const it of relatedItems) {
-    if (it.handle) sanityByHandle.set(it.handle, it)
+  // Index the Shopify cards by handle so per-color groups can quickly turn
+  // editor picks (handle + variantColor) into rendered mini-cards.
+  const shopifyByHandle = new Map<string, RelatedShopifyCard>()
+  for (const p of related) {
+    if (p.handle !== shopify.handle) shopifyByHandle.set(p.handle, p)
   }
 
-  const relatedCards: ProductMiniCard[] = related
-    .filter((p) => p.handle !== shopify.handle)
-    .map((p) => {
-      const sanityItem = sanityByHandle.get(p.handle)
-      const variantColor = sanityItem?.variantColor ?? null
-      const variantImageUrl = sanityItem?.variantImageUrl ?? null
-      return {
-        handle: p.handle,
-        title: p.title,
-        imageUrl: variantImageUrl ?? p.featuredImage?.url,
-        imageAlt: p.featuredImage?.altText ?? undefined,
-        minPrice: Number(p.priceRange.minVariantPrice.amount),
-        maxPrice: Number(p.priceRange.maxVariantPrice.amount),
-        colorSlug: variantColor ? slugify(variantColor) : undefined,
-      }
-    })
+  function toMiniCards(items: SanityRelatedItem[]): ProductMiniCard[] {
+    const out: ProductMiniCard[] = []
+    for (const it of items) {
+      const card = shopifyByHandle.get(it.handle)
+      if (!card) continue
+      out.push({
+        handle: card.handle,
+        title: card.title,
+        imageUrl: it.variantImageUrl ?? card.featuredImage?.url,
+        imageAlt: card.featuredImage?.altText ?? undefined,
+        minPrice: Number(card.priceRange.minVariantPrice.amount),
+        maxPrice: Number(card.priceRange.maxVariantPrice.amount),
+        colorSlug: it.variantColor ? slugify(it.variantColor) : undefined,
+      })
+    }
+    return out
+  }
+
+  const relatedCards: ProductMiniCard[] = toMiniCards(relatedItems)
+
+  // Build per-color override map keyed by color slug, matching the keys used
+  // in `colorsMap` so the per-color list can be attached below.
+  const relatedByColorSlug = new Map<string, ProductMiniCard[]>()
+  for (const group of relatedByColor) {
+    if (!group.color) continue
+    const slug = slugify(group.color)
+    if (!slug) continue
+    const cards = toMiniCards(group.products)
+    if (cards.length > 0) relatedByColorSlug.set(slug, cards)
+  }
+
+  const colorsWithRelated = colors.map((c) => {
+    const override = relatedByColorSlug.get(c.slug)
+    return override ? {...c, related: override} : c
+  })
 
   return {
     id: shopify.id,
@@ -270,7 +295,7 @@ export function buildProductView(
     featuredImageUrl: shopify.featuredImage?.url,
     editorial,
     hasEditorial,
-    colors,
+    colors: colorsWithRelated,
     defaultColorSlug: defaultColor,
     related: relatedCards,
   }

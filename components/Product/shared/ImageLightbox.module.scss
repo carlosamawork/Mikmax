@@ -1,57 +1,52 @@
 @use '@/styles/common/variables' as *;
+@use '@/styles/common/tokens' as *;
+@use '@/styles/mixins/mixins' as *;
 
 .overlay {
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: map-get($colors, 'white');
+  z-index: $z-zoom-modal;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .close {
-  position: absolute;
-  top: px(16);
-  right: px(16);
-  background: map-get($colors, 'white');
-  border: none;
+  position: fixed;
+  top: px(7);
+  right: px(7);
   width: px(35);
   height: px(35);
-  font-size: px(20);
-  cursor: pointer;
-  z-index: 1;
-}
-
-.nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.8);
+  background: map-get($colors, 'lightgray-bg');
   border: none;
-  width: px(40);
-  height: px(60);
-  font-size: px(24);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-}
+  color: map-get($colors, 'darker');
+  z-index: $z-toast;
+  transition: background $transition-fast;
 
-.navPrev { left: px(16); }
-.navNext { right: px(16); }
+  &:hover {
+    background: map-get($colors, 'gray-light');
+  }
+}
 
 .imageWrap {
+  display: block;
+  width: 100%;
   position: relative;
-  width: 90vw;
-  height: 90vh;
-  cursor: zoom-in;
-  transition: transform 0.3s;
-  overflow: hidden;
-}
-
-.imageWrapZoomed {
-  cursor: zoom-out;
-  transform: scale(1.8);
 }
 
 .image {
+  display: block;
+  width: 100%;
+  height: auto;
   object-fit: contain;
 }

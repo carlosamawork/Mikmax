@@ -49,6 +49,9 @@ export type CollectionTreeParent = {
   handle?: string
   imageUrl?: string
   children?: CollectionTreeChild[]
+  // True if the parent collection itself has at least one product in Shopify.
+  // Drives whether the megamenu renders the "All" deep-link for this parent.
+  hasOwnProducts?: boolean
 }
 
 export type MenuShop = {

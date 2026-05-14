@@ -52,6 +52,17 @@ export default function ProductDetail({view, initial}: Props) {
     router.replace(target, {scroll: false})
   }, [selectedColor, selectedSize, pathname, router, view.defaultColorSlug])
 
+  useEffect(() => {
+    const root = document.documentElement
+    const body = document.body
+    root.classList.add('no-page-scrollbar')
+    body.classList.add('no-page-scrollbar')
+    return () => {
+      root.classList.remove('no-page-scrollbar')
+      body.classList.remove('no-page-scrollbar')
+    }
+  }, [])
+
   function changeColor(slug: string) {
     setSelectedColor(slug)
     setSelectedSize((prev) => findEquivalentSize(view, slug, prev))

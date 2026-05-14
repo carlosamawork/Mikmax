@@ -36,7 +36,10 @@ export default function MobileLayout(props: Props) {
         onToggleInfo={props.onToggleInfo}
         isInfoOpen={props.isInfoOpen}
       />
-      <RelatedGrid products={props.view.related} currency={props.view.currency} />
+      <RelatedGrid
+        products={props.currentColor.related ?? props.view.related}
+        currency={props.view.currency}
+      />
       <StickyCTA canAddToCart={canAddToCart} onAddToCart={props.onAddToCart} />
     </div>
   )

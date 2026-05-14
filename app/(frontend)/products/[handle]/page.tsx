@@ -73,10 +73,31 @@ export default async function ProductPage({
     (it): it is {handle: string; variantColor: string | null; variantImageUrl: string | null} =>
       typeof it.handle === 'string' && it.handle.length > 0,
   )
-  const relatedHandles = relatedItems.map((it) => it.handle)
-  const relatedCards = relatedHandles.length ? await getProductCards(relatedHandles) : []
+  const relatedByColor = (sanityDoc?.relatedByColor ?? [])
+    .map((g) => ({
+      color: g.color,
+      products: (g.products ?? []).filter(
+        (it): it is {handle: string; variantColor: string | null; variantImageUrl: string | null} =>
+          typeof it.handle === 'string' && it.handle.length > 0,
+      ),
+    }))
+    .filter((g) => typeof g.color === 'string' && g.color.length > 0)
 
-  const view = buildProductView(sanityDoc, shopifyProduct, relatedCards, relatedItems)
+  const allHandles = Array.from(
+    new Set<string>([
+      ...relatedItems.map((it) => it.handle),
+      ...relatedByColor.flatMap((g) => g.products.map((it) => it.handle)),
+    ]),
+  )
+  const relatedCards = allHandles.length ? await getProductCards(allHandles) : []
+
+  const view = buildProductView(
+    sanityDoc,
+    shopifyProduct,
+    relatedCards,
+    relatedItems,
+    relatedByColor,
+  )
   const initial = resolveInitialState(view, search)
 
   return <ProductDetail view={view} initial={initial} />

@@ -22,7 +22,7 @@ export default function DesktopLayout(props: Props) {
     <div className={s.layout}>
       <GalleryHorizontal
         images={props.currentColor.images}
-        related={props.view.related}
+        related={props.currentColor.related ?? props.view.related}
         currency={props.view.currency}
         onZoom={props.onZoom}
       />

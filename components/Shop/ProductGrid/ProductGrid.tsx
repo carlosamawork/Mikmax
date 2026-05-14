@@ -1,16 +1,17 @@
 import Link from 'next/link'
+import type {ReactNode, CSSProperties} from 'react'
 import ProductCard from '@/components/PageBuilder/ProductCard/ProductCard'
 import type {ProductCardData, ViewMode} from '@/types/shop'
-import type {CSSProperties} from 'react'
 import s from './ProductGrid.module.scss'
 
 interface Props {
   products: ProductCardData[]
   view: ViewMode
   hasActiveFilters?: boolean
+  children?: ReactNode
 }
 
-export default function ProductGrid({products, view, hasActiveFilters}: Props) {
+export default function ProductGrid({products, view, hasActiveFilters, children}: Props) {
   if (products.length === 0) {
     return (
       <div className={s.empty}>
@@ -47,9 +48,11 @@ export default function ProductGrid({products, view, hasActiveFilters}: Props) {
             compareAtPrice: p.compareAtPrice,
             tags: p.tags,
             availableForSale: p.availableForSale,
+            colorSlug: p.colorSlug,
           }}
         />
       ))}
+      {children}
     </div>
   )
 }

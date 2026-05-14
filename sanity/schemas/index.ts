@@ -67,6 +67,7 @@ import spot from './objects/hotspot/spot'
 import productHotspots from './objects/hotspot/productHotspots'
 import option from './objects/shopify/option'
 import productWithVariant from './objects/shopify/productWithVariant'
+import relatedColorGroup from './objects/relatedColorGroup'
 import proxyString from './objects/shopify/proxyString'
 import seo from './objects/seo/seo'
 import seoHome from './objects/seo/home'
@@ -124,6 +125,7 @@ const objects = [
   productHotspots,
   option,
   productWithVariant,
+  relatedColorGroup,
   proxyString,
   seo,
   seoHome,

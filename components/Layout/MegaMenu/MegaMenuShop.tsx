@@ -62,7 +62,7 @@ export default function MegaMenuShop({shop, onMouseEnter, onMouseLeave}: Props) 
         >
           <p className={s.shopLabel}>{parent.title}</p>
           <ul className={s.shopItems}>
-            {parent.handle && (
+            {parent.handle && parent.hasOwnProducts && (
               <li role="none">
                 <Link
                   href={`/shop/${parent.handle}`}

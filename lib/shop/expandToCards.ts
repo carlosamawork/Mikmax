@@ -1,5 +1,6 @@
 // lib/shop/expandToCards.ts
 import type {ProductCardData} from '@/types/shop'
+import {slugify} from '@/lib/shop/searchParams'
 
 type MetaobjectFieldNode = {
   key: string
@@ -184,6 +185,7 @@ function variantCard(
     tags: Array.isArray(p.tags) ? p.tags.join(',') : undefined,
     variantId: variant.id,
     colorLabel: colorValue,
+    colorSlug: slugify(colorValue),
     availableForSale: variant.availableForSale,
   }
 }

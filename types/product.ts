@@ -22,6 +22,9 @@ export type ProductColor = {
   taxonomyValueGids: string[]   // ['gid://shopify/TaxonomyValue/9']
   images: GalleryImage[]
   sizes: ColorSize[]
+  // Optional per-color override of the related products. When set, the PDP
+  // shows this list instead of ProductView.related for this color.
+  related?: ProductMiniCard[]
 }
 
 export type ProductEditorial = {
