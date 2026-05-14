@@ -214,7 +214,7 @@ export default function MobileMenu({menu, open, onClose}: Props) {
                 </button>
                 {isExpanded && (
                   <div className={s.children}>
-                    {parent.handle && (
+                    {parent.handle && parent.hasOwnProducts && (
                       <Link
                         href={`/shop/${parent.handle}`}
                         className={s.childRow}

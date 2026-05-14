@@ -9,6 +9,8 @@ export type ProductCardData = {
   tags?: string
   // Optional: set when card represents a specific variant; false renders "Agotado" overlay.
   availableForSale?: boolean
+  // Optional: set when the card represents a specific color variant — used to deep-link to the PDP with that color preselected.
+  colorSlug?: string
 }
 
 export type SetCardComponent = {

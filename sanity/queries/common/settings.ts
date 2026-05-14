@@ -1,6 +1,7 @@
 // sanity/queries/common/settings.ts
 import {groq} from 'next-sanity'
 import {client} from '../index'
+import {getCollectionHandlesWithProducts} from '@/lib/shopify'
 import type {
   SettingsData,
   MenuShop,
@@ -145,7 +146,26 @@ export async function getSettings(): Promise<SettingsData> {
 
   if (!needsTree) return settings
 
-  const tree = await fetchCollectionTree()
+  const [tree, handlesWithProducts] = await Promise.all([
+    fetchCollectionTree(),
+    getCollectionHandlesWithProducts().catch(() => [] as string[]),
+  ])
+
+  const productSet = new Set(handlesWithProducts)
+  const megamenuTree: CollectionTreeParent[] = tree
+    .map((p) => {
+      const filteredChildren = (p.children ?? []).filter(
+        (c) => c.handle && productSet.has(c.handle),
+      )
+      const hasOwnProducts = Boolean(p.handle && productSet.has(p.handle))
+      return {
+        ...p,
+        children: filteredChildren,
+        hasOwnProducts,
+      }
+    })
+    .filter((p) => p.hasOwnProducts || (p.children?.length ?? 0) > 0)
+
   const parents: FooterCollectionParent[] = tree.map((p) => ({
     title: p.title,
     handle: p.handle,
@@ -156,7 +176,7 @@ export async function getSettings(): Promise<SettingsData> {
       ...settings.menu,
       links: links.map((link) =>
         link._type === 'menuShop'
-          ? ({...(link as MenuShop), tree} as MenuShop)
+          ? ({...(link as MenuShop), tree: megamenuTree} as MenuShop)
           : link,
       ),
     }

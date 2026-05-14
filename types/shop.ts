@@ -56,6 +56,7 @@ export type ProductCardData = {
   // Set when the card represents a specific color variant of a product.
   variantId?: string
   colorLabel?: string
+  colorSlug?: string
   availableForSale?: boolean
 }
 

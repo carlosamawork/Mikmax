@@ -69,10 +69,17 @@ export default function InfiniteScrollSentinel({
             compareAtPrice: p.compareAtPrice,
             tags: p.tags,
             availableForSale: p.availableForSale,
+            colorSlug: p.colorSlug,
           }}
         />
       ))}
-      {hasMore && <div ref={ref} style={{height: 1}} aria-hidden="true" />}
+      {hasMore && (
+        <div
+          ref={ref}
+          style={{height: 1, gridColumn: '1 / -1'}}
+          aria-hidden="true"
+        />
+      )}
     </>
   )
 }
