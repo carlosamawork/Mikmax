@@ -58,6 +58,7 @@ export default function LazyImage({
           {...imageProps}
           src={src}
           alt={alt}
+          quality={100}
           priority={priority}
           className={imageClassName}
           onLoad={() => setIsLoaded(true)}
