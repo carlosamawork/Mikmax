@@ -1,8 +1,6 @@
 @use "sass:math";
 
-$Neue: "NeueHaasGroteskDisp", sans-serif;
-$Manuka: 'Manuka', sans-serif;
-$HelveticaNeue: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$MonumentGrotesk: 'Monument Grotesk', Helvetica, Arial, sans-serif;
 
 $colors: (
   // text
@@ -14,7 +12,8 @@ $colors: (
   "darker-30": rgba(43, 43, 43, 0.3),
   "gray": #969696,
   "grey": #969696,
-  
+  "gray-light": #a4a4a4,
+
   // colors
   "red": #ff1222,
   "green": #00e63c,

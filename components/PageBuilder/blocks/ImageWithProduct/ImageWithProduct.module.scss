@@ -1,0 +1,86 @@
+// components/PageBuilder/blocks/ImageWithProduct/ImageWithProduct.module.scss
+@use '../../../../styles/common/variables' as *;
+@use '../../../../styles/common/tokens' as *;
+@use '../../../../styles/mixins/mixins' as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 0;
+
+  @include from(md) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 0 px(5);
+    max-height: 100svh;
+  }
+}
+
+// `imagePosition: right` swaps the visual order on desktop only.
+.imageRight {
+  @include from(md) {
+    flex-direction: row-reverse;
+  }
+}
+
+// ─── Feature image cell (left or right) ───────────────────────────────────────
+.featureCell {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: px(550);
+  overflow: hidden;
+  background: map-get($colors, 'gray');
+  text-decoration: none;
+
+  @include from(md) {
+    flex: 0 0 50%;
+    width: 50%;
+    height: auto;
+    aspect-ratio: 723 / 960;
+    max-height: 100svh;
+  }
+
+  // LazyImage wrapper specificity boost (same pattern as siblings).
+  .media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mediaImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.title {
+  position: absolute;
+  left: px(10);
+  bottom: px(15);
+  margin: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(20);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'white');
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+// ─── Product cell wrapper ─────────────────────────────────────────────────────
+.productCellWrap {
+  width: px(199);
+
+  @include from(md) {
+    flex: 0 0 px(357);
+    width: px(357);
+    align-self: flex-start;
+  }
+}

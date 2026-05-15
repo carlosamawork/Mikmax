@@ -1,4 +1,19 @@
 import {defineField} from 'sanity'
+import React from 'react'
+
+const TextBlackIcon = () => (
+  <span style={{fontWeight: 600, color: '#000'}}>N</span>
+)
+const TextGrayIcon = () => (
+  <span style={{fontWeight: 600, color: '#969696'}}>G</span>
+)
+
+const TextBlackRender = (props: {children: React.ReactNode}) => (
+  <span style={{color: '#000'}}>{props.children}</span>
+)
+const TextGrayRender = (props: {children: React.ReactNode}) => (
+  <span style={{color: '#969696'}}>{props.children}</span>
+)
 
 export default defineField({
   name: 'body',
@@ -18,64 +33,32 @@ export default defineField({
         {title: 'H4', value: 'h4'},
         {title: 'H5', value: 'h5'},
         {title: 'H6', value: 'h6'},
-        {title: 'Quote', value: 'blockquote'}
+        {title: 'Quote', value: 'blockquote'},
       ],
       marks: {
         decorators: [
+          {title: 'Italic', value: 'em'},
+          {title: 'Strong', value: 'strong'},
           {
-            title: 'Italic',
-            value: 'em',
+            title: 'Negro',
+            value: 'textBlack',
+            icon: TextBlackIcon,
+            component: TextBlackRender,
           },
           {
-            title: 'Strong',
-            value: 'strong',
+            title: 'Gris',
+            value: 'textGray',
+            icon: TextGrayIcon,
+            component: TextGrayRender,
           },
         ],
         annotations: [
-          // product
-          {
-            name: 'annotationProduct',
-            type: 'annotationProduct',
-          },
-          // Email
-          {
-            name: 'annotationLinkEmail',
-            type: 'annotationLinkEmail',
-          },
-          // Internal link
-          // {
-          //   name: 'annotationLinkInternal',
-          //   type: 'annotationLinkInternal',
-          // },
-          // URL
-          {
-            name: 'annotationLinkExternal',
-            type: 'annotationLinkExternal'
-          },
+          {name: 'annotationProduct', type: 'annotationProduct'},
+          {name: 'annotationLinkEmail', type: 'annotationLinkEmail'},
+          {name: 'annotationLinkExternal', type: 'annotationLinkExternal'},
         ],
       },
-      // Paragraphs
       type: 'block',
-
     },
-    // Custom blocks
-    {
-      type: 'module.accordion',
-    },
-    {
-      type: 'module.callout',
-    },
-    {
-      type: 'module.grid',
-    },
-    {
-      type: 'module.images',
-    },
-    {
-      type: 'module.products',
-    },
-    {
-      type: 'htmlEmbed',
-    }
   ],
 })

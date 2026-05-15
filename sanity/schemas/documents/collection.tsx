@@ -1,17 +1,12 @@
 import React from 'react'
 import {defineField, defineType} from 'sanity'
 import {PackageIcon} from '@sanity/icons'
-import {getExtension} from '@sanity/asset-utils'
 import pluralize from 'pluralize-esm'
 import CollectionHiddenInput from '../../components/inputs/CollectionHidden'
 import ShopifyIcon from '../../components/icons/Shopify'
 import ShopifyDocumentStatus from '../../components/media/ShopifyDocumentStatus'
 
 const GROUPS = [
-  {
-    name: 'theme',
-    title: 'Theme',
-  },
   {
     default: true,
     name: 'editorial',
@@ -61,66 +56,44 @@ export default defineType({
     //   type: 'proxyString',
     //   options: {field: 'store.slug.current'},
     // }),
-    // Color theme
+    // Parent collection (jerarquía editorial — se gestiona solo en Sanity)
     defineField({
-      name: 'colorTheme',
-      title: 'Color theme',
+      name: 'parent',
+      title: 'Colección padre',
       type: 'reference',
-      to: [{type: 'colorTheme'}],
-      group: 'theme',
-    }),
-    // Vector
-    defineField({
-      name: 'vector',
-      title: 'Vector artwork',
-      type: 'image',
-      description: 'Displayed in collection links using color theme',
+      to: [{type: 'collection'}],
+      weak: true,
+      description:
+        'Permite agrupar colecciones en jerarquía (ej. "Manteles" hija de "Mesa"). Opcional. Shopify no se entera de este vínculo: es solo navegacional.',
+      group: 'editorial',
       options: {
-        accept: 'image/svg+xml',
+        filter: ({document}) => {
+          const id = (document?._id ?? '').replace(/^drafts\./, '')
+          if (!id) return {filter: ''}
+          return {
+            filter: '_id != $id && _id != $draftId',
+            params: {id, draftId: `drafts.${id}`},
+          }
+        },
       },
-      group: 'theme',
-      validation: (Rule) =>
-        Rule.custom((image) => {
-          if (!image?.asset?._ref) {
-            return true
-          }
-
-          const format = getExtension(image.asset._ref)
-
-          if (format !== 'svg') {
-            return 'Image must be an SVG'
-          }
-          return true
-        }),
     }),
-    // Show hero
+    // Orden manual (orderable plugin)
     defineField({
-      name: 'showHero',
-      title: 'Show hero',
-      type: 'boolean',
-      description: 'If disabled, page title will be displayed instead',
+      name: 'orderRank',
+      title: 'Orden',
+      type: 'string',
       group: 'editorial',
+      hidden: true,
+      description: 'Posición manual asignada desde la vista "Ordenar colecciones".',
     }),
-    // Hero
+    // Featured editorial images (Vista 2 only)
     defineField({
-      name: 'hero',
-      title: 'Hero',
-      type: 'hero.collection',
-      hidden: ({document}) => !document?.showHero,
-      group: 'editorial',
-    }),
-    // Modules
-    defineField({
-      name: 'modules',
-      title: 'Modules',
+      name: 'imagenesDestacadas',
+      title: 'Imágenes destacadas',
       type: 'array',
-      description: 'Editorial modules to associate with this collection',
-      of: [
-        {type: 'module.callout'},
-        {type: 'module.callToAction'},
-        {type: 'module.image'},
-        {type: 'module.instagram'},
-      ],
+      description:
+        'Imágenes editoriales que se intercalan dentro del listado de productos. Solo se muestran en la Vista 2 de la página de colección.',
+      of: [{type: 'module.image'}],
       group: 'editorial',
     }),
     // Shopify collection

@@ -56,25 +56,10 @@ export default defineField({
       group: 'editorial',
     }),
     defineField({
-      name: 'modulos',
-      title: 'Módulos',
-      type: 'array',
-      of: [{type: 'post_block'}],
-      group: 'editorial',
-      hidden: ({parent}) => {
-        const isElemental = parent?.category?._ref == "582a04a9-5b92-4c17-aec4-7c74faaf82ae"
-        return !isElemental
-      },
-    }),
-    defineField({
       name: 'content',
       title: 'Contenido',
       type: 'body',
       group: 'editorial',
-      hidden: ({parent}) => {
-        const isElemental = parent?.category?._ref == "582a04a9-5b92-4c17-aec4-7c74faaf82ae"
-        return isElemental
-      },
     }),
     defineField({
       name: "tags",

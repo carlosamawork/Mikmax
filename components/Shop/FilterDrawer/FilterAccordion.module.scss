@@ -1,0 +1,30 @@
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.accordion {
+  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: 0;
+  padding: px(16) px(20);
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  letter-spacing: 0.5px;
+  color: map-get($colors, 'darker');
+  cursor: pointer;
+}
+
+.body {
+  padding: 0 px(20) px(16);
+
+  ul{
+    font-size: px(12)
+  }
+}

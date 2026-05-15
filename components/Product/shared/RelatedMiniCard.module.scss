@@ -1,0 +1,50 @@
+@use '@/styles/common/variables' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: px(9);
+  text-decoration: none;
+  color: inherit;
+  font-family: $MonumentGrotesk;
+}
+
+.image {
+  position: relative;
+  aspect-ratio: 268 / 357;
+  background: map-get($colors, 'lightgray-bg');
+  overflow: hidden;
+}
+
+.imageWrapper {
+  position: absolute;
+  inset: 0;
+}
+
+.imageInner {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+.imagePlaceholder {
+  background: map-get($colors, 'lightgray-bg');
+  width: 100%;
+  height: 100%;
+}
+
+.body {
+  padding: px(10);
+  display: flex;
+  flex-direction: column;
+  gap: px(8);
+}
+
+.title {
+  font-size: px(11);
+  letter-spacing: px(0.5);
+}
+
+.price {
+  font-size: px(11);
+}

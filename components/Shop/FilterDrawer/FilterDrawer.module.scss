@@ -1,0 +1,94 @@
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 90;
+}
+
+.aside {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 100;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+
+  @include from(md) {
+    width: px(480);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: px(16) px(20);
+  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+
+  h2 {
+    margin: 0;
+    font-family: $MonumentGrotesk;
+    font-size: px(13);
+    letter-spacing: 0.5px;
+  }
+
+  button {
+    background: none;
+    border: 0;
+    font-size: px(20);
+    cursor: pointer;
+    line-height: 1;
+  }
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+
+  ul{
+    font-size: px(12)
+  }
+}
+
+.footer {
+  display: flex;
+  gap: px(12);
+  padding: px(16) px(20);
+  border-top: 1px solid map-get($colors, 'lightgray-bg');
+  background: #fff;
+  position: sticky;
+  bottom: 0;
+
+  .clear {
+    background: none;
+    border: 0;
+    text-decoration: underline;
+    color: map-get($colors, 'darker');
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+
+  .primary {
+    flex: 1;
+    background: map-get($colors, 'darker');
+    color: #fff;
+    border: 0;
+    padding: px(14);
+    font-family: $MonumentGrotesk;
+    font-size: px(12);
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+}

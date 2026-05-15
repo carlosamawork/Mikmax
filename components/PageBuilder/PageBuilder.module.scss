@@ -1,0 +1,16 @@
+// components/PageBuilder/PageBuilder.module.scss
+@use '../../styles/common/variables' as *;
+@use '../../styles/common/tokens' as *;
+@use '../../styles/mixins/mixins' as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  // Figma frame 11:1991 has `flex-col gap-[100px]` between home modules.
+  // Desktop only — mobile keeps modules tight.
+  @include from(md) {
+    gap: px(100);
+  }
+}

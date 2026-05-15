@@ -1,0 +1,55 @@
+@use '@/styles/common/variables' as *;
+
+.wrap {
+  padding: 0 px(10);
+  font-family: $MonumentGrotesk;
+}
+
+.titleBlock {
+  padding: px(12) 0;
+}
+
+.title {
+  font-size: px(13);
+  margin-bottom: px(4);
+}
+
+.price {
+  font-size: px(12);
+  margin-bottom: px(12);
+}
+
+.delivery {
+  font-size: px(9);
+  line-height: px(11);
+  background: map-get($colors, 'lightgray-bg');
+  padding: px(10);
+}
+
+.section {
+  padding: px(10) 0;
+}
+
+.label {
+  font-size: px(11);
+  margin-bottom: px(8);
+}
+
+.infoToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: map-get($colors, 'white');
+  border: none;
+  border-top: 1px solid map-get($colors, 'lightgray-bg');
+  padding: px(14) 0;
+  font-size: px(11);
+  cursor: pointer;
+}
+
+.caret {
+  width: px(10);
+  height: px(6);
+  flex-shrink: 0;
+}

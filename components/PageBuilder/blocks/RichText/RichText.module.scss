@@ -1,0 +1,14 @@
+@use '../../../../styles/common/variables' as *;
+@use '../../../../styles/common/tokens' as *;
+@use '../../../../styles/mixins/mixins' as *;
+
+.section {
+  width: 100%;
+  padding: px(50) px(15);
+  max-width: px(800);
+  margin: 0 auto;
+
+  @include from(md) {
+    padding: px(80) px(30);
+  }
+}

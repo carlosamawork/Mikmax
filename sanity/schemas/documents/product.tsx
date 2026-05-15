@@ -58,37 +58,50 @@ export default defineType({
     //   options: {field: 'store.slug.current'},
     // }),
     defineField({
-      name: 'body',
-      title: 'Body',
+      name: 'propiedadesMaterial',
+      title: 'Propiedades del material',
       type: 'body',
       group: 'editorial',
     }),
     defineField({
-      name: 'images',
-      title: 'Imágenes adicionales',
-      type: 'array',
-      of: [{
-        type: 'module.image'
-      },],
+      name: 'recomendacionesLavado',
+      title: 'Recomendaciones de lavado',
+      type: 'body',
       group: 'editorial',
     }),
     defineField({
-      name: 'videos',
-      title: 'Videos',
-      type: 'array',
-      of: [{
-        type: 'module.video'
-      },],
+      name: 'usoRecomendado',
+      title: 'Uso recomendado',
+      type: 'body',
       group: 'editorial',
     }),
     defineField({
-      name: 'valoraciones',
-      title: 'Valoraciones',
+      name: 'relatedProducts',
+      title: 'Related products (default)',
+      description:
+        'Lista por defecto que se muestra cuando el color seleccionado en la PDP no tiene su propio grupo en "Relacionados por color". Máx 10. Por cada item elige producto + variante de color (si el producto tiene color).',
       type: 'array',
-      of: [{
-        type: 'module.valoracion'
-      },],
+      of: [{type: 'productWithVariant'}],
       group: 'editorial',
+      validation: (Rule) => Rule.max(10),
+    }),
+    defineField({
+      name: 'relatedByColor',
+      title: 'Relacionados por color',
+      description:
+        'Override por color. Si un color tiene su propio grupo, esos productos sustituyen a los "Related products" globales cuando el usuario abra la PDP con ese color. Si no hay grupo para un color, se usa la lista por defecto.',
+      type: 'array',
+      of: [{type: 'relatedColorGroup'}],
+      group: 'editorial',
+      validation: (Rule) =>
+        Rule.custom((value?: {color?: string}[]) => {
+          if (!Array.isArray(value)) return true
+          const colors = value
+            .map((g) => g?.color?.trim().toLowerCase())
+            .filter((c): c is string => Boolean(c))
+          const dupes = colors.filter((c, i) => colors.indexOf(c) !== i)
+          return dupes.length === 0 || `Color duplicado: ${dupes.join(', ')}`
+        }),
     }),
     defineField({
       name: 'orderRank',
