@@ -55,13 +55,11 @@ export default defineField({
             defineField({
               name: 'title',
               type: 'string',
-              validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'links',
               type: 'array',
-              of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
-              validation: (Rule) => Rule.min(1),
+              of: [{type: 'linkInternal'}, {type: 'linkExternal'}, {type: 'object', name: 'space', fields: [ {type: 'string', name: 'blank'}]}],
             }),
           ],
           preview: {

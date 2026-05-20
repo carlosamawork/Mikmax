@@ -156,8 +156,8 @@ export default function Footer({data}: FooterProps) {
             }
             return (
               <div key={col._key} className={s.col}>
-                <p className={s.colTitle}>{col.title}</p>
-                <FooterLinks links={col.links} />
+                {col.title && <p className={s.colTitle}>{col.title}</p>}
+                {col.links && col.links.length > 0 && <FooterLinks links={col.links} />}
               </div>
             )
           })}
