@@ -3,7 +3,7 @@ import {imageSize} from '../primitives/imageSize'
 
 const moduleImage = `
   image{
-    ${imageData}
+    ${imageData},
     ${imageSize}
   }
 `

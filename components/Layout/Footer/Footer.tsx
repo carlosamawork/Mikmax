@@ -125,14 +125,14 @@ export default function Footer({data}: FooterProps) {
 
   return (
     <footer className={s.footer}>
-      {/* <div className={s.top}>
+      <div className={s.top}>
         <div className={s.newsletter}>
-          <NewsletterForm
-            title={newsletter?.title}
-            subtitle={newsletter?.body}
-            placeholder={newsletter?.placeholder}
-            buttonLabel={newsletter?.buttonLabel}
-          />
+          {/* // <NewsletterForm
+          //   title={newsletter?.title}
+          //   subtitle={newsletter?.body}
+          //   placeholder={newsletter?.placeholder}
+          //   buttonLabel={newsletter?.buttonLabel}
+          // /> */}
           <span className={s.copyright}>© {new Date().getFullYear()} Mikmax</span>
         </div>
 
@@ -165,7 +165,7 @@ export default function Footer({data}: FooterProps) {
             <RegionSelector regions={regions} />
           </div>
         </div>
-      </div> */}
+      </div>
 
       <div className={s.bigLogo} aria-hidden>
         <LazyImage
