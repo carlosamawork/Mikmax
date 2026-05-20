@@ -1,0 +1,54 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: block;
+}
+
+.link {
+  display: block;
+  text-align: left;
+  padding: px(18) px(20);
+  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'gray-light');
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: map-get($colors, 'black-border');
+  }
+}
+
+.linkActive {
+  color: map-get($colors, 'black-border');
+}
+
+@include responsive('md') {
+  .list {
+    flex-direction: row;
+    overflow-x: auto;
+    border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+  }
+
+  .item {
+    flex-shrink: 0;
+  }
+
+  .link {
+    white-space: nowrap;
+    border-bottom: none;
+    border-right: 1px solid map-get($colors, 'lightgray-bg');
+    padding: px(14) px(16);
+  }
+}
