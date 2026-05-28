@@ -9,6 +9,7 @@ import GalleryHorizontal from '@/components/Product/Desktop/GalleryHorizontal'
 import GallerySwiper from '@/components/Product/Mobile/GallerySwiper'
 import ImageLightbox from '@/components/Product/shared/ImageLightbox'
 import RelatedGrid from '@/components/Product/Mobile/RelatedGrid'
+import ProductInfoPanel from '@/components/Product/shared/ProductInfoPanel'
 import LookDesktopBar from './LookDesktopBar'
 import LookSizeList from './LookSizeList'
 import LookPrice from './LookPrice'
@@ -26,7 +27,7 @@ export default function LookDetail({view}: Props) {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [mSizesOpen, setMSizesOpen] = useState(false)
-  const [mInfoOpen, setMInfoOpen] = useState(false)
+  const [infoOpen, setInfoOpen] = useState(false)
 
   const allSelected =
     view.components.length > 0 && selected.every((sz) => sz !== undefined)
@@ -118,6 +119,8 @@ export default function LookDetail({view}: Props) {
           discountedTotal={discountedTotal}
           hasDiscount={hasDiscount}
           onAddToCart={handleAddToCart}
+          isInfoOpen={infoOpen}
+          onToggleInfo={() => setInfoOpen((o) => !o)}
         />
       </div>
 
@@ -138,7 +141,20 @@ export default function LookDetail({view}: Props) {
           onClick={() => setMSizesOpen((o) => !o)}
         >
           <span>Select Product and Sizes</span>
-          <span className={[s.mCaret, mSizesOpen ? s.mCaretOpen : ''].join(' ')} aria-hidden />
+          <svg
+            className={[s.mCaret, mSizesOpen ? s.mCaretOpen : ''].join(' ')}
+            viewBox="0 0 10 6"
+            fill="none"
+            aria-hidden
+          >
+            <path
+              d="M1 1L5 5L9 1"
+              stroke="currentColor"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
         {mSizesOpen && (
           <>
@@ -154,25 +170,37 @@ export default function LookDetail({view}: Props) {
           </>
         )}
 
-        {view.description && (
-          <>
-            <button
-              type="button"
-              className={s.mAccordion}
-              aria-expanded={mInfoOpen}
-              onClick={() => setMInfoOpen((o) => !o)}
-            >
-              <span>Product Information</span>
-              <span className={[s.mCaret, mInfoOpen ? s.mCaretOpen : ''].join(' ')} aria-hidden />
-            </button>
-            {mInfoOpen && <div className={s.mInfoBody}>{view.description}</div>}
-          </>
+        {view.hasEditorial && (
+          <button
+            type="button"
+            className={s.mAccordion}
+            aria-haspopup="dialog"
+            aria-expanded={infoOpen}
+            onClick={() => setInfoOpen(true)}
+          >
+            <span>Product Information</span>
+            <svg className={s.mCaret} viewBox="0 0 10 6" fill="none" aria-hidden>
+              <path
+                d="M1 1L5 5L9 1"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
         )}
       </div>
 
       <div className={s.relatedMobile}>
         <RelatedGrid products={relatedCards} currency={view.currency} />
       </div>
+
+      <ProductInfoPanel
+        open={infoOpen}
+        onClose={() => setInfoOpen(false)}
+        editorial={view.editorial}
+      />
 
       <ImageLightbox
         open={lightboxOpen}

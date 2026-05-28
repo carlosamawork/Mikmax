@@ -7,6 +7,7 @@ import type {
   LookGalleryImage,
   LookRelatedCard,
 } from '@/types/look'
+import type {ProductEditorial} from '@/types/product'
 
 type ShopifyVariant = {
   id: string
@@ -107,6 +108,21 @@ export function buildLookView(
     })
     .filter((x): x is LookGalleryImage => x !== null)
 
+  const editorial: ProductEditorial = {
+    descripcion: look.description ?? null,
+    propiedadesMaterial: (look.propiedadesMaterial ??
+      null) as ProductEditorial['propiedadesMaterial'],
+    recomendacionesLavado: (look.recomendacionesLavado ??
+      null) as ProductEditorial['recomendacionesLavado'],
+    usoRecomendado: (look.usoRecomendado ?? null) as ProductEditorial['usoRecomendado'],
+  }
+  const hasEditorial = !!(
+    editorial.descripcion ||
+    editorial.propiedadesMaterial?.length ||
+    editorial.recomendacionesLavado?.length ||
+    editorial.usoRecomendado?.length
+  )
+
   const related: LookRelatedCard[] = relatedCards.map((c) => ({
     handle: c.handle,
     title: c.title,
@@ -127,6 +143,8 @@ export function buildLookView(
     discountStrategy: look.discountStrategy ?? 'none',
     discountValue: look.discountValue ?? 0,
     discountCode: look.discountCode ?? null,
+    editorial,
+    hasEditorial,
     related,
     minTotal,
     maxTotal,

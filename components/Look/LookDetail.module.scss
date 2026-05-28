@@ -10,11 +10,6 @@
   position: relative;
   width: 100%;
   background-color: map-get($colors, 'white');
-
-  @include from(md) {
-    // Keep page content clear of the fixed bottom bar (76px + 3px offset).
-    padding-bottom: px(85);
-  }
 }
 
 // ─── GALLERY VISIBILITY ───────────────────────────────────────────────────────
@@ -110,12 +105,9 @@
 }
 
 .mCaret {
-  width: 0;
-  height: 0;
   flex-shrink: 0;
-  border-left: px(5) solid transparent;
-  border-right: px(5) solid transparent;
-  border-top: px(6) solid map-get($colors, 'black');
+  width: px(10);
+  height: px(6);
   transition: transform 0.2s ease;
 }
 

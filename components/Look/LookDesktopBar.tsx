@@ -15,12 +15,14 @@ interface Props {
   discountedTotal: number
   hasDiscount: boolean
   onAddToCart: () => void
+  isInfoOpen: boolean
+  onToggleInfo: () => void
 }
 
 // Fixed bottom bar for the look detail page (desktop only), mirroring the PDP
 // DesktopToolbar and Figma node 31-13569: title/price, a size-panel toggle,
 // Product Information + delivery meta, and the add-to-cart CTA. The size panel
-// and the info body expand above the bar.
+// expands above the bar; Product Information opens the shared ProductInfoPanel.
 export default function LookDesktopBar({
   view,
   selected,
@@ -30,9 +32,10 @@ export default function LookDesktopBar({
   discountedTotal,
   hasDiscount,
   onAddToCart,
+  isInfoOpen,
+  onToggleInfo,
 }: Props) {
   const [panelOpen, setPanelOpen] = useState(false)
-  const [infoOpen, setInfoOpen] = useState(false)
 
   return (
     <div className={s.bar}>
@@ -41,7 +44,6 @@ export default function LookDesktopBar({
           <LookSizeList components={view.components} selected={selected} onSelect={onSelect} />
         </div>
       )}
-      {infoOpen && view.description && <div className={s.infoBody}>{view.description}</div>}
 
       <div className={s.colTitle}>
         <h1 className={s.title}>{view.title}</h1>
@@ -66,15 +68,28 @@ export default function LookDesktopBar({
           onClick={() => setPanelOpen((o) => !o)}
         >
           <span>Select products and sizes</span>
-          <span className={[s.caret, panelOpen ? s.caretOpen : ''].join(' ')} aria-hidden />
+          <svg
+            className={[s.caret, panelOpen ? s.caretOpen : ''].join(' ')}
+            viewBox="0 0 10 6"
+            fill="none"
+            aria-hidden
+          >
+            <path
+              d="M1 1L5 5L9 1"
+              stroke="currentColor"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
         <div className={s.midBottom}>
           <button
             type="button"
             className={s.infoToggle}
-            aria-expanded={infoOpen}
-            disabled={!view.description}
-            onClick={() => setInfoOpen((o) => !o)}
+            aria-expanded={isInfoOpen}
+            disabled={!view.hasEditorial}
+            onClick={onToggleInfo}
           >
             Product Information +
           </button>

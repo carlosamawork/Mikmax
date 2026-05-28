@@ -12,6 +12,9 @@ export const LOOK_BY_SLUG_QUERY = groq`
     title,
     "slug": slug.current,
     description,
+    propiedadesMaterial,
+    recomendacionesLavado,
+    usoRecomendado,
     "seo": seo{ ${seo} },
     editorialImages[]{
       image{
@@ -53,6 +56,9 @@ export type SanityLookDoc = {
   title: string
   slug: string
   description: string | null
+  propiedadesMaterial: unknown[] | null
+  recomendacionesLavado: unknown[] | null
+  usoRecomendado: unknown[] | null
   seo: unknown
   editorialImages: SanityLookImage[] | null
   components: SanityLookComponent[] | null

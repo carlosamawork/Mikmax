@@ -21,14 +21,15 @@ $labelCol: 68;
   display: flex;
   align-items: stretch;
   background-color: map-get($colors, 'white');
-
+  
+  border-top: px(1) solid map-get($colors, 'grey-border');
   .pieceIndex {
     flex-shrink: 0;
     width: px($rail);
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f7f7f7;
+    background-color: #fff;
     font-family: $MonumentGrotesk;
     font-size: px(11);
     line-height: px(15);
@@ -48,7 +49,7 @@ $labelCol: 68;
   .pieceLabel {
     display: flex;
     align-items: center;
-    padding: 0 px(10);
+    padding: 0 px(56);
     font-family: $MonumentGrotesk;
     font-size: px(11);
     line-height: px(15);
@@ -64,7 +65,7 @@ $labelCol: 68;
   grid-template-columns: px($rail) px($labelCol) auto 1fr auto;
   align-items: stretch;
   background-color: map-get($colors, 'white');
-  border-top: px(1) solid map-get($colors, 'lightgray-bg');
+  border-top: px(1) solid map-get($colors, 'grey-border');
 }
 
 .sizeRowDisabled {
@@ -90,17 +91,18 @@ $labelCol: 68;
 
 .sizeName {
   align-self: center;
-  padding: px(14) px(10);
+  padding: px(14) px(35);
   font-family: $MonumentGrotesk;
   font-size: px(11);
   line-height: px(15);
   letter-spacing: px(0.5);
   color: map-get($colors, 'black');
+  white-space: nowrap;
 }
 
 .sizePrice {
   align-self: center;
-  padding: px(14) px(10);
+  padding: px(14) px(56);
   font-family: $MonumentGrotesk;
   font-size: px(11);
   line-height: px(15);

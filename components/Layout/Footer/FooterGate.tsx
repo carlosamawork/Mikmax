@@ -4,7 +4,7 @@ import Footer from './Footer'
 import type {FooterProps} from '@/types/footer'
 
 // Routes where the global footer should NOT render.
-const HIDDEN_PREFIXES = ['/products/']
+const HIDDEN_PREFIXES = ['/products/', '/looks/']
 
 export default function FooterGate(props: FooterProps) {
   const pathname = usePathname()

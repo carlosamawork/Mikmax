@@ -24,6 +24,9 @@ $row: 38;
   z-index: 20;
   background-color: map-get($colors, 'white');
   font-family: $MonumentGrotesk;
+  @include from(md) {
+    max-width: px(1072);
+  }
 }
 
 // ─── EXPANDING OVERLAYS (above the bar) ───────────────────────────────────────
@@ -38,7 +41,7 @@ $row: 38;
   max-height: 60vh;
   overflow-y: auto;
   background-color: map-get($colors, 'white');
-  border: px(1) solid map-get($colors, 'grey-border');
+  border-bottom: px(1) solid map-get($colors, 'grey-border');
   box-shadow: 0 px(-4) px(16) rgba(0, 0, 0, 0.06);
   z-index: 21;
 }
@@ -125,11 +128,9 @@ $row: 38;
 }
 
 .caret {
-  width: 0;
-  height: 0;
-  border-left: px(5) solid transparent;
-  border-right: px(5) solid transparent;
-  border-top: px(6) solid map-get($colors, 'black');
+  flex-shrink: 0;
+  width: px(10);
+  height: px(6);
   transition: transform 0.2s ease;
 }
 
@@ -181,8 +182,8 @@ $row: 38;
 // ─── COLUMN C: add-to-cart CTA ────────────────────────────────────────────────
 
 .cta {
-  width: px($col);
-  flex-shrink: 0;
+  flex: 1;
+  min-width: 0;
   height: 100%;
   border: none;
   background-color: map-get($colors, 'gray-light');

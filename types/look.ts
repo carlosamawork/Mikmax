@@ -1,4 +1,5 @@
 // types/look.ts
+import type {ProductEditorial} from '@/types/product'
 
 export type LookSizeOption = {
   size: string
@@ -41,6 +42,8 @@ export type LookView = {
   discountStrategy: 'none' | 'sumMinusFixed' | 'sumMinusPercent'
   discountValue: number
   discountCode: string | null
+  editorial: ProductEditorial
+  hasEditorial: boolean
   related: LookRelatedCard[]
   // Pre-computed price range across all components (cheapest → most expensive size each)
   minTotal: number

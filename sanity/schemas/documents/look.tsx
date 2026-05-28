@@ -30,8 +30,27 @@ export default defineType({
     }),
     defineField({
       name: 'description',
+      title: 'Descripción',
       type: 'text',
       rows: 3,
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'propiedadesMaterial',
+      title: 'Propiedades del material',
+      type: 'body',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'recomendacionesLavado',
+      title: 'Recomendaciones de lavado',
+      type: 'body',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'usoRecomendado',
+      title: 'Uso recomendado',
+      type: 'body',
       group: 'editorial',
     }),
     defineField({
@@ -46,7 +65,7 @@ export default defineType({
       name: 'components',
       title: 'Componentes (productos del look)',
       description:
-        'Cada componente es una variante específica de Shopify. El usuario solo elige talla; el color queda pre-bloqueado por la variante.',
+        'Cada componente es un producto de Shopify con un color fijo. El usuario solo elige talla; las tallas se toman de Shopify.',
       type: 'array',
       of: [{type: 'bundleComponent'}],
       validation: (Rule) => Rule.min(2),
