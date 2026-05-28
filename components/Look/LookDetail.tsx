@@ -93,18 +93,21 @@ export default function LookDetail({view}: Props) {
         <GallerySwiper images={view.images} onZoom={openZoom} />
       </div>
 
-      <div className={s.body}>
-        <h1 className={s.title}>{view.title}</h1>
-
-        <LookPrice
-          allSelected={allSelected}
-          minTotal={view.minTotal}
-          maxTotal={view.maxTotal}
-          summedTotal={summedTotal}
-          discountedTotal={discountedTotal}
-          hasDiscount={hasDiscount}
-          currency={view.currency}
-        />
+      <div className={s.bar}>
+        <div className={s.titleBlock}>
+          <h1 className={s.title}>{view.title}</h1>
+          <div className={s.priceBlock}>
+            <LookPrice
+              allSelected={allSelected}
+              minTotal={view.minTotal}
+              maxTotal={view.maxTotal}
+              summedTotal={summedTotal}
+              discountedTotal={discountedTotal}
+              hasDiscount={hasDiscount}
+              currency={view.currency}
+            />
+          </div>
+        </div>
 
         <LookSelector
           components={view.components}
@@ -115,7 +118,7 @@ export default function LookDetail({view}: Props) {
         />
 
         {view.description && (
-          <section className={s.info}>
+          <div className={s.infoBlock}>
             <button
               type="button"
               className={s.infoToggle}
@@ -125,7 +128,7 @@ export default function LookDetail({view}: Props) {
               Product Information
             </button>
             {infoOpen && <div className={s.infoBody}>{view.description}</div>}
-          </section>
+          </div>
         )}
       </div>
 

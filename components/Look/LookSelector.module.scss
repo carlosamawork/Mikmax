@@ -1,285 +1,176 @@
+// LookSelector — per-piece size picker.
+//
+// Mobile: an inline accordion (full-width toggle, panel expands below).
+// Desktop: integrates into the LookDetail bottom bar — `.toggle` is the bar's
+// right-hand CTA, and `.panel` expands ABOVE the bar (fixed, centered).
+
 @use '@/styles/common/variables' as *;
 @use '@/styles/mixins/mixins' as *;
 
-// Figma sources:
-//   Mobile accordion  — node 11-4179 (base styles)
-//   Desktop fixed bar — node 31-13533 (@include from(md) overrides)
-//
-// Typography: Monument Grotesk Regular 13px/17px (mobile), 11px/15px (desktop), tracking 0.5px
-// Colors: bg white, bg-light #f0f0f0, border #f0f0f0, text black (#3f3f3f), gray #a4a4a4
-
-// ─── SELECTOR WRAPPER ────────────────────────────────────────────────────────
+$bar-height: 80;
+$bar-offset: 3;
 
 .selector {
-  position: relative;
+  width: 100%;
+
+  @include from(md) {
+    order: 3;
+    flex: 1 0 px(246);
+    display: flex;
+  }
+}
+
+.toggle {
+  display: block;
+  width: 100%;
+  height: px(60);
+  padding: 0 px(10);
+  border: none;
+  cursor: pointer;
+  background-color: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: px(0.5);
+  text-align: center;
+
+  @include from(md) {
+    height: 100%;
+    font-size: px(11);
+    line-height: px(15);
+  }
+}
+
+.panel {
   width: 100%;
   background-color: map-get($colors, 'white');
   border-top: px(1) solid map-get($colors, 'grey-border');
 
   @include from(md) {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: px(76);
-    border-top: px(1) solid map-get($colors, 'grey-border');
-    z-index: 100;
-    background-color: map-get($colors, 'white');
-  }
-}
-
-// ─── TOGGLE BUTTON ───────────────────────────────────────────────────────────
-
-.toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: px(60);
-  padding: 0 px(10);
-  background-color: map-get($colors, 'lightgray-bg');
-  border: none;
-  border-bottom: px(1) solid map-get($colors, 'grey-border');
-  cursor: pointer;
-  font-family: $MonumentGrotesk;
-  font-size: px(13);
-  line-height: px(17);
-  letter-spacing: px(0.5);
-  color: map-get($colors, 'black');
-  text-align: left;
-
-  // Caret indicator — triangle pointing down (closed) / up (open)
-  &::after {
-    content: '';
-    display: block;
-    width: px(10);
-    height: px(7);
-    flex-shrink: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7'%3E%3Cpath d='M0 0 L5 7 L10 0Z' fill='%233f3f3f'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-size: contain;
-    transition: transform 0.2s ease;
-  }
-
-  &[aria-expanded='true']::after {
-    transform: rotate(180deg);
-  }
-
-  @include from(md) {
-    // On desktop the "toggle" occupies the right portion of the fixed bar
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: px(359);
-    height: 100%;
-    border-bottom: none;
-    background-color: map-get($colors, 'lightgray-bg');
-    font-size: px(11);
-    line-height: px(15);
-    color: rgba(255, 255, 255, 0.9);
-    background-color: map-get($colors, 'grey-bg');
-    padding: 0 px(10);
-  }
-}
-
-// ─── PANEL ───────────────────────────────────────────────────────────────────
-
-.panel {
-  width: 100%;
-  background-color: map-get($colors, 'white');
-  border-bottom: px(1) solid map-get($colors, 'grey-border');
-
-  @include from(md) {
-    // Panel floats above the fixed bar, expanding upward
-    position: fixed;
-    bottom: px(76);
-    left: 0;
-    width: 100%;
-    max-height: 70vh;
+    bottom: px($bar-height + $bar-offset);
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: px(1072);
+    max-height: 60vh;
     overflow-y: auto;
-    border-bottom: none;
-    border-top: px(1) solid map-get($colors, 'grey-border');
+    border: px(1) solid map-get($colors, 'grey-border');
     box-shadow: 0 px(-4) px(16) rgba(0, 0, 0, 0.06);
+    z-index: 21;
   }
+}
 
-  // ─── PIECE ─────────────────────────────────────────────────────────────────
+.piece {
+  padding: px(10);
+  border-bottom: px(1) solid map-get($colors, 'grey-border');
 
-  .piece {
-    border-bottom: px(1) solid map-get($colors, 'grey-border');
+  .pieceHead {
+    display: flex;
+    align-items: center;
+    gap: px(10);
+    margin-bottom: px(8);
 
-    @include from(md) {
-      padding-left: 12.5%;
+    .pieceIndex {
+      font-family: $MonumentGrotesk;
+      font-size: px(11);
+      color: map-get($colors, 'gray-light');
     }
 
-    // ─── PIECE HEAD ──────────────────────────────────────────────────────────
+    .pieceThumb {
+      width: px(48);
+      height: px(64);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
 
-    .pieceHead {
+    .pieceLabel {
+      font-family: $MonumentGrotesk;
+      font-size: px(13);
+      letter-spacing: px(0.5);
+      color: map-get($colors, 'black');
+
+      @include from(md) {
+        font-size: px(11);
+      }
+    }
+  }
+
+  .sizes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .sizeRow {
       display: flex;
       align-items: center;
-      min-height: px(91);
-      padding: px(10) px(10) px(10) 0;
-      background-color: map-get($colors, 'white');
-      border-bottom: px(1) solid map-get($colors, 'grey-border');
+      gap: px(10);
+      height: px(40);
 
-      .pieceIndex {
-        flex-shrink: 0;
-        width: px(36);
-        text-align: center;
-        font-family: $MonumentGrotesk;
-        font-size: px(11);
-        line-height: px(15);
-        letter-spacing: px(0.5);
-        color: map-get($colors, 'black');
-      }
-
-      .pieceThumb {
-        flex-shrink: 0;
-        width: px(64);
-        height: px(84);
-        object-fit: cover;
-        border-bottom: px(1) solid map-get($colors, 'grey-border');
-      }
-
-      .pieceLabel {
+      .sizeName {
         flex: 1;
-        padding-left: px(14);
-        padding-right: px(10);
         font-family: $MonumentGrotesk;
-        font-size: px(11);
-        line-height: px(15);
+        font-size: px(13);
         letter-spacing: px(0.5);
         color: map-get($colors, 'black');
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
 
         @include from(md) {
           font-size: px(11);
         }
       }
-    }
 
-    // ─── SIZES LIST ──────────────────────────────────────────────────────────
+      .sizePrice {
+        font-family: $MonumentGrotesk;
+        font-size: px(13);
+        color: map-get($colors, 'black');
 
-    .sizes {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+        @include from(md) {
+          font-size: px(11);
+        }
+      }
 
-      // ─── SIZE ROW ──────────────────────────────────────────────────────────
-
-      .sizeRow {
-        display: flex;
-        align-items: center;
-        position: relative;
-        height: px(35);
-        border-bottom: px(1) solid map-get($colors, 'grey-border');
+      .sizeSelect {
+        width: px(90);
+        height: px(28);
+        flex-shrink: 0;
+        border: px(1) solid map-get($colors, 'black-border');
         background-color: map-get($colors, 'white');
+        color: map-get($colors, 'black');
+        font-family: $MonumentGrotesk;
+        font-size: px(11);
+        letter-spacing: px(0.5);
+        cursor: pointer;
 
-        .sizeName {
-          position: absolute;
-          left: px(70);
-          font-family: $MonumentGrotesk;
-          font-size: px(11);
-          line-height: px(15);
-          letter-spacing: px(0.5);
-          color: map-get($colors, 'black');
+        &:disabled {
+          color: map-get($colors, 'gray-light');
+          border-color: map-get($colors, 'grey-border');
+          text-decoration: line-through;
+          cursor: not-allowed;
         }
+      }
 
-        .sizePrice {
-          position: absolute;
-          left: px(160);
-          font-family: $MonumentGrotesk;
-          font-size: px(11);
-          line-height: px(15);
-          letter-spacing: px(0.5);
-          color: map-get($colors, 'black');
-
-          @include from(md) {
-            left: px(205);
-          }
-        }
-
-        .sizeSelect {
-          position: absolute;
-          right: 0;
-          top: 0;
-          width: px(62);
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: px(10);
-          background-color: map-get($colors, 'lightgray-bg');
-          border: none;
-          cursor: pointer;
-          font-family: $MonumentGrotesk;
-          font-size: px(11);
-          line-height: px(15);
-          letter-spacing: px(0.5);
-          color: map-get($colors, 'darker');
-          transition: background-color 0.15s ease, color 0.15s ease;
-
-          @include hover() {
-            background-color: map-get($colors, 'darker');
-            color: map-get($colors, 'white');
-          }
-
-          &.sizeSelectActive {
-            background-color: map-get($colors, 'darker');
-            color: map-get($colors, 'white');
-          }
-
-          &:disabled {
-            background-color: map-get($colors, 'lightgray-bg');
-            color: map-get($colors, 'gray-light');
-            cursor: not-allowed;
-            text-decoration: line-through;
-
-            @include hover() {
-              background-color: map-get($colors, 'lightgray-bg');
-              color: map-get($colors, 'gray-light');
-            }
-          }
-        }
+      .sizeSelectActive {
+        background-color: map-get($colors, 'black-border');
+        color: map-get($colors, 'white');
       }
     }
   }
+}
 
-  // ─── ADD TO CART ───────────────────────────────────────────────────────────
+.addToCart {
+  display: block;
+  width: 100%;
+  height: px(60);
+  border: none;
+  cursor: pointer;
+  background-color: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  letter-spacing: px(0.5);
 
-  .addToCart {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: px(70);
-    padding: px(10);
-    background-color: map-get($colors, 'darker');
-    border: none;
-    cursor: pointer;
-    font-family: $MonumentGrotesk;
-    font-size: px(11);
-    line-height: px(15);
-    letter-spacing: px(0.5);
-    color: map-get($colors, 'white');
-    transition: background-color 0.15s ease;
-
-    @include hover() {
-      background-color: map-get($colors, 'black');
-    }
-
-    &:disabled {
-      background-color: map-get($colors, 'grey-bg');
-      cursor: not-allowed;
-
-      @include hover() {
-        background-color: map-get($colors, 'grey-bg');
-      }
-    }
-
-    @include from(md) {
-      height: px(76);
-    }
+  &:disabled {
+    background-color: map-get($colors, 'grey-bg');
+    cursor: not-allowed;
   }
 }
