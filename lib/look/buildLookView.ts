@@ -14,6 +14,7 @@ type ShopifyVariant = {
   price: {amount: string; currencyCode: string}
   compareAtPrice?: {amount: string} | null
   selectedOptions: {name: string; value: string}[]
+  image?: {url: string; altText?: string | null} | null
 }
 
 type ShopifyProductDetail = {
@@ -39,45 +40,33 @@ function sizeOf(v: ShopifyVariant, sizeOptionName: string | undefined): string |
   return v.selectedOptions.find((o) => o.name === sizeOptionName)?.value
 }
 
-// Resolve one component's selectable sizes from its Shopify product detail.
+// Resolve one component's selectable sizes (and the color's thumbnail) from its
+// Shopify product detail. The color is locked by the editor's `comp.color`; all
+// sizes of that color are offered, taken live from Shopify.
 function resolveComponentSizes(
   comp: SanityLookComponent,
   detail: ShopifyProductDetail,
-): LookSizeOption[] {
-  if (!detail) return []
-  // Without the referenced variant we can't determine the locked color, so drop
-  // the component rather than silently exposing every color of the product.
-  if (!comp.variantGid) return []
+): {sizes: LookSizeOption[]; imageUrl?: string} {
+  if (!detail || !comp.color) return {sizes: []}
   const variants = detail.variants?.nodes ?? []
   const sizeOptionName = detail.options?.find((o) => o.name.toLowerCase() !== 'color')?.name
-  // Locked color = the referenced variant's color.
-  const ref = variants.find((v) => v.id === comp.variantGid)
-  const lockedColor = ref ? colorOf(ref) : undefined
-  const allowed = new Set((comp.availableSizes ?? []).map((s) => s.trim().toLowerCase()))
+  const target = comp.color.trim().toLowerCase()
 
-  const out: LookSizeOption[] = []
+  let imageUrl: string | undefined
+  const sizes: LookSizeOption[] = []
   for (const v of variants) {
-    if (lockedColor && colorOf(v) !== lockedColor) continue
-    const size = sizeOf(v, sizeOptionName) ?? 'Default'
-    // If availableSizes is set, only include those sizes; otherwise include all.
-    if (allowed.size > 0 && !allowed.has(size.trim().toLowerCase())) continue
-    out.push({
-      size,
+    const c = colorOf(v)
+    if (!c || c.trim().toLowerCase() !== target) continue
+    if (!imageUrl && v.image?.url) imageUrl = v.image.url
+    sizes.push({
+      size: sizeOf(v, sizeOptionName) ?? 'Default',
       variantGid: v.id,
       price: Number(v.price.amount),
       compareAtPrice: v.compareAtPrice ? Number(v.compareAtPrice.amount) : undefined,
       availableForSale: v.availableForSale,
     })
   }
-  // Preserve the editor's availableSizes order when present.
-  if (allowed.size > 0 && comp.availableSizes) {
-    const order = comp.availableSizes.map((s) => s.trim().toLowerCase())
-    out.sort(
-      (a, b) =>
-        order.indexOf(a.size.trim().toLowerCase()) - order.indexOf(b.size.trim().toLowerCase()),
-    )
-  }
-  return out
+  return {sizes, imageUrl}
 }
 
 export function buildLookView(
@@ -88,10 +77,10 @@ export function buildLookView(
   const components: LookComponentView[] = (look.components ?? [])
     .map((comp) => {
       const detail = comp.productHandle ? details[comp.productHandle] ?? null : null
-      const sizes = resolveComponentSizes(comp, detail)
+      const {sizes, imageUrl} = resolveComponentSizes(comp, detail)
       return {
-        label: comp.label ?? comp.variantTitle ?? 'Pieza',
-        imageUrl: comp.previewImageUrl ?? undefined,
+        label: comp.label ?? comp.productTitle ?? 'Pieza',
+        imageUrl,
         sizes,
       }
     })

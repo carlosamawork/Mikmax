@@ -21,13 +21,9 @@ export const LOOK_BY_SLUG_QUERY = groq`
     },
     "components": components[]{
       label,
-      availableSizes,
-      "variantGid": productVariant->store.gid,
-      "productGid": productVariant->store.productGid,
-      // PERF: correlated full-collection scan per component (no product back-ref on productVariant)
-      "productHandle": *[_type == "product" && store.gid == ^.productVariant->store.productGid][0].store.slug.current,
-      "previewImageUrl": productVariant->store.previewImageUrl,
-      "variantTitle": productVariant->store.title
+      color,
+      "productHandle": product->store.slug.current,
+      "productTitle": product->store.title
     },
     discountStrategy,
     discountValue,
@@ -47,12 +43,9 @@ export type SanityLookImage = {
 
 export type SanityLookComponent = {
   label: string | null
-  availableSizes: string[] | null
-  variantGid: string | null
-  productGid: string | null
+  color: string | null
   productHandle: string | null
-  previewImageUrl: string | null
-  variantTitle: string | null
+  productTitle: string | null
 }
 
 export type SanityLookDoc = {
