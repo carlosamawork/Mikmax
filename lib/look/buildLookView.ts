@@ -45,6 +45,9 @@ function resolveComponentSizes(
   detail: ShopifyProductDetail,
 ): LookSizeOption[] {
   if (!detail) return []
+  // Without the referenced variant we can't determine the locked color, so drop
+  // the component rather than silently exposing every color of the product.
+  if (!comp.variantGid) return []
   const variants = detail.variants?.nodes ?? []
   const sizeOptionName = detail.options?.find((o) => o.name.toLowerCase() !== 'color')?.name
   // Locked color = the referenced variant's color.
@@ -95,6 +98,7 @@ export function buildLookView(
     .filter((c) => c.sizes.length > 0)
 
   // Price range: sum of cheapest / most expensive size per component.
+  // `components` is pre-filtered to sizes.length > 0, so Math.min/max never see [].
   let minTotal = 0
   let maxTotal = 0
   for (const c of components) {
