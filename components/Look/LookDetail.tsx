@@ -9,7 +9,8 @@ import GalleryHorizontal from '@/components/Product/Desktop/GalleryHorizontal'
 import GallerySwiper from '@/components/Product/Mobile/GallerySwiper'
 import ImageLightbox from '@/components/Product/shared/ImageLightbox'
 import RelatedGrid from '@/components/Product/Mobile/RelatedGrid'
-import LookSelector from './LookSelector'
+import LookDesktopBar from './LookDesktopBar'
+import LookSizeList from './LookSizeList'
 import LookPrice from './LookPrice'
 import s from './LookDetail.module.scss'
 
@@ -24,7 +25,8 @@ export default function LookDetail({view}: Props) {
   )
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
-  const [infoOpen, setInfoOpen] = useState(false)
+  const [mSizesOpen, setMSizesOpen] = useState(false)
+  const [mInfoOpen, setMInfoOpen] = useState(false)
 
   const allSelected =
     view.components.length > 0 && selected.every((sz) => sz !== undefined)
@@ -79,6 +81,18 @@ export default function LookDetail({view}: Props) {
     setLightboxOpen(true)
   }
 
+  const price = (
+    <LookPrice
+      allSelected={allSelected}
+      minTotal={view.minTotal}
+      maxTotal={view.maxTotal}
+      summedTotal={summedTotal}
+      discountedTotal={discountedTotal}
+      hasDiscount={hasDiscount}
+      currency={view.currency}
+    />
+  )
+
   return (
     <article className={s.look}>
       <div className={s.galleryDesktop}>
@@ -93,42 +107,66 @@ export default function LookDetail({view}: Props) {
         <GallerySwiper images={view.images} onZoom={openZoom} />
       </div>
 
-      <div className={s.bar}>
-        <div className={s.titleBlock}>
-          <h1 className={s.title}>{view.title}</h1>
-          <div className={s.priceBlock}>
-            <LookPrice
-              allSelected={allSelected}
-              minTotal={view.minTotal}
-              maxTotal={view.maxTotal}
-              summedTotal={summedTotal}
-              discountedTotal={discountedTotal}
-              hasDiscount={hasDiscount}
-              currency={view.currency}
-            />
-          </div>
-        </div>
-
-        <LookSelector
-          components={view.components}
+      {/* Desktop: fixed bottom bar */}
+      <div className={s.desktopOnly}>
+        <LookDesktopBar
+          view={view}
           selected={selected}
           onSelect={handleSelect}
           allSelected={allSelected}
+          summedTotal={summedTotal}
+          discountedTotal={discountedTotal}
+          hasDiscount={hasDiscount}
           onAddToCart={handleAddToCart}
         />
+      </div>
 
-        {view.description && (
-          <div className={s.infoBlock}>
+      {/* Mobile: stacked flow */}
+      <div className={s.mobileOnly}>
+        <h1 className={s.mTitle}>{view.title}</h1>
+        <div className={s.mPrice}>{price}</div>
+        <p className={s.mMeta}>
+          Complimentary gift wrapping
+          <br />
+          30-day returns
+        </p>
+
+        <button
+          type="button"
+          className={s.mAccordion}
+          aria-expanded={mSizesOpen}
+          onClick={() => setMSizesOpen((o) => !o)}
+        >
+          <span>Select Product and Sizes</span>
+          <span className={[s.mCaret, mSizesOpen ? s.mCaretOpen : ''].join(' ')} aria-hidden />
+        </button>
+        {mSizesOpen && (
+          <>
+            <LookSizeList components={view.components} selected={selected} onSelect={handleSelect} />
             <button
               type="button"
-              className={s.infoToggle}
-              aria-expanded={infoOpen}
-              onClick={() => setInfoOpen((o) => !o)}
+              className={s.mAddToCart}
+              disabled={!allSelected}
+              onClick={handleAddToCart}
             >
-              Product Information
+              {allSelected ? 'Add to cart' : 'Select all sizes'}
             </button>
-            {infoOpen && <div className={s.infoBody}>{view.description}</div>}
-          </div>
+          </>
+        )}
+
+        {view.description && (
+          <>
+            <button
+              type="button"
+              className={s.mAccordion}
+              aria-expanded={mInfoOpen}
+              onClick={() => setMInfoOpen((o) => !o)}
+            >
+              <span>Product Information</span>
+              <span className={[s.mCaret, mInfoOpen ? s.mCaretOpen : ''].join(' ')} aria-hidden />
+            </button>
+            {mInfoOpen && <div className={s.mInfoBody}>{view.description}</div>}
+          </>
         )}
       </div>
 

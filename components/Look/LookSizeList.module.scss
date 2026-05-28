@@ -1,0 +1,120 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.list {
+  width: 100%;
+}
+
+.piece {
+  display: flex;
+  align-items: flex-start;
+  gap: px(12);
+  padding: px(12) px(16);
+  border-bottom: px(1) solid map-get($colors, 'grey-border');
+
+  .pieceIndex {
+    flex-shrink: 0;
+    width: px(20);
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    line-height: px(15);
+    color: map-get($colors, 'gray-light');
+  }
+
+  .pieceThumb {
+    flex-shrink: 0;
+    width: px(56);
+    height: px(75);
+    object-fit: cover;
+    background-color: map-get($colors, 'lightgray-bg');
+  }
+
+  .pieceMain {
+    flex: 1;
+    min-width: 0;
+
+    .pieceLabel {
+      margin: 0 0 px(8);
+      font-family: $MonumentGrotesk;
+      font-size: px(13);
+      line-height: px(17);
+      letter-spacing: px(0.5);
+      color: map-get($colors, 'black');
+
+      @include from(md) {
+        font-size: px(11);
+        line-height: px(15);
+      }
+    }
+
+    .sizes {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      .sizeRow {
+        display: flex;
+        align-items: center;
+        gap: px(16);
+        height: px(34);
+
+        .sizeName {
+          flex-shrink: 0;
+          width: px(120);
+          font-family: $MonumentGrotesk;
+          font-size: px(13);
+          letter-spacing: px(0.5);
+          color: map-get($colors, 'black');
+
+          @include from(md) {
+            font-size: px(11);
+          }
+        }
+
+        .sizePrice {
+          flex: 1;
+          font-family: $MonumentGrotesk;
+          font-size: px(13);
+          color: map-get($colors, 'black');
+
+          @include from(md) {
+            font-size: px(11);
+          }
+        }
+
+        .sizeSelect {
+          flex-shrink: 0;
+          width: px(96);
+          height: px(28);
+          border: px(1) solid map-get($colors, 'black-border');
+          background-color: map-get($colors, 'white');
+          color: map-get($colors, 'black');
+          font-family: $MonumentGrotesk;
+          font-size: px(11);
+          letter-spacing: px(0.5);
+          cursor: pointer;
+          transition: background-color 0.15s ease, color 0.15s ease;
+
+          @include hover {
+            &:not(:disabled) {
+              background-color: map-get($colors, 'black-border');
+              color: map-get($colors, 'white');
+            }
+          }
+
+          &:disabled {
+            color: map-get($colors, 'gray-light');
+            border-color: map-get($colors, 'grey-border');
+            text-decoration: line-through;
+            cursor: not-allowed;
+          }
+        }
+
+        .sizeSelectActive {
+          background-color: map-get($colors, 'black-border');
+          color: map-get($colors, 'white');
+        }
+      }
+    }
+  }
+}

@@ -1,18 +1,10 @@
-// LookDetail layout — mobile-first.
-//
-// Desktop mirrors the PDP DesktopToolbar (components/Product/Desktop): a single
-// fixed bottom bar (one centered flex row, max-width 1072px) holding the title +
-// price block, the Product Information block, and the selector CTA. The size
-// panel (LookSelector) and the info body expand ABOVE the bar.
-//
-// Mobile stacks everything in normal flow: gallery → title → price → selector
-// accordion → product-information accordion → related grid (Figma node 11-4411).
+// LookDetail layout. Mirrors the PDP's desktop/mobile split:
+//   Desktop → full-bleed gallery + a fixed bottom bar (LookDesktopBar).
+//   Mobile  → stacked flow: gallery → title → price → meta → size accordion →
+//             product-information accordion → related grid (Figma node 11-4411).
 
 @use '@/styles/common/variables' as *;
 @use '@/styles/mixins/mixins' as *;
-
-$bar-height: 80;
-$bar-offset: 3;
 
 .look {
   position: relative;
@@ -20,8 +12,8 @@ $bar-offset: 3;
   background-color: map-get($colors, 'white');
 
   @include from(md) {
-    // Keep page content clear of the fixed bottom bar.
-    padding-bottom: px($bar-height + $bar-offset * 2);
+    // Keep page content clear of the fixed bottom bar (76px + 3px offset).
+    padding-bottom: px(85);
   }
 }
 
@@ -45,46 +37,32 @@ $bar-offset: 3;
   }
 }
 
-// ─── BAR ──────────────────────────────────────────────────────────────────────
+// ─── DESKTOP / MOBILE SWITCH ──────────────────────────────────────────────────
 
-.bar {
-  width: 100%;
+.desktopOnly {
+  display: none;
 
   @include from(md) {
-    position: fixed;
-    bottom: px($bar-offset);
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: px(1072);
-    height: px($bar-height);
-    display: flex;
-    align-items: stretch;
-    z-index: 20;
-    background-color: map-get($colors, 'white');
-    font-family: $MonumentGrotesk;
+    display: block;
   }
 }
 
-// ─── TITLE + PRICE ──────────────────────────────────────────────────────────────
-
-.titleBlock {
-  display: flex;
-  flex-direction: column;
+.mobileOnly {
+  display: block;
 
   @include from(md) {
-    order: 1;
-    width: px(306);
-    flex-shrink: 0;
+    display: none;
   }
 }
 
-.title {
+// ─── MOBILE STACKED FLOW ──────────────────────────────────────────────────────
+
+.mTitle {
   margin: 0;
   height: px(60);
   display: flex;
   align-items: center;
-  padding: px(10);
+  padding: 0 px(16);
   background-color: map-get($colors, 'white');
   font-family: $MonumentGrotesk;
   font-size: px(13);
@@ -92,51 +70,35 @@ $bar-offset: 3;
   letter-spacing: px(0.5);
   font-weight: 400;
   color: map-get($colors, 'black');
-
-  @include from(md) {
-    height: px(40);
-    font-size: px(11);
-    line-height: px(15);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 }
 
-.priceBlock {
+.mPrice {
   display: flex;
   align-items: center;
-  height: px(60);
-  padding: px(10);
+  min-height: px(48);
+  padding: px(8) px(16);
   background-color: map-get($colors, 'lightgray-bg');
-
-  @include from(md) {
-    height: px(40);
-  }
 }
 
-// ─── PRODUCT INFORMATION ────────────────────────────────────────────────────────
-
-.infoBlock {
-  width: 100%;
-
-  @include from(md) {
-    order: 2;
-    position: relative;
-    width: px(184);
-    flex-shrink: 0;
-  }
+.mMeta {
+  margin: 0;
+  padding: px(12) px(16);
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: px(11);
+  line-height: px(15);
+  color: map-get($colors, 'black');
 }
 
-.infoToggle {
+.mAccordion {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: px(60);
-  padding: 0 px(10);
+  height: px(56);
+  padding: 0 px(16);
   background-color: map-get($colors, 'white');
   border: none;
+  border-top: px(1) solid map-get($colors, 'grey-border');
   border-bottom: px(1) solid map-get($colors, 'grey-border');
   cursor: pointer;
   font-family: $MonumentGrotesk;
@@ -145,58 +107,48 @@ $bar-offset: 3;
   letter-spacing: px(0.5);
   color: map-get($colors, 'black');
   text-align: left;
-
-  &::after {
-    content: '';
-    display: block;
-    width: px(10);
-    height: px(7);
-    flex-shrink: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7'%3E%3Cpath d='M0 0 L5 7 L10 0Z' fill='%233f3f3f'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-size: contain;
-    transition: transform 0.2s ease;
-  }
-
-  &[aria-expanded='true']::after {
-    transform: rotate(180deg);
-  }
-
-  @include from(md) {
-    height: 100%;
-    font-size: px(11);
-    line-height: px(15);
-    border-bottom: none;
-
-    &::after {
-      display: none;
-    }
-  }
 }
 
-.infoBody {
-  padding: px(10);
+.mCaret {
+  width: 0;
+  height: 0;
+  flex-shrink: 0;
+  border-left: px(5) solid transparent;
+  border-right: px(5) solid transparent;
+  border-top: px(6) solid map-get($colors, 'black');
+  transition: transform 0.2s ease;
+}
+
+.mCaretOpen {
+  transform: rotate(180deg);
+}
+
+.mInfoBody {
+  padding: px(16);
   background-color: map-get($colors, 'white');
   border-bottom: px(1) solid map-get($colors, 'grey-border');
   font-family: $MonumentGrotesk;
   font-size: px(13);
-  line-height: px(17);
+  line-height: px(19);
   letter-spacing: px(0.5);
   color: map-get($colors, 'black');
+}
 
-  @include from(md) {
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    width: px(320);
-    max-height: 50vh;
-    overflow-y: auto;
-    border: px(1) solid map-get($colors, 'grey-border');
-    border-bottom: none;
-    font-size: px(11);
-    line-height: px(15);
-    box-shadow: 0 px(-4) px(16) rgba(0, 0, 0, 0.06);
-    z-index: 21;
+.mAddToCart {
+  display: block;
+  width: 100%;
+  height: px(60);
+  border: none;
+  cursor: pointer;
+  background-color: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  letter-spacing: px(0.5);
+
+  &:disabled {
+    background-color: map-get($colors, 'gray-light');
+    cursor: not-allowed;
   }
 }
 

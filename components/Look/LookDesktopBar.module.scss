@@ -1,0 +1,200 @@
+// Desktop bottom bar — Figma node 31-13569 (1077 × 76).
+// Three 359px columns: A = title/price, B = panel toggle + (info | meta),
+// C = add-to-cart CTA. The size panel and info body expand above the bar.
+
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+$bar-width: 1077;
+$bar-height: 76;
+$bar-offset: 3;
+$col: 359;
+$row: 38;
+
+.bar {
+  position: fixed;
+  bottom: px($bar-offset);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: px($bar-width);
+  height: px($bar-height);
+  display: flex;
+  align-items: stretch;
+  z-index: 20;
+  background-color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+}
+
+// ─── EXPANDING OVERLAYS (above the bar) ───────────────────────────────────────
+
+.panel {
+  position: fixed;
+  bottom: px($bar-height + $bar-offset);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: px($bar-width);
+  max-height: 60vh;
+  overflow-y: auto;
+  background-color: map-get($colors, 'white');
+  border: px(1) solid map-get($colors, 'grey-border');
+  box-shadow: 0 px(-4) px(16) rgba(0, 0, 0, 0.06);
+  z-index: 21;
+}
+
+.infoBody {
+  position: fixed;
+  bottom: px($bar-height + $bar-offset);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: px($bar-width);
+  max-height: 50vh;
+  overflow-y: auto;
+  padding: px(16);
+  background-color: map-get($colors, 'white');
+  border: px(1) solid map-get($colors, 'grey-border');
+  box-shadow: 0 px(-4) px(16) rgba(0, 0, 0, 0.06);
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+  z-index: 21;
+}
+
+// ─── COLUMN A: title / price ──────────────────────────────────────────────────
+
+.colTitle {
+  width: px($col);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  height: px($row);
+  display: flex;
+  align-items: center;
+  padding: 0 px(10);
+  background-color: map-get($colors, 'white');
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  font-weight: 400;
+  color: map-get($colors, 'black');
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  height: px($row);
+  padding: 0 px(10);
+  background-color: map-get($colors, 'lightgray-bg');
+}
+
+// ─── COLUMN B: toggle (top) + info | meta (bottom) ────────────────────────────
+
+.colMid {
+  width: px($col);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.panelToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: px($row);
+  padding: 0 px(10);
+  border: none;
+  cursor: pointer;
+  background-color: #f7f7f7;
+  color: map-get($colors, 'black');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  text-align: left;
+}
+
+.caret {
+  width: 0;
+  height: 0;
+  border-left: px(5) solid transparent;
+  border-right: px(5) solid transparent;
+  border-top: px(6) solid map-get($colors, 'black');
+  transition: transform 0.2s ease;
+}
+
+.caretOpen {
+  transform: rotate(180deg);
+}
+
+.midBottom {
+  display: flex;
+  height: px($row);
+}
+
+.infoToggle {
+  width: px(197);
+  flex-shrink: 0;
+  height: 100%;
+  padding: 0 px(10);
+  display: flex;
+  align-items: center;
+  background-color: map-get($colors, 'white');
+  border: none;
+  cursor: pointer;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+  text-align: left;
+
+  &:disabled {
+    color: map-get($colors, 'gray-light');
+    cursor: default;
+  }
+}
+
+.meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 px(10);
+  background-color: map-get($colors, 'lightgray-bg');
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: px(9);
+  line-height: px(11);
+  color: map-get($colors, 'black');
+}
+
+// ─── COLUMN C: add-to-cart CTA ────────────────────────────────────────────────
+
+.cta {
+  width: px($col);
+  flex-shrink: 0;
+  height: 100%;
+  border: none;
+  background-color: map-get($colors, 'gray-light');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  cursor: not-allowed;
+}
+
+.ctaActive {
+  background-color: map-get($colors, 'black-border');
+  cursor: pointer;
+}
