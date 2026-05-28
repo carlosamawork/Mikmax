@@ -56,7 +56,7 @@ export default defineType({
       name: 'relatedProducts',
       title: 'Productos relacionados',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'product'}]}],
+      of: [{type: 'reference', to: [{type: 'product'}], weak: true}],
       group: 'editorial',
     }),
     defineField({
