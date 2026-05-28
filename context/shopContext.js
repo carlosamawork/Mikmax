@@ -1,6 +1,14 @@
 'use client'
 import {createContext, useState, useEffect} from 'react'
-import {cartCreate, cartLinesAdd, cartLinesUpdate, cartLinesRemove} from '../lib/shopify'
+import {
+  cartCreate,
+  cartCreateMultiple,
+  cartLinesAdd,
+  cartLinesAddMultiple,
+  cartLinesUpdate,
+  cartLinesRemove,
+  cartDiscountCodesUpdate,
+} from '../lib/shopify'
 
 const CartContext = createContext()
 
@@ -113,6 +121,50 @@ export default function ShopProvider({children}) {
     }
   }
 
+  async function addLookToCart(lookLines, discountCode) {
+    if (!Array.isArray(lookLines) || lookLines.length === 0) return
+    setCartOpen(true)
+
+    const apiLines = lookLines.map((l) => ({merchandiseId: l.store.gid, quantity: l.quantity ?? 1}))
+    const itemsData = lookLines.map((l) => ({...l, variantQuantity: l.quantity ?? 1}))
+
+    try {
+      let apiCart
+      if (cart.length === 0) {
+        apiCart = await cartCreateMultiple(apiLines)
+      } else {
+        apiCart = await cartLinesAddMultiple(cartId, apiLines)
+      }
+      if (!apiCart || apiCart.error) return
+
+      const currentCartId = apiCart.id ?? cartId
+
+      if (discountCode) {
+        const withDiscount = await cartDiscountCodesUpdate(currentCartId, [discountCode])
+        if (withDiscount && !withDiscount.error) apiCart = withDiscount
+      }
+
+      const lines = apiCart.lines.edges.map((e) => e.node)
+
+      // Merge new items into existing local cart WITHOUT mutating state objects.
+      const mergedLocal = cart.map((c) => ({...c}))
+      for (const item of itemsData) {
+        const existing = mergedLocal.find((c) => c.store.gid === item.store.gid)
+        if (existing) existing.variantQuantity += item.variantQuantity
+        else mergedLocal.push({...item})
+      }
+      const synced = syncLineIds(mergedLocal, lines)
+
+      const meta = {id: currentCartId, checkoutUrl: apiCart.checkoutUrl ?? checkoutUrl}
+      setCart(synced)
+      setCartId(currentCartId)
+      setCheckoutUrl(meta.checkoutUrl)
+      saveToStorage(synced, meta)
+    } catch (err) {
+      console.error('addLookToCart failed', err)
+    }
+  }
+
   async function updateCartItem(item, quantity) {
     if (!item?.lineId) return
 
@@ -159,6 +211,7 @@ export default function ShopProvider({children}) {
         isOpen,
         setIsOpen,
         addToCart,
+        addLookToCart,
         checkoutUrl,
         removeCartItem,
         updateCartItem,
