@@ -1,110 +1,129 @@
-// Size list — Figma node 31-13861.
-// Piece header (number + 68x91 thumbnail + title), then full-width 35px size
-// rows: size + price indented left, a 62px "Select" button flush right.
+// Size list — mirrors the PDP SizeSelector colours (Figma 31-13861):
+//   • continuous 44px #f7f7f7 index rail down the left
+//   • white rows, light top border, #f0f0f0 Select button (80px, flush right)
+//   • selected row → #f7f7f7 with its index + Select button flipped to white
+//   • disabled (sold out) row → 40% opacity
+// Columns are fixed so the piece title aligns with the size-price column.
 
 @use '@/styles/common/variables' as *;
 @use '@/styles/mixins/mixins' as *;
+
+$rail: 44;
+$labelCol: 68;
 
 .list {
   width: 100%;
 }
 
-.piece {
-  .pieceHeader {
+// ─── PIECE HEADER (number rail + thumbnail + title) ───────────────────────────
+
+.pieceHeader {
+  display: flex;
+  align-items: stretch;
+  background-color: map-get($colors, 'white');
+
+  .pieceIndex {
+    flex-shrink: 0;
+    width: px($rail);
     display: flex;
     align-items: center;
-    background-color: map-get($colors, 'white');
-
-    .pieceIndex {
-      flex-shrink: 0;
-      width: px(36);
-      text-align: center;
-      font-family: $MonumentGrotesk;
-      font-size: px(11);
-      line-height: px(15);
-      letter-spacing: px(0.5);
-      color: map-get($colors, 'black');
-    }
-
-    .pieceThumb {
-      flex-shrink: 0;
-      width: px(68);
-      height: px(91);
-      object-fit: cover;
-      background-color: map-get($colors, 'lightgray-bg');
-    }
-
-    .pieceLabel {
-      margin-left: px(56);
-      font-family: $MonumentGrotesk;
-      font-size: px(11);
-      line-height: px(15);
-      letter-spacing: px(0.5);
-      color: map-get($colors, 'black');
-    }
+    justify-content: center;
+    background-color: #f7f7f7;
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    line-height: px(15);
+    letter-spacing: px(0.5);
+    color: map-get($colors, 'black');
   }
 
-  .sizeRow {
+  .pieceThumb {
+    flex-shrink: 0;
+    width: px($labelCol);
+    height: px(91);
+    object-fit: cover;
+    background-color: map-get($colors, 'lightgray-bg');
+  }
+
+  // Title starts where the price column starts (rail + label column).
+  .pieceLabel {
     display: flex;
     align-items: center;
-    height: px(35);
-    padding-left: px(20);
-    border-bottom: px(1) solid map-get($colors, 'lightgray-bg');
+    padding: 0 px(10);
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    line-height: px(15);
+    letter-spacing: px(0.5);
+    color: map-get($colors, 'black');
+  }
+}
+
+// ─── SIZE ROWS ────────────────────────────────────────────────────────────────
+
+.sizeRow {
+  display: grid;
+  grid-template-columns: px($rail) px($labelCol) auto 1fr auto;
+  align-items: stretch;
+  background-color: map-get($colors, 'white');
+  border-top: px(1) solid map-get($colors, 'lightgray-bg');
+}
+
+.sizeRowDisabled {
+  opacity: 0.4;
+}
+
+.sizeRowSelected {
+  background-color: #f7f7f7;
+
+  .sizeIndex {
     background-color: map-get($colors, 'white');
+  }
 
-    @include from(md) {
-      padding-left: px(70);
-    }
+  .sizeSelect {
+    background-color: map-get($colors, 'white');
+  }
+}
 
-    .sizeName {
-      font-family: $MonumentGrotesk;
-      font-size: px(11);
-      line-height: px(15);
-      letter-spacing: px(0.5);
-      color: map-get($colors, 'black');
-    }
+.sizeIndex {
+  align-self: stretch;
+  background-color: #f7f7f7;
+}
 
-    .sizePrice {
-      margin-left: px(45);
-      font-family: $MonumentGrotesk;
-      font-size: px(11);
-      line-height: px(15);
-      letter-spacing: px(0.5);
-      color: map-get($colors, 'black');
-    }
+.sizeName {
+  align-self: center;
+  padding: px(14) px(10);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+}
 
-    .sizeSelect {
-      margin-left: auto;
-      flex-shrink: 0;
-      width: px(62);
-      height: px(35);
-      border: none;
-      background-color: map-get($colors, 'lightgray-bg');
-      color: #0a0a0a;
-      font-family: $MonumentGrotesk;
-      font-size: px(11);
-      line-height: px(15);
-      letter-spacing: px(0.5);
-      cursor: pointer;
-      transition: background-color 0.15s ease, color 0.15s ease;
+.sizePrice {
+  align-self: center;
+  padding: px(14) px(10);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+}
 
-      @include hover {
-        &:not(:disabled) {
-          background-color: map-get($colors, 'black-border');
-          color: map-get($colors, 'white');
-        }
-      }
+.sizeSelect {
+  align-self: stretch;
+  justify-self: end;
+  min-width: px(80);
+  max-width: px(80);
+  border: none;
+  padding: 0 px(20);
+  background-color: map-get($colors, 'lightgray-bg');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+  cursor: pointer;
 
-      &:disabled {
-        color: map-get($colors, 'gray-light');
-        text-decoration: line-through;
-        cursor: not-allowed;
-      }
-    }
-
-    .sizeSelectActive {
-      background-color: map-get($colors, 'black-border');
-      color: map-get($colors, 'white');
-    }
+  &:disabled {
+    cursor: not-allowed;
   }
 }

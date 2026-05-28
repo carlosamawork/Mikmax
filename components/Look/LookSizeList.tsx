@@ -8,9 +8,10 @@ interface Props {
   onSelect: (componentIndex: number, size: string) => void
 }
 
-// Shared list of the look's pieces and their selectable sizes (Figma 31-13861):
-// each piece has a header (number + thumbnail + title), then full-width size
-// rows with the size + price on the left and a Select button flush right.
+// Shared list of the look's pieces and their selectable sizes. The size rows
+// mirror the PDP SizeSelector (44px index rail, #f0f0f0 Select button, selected
+// row turns #f7f7f7 with index + button flipped to white). Each piece adds a
+// header with the product thumbnail, since a look spans several products.
 export default function LookSizeList({components, selected, onSelect}: Props) {
   return (
     <div className={s.list}>
@@ -35,17 +36,27 @@ export default function LookSizeList({components, selected, onSelect}: Props) {
           {comp.sizes.map((opt) => {
             const isSelected = selected[i] === opt.size
             return (
-              <div key={opt.variantGid} className={s.sizeRow}>
+              <div
+                key={opt.variantGid}
+                className={[
+                  s.sizeRow,
+                  !opt.availableForSale ? s.sizeRowDisabled : '',
+                  isSelected ? s.sizeRowSelected : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+              >
+                <span className={s.sizeIndex} aria-hidden />
                 <span className={s.sizeName}>{opt.size}</span>
                 <span className={s.sizePrice}>€{opt.price.toFixed(2)}</span>
                 <button
                   type="button"
-                  className={[s.sizeSelect, isSelected ? s.sizeSelectActive : ''].join(' ')}
+                  className={s.sizeSelect}
                   disabled={!opt.availableForSale}
                   aria-pressed={isSelected}
                   onClick={() => onSelect(i, opt.size)}
                 >
-                  {opt.availableForSale ? (isSelected ? 'Selected' : 'Select') : 'Sold out'}
+                  Select
                 </button>
               </div>
             )
