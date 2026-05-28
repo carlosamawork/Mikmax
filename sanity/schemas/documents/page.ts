@@ -38,14 +38,6 @@ export default defineField({
       validation: validateSlug,
       group: 'editorial',
     }),
-    defineField({
-      name: 'legal',
-      title: 'Legal',
-      type: 'boolean',
-      description: 'Escoge esta opción si es una página de tipo legal',
-      initialValue: false,
-      group: 'editorial',
-    }),
     // Show hero
     defineField({
       name: 'showHero',

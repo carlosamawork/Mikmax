@@ -51,6 +51,10 @@ export type SanityProductDoc = {
 }
 
 export async function getSanityProduct(handle: string): Promise<SanityProductDoc | null> {
-  const doc = await client.fetch<SanityProductDoc | null>(PRODUCT_BY_HANDLE_QUERY, {handle})
+  const doc = await client.fetch<SanityProductDoc | null>(
+    PRODUCT_BY_HANDLE_QUERY,
+    {handle},
+    {next: {tags: ['product', `product:${handle}`], revalidate: 3600}},
+  )
   return doc ?? null
 }

@@ -1,6 +1,6 @@
-// sanity/schemas/objects/bundle/bundleComponent.ts
 import {ComponentIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import BundleColorSelect from '../../../components/inputs/BundleColorSelect'
 
 export default defineType({
   name: 'bundleComponent',
@@ -9,29 +9,30 @@ export default defineType({
   icon: ComponentIcon,
   fields: [
     defineField({
-      name: 'productVariant',
-      title: 'Product variant',
+      name: 'product',
+      title: 'Producto',
       type: 'reference',
-      to: [{type: 'productVariant'}],
+      to: [{type: 'product'}],
+      weak: true,
       validation: (Rule) => Rule.required(),
       description:
-        'Variante específica de Shopify. El color queda pre-bloqueado por la variante.',
+        'Producto de Shopify. Elige el color abajo; las tallas se toman automáticamente de Shopify.',
+    }),
+    defineField({
+      name: 'color',
+      title: 'Color',
+      type: 'string',
+      components: {input: BundleColorSelect},
+      validation: (Rule) => Rule.required(),
+      description:
+        'Color del producto para este look (queda fijo). El cliente solo elegirá talla.',
     }),
     defineField({
       name: 'label',
       title: 'Label visible',
       type: 'string',
       description:
-        'Override del título de la variante en la UI del bundle (ej. "Funda nórdica"). Si se deja vacío, usa el título de la variante.',
-    }),
-    defineField({
-      name: 'availableSizes',
-      title: 'Tallas disponibles',
-      type: 'array',
-      of: [{type: 'string'}],
-      description:
-        'Lista de tallas habilitadas para esta variante en el contexto del bundle.',
-      validation: (Rule) => Rule.min(1),
+        'Override del título del producto en la UI del bundle. Si se deja vacío, usa el título del producto.',
     }),
     defineField({
       name: 'notes',
@@ -43,13 +44,13 @@ export default defineType({
   preview: {
     select: {
       label: 'label',
-      variantTitle: 'productVariant.store.title',
-      sku: 'productVariant.store.sku',
+      productTitle: 'product.store.title',
+      color: 'color',
     },
-    prepare({label, variantTitle, sku}) {
+    prepare({label, productTitle, color}) {
       return {
-        title: label || variantTitle || '(sin título)',
-        subtitle: sku ? `SKU ${sku}` : 'Sin SKU sincronizado',
+        title: label || productTitle || '(sin producto)',
+        subtitle: color ? `Color: ${color}` : 'Sin color',
       }
     },
   },

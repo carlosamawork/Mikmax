@@ -8,6 +8,7 @@ import home from './homeStructure'
 import pages from './pageStructure'
 import products from './productStructure'
 import settings from './settingStructure'
+import legalPage from './legalPageStructure'
 import posts from './postStructure'
 import orderPosts from './orderPostStructure'
 import orderProducts from './orderProductStructure'
@@ -55,6 +56,7 @@ const hiddenDocTypes = (listItem: {getId?: () => string | undefined}) => {
     'orderable.look',
     'set',
     'orderable.set',
+    'legalPage',
   ].includes(id)
 }
 
@@ -78,6 +80,7 @@ export const structure: StructureResolver = (S, context) =>
       postTag(S, context),
       S.divider(),
       settings(S, context),
+      legalPage(S, context),
       S.divider(),
       ...S.documentTypeListItems().filter(hiddenDocTypes),
     ])

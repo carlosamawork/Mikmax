@@ -1,12 +1,15 @@
-// sanity/types/objects/global/header.ts
+import type {PortableTextBlock} from 'next-sanity'
+import type {SEO} from '../objects/seo'
 
-import { PortableTextBlock } from "next-sanity";
+export type LegalSection = {
+  title: string
+  slug: string
+  body?: PortableTextBlock[]
+  seo?: SEO
+}
 
 export type LegalPageData = {
-    title: string;
-	sections: {
-		title: string;
-		id: string;
-		body: PortableTextBlock[];
-	}[];
-};
+  title: string
+  sections: LegalSection[]
+  seo?: SEO
+}

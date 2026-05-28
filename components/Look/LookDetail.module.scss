@@ -1,0 +1,156 @@
+// LookDetail layout. Mirrors the PDP's desktop/mobile split:
+//   Desktop → full-bleed gallery + a fixed bottom bar (LookDesktopBar).
+//   Mobile  → stacked flow: gallery → title → price → meta → size accordion →
+//             product-information accordion → related grid (Figma node 11-4411).
+
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.look {
+  position: relative;
+  width: 100%;
+  background-color: map-get($colors, 'white');
+}
+
+// ─── GALLERY VISIBILITY ───────────────────────────────────────────────────────
+
+.galleryMobile {
+  display: block;
+  width: 100%;
+
+  @include from(md) {
+    display: none;
+  }
+}
+
+.galleryDesktop {
+  display: none;
+
+  @include from(md) {
+    display: block;
+    width: 100%;
+  }
+}
+
+// ─── DESKTOP / MOBILE SWITCH ──────────────────────────────────────────────────
+
+.desktopOnly {
+  display: none;
+
+  @include from(md) {
+    display: block;
+  }
+}
+
+.mobileOnly {
+  display: block;
+
+  @include from(md) {
+    display: none;
+  }
+}
+
+// ─── MOBILE STACKED FLOW ──────────────────────────────────────────────────────
+
+.mTitle {
+  margin: 0;
+  height: px(60);
+  display: flex;
+  align-items: center;
+  padding: 0 px(16);
+  background-color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: px(0.5);
+  font-weight: 400;
+  color: map-get($colors, 'black');
+}
+
+.mPrice {
+  display: flex;
+  align-items: center;
+  min-height: px(48);
+  padding: px(8) px(16);
+  background-color: map-get($colors, 'lightgray-bg');
+}
+
+.mMeta {
+  margin: 0;
+  padding: px(12) px(16);
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: px(11);
+  line-height: px(15);
+  color: map-get($colors, 'black');
+}
+
+.mAccordion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: px(56);
+  padding: 0 px(16);
+  background-color: map-get($colors, 'white');
+  border: none;
+  border-top: px(1) solid map-get($colors, 'grey-border');
+  border-bottom: px(1) solid map-get($colors, 'grey-border');
+  cursor: pointer;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+  text-align: left;
+}
+
+.mCaret {
+  flex-shrink: 0;
+  width: px(10);
+  height: px(6);
+  transition: transform 0.2s ease;
+}
+
+.mCaretOpen {
+  transform: rotate(180deg);
+}
+
+.mInfoBody {
+  padding: px(16);
+  background-color: map-get($colors, 'white');
+  border-bottom: px(1) solid map-get($colors, 'grey-border');
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(19);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+}
+
+.mAddToCart {
+  display: block;
+  width: 100%;
+  height: px(60);
+  border: none;
+  cursor: pointer;
+  background-color: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  letter-spacing: px(0.5);
+
+  &:disabled {
+    background-color: map-get($colors, 'gray-light');
+    cursor: not-allowed;
+  }
+}
+
+// ─── RELATED (mobile only — desktop shows them inside the gallery scroller) ─────
+
+.relatedMobile {
+  display: block;
+  width: 100%;
+
+  @include from(md) {
+    display: none;
+  }
+}
