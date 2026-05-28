@@ -1,0 +1,279 @@
+// LookDetail layout — mobile-first
+//
+// Figma sources:
+//   Desktop frame — node 11-4591 (1440px canvas)
+//     Image carousel: full-viewport width, ~904px tall, horizontal scroll with zoom buttons
+//     Fixed bottom bar (76px): title left (~359px) | price middle (~197px) | selector toggle right (~359px)
+//     "Product Information +" row sits in the bar between title and selector
+//   Mobile frame  — node 11-4411 (402px canvas)
+//     Swiper full-width (539px tall) → title (60px, white) → price (60px, #f0f0f0) →
+//     LookSelector accordion → Product Information accordion → RelatedGrid
+//
+// Typography: Monument Grotesk Regular
+//   Mobile:  13px / 17px, letter-spacing 0.5px
+//   Desktop: 11px / 15px, letter-spacing 0.5px
+// Colors: white #fff | lightgray-bg #f0f0f0 | black #3f3f3f | gray-light #a4a4a4
+// LookSelector already owns `position: fixed; bottom: 0` on desktop (76px bar, right 359px).
+// .body on desktop co-occupies that same bar for title + price using the same fixed strategy.
+
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+// ─── ARTICLE ROOT ─────────────────────────────────────────────────────────────
+
+.look {
+  position: relative;
+  width: 100%;
+  background-color: map-get($colors, 'white');
+
+  // Reserve space at the bottom on desktop so content is not hidden behind the
+  // fixed 76px bottom bar that LookSelector and .body both occupy.
+  @include from(md) {
+    padding-bottom: px(76);
+  }
+}
+
+// ─── GALLERY VISIBILITY TOGGLING ─────────────────────────────────────────────
+
+// Mobile swiper — visible on mobile, hidden on desktop
+.galleryMobile {
+  display: block;
+  width: 100%;
+
+  @include from(md) {
+    display: none;
+  }
+}
+
+// Desktop horizontal scroller — hidden on mobile, shown on desktop
+.galleryDesktop {
+  display: none;
+
+  @include from(md) {
+    display: block;
+    width: 100%;
+  }
+}
+
+// ─── BODY (title + price + selector + info) ───────────────────────────────────
+
+.body {
+  width: 100%;
+
+  @include from(md) {
+    // Co-occupy the same fixed bottom bar as LookSelector.
+    // LookSelector occupies the right 359px; .body covers the left 718px (title + price zone).
+    // z-index is 99 so it sits below the selector (z-index 100 in LookSelector.module.scss)
+    // but above page content.
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: px(718); // 1077 total bar - 359 selector = 718px
+    height: px(76);
+    display: flex;
+    flex-direction: column;
+    z-index: 99;
+    background-color: map-get($colors, 'white');
+    border-top: px(1) solid map-get($colors, 'grey-border');
+    pointer-events: none; // children re-enable as needed
+  }
+}
+
+// ─── TITLE ────────────────────────────────────────────────────────────────────
+
+.title {
+  margin: 0;
+  padding: px(10);
+  height: px(60);
+  display: flex;
+  align-items: center;
+  background-color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+  font-weight: 400;
+
+  @include from(md) {
+    // Top half of the 76px bar, left column (~359px wide, matching Figma node I11:4620;191:1569)
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: px(359);
+    height: px(38);
+    padding: 0 px(10);
+    font-size: px(11);
+    line-height: px(15);
+    background-color: map-get($colors, 'white');
+    pointer-events: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// LookPrice renders a <p> with class .price from its own module — no direct
+// descendant selector needed here. The price row on mobile is handled by
+// LookPrice.module.scss (which this component imports separately). We provide
+// a wrapper via the surrounding .body context.
+//
+// On desktop the price must appear in the bottom-left band.
+// LookPrice.module.scss already sets `font-size: 11px` at md breakpoint.
+// We need it to be positioned in the second row of the left column.
+// Since LookPrice renders its own <p> directly (no extra wrapper), we target
+// the price paragraph via the :global selector.
+
+.body {
+  // Mobile: LookPrice <p> inherits the body flow naturally.
+  // Desktop: position the price paragraph in the lower-left of the bar.
+  :global(.LookPrice_price__) {
+    // Fallback — handled via the next rule
+  }
+}
+
+// Because CSS Modules hash class names, we cannot reference LookPrice's class
+// from LookDetail's module. Instead, we wrap the LookPrice output in a
+// semantic element via a sibling div trick: the component tree in TSX renders
+// LookPrice directly inside .body. On desktop we need the second child (after
+// .title) to occupy the bottom row of the left portion.
+//
+// Architecture note: on desktop the .body is fixed at bottom:0, width 718px,
+// height 76px. The .title gets top:0 left:0 w:359 h:38. The LookPrice <p> is
+// the next sibling — we use nth-child/adjacent selector via the module.
+
+// ─── PRICE POSITIONING (desktop) ─────────────────────────────────────────────
+// LookPrice outputs a bare <p> as a direct child of .body.
+// We target it with a child selector.
+
+.body > :global(p) {
+  // Mobile: LookPrice already has its own padding via .price class.
+  // Ensure it has a bg on mobile matching Figma's #f0f0f0 price row.
+  margin: 0;
+  padding: px(10);
+  height: px(60);
+  display: flex;
+  align-items: center;
+  background-color: map-get($colors, 'lightgray-bg');
+
+  @include from(md) {
+    // Bottom half of the 76px bar, left column, matching Figma node I11:4620;191:1565
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: px(359);
+    height: px(38);
+    padding: 0 px(10);
+    background-color: map-get($colors, 'lightgray-bg');
+    pointer-events: auto;
+  }
+}
+
+// ─── PRODUCT INFORMATION ACCORDION ────────────────────────────────────────────
+
+.info {
+  width: 100%;
+
+  @include from(md) {
+    // On desktop, "Product Information +" lives in the top half of the middle
+    // band of the fixed bar (nodes I11:4620;191:1556 / I11:4620;191:1581).
+    // It spans from px(359) to px(556) (width ~197px).
+    position: fixed;
+    bottom: px(38); // upper half of the 76px bar
+    left: px(359);
+    width: px(197);
+    height: px(38);
+    z-index: 99;
+    background-color: map-get($colors, 'white');
+    border-top: px(1) solid map-get($colors, 'grey-border');
+    border-right: px(1) solid map-get($colors, 'grey-border');
+    pointer-events: auto;
+  }
+}
+
+.infoToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: px(60);
+  padding: 0 px(10);
+  background-color: map-get($colors, 'white');
+  border: none;
+  border-bottom: px(1) solid map-get($colors, 'grey-border');
+  cursor: pointer;
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+  text-align: left;
+
+  // Caret indicator matching the LookSelector toggle style
+  &::after {
+    content: '';
+    display: block;
+    width: px(10);
+    height: px(7);
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7'%3E%3Cpath d='M0 0 L5 7 L10 0Z' fill='%233f3f3f'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: transform 0.2s ease;
+  }
+
+  &[aria-expanded='true']::after {
+    transform: rotate(180deg);
+  }
+
+  @include from(md) {
+    // Condensed single row inside the info band
+    height: 100%;
+    font-size: px(11);
+    line-height: px(15);
+    border-bottom: none;
+    padding: 0 px(10);
+  }
+}
+
+.infoBody {
+  padding: px(10);
+  background-color: map-get($colors, 'white');
+  border-bottom: px(1) solid map-get($colors, 'grey-border');
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+
+  @include from(md) {
+    // Expands upward from the fixed bar
+    position: fixed;
+    bottom: px(76);
+    left: px(359);
+    width: px(197);
+    max-height: 50vh;
+    overflow-y: auto;
+    border-top: px(1) solid map-get($colors, 'grey-border');
+    border-right: px(1) solid map-get($colors, 'grey-border');
+    border-bottom: none;
+    z-index: 99;
+    font-size: px(11);
+    line-height: px(15);
+    box-shadow: 0 px(-4) px(16) rgba(0, 0, 0, 0.06);
+  }
+}
+
+// ─── RELATED GRID (mobile-only) ───────────────────────────────────────────────
+
+// The desktop GalleryHorizontal already appends related products inside the
+// horizontal scroller. This div only shows on mobile.
+
+.relatedMobile {
+  display: block;
+  width: 100%;
+
+  @include from(md) {
+    display: none;
+  }
+}
