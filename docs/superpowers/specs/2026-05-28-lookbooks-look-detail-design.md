@@ -166,3 +166,26 @@ Caché: `{next: {tags: ['look', \`look:${slug}\`], revalidate: 3600}}`.
 - **Desalineación descuento Sanity ↔ Shopify:** el display usa `discountValue` de Sanity; el cobro real usa el código de Shopify. Mitigación: descripción clara en el schema + (futuro) validación.
 - **Identificación de opción color vs talla:** depende de los nombres/valores de opción sincronizados desde Shopify. La heurística (opción cuyos valores ⊇ `availableSizes`) debe validarse con datos reales.
 - **N consultas a Shopify** (una por producto del look): aceptable en paralelo; cacheado por `revalidate = 300`.
+
+## Revisión 2026-05-28 — modelo del componente: producto + color (supersede)
+
+Tras probar el admin, el modelo original de `bundleComponent` (referencia directa a una `productVariant`, color+talla concretos, + `availableSizes` manual) resultó confuso. En este catálogo **el color es una opción del producto** (un producto tiene opciones Color + Talla; variantes = color×talla). Se rediseña el componente para elegir **producto + color**, con tallas automáticas desde Shopify.
+
+**Cambios (supersede las secciones de schema/GROQ/resolución de arriba):**
+
+1. **`bundleComponent`:** elimina `productVariant` y `availableSizes`. Nuevos campos:
+   - `product` — referencia débil a `product` (requerido).
+   - `color` — string con **input personalizado** `BundleColorSelect` que lista los colores reales del producto referenciado (requerido).
+   - Conserva `label`, `notes`.
+
+2. **Input `sanity/components/inputs/BundleColorSelect.tsx` (nuevo):** lee el `product._ref` hermano vía `props.path`, consulta `*[_id == $ref][0].store.options` con el cliente de Sanity (`useClient`, `SANITY_API_VERSION`), y renderiza un `Select` (`@sanity/ui`) con los valores de la opción "Color". Estados: sin producto, producto sin opción Color, cargando. Reutiliza el patrón de `ProductColorSelect` (que solo sirve cuando el doc raíz es el producto; aquí el producto es una referencia, por eso es un input nuevo asíncrono).
+
+3. **GROQ `getLook` → `components[]`:** `{label, color, "productHandle": product->store.slug.current, "productTitle": product->store.title}`. Elimina el sub-query correlado (mejora de rendimiento) y los campos de variante/availableSizes.
+
+4. **`SanityLookComponent`:** `{label, color, productHandle, productTitle}`.
+
+5. **`buildLookView` / `resolveComponentSizes`:** el color bloqueado = `comp.color` (comparación case-insensitive contra la opción color de cada variante); tallas = **todas** las variantes de ese color (sin filtro manual); la miniatura de la pieza sale de la imagen de la variante del color (Shopify); `label = comp.label ?? comp.productTitle ?? 'Pieza'`. El tipo `ShopifyVariant` añade `image`.
+
+6. **Frontend sin cambios:** `LookView`/`LookComponentView` mantienen su forma → `LookDetail`/`LookSelector`/`LookPrice` no cambian.
+
+7. **Migración:** el build prerenderizó 0 looks (no hay looks publicados), así que no hay datos que migrar; los componentes en borrador habría que rehacerlos (producto + color).
