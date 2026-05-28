@@ -14,14 +14,17 @@ export const LOOK_BY_SLUG_QUERY = groq`
     description,
     "seo": seo{ ${seo} },
     editorialImages[]{
-      ${image},
-      "alt": alt
+      image{
+        ${image},
+        "alt": alt
+      }
     },
     "components": components[]{
       label,
       availableSizes,
       "variantGid": productVariant->store.gid,
       "productGid": productVariant->store.productGid,
+      // PERF: correlated full-collection scan per component (no product back-ref on productVariant)
       "productHandle": *[_type == "product" && store.gid == ^.productVariant->store.productGid][0].store.slug.current,
       "previewImageUrl": productVariant->store.previewImageUrl,
       "variantTitle": productVariant->store.title
@@ -34,6 +37,13 @@ export const LOOK_BY_SLUG_QUERY = groq`
     }
   }
 `
+
+export type SanityLookImage = {
+  image: {
+    imageUrl: string | null
+    alt: string | null
+  } | null
+}
 
 export type SanityLookComponent = {
   label: string | null
@@ -51,7 +61,7 @@ export type SanityLookDoc = {
   slug: string
   description: string | null
   seo: unknown
-  editorialImages: Array<Record<string, unknown>> | null
+  editorialImages: SanityLookImage[] | null
   components: SanityLookComponent[] | null
   discountStrategy: 'none' | 'sumMinusFixed' | 'sumMinusPercent' | null
   discountValue: number | null
@@ -79,7 +89,7 @@ export async function getLookSlugs(): Promise<string[]> {
 
 export async function getLookSEO(slug: string) {
   return client.fetch(
-    groq`*[_type == "look" && slug.current == $slug][0]{ "seo": seo{ ${seo} }, title }`,
+    groq`*[_type == "look" && slug.current == $slug && !(_id in path('drafts.**'))][0]{ "seo": seo{ ${seo} }, title }`,
     {slug},
     {next: {tags: ['look', `look:${slug}`], revalidate: 3600}},
   )
