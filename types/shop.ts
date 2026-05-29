@@ -23,6 +23,7 @@ export type ShopSearchParams = {
   color?: string
   size?: string
   pattern?: string
+  material?: string     // comma-separated slugged material labels (cover/filler/fabric)
   priceMin?: string
   priceMax?: string
   available?: string    // 'true' to show only in-stock
