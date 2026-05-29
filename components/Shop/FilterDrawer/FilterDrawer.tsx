@@ -3,7 +3,7 @@ import {useEffect, useMemo, useRef, useState} from 'react'
 import {useRouter, usePathname, useSearchParams} from 'next/navigation'
 import type {FilterDefinition, ShopSearchParams, SortKey} from '@/types/shop'
 import {serializeSearchParams} from '@/lib/shop/searchParams'
-import {getFilterCount} from '@/app/(frontend)/shop/actions'
+import {getFilterCount as defaultCountAction} from '@/app/(frontend)/shop/actions'
 import FilterAccordion from './FilterAccordion'
 import SortRadios from './SortRadios'
 import ColorSwatches from './ColorSwatches'
@@ -26,9 +26,19 @@ interface Props {
   facets: FilterDefinition[]
   defaults: ShopSearchParams
   initialCount: number
+  countAction?: (args: {handle: string; params: ShopSearchParams}) => Promise<number>
+  sortOptions?: SortKey[]
 }
 
-export default function FilterDrawer({handle, open, facets, defaults, initialCount}: Props) {
+export default function FilterDrawer({
+  handle,
+  open,
+  facets,
+  defaults,
+  initialCount,
+  countAction = defaultCountAction,
+  sortOptions,
+}: Props) {
   const router = useRouter()
   const path = usePathname()
   const params = useSearchParams()
@@ -72,12 +82,12 @@ export default function FilterDrawer({handle, open, facets, defaults, initialCou
     if (!open) return
     const id = ++lastFetch.current
     const t = setTimeout(() => {
-      getFilterCount({handle, params: state}).then((n) => {
+      countAction({handle, params: state}).then((n) => {
         if (id === lastFetch.current) setCount(n)
       })
     }, 250)
     return () => clearTimeout(t)
-  }, [state, open, handle])
+  }, [state, open, handle, countAction])
 
   function toggleAccordion(id: string) {
     setAccordion((cur) => (cur === id ? null : id))
@@ -154,7 +164,7 @@ export default function FilterDrawer({handle, open, facets, defaults, initialCou
             open={accordion === 'sort'}
             onToggle={toggleAccordion}
           >
-            <SortRadios value={state.sort ?? 'featured'} onChange={setSort} />
+            <SortRadios value={state.sort ?? 'featured'} onChange={setSort} options={sortOptions} />
           </FilterAccordion>
 
           {facet(FACET_ID.size) && (
