@@ -8,6 +8,8 @@ import FilterAccordion from './FilterAccordion'
 import SortRadios from './SortRadios'
 import ColorSwatches from './ColorSwatches'
 import SizeChips from './SizeChips'
+import MaterialChips from './MaterialChips'
+import {getMaterialFacetValues} from '@/lib/shop/materialFilter'
 import PriceRange from './PriceRange'
 import s from './FilterDrawer.module.scss'
 
@@ -85,7 +87,10 @@ export default function FilterDrawer({handle, open, facets, defaults, initialCou
     setState((s) => ({...s, sort: sort === 'featured' ? undefined : sort}))
   }
 
-  function toggleListValue(key: 'productType' | 'color' | 'size' | 'pattern', kebab: string) {
+  function toggleListValue(
+    key: 'productType' | 'color' | 'size' | 'pattern' | 'material',
+    kebab: string,
+  ) {
     setState((s) => {
       const current = (s[key] ?? '').split(',').filter(Boolean)
       const idx = current.indexOf(kebab)
@@ -122,11 +127,13 @@ export default function FilterDrawer({handle, open, facets, defaults, initialCou
       color: (state.color ?? '').split(',').filter(Boolean),
       size: (state.size ?? '').split(',').filter(Boolean),
       pattern: (state.pattern ?? '').split(',').filter(Boolean),
+      material: (state.material ?? '').split(',').filter(Boolean),
     }),
     [state],
   )
 
   const facet = (id: string) => facets.find((f) => f.id === id)
+  const materialValues = useMemo(() => getMaterialFacetValues(facets), [facets])
 
   if (!open) return null
 
@@ -176,6 +183,21 @@ export default function FilterDrawer({handle, open, facets, defaults, initialCou
                 values={facet(FACET_ID.color)!.values}
                 selected={selected.color}
                 onToggle={(v) => toggleListValue('color', v)}
+              />
+            </FilterAccordion>
+          )}
+
+          {materialValues.length > 0 && (
+            <FilterAccordion
+              id="material"
+              title="Materials"
+              open={accordion === 'material'}
+              onToggle={toggleAccordion}
+            >
+              <MaterialChips
+                values={materialValues}
+                selected={selected.material}
+                onToggle={(v) => toggleListValue('material', v)}
               />
             </FilterAccordion>
           )}
