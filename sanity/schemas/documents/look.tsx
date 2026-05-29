@@ -62,6 +62,14 @@ export default defineType({
       group: 'editorial',
     }),
     defineField({
+      name: 'orderRank',
+      title: 'Orden',
+      type: 'string',
+      group: 'editorial',
+      hidden: true,
+      description: 'Posición manual asignada desde la vista "Ordenar looks".',
+    }),
+    defineField({
       name: 'components',
       title: 'Componentes (productos del look)',
       description:
