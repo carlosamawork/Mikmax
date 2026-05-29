@@ -49,3 +49,19 @@ export type LookView = {
   minTotal: number
   maxTotal: number
 }
+
+export type LookArchiveItem = {
+  id: string
+  title: string
+  slug: string
+  imageUrl?: string
+  imageAlt?: string
+  rawMin: number
+  rawMax: number
+  discMin: number
+  discMax: number
+  hasDiscount: boolean
+  colorGids: string[]
+  materialSlugs: string[]
+  sizeSlugs: string[]
+}
