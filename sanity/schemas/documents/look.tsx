@@ -30,8 +30,27 @@ export default defineType({
     }),
     defineField({
       name: 'description',
+      title: 'Descripción',
       type: 'text',
       rows: 3,
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'propiedadesMaterial',
+      title: 'Propiedades del material',
+      type: 'body',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'recomendacionesLavado',
+      title: 'Recomendaciones de lavado',
+      type: 'body',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'usoRecomendado',
+      title: 'Uso recomendado',
+      type: 'body',
       group: 'editorial',
     }),
     defineField({
@@ -43,30 +62,29 @@ export default defineType({
       group: 'editorial',
     }),
     defineField({
+      name: 'orderRank',
+      title: 'Orden',
+      type: 'string',
+      group: 'editorial',
+      hidden: true,
+      description: 'Posición manual asignada desde la vista "Ordenar looks".',
+    }),
+    defineField({
       name: 'components',
       title: 'Componentes (productos del look)',
       description:
-        'Cada componente es una variante específica de Shopify. El usuario solo elige talla; el color queda pre-bloqueado por la variante.',
+        'Cada componente es un producto de Shopify con un color fijo. El usuario solo elige talla; las tallas se toman de Shopify.',
       type: 'array',
       of: [{type: 'bundleComponent'}],
       validation: (Rule) => Rule.min(2),
       group: 'editorial',
     }),
     defineField({
-      name: 'priceFixed',
-      title: 'Precio fijo (€)',
-      type: 'number',
-      description:
-        'Precio del look completo. Es la base que cobra Shopify cuando no hay descuento de bundle aplicado.',
-      validation: (Rule) => Rule.required().min(0),
-      group: 'pricing',
-    }),
-    defineField({
-      name: 'priceCompareAt',
-      title: 'Precio "antes" tachado (€) — opcional',
-      type: 'number',
-      validation: (Rule) => Rule.min(0),
-      group: 'pricing',
+      name: 'relatedProducts',
+      title: 'Productos relacionados',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'product'}], weak: true}],
+      group: 'editorial',
     }),
     defineField({
       name: 'discountStrategy',
@@ -74,13 +92,13 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Resta cantidad fija a la suma de componentes', value: 'sumMinusFixed'},
-          {title: 'Resta % a la suma de componentes', value: 'sumMinusPercent'},
-          {title: 'Override: total cerrado (ignora la suma)', value: 'overrideTotal'},
+          {title: 'Sin descuento', value: 'none'},
+          {title: 'Resta cantidad fija (€) a la suma', value: 'sumMinusFixed'},
+          {title: 'Resta % a la suma', value: 'sumMinusPercent'},
         ],
         layout: 'radio',
       },
-      initialValue: 'overrideTotal',
+      initialValue: 'none',
       validation: (Rule) => Rule.required(),
       group: 'pricing',
     }),
@@ -88,9 +106,17 @@ export default defineType({
       name: 'discountValue',
       title: 'Valor de descuento',
       description:
-        'Si la estrategia es "sumMinusFixed": cantidad en €. Si es "sumMinusPercent": número entre 0 y 100. Si es "overrideTotal": no se usa (se ignora).',
+        'Solo para mostrar en la página. "sumMinusFixed": € a restar. "sumMinusPercent": número 0-100. El cobro real lo impone el código de descuento de Shopify, manténlos alineados.',
       type: 'number',
       validation: (Rule) => Rule.min(0),
+      group: 'pricing',
+    }),
+    defineField({
+      name: 'discountCode',
+      title: 'Código de descuento de Shopify',
+      description:
+        'Código que se aplica al carrito al añadir el look (cartDiscountCodesUpdate). Debe coincidir con discountStrategy/discountValue.',
+      type: 'string',
       group: 'pricing',
     }),
     defineField({
@@ -101,21 +127,12 @@ export default defineType({
     }),
   ],
   preview: {
-    select: {
-      title: 'title',
-      price: 'priceFixed',
-      media: 'editorialImages.0.image',
-    },
-    prepare({title, price, media}) {
-      return {
-        title,
-        subtitle: price ? `€${price}` : 'Sin precio',
-        media,
-      }
+    select: {title: 'title', media: 'editorialImages.0.image'},
+    prepare({title, media}) {
+      return {title, subtitle: 'Look Book', media}
     },
   },
   orderings: [
     {name: 'titleAsc', title: 'Título A-Z', by: [{field: 'title', direction: 'asc'}]},
-    {name: 'priceDesc', title: 'Precio (mayor primero)', by: [{field: 'priceFixed', direction: 'desc'}]},
   ],
 })

@@ -34,7 +34,7 @@ type RawChild = {
 async function fetchCollectionTree(): Promise<CollectionTreeParent[]> {
   const [parents, children] = await Promise.all([
     client.fetch<RawParent[]>(
-      groq`*[_type == "collection" && !defined(parent) && !store.isDeleted] | order(coalesce(orderRank, store.title) asc) {
+      groq`*[_type == "collection" && !defined(parent) && !store.isDeleted && coalesce(hideFromShopMenu, false) == false] | order(coalesce(orderRank, store.title) asc) {
         _id,
         "title": store.title,
         "handle": store.slug.current,
@@ -44,7 +44,7 @@ async function fetchCollectionTree(): Promise<CollectionTreeParent[]> {
       {next: {tags: ['settings'], revalidate: 3600}},
     ),
     client.fetch<RawChild[]>(
-      groq`*[_type == "collection" && defined(parent) && !store.isDeleted] | order(coalesce(orderRank, store.title) asc) {
+      groq`*[_type == "collection" && defined(parent) && !store.isDeleted && coalesce(hideFromShopMenu, false) == false] | order(coalesce(orderRank, store.title) asc) {
         "parent": parent._ref,
         "title": store.title,
         "handle": store.slug.current

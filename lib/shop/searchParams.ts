@@ -4,7 +4,7 @@ import type {FilterDefinition, ShopSearchParams, SortKey, ViewMode} from '@/type
 const VALID_SORTS: SortKey[] = ['featured', 'newest', 'price-asc', 'price-desc', 'best-selling']
 const VALID_VIEWS: ViewMode[] = ['4col', '2col']
 
-const FILTER_KEYS = ['productType', 'color', 'size', 'pattern'] as const
+const FILTER_KEYS = ['productType', 'color', 'size', 'pattern', 'material'] as const
 type ListFilterKey = (typeof FILTER_KEYS)[number]
 
 export function parseSearchParams(

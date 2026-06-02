@@ -5,11 +5,13 @@ import {SORT_LABELS} from '@/types/shop'
 interface Props {
   value: SortKey
   onChange: (next: SortKey) => void
+  options?: SortKey[]
 }
 
 const ORDER: SortKey[] = ['featured', 'newest', 'best-selling', 'price-asc', 'price-desc']
 
-export default function SortRadios({value, onChange}: Props) {
+export default function SortRadios({value, onChange, options}: Props) {
+  const list = options ?? ORDER
   return (
     <ul
       style={{
@@ -21,7 +23,7 @@ export default function SortRadios({value, onChange}: Props) {
         listStyle: 'none',
       }}
     >
-      {ORDER.map((sk) => (
+      {list.map((sk) => (
         <li key={sk}>
           <label style={{display: 'flex', gap: 8, alignItems: 'center', cursor: 'pointer'}}>
             <input

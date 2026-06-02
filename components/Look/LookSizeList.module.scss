@@ -1,0 +1,131 @@
+// Size list — mirrors the PDP SizeSelector colours (Figma 31-13861):
+//   • continuous 44px #f7f7f7 index rail down the left
+//   • white rows, light top border, #f0f0f0 Select button (80px, flush right)
+//   • selected row → #f7f7f7 with its index + Select button flipped to white
+//   • disabled (sold out) row → 40% opacity
+// Columns are fixed so the piece title aligns with the size-price column.
+
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+$rail: 44;
+$labelCol: 68;
+
+.list {
+  width: 100%;
+}
+
+// ─── PIECE HEADER (number rail + thumbnail + title) ───────────────────────────
+
+.pieceHeader {
+  display: flex;
+  align-items: stretch;
+  background-color: map-get($colors, 'white');
+  
+  border-top: px(1) solid map-get($colors, 'grey-border');
+  .pieceIndex {
+    flex-shrink: 0;
+    width: px($rail);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    line-height: px(15);
+    letter-spacing: px(0.5);
+    color: map-get($colors, 'black');
+  }
+
+  .pieceThumb {
+    flex-shrink: 0;
+    width: px($labelCol);
+    height: px(91);
+    object-fit: cover;
+    background-color: map-get($colors, 'lightgray-bg');
+  }
+
+  // Title starts where the price column starts (rail + label column).
+  .pieceLabel {
+    display: flex;
+    align-items: center;
+    padding: 0 px(56);
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    line-height: px(15);
+    letter-spacing: px(0.5);
+    color: map-get($colors, 'black');
+  }
+}
+
+// ─── SIZE ROWS ────────────────────────────────────────────────────────────────
+
+.sizeRow {
+  display: grid;
+  grid-template-columns: px($rail) px($labelCol) auto 1fr auto;
+  align-items: stretch;
+  background-color: map-get($colors, 'white');
+  border-top: px(1) solid map-get($colors, 'grey-border');
+}
+
+.sizeRowDisabled {
+  opacity: 0.4;
+}
+
+.sizeRowSelected {
+  background-color: #f7f7f7;
+
+  .sizeIndex {
+    background-color: map-get($colors, 'white');
+  }
+
+  .sizeSelect {
+    background-color: map-get($colors, 'white');
+  }
+}
+
+.sizeIndex {
+  align-self: stretch;
+  background-color: #f7f7f7;
+}
+
+.sizeName {
+  align-self: center;
+  padding: px(14) px(35);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+  white-space: nowrap;
+}
+
+.sizePrice {
+  align-self: center;
+  padding: px(14) px(56);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+}
+
+.sizeSelect {
+  align-self: stretch;
+  justify-self: end;
+  min-width: px(80);
+  max-width: px(80);
+  border: none;
+  padding: 0 px(20);
+  background-color: map-get($colors, 'lightgray-bg');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black');
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

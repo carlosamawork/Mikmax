@@ -4,34 +4,62 @@ import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'block.setModule',
-  title: 'Módulo Sets',
+  title: 'Módulo Set',
   type: 'object',
   icon: StackCompactIcon,
   fields: [
-    defineField({name: 'title', type: 'string'}),
     defineField({
-      name: 'sets',
-      type: 'array',
-      of: [{type: 'reference', to: [{type: 'set'}]}],
-      validation: (Rule) => Rule.min(1),
+      name: 'title',
+      title: 'Título',
+      type: 'string',
     }),
     defineField({
-      name: 'layout',
+      name: 'subtitle',
+      title: 'Subtítulo',
       type: 'string',
-      options: {
-        list: [
-          {title: 'Fila mini', value: 'row-mini'},
-          {title: 'Grid', value: 'grid'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'row-mini',
+    }),
+    defineField({
+      name: 'product',
+      title: 'Producto (Set)',
+      description: 'Producto de la colección Sets al que enlaza el módulo.',
+      type: 'reference',
+      to: [{type: 'product'}],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'images',
+      title: 'Imágenes',
+      type: 'array',
+      validation: (Rule) => Rule.min(1),
+      of: [
+        {
+          type: 'image',
+          options: {hotspot: true, crop: true},
+          fields: [
+            defineField({
+              name: 'alt',
+              title: 'Alt',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        },
+      ],
     }),
   ],
   preview: {
-    select: {title: 'title', count: 'sets.length'},
-    prepare({title, count}) {
-      return {title: title || 'Módulo Sets', subtitle: `${count || 0} sets`}
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+      media: 'images.0',
+      productTitle: 'product.store.title',
+    },
+    prepare({title, subtitle, media, productTitle}) {
+      return {
+        title: title || 'Módulo Set',
+        subtitle: subtitle || (productTitle ? `→ ${productTitle}` : 'Sin subtítulo'),
+        media,
+      }
     },
   },
 })

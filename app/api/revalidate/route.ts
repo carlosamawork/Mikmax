@@ -34,6 +34,10 @@ export async function POST(req: NextRequest) {
       tags.push('settings')
     }
 
+    if (body._type === 'look') {
+      if (body.slug) tags.push(`look:${body.slug}`)
+    }
+
     tags.forEach((tag) => revalidateTag(tag))
 
     return NextResponse.json({revalidated: true, tags, now: Date.now()})

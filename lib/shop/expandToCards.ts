@@ -34,7 +34,7 @@ type ShopifyVariantNode = {
   selectedOptions: {name: string; value: string}[]
 }
 
-type ShopifyProductNode = {
+export type ShopifyProductNode = {
   id: string
   handle: string
   title: string
@@ -73,7 +73,7 @@ function readMetaobjectBaseGids(metaobject: ColorPatternMetaobjectNode): string[
  * matching the variant's `selectedOptions` "Color" value against the `label`
  * field of the product's color-pattern metaobjects.
  */
-function findVariantBaseGids(p: ShopifyProductNode, colorValue: string): string[] {
+export function findVariantBaseGids(p: ShopifyProductNode, colorValue: string): string[] {
   const refs = p.colorPattern?.references?.nodes ?? []
   const target = colorValue.trim().toLowerCase()
   const match = refs.find((m) => {

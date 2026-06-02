@@ -10,6 +10,7 @@ import {
 import {getOrderedHandles} from '@/sanity/queries/queries/shop'
 import {buildShopifyFilters, extractSelectedColorGids} from '@/lib/shop/searchParams'
 import {expandProductsToCards} from '@/lib/shop/expandToCards'
+import {filterProductsByMaterial} from '@/lib/shop/materialFilter'
 import {applyCardFilters, sortCards} from '@/lib/shop/filterAndSortCards'
 import {ALL_HANDLE, CHUNK_SIZE} from '@/types/shop'
 import type {ShopChunkResult, ShopSearchParams, SortKey} from '@/types/shop'
@@ -30,11 +31,17 @@ type ShopifyVariantNode = {
   } | null
 }
 
+type MaterialMetaobjectNode = {fields?: {key: string; value: string | null}[]}
+type MaterialMetafield = {references?: {nodes: MaterialMetaobjectNode[]} | null} | null
+
 type ShopifyProductNode = {
   id: string
   handle: string
   title: string
   tags?: string[]
+  coverMaterial?: MaterialMetafield
+  fillerMaterial?: MaterialMetafield
+  fabric?: MaterialMetafield
   featuredImage?: {url: string; altText?: string | null} | null
   priceRange: {
     minVariantPrice: {amount: string}
@@ -96,7 +103,9 @@ async function buildAllCards(handle: string, params: ShopSearchParams) {
     orderedProducts = matching
   }
 
-  const expanded = expandProductsToCards(orderedProducts, selectedColorGids)
+  const selectedMaterialSlugs = (params.material ?? '').split(',').filter(Boolean)
+  const materialFiltered = filterProductsByMaterial(orderedProducts, selectedMaterialSlugs)
+  const expanded = expandProductsToCards(materialFiltered, selectedColorGids)
   const filtered = applyCardFilters(expanded, params)
   return sortCards(filtered, sort)
 }
