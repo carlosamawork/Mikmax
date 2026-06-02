@@ -1,0 +1,136 @@
+// components/Layout/Header/SearchOverlay.module.scss
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: $z-search-overlay;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background: map-get($colors, 'white');
+  max-height: 100vh;
+  overflow-y: auto;
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // #f7f7f7 — no exact token: 'lightgray-bg' is #F0F0F0, 'lighter' is #f8f8f8; hardcoding per spec
+    background: #f7f7f7;
+
+    .form {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding-left: px(10);
+
+      .input {
+        flex: 1;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        height: px(40);
+        font-family: $MonumentGrotesk;
+        font-size: px(11);
+        line-height: px(15);
+        letter-spacing: 0.5px;
+        color: map-get($colors, 'darker');
+
+        &::placeholder {
+          // #a4a4a4 matches 'gray-light' exactly
+          color: map-get($colors, 'gray-light');
+        }
+      }
+    }
+
+    .close {
+      width: px(35);
+      height: px(35);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font-size: px(18);
+      color: map-get($colors, 'darker');
+    }
+  }
+
+  .results {
+    display: flex;
+    flex-direction: column;
+    padding: px(10);
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: px(10);
+      padding: px(8) 0;
+      text-decoration: none;
+      color: inherit;
+
+      .thumb {
+        width: px(48);
+        height: px(60);
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: px(2);
+
+        .itemTitle {
+          font-family: $MonumentGrotesk;
+          font-size: px(13);
+          line-height: px(17);
+          color: map-get($colors, 'darker');
+        }
+
+        .itemPrice {
+          font-family: $MonumentGrotesk;
+          font-size: px(11);
+          color: map-get($colors, 'gray');
+        }
+      }
+    }
+
+    .viewAll {
+      font-family: $MonumentGrotesk;
+      font-size: px(13);
+      letter-spacing: 0.5px;
+      color: map-get($colors, 'darker');
+      text-decoration: underline;
+      text-align: left;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      padding: px(8) 0;
+    }
+  }
+
+  .message {
+    font-family: $MonumentGrotesk;
+    font-size: px(13);
+    color: map-get($colors, 'gray');
+    padding: px(10);
+  }
+}
