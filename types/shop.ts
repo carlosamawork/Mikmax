@@ -1,7 +1,8 @@
 export type ViewMode = '4col' | '2col'
 
 export type SortKey =
-  | 'featured'      // Sanity orderRank (default)
+  | 'featured'      // Sanity orderRank (default en /shop)
+  | 'relevance'     // Shopify RELEVANCE (default en /search)
   | 'newest'        // Shopify CREATED desc
   | 'price-asc'     // Shopify PRICE asc
   | 'price-desc'    // Shopify PRICE desc
@@ -9,6 +10,7 @@ export type SortKey =
 
 export const SORT_LABELS: Record<SortKey, string> = {
   featured: 'Latest novelty',
+  relevance: 'Relevance',
   newest: 'New arrivals',
   'price-asc': 'Price (low to high)',
   'price-desc': 'Price (high to low)',
@@ -19,6 +21,7 @@ export type ShopSearchParams = {
   view?: ViewMode
   sort?: SortKey
   filters?: 'open'
+  q?: string            // texto de búsqueda (solo /search)
   productType?: string  // comma-separated kebab-case values
   color?: string
   size?: string

@@ -1,7 +1,14 @@
 // lib/shop/searchParams.ts
 import type {FilterDefinition, ShopSearchParams, SortKey, ViewMode} from '@/types/shop'
 
-const VALID_SORTS: SortKey[] = ['featured', 'newest', 'price-asc', 'price-desc', 'best-selling']
+const VALID_SORTS: SortKey[] = [
+  'featured',
+  'relevance',
+  'newest',
+  'price-asc',
+  'price-desc',
+  'best-selling',
+]
 const VALID_VIEWS: ViewMode[] = ['4col', '2col']
 
 const FILTER_KEYS = ['productType', 'color', 'size', 'pattern', 'material'] as const
@@ -25,6 +32,8 @@ export function parseSearchParams(
   const priceMax = pickFirst(raw.priceMax)
   if (priceMax && !Number.isNaN(Number(priceMax))) out.priceMax = priceMax
   if (pickFirst(raw.available) === 'true') out.available = 'true'
+  const q = pickFirst(raw.q)
+  if (q) out.q = q
   return out
 }
 
@@ -36,7 +45,13 @@ function pickFirst(v: string | string[] | undefined): string | undefined {
 export function serializeSearchParams(params: ShopSearchParams): string {
   const usp = new URLSearchParams()
   if (params.view && params.view !== '4col') usp.set('view', params.view)
-  if (params.sort && params.sort !== 'featured') usp.set('sort', params.sort)
+  // Omit both clean defaults: 'featured' (default en /shop) y 'relevance' (default en
+  // /search). 'relevance' no se ofrece en las opciones de orden de /shop (ver SEARCH_SORTS
+  // en /search), así que este guard es seguro — no añadir 'relevance' a las opciones del
+  // shop sin revisar este round-trip de la URL.
+  if (params.sort && params.sort !== 'featured' && params.sort !== 'relevance')
+    usp.set('sort', params.sort)
+  if (params.q) usp.set('q', params.q)
   if (params.filters === 'open') usp.set('filters', 'open')
   for (const key of FILTER_KEYS) {
     const v = params[key]
