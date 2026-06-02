@@ -87,8 +87,12 @@ export async function getHome(): Promise<HomeData> {
         },
         _type == "block.setModule" => {
           title,
-          layout,
-          "sets": sets[]->{ ${setCardProjection} }
+          subtitle,
+          "product": product->{ ${productCardProjection} },
+          images[]{
+            ${image},
+            "alt": alt
+          }
         },
         _type == "block.richText" => {
           body
@@ -96,7 +100,9 @@ export async function getHome(): Promise<HomeData> {
       }
     }`,
     {},
-    {next: {tags: ['home'], revalidate: 3600}},
+    // La home renderiza productos (imageWithProduct, productModule, setModule)
+    // y looks (lookModule): suscribirse a sus tipos para que publicarlos la refresque.
+    {next: {tags: ['home', 'product', 'look'], revalidate: 3600}},
   )
   return result ?? {}
 }
