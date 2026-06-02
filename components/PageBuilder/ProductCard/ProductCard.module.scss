@@ -9,8 +9,14 @@
   text-decoration: none;
   color: inherit;
 
-  // Hover sobre la card: el bloque de info pasa a fondo gris (con transición).
+  // Hover sobre la card: mini zoom-in en la imagen (solo aquí, no en el resto
+  // de imágenes del sitio) y el bloque de info pasa a fondo gris. Ambos con
+  // transición (la del zoom vive en LazyImage por especificidad).
   @include hover {
+    .img {
+      transform: scale(1.008);
+    }
+
     .info {
       background: map-get($colors, 'lightgray-bg');
     }
