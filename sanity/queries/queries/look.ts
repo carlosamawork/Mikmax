@@ -72,7 +72,8 @@ export async function getLook(slug: string): Promise<SanityLookDoc | null> {
   const doc = await client.fetch<SanityLookDoc | null>(
     LOOK_BY_SLUG_QUERY,
     {slug},
-    {next: {tags: ['look', `look:${slug}`], revalidate: 3600}},
+    // Lee product->store… (componentes y relatedProducts): suscribirse a `product`.
+    {next: {tags: ['look', 'product', `look:${slug}`], revalidate: 3600}},
   )
   return doc ?? null
 }
@@ -132,7 +133,8 @@ export async function getAllLooks(): Promise<SanityLookListDoc[]> {
   const docs = await client.fetch<SanityLookListDoc[]>(
     ALL_LOOKS_QUERY,
     {},
-    {next: {tags: ['look'], revalidate: 3600}},
+    // Lee product->store.slug.current en los componentes: suscribirse a `product`.
+    {next: {tags: ['look', 'product'], revalidate: 3600}},
   )
   return docs ?? []
 }
