@@ -28,6 +28,7 @@ interface Props {
   initialCount: number
   countAction?: (args: {handle: string; params: ShopSearchParams}) => Promise<number>
   sortOptions?: SortKey[]
+  defaultSort?: SortKey
 }
 
 export default function FilterDrawer({
@@ -38,6 +39,7 @@ export default function FilterDrawer({
   initialCount,
   countAction = defaultCountAction,
   sortOptions,
+  defaultSort = 'featured',
 }: Props) {
   const router = useRouter()
   const path = usePathname()
@@ -94,7 +96,7 @@ export default function FilterDrawer({
   }
 
   function setSort(sort: SortKey) {
-    setState((s) => ({...s, sort: sort === 'featured' ? undefined : sort}))
+    setState((s) => ({...s, sort: sort === defaultSort ? undefined : sort}))
   }
 
   function toggleListValue(
@@ -115,7 +117,7 @@ export default function FilterDrawer({
   }
 
   function clearAll() {
-    setState({view: defaults.view, filters: 'open'})
+    setState({view: defaults.view, filters: 'open', q: defaults.q})
   }
 
   function closeFromButton() {
@@ -164,7 +166,7 @@ export default function FilterDrawer({
             open={accordion === 'sort'}
             onToggle={toggleAccordion}
           >
-            <SortRadios value={state.sort ?? 'featured'} onChange={setSort} options={sortOptions} />
+            <SortRadios value={state.sort ?? defaultSort} onChange={setSort} options={sortOptions} />
           </FilterAccordion>
 
           {facet(FACET_ID.size) && (
