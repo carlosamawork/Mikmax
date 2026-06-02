@@ -15,7 +15,7 @@
   width: 100%;
   height: px(21);
   padding: 0 px(8);
-  background: map-get($colors, 'white');
+  background: map-get($colors, 'header-bg');
   border-bottom: 1px solid map-get($colors, 'lightgray-bg');
   color: map-get($colors, 'darker');
   font-family: $MonumentGrotesk;
@@ -25,7 +25,7 @@
 
   @include from(md) {
     max-width: px(1072);
-    background: map-get($colors, 'lightgray-bg');
+    background: map-get($colors, 'header-bg');
     border-bottom: 0;
   }
 }

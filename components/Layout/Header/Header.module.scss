@@ -10,23 +10,23 @@
   top: 0;
   z-index: $z-sticky-header;
   width: 100%;
-  background: map-get($colors, 'white');
+  background: map-get($colors, 'header-bg');
   transition: background $transition-fast, color $transition-fast;
 
   @include from(md) {
     max-width: px(1072);
-    background: map-get($colors, 'lightgray-bg');
+    background: map-get($colors, 'header-bg');
     top: var(--header-top, 0);
   }
 }
 
-.default { background: map-get($colors, 'white'); color: map-get($colors, 'darker'); }
-.variant2 { background: rgba(map-get($colors, 'white'), 0.92); color: map-get($colors, 'darker'); backdrop-filter: blur(8px); }
-.variant3 { background: map-get($colors, 'white'); color: map-get($colors, 'darker'); }
+.default { background: map-get($colors, 'header-bg'); color: map-get($colors, 'darker'); }
+.variant2 { background: rgba(map-get($colors, 'header-bg'), 0.92); color: map-get($colors, 'darker'); backdrop-filter: blur(8px); }
+.variant3 { background: map-get($colors, 'header-bg'); color: map-get($colors, 'darker'); }
 .z        { background: map-get($colors, 'darker'); color: map-get($colors, 'white'); }
 
 @include from(md) {
-  .default { background: map-get($colors, 'lightgray-bg'); }
+  .default { background: map-get($colors, 'header-bg'); }
 }
 
 .inner {
@@ -60,6 +60,9 @@
   display: block;
   width: 100%;
   height: 100%;
+  // Logo en blanco (el SVG es oscuro): brightness(0) lo hace negro e invert(1) lo
+  // pasa a blanco.
+  filter: brightness(0) invert(1);
 }
 
 .nav {
