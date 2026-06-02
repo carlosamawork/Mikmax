@@ -22,6 +22,7 @@ $z-base:           0;
 $z-content:        1;
 $z-sticky-header:  100;
 $z-mobile-nav:     200;
+$z-search-overlay: 300; // above mobile nav, below cart drawer
 $z-cart-drawer:    900;
 $z-filter-drawer:  900;
 $z-ficha-modal:    950;

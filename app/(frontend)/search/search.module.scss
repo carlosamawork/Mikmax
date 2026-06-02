@@ -1,0 +1,53 @@
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: px(4);
+  // Top: clearance del header fijo (igual que el margin-top del ShopToolbar en /shop),
+  // para que el toolbar 'flush' quede justo debajo. Lateral px(11) para alinear con
+  // el padding del ShopToolbar.
+  padding: px(100) px(11) px(10);
+
+  .title {
+    margin: 0;
+    font-family: $MonumentGrotesk;
+    // Mismo tamaño e interlineado que el texto del ShopToolbar ("Vistas").
+    font-size: px(11);
+    line-height: px(15);
+    letter-spacing: 0.5px;
+    color: map-get($colors, 'darker');
+  }
+
+  .count {
+    margin: 0;
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    line-height: px(15);
+    letter-spacing: 0.5px;
+    color: map-get($colors, 'gray');
+  }
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: px(8);
+  padding: px(80) px(15);
+  font-family: $MonumentGrotesk;
+  color: map-get($colors, 'gray');
+
+  .emptyTitle {
+    margin: 0;
+    font-size: px(16);
+    color: map-get($colors, 'darker');
+  }
+
+  .emptyText {
+    margin: 0;
+    font-size: px(13);
+  }
+}

@@ -1,7 +1,7 @@
 // components/Layout/Header/HeaderClient.tsx
 'use client'
 
-import {useContext, useEffect, useRef, useState} from 'react'
+import {useCallback, useContext, useEffect, useRef, useState} from 'react'
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
 import {CartContext} from '@/context/shopContext'
@@ -11,6 +11,7 @@ import MegaMenu from '../MegaMenu/MegaMenu'
 import MegaMenuShop from '../MegaMenu/MegaMenuShop'
 import MobileMenu from '../MobileMenu/MobileMenu'
 import {getInternalHref} from '@/sanity/queries/fragments/links'
+import SearchOverlay from './SearchOverlay'
 
 type CartItem = {variantQuantity?: number}
 type CartCtx = {
@@ -22,12 +23,15 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
   const [variant, setVariant] = useState<HeaderVariant>(initialVariant)
   const [activeKey, setActiveKey] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const ctx = useContext<CartCtx>(CartContext as React.Context<CartCtx>)
   const cartCount = (ctx?.cart ?? []).reduce(
     (acc: number, item: CartItem) => acc + (item.variantQuantity ?? 0),
     0,
   )
+
+  const closeSearch = useCallback(() => setSearchOpen(false), [])
 
   const open = (key: string) => {
     if (closeTimer.current) clearTimeout(closeTimer.current)
@@ -158,12 +162,15 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
         <div className={s.actions}>
           {/* Desktop: text labels */}
           <div className={s.actionsDesktop}>
-            {/* <button type="button" className={s.actionBtn} aria-label="Search">
+            <button
+              type="button"
+              className={s.actionBtn}
+              aria-label="Search"
+              aria-expanded={searchOpen}
+              onClick={() => setSearchOpen(true)}
+            >
               Search
             </button>
-            <Link href="/login" className={s.actionBtn}>
-              Login
-            </Link> */}
             <button
               type="button"
               className={s.actionBtn}
@@ -176,7 +183,13 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
 
           {/* Mobile: icon buttons */}
           <div className={s.actionsMobile}>
-            <button type="button" className={s.iconBtn} aria-label="Search">
+            <button
+              type="button"
+              className={s.iconBtn}
+              aria-label="Search"
+              aria-expanded={searchOpen}
+              onClick={() => setSearchOpen(true)}
+            >
               <LazyImage
                 src="/icons/search.svg"
                 alt=""
@@ -226,6 +239,8 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
           onMouseLeave={scheduleClose}
         />
       )}
+
+      <SearchOverlay open={searchOpen} onClose={closeSearch} />
 
       {/* Mobile menu drawer (rendered via portal, fixed full-screen) */}
       <MobileMenu menu={menu} open={mobileOpen} onClose={() => setMobileOpen(false)} />
