@@ -33,17 +33,17 @@ export default function DesktopToolbar({
     !!selectedSize &&
     !!currentColor.sizes.find((sz) => sz.label === selectedSize)?.availableForSale
   const [hovered, setHovered] = useState<string | null>(null)
-  // En la barra compacta de desktop hay un solo hueco: muestra el color bajo el
-  // cursor o, si no hay hover, el seleccionado.
-  const activeColorLabel =
-    (hovered ? view.colors.find((c) => c.slug === hovered)?.label : undefined) ??
-    currentColor.label
+  // Nombre del color bajo el cursor (vacío sin hover). El título muestra siempre
+  // el color seleccionado con click.
+  const hoveredLabel = hovered
+    ? view.colors.find((c) => c.slug === hovered)?.label
+    : undefined
   return (
     <div className={s.toolbar}>
       <div className={s.titleBlock}>
         <div className={s.title}>
           <span className={s.titleText}>{view.title}</span>
-          {activeColorLabel && <span className={s.titleColor}>{activeColorLabel}</span>}
+          {currentColor.label && <span className={s.titleColor}>{currentColor.label}</span>}
         </div>
         <div className={s.priceBg}>
           <PriceLabel min={view.minPrice} max={view.maxPrice} currency={view.currency} />
@@ -64,7 +64,10 @@ export default function DesktopToolbar({
           />
         </div>
         <div className={s.variantRow}>
-          <div className={s.variantLabel}>Colors:</div>
+          <div className={[s.variantLabel, s.variantLabelColor].join(' ')}>
+            <span>Colors:</span>
+            <span className={s.hoverName}>{hoveredLabel ?? ''}</span>
+          </div>
           <ColorSwatches
             colors={view.colors}
             selected={selectedColor}

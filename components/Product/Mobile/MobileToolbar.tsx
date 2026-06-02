@@ -57,7 +57,7 @@ export default function MobileToolbar({
       </div>
 
       <div className={s.section}>
-        <div className={s.label}>Color:</div>
+        <div className={s.label}>Colors:</div>
         <div className={s.colorName}>{hoveredLabel ?? ' '}</div>
         <ColorSwatches
           colors={view.colors}

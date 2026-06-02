@@ -82,6 +82,22 @@
   background: #f7f7f7;
 }
 
+// Celda de "Colors:" apilada: el label arriba y, debajo, el nombre del color
+// bajo el cursor (vacío sin hover). Mantiene el ancho de 44px para no descuadrar
+// la alineación de los swatches con la fila de tallas.
+.variantLabelColor {
+  flex-direction: column;
+  gap: px(2);
+  line-height: 1;
+
+  .hoverName {
+    min-height: px(9);
+    color: map-get($colors, 'gray-light');
+    text-align: center;
+    word-break: break-word;
+  }
+}
+
 .infoBlock {
   width: px(184);
   flex-shrink: 0;
