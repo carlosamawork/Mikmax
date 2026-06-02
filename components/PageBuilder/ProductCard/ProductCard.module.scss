@@ -8,6 +8,16 @@
   width: 100%;
   text-decoration: none;
   color: inherit;
+
+  // Hover: anula la opacidad global de los enlaces (body a:hover) y hace un mini
+  // zoom-in sobre la imagen (recortado por el overflow del .media).
+  @include hover {
+    opacity: 1;
+
+    .img {
+      transform: scale(1.04);
+    }
+  }
 }
 
 .media {
@@ -32,6 +42,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s ease;
 }
 
 .tag {
