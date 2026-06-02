@@ -14,8 +14,9 @@
   .title {
     margin: 0;
     font-family: $MonumentGrotesk;
-    font-size: px(16);
-    line-height: px(22);
+    // Mismo tamaño e interlineado que el texto del ShopToolbar ("Vistas").
+    font-size: px(11);
+    line-height: px(15);
     letter-spacing: 0.5px;
     color: map-get($colors, 'darker');
   }
