@@ -1,4 +1,5 @@
 'use client'
+import {useState} from 'react'
 import PriceLabel from '../shared/PriceLabel'
 import ColorSwatches from '../shared/ColorSwatches'
 import SizeSelector from '../shared/SizeSelector'
@@ -26,10 +27,17 @@ export default function MobileToolbar({
   onToggleInfo,
   isInfoOpen,
 }: Props) {
+  const [hovered, setHovered] = useState<string | null>(null)
+  const hoveredLabel = hovered
+    ? view.colors.find((c) => c.slug === hovered)?.label
+    : undefined
   return (
     <div className={s.wrap}>
       <div className={s.titleBlock}>
-        <div className={s.title}>{view.title}</div>
+        <div className={s.title}>
+          {view.title}
+          {currentColor.label && <span className={s.titleColor}>{currentColor.label}</span>}
+        </div>
         <div className={s.price}>
           <PriceLabel min={view.minPrice} max={view.maxPrice} currency={view.currency} />
         </div>
@@ -49,8 +57,14 @@ export default function MobileToolbar({
       </div>
 
       <div className={s.section}>
-        <div className={s.label}>Please select a color:</div>
-        <ColorSwatches colors={view.colors} selected={selectedColor} onSelect={onSelectColor} />
+        <div className={s.label}>Colors:</div>
+        <div className={s.colorName}>{hoveredLabel ?? ' '}</div>
+        <ColorSwatches
+          colors={view.colors}
+          selected={selectedColor}
+          onSelect={onSelectColor}
+          onHover={setHovered}
+        />
       </div>
 
       <button type="button" className={s.infoToggle} onClick={onToggleInfo}>

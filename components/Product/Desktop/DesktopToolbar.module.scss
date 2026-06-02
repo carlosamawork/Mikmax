@@ -34,8 +34,24 @@
   font-size: px(11);
   letter-spacing: px(0.5);
 }
-.title { background: map-get($colors, 'white'); }
+.title {
+  background: map-get($colors, 'white');
+  gap: px(6);
+  overflow: hidden;
+}
 .priceBg { background: map-get($colors, 'lightgray-bg'); }
+
+.titleText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.titleColor {
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: map-get($colors, 'gray-light');
+}
 
 .variantBlock {
   width: px(313);
@@ -64,6 +80,22 @@
 
 .variantLabelSize {
   background: #f7f7f7;
+}
+
+// Celda de "Colors:" apilada: el label arriba y, debajo, el nombre del color
+// bajo el cursor (vacío sin hover). Mantiene el ancho de 44px para no descuadrar
+// la alineación de los swatches con la fila de tallas.
+.variantLabelColor {
+  flex-direction: column;
+  gap: px(2);
+  line-height: 1;
+
+  .hoverName {
+    min-height: px(9);
+    color: map-get($colors, 'gray-light');
+    text-align: center;
+    word-break: break-word;
+  }
 }
 
 .infoBlock {

@@ -14,6 +14,11 @@
   margin-bottom: px(4);
 }
 
+.titleColor {
+  margin-left: px(6);
+  color: map-get($colors, 'gray-light');
+}
+
 .price {
   font-size: px(12);
   margin-bottom: px(12);
@@ -32,7 +37,17 @@
 
 .label {
   font-size: px(11);
+  margin-bottom: px(4);
+}
+
+// Nombre del color bajo el cursor (vacío sin hover). Reserva altura para que
+// los swatches no salten al aparecer/desaparecer el nombre.
+.colorName {
+  min-height: px(15);
   margin-bottom: px(8);
+  font-size: px(11);
+  line-height: px(15);
+  color: map-get($colors, 'gray-light');
 }
 
 .infoToggle {

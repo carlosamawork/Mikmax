@@ -1,4 +1,5 @@
 'use client'
+import {useState} from 'react'
 import PriceLabel from '../shared/PriceLabel'
 import ColorSwatches from '../shared/ColorSwatches'
 import SizeSelector from '../shared/SizeSelector'
@@ -31,10 +32,19 @@ export default function DesktopToolbar({
   const canAddToCart =
     !!selectedSize &&
     !!currentColor.sizes.find((sz) => sz.label === selectedSize)?.availableForSale
+  const [hovered, setHovered] = useState<string | null>(null)
+  // Nombre del color bajo el cursor (vacío sin hover). El título muestra siempre
+  // el color seleccionado con click.
+  const hoveredLabel = hovered
+    ? view.colors.find((c) => c.slug === hovered)?.label
+    : undefined
   return (
     <div className={s.toolbar}>
       <div className={s.titleBlock}>
-        <div className={s.title}>{view.title}</div>
+        <div className={s.title}>
+          <span className={s.titleText}>{view.title}</span>
+          {currentColor.label && <span className={s.titleColor}>{currentColor.label}</span>}
+        </div>
         <div className={s.priceBg}>
           <PriceLabel min={view.minPrice} max={view.maxPrice} currency={view.currency} />
         </div>
@@ -54,8 +64,16 @@ export default function DesktopToolbar({
           />
         </div>
         <div className={s.variantRow}>
-          <div className={s.variantLabel}>Colors:</div>
-          <ColorSwatches colors={view.colors} selected={selectedColor} onSelect={onSelectColor} />
+          <div className={[s.variantLabel, s.variantLabelColor].join(' ')}>
+            <span>Colors:</span>
+            <span className={s.hoverName}>{hoveredLabel ?? ''}</span>
+          </div>
+          <ColorSwatches
+            colors={view.colors}
+            selected={selectedColor}
+            onSelect={onSelectColor}
+            onHover={setHovered}
+          />
         </div>
       </div>
 

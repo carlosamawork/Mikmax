@@ -101,7 +101,7 @@ body{
 a {
     transition: opacity 0.25s ease;
     @include hover {
-        opacity: 0.7;
+        opacity: 1;
     }
 }
 
