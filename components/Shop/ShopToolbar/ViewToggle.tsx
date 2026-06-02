@@ -18,7 +18,7 @@ export default function ViewToggle({value}: {value: ViewMode}) {
 
   return (
     <div className={s.viewGroup} role="group" aria-label="Vista">
-      <span className={s.viewLabel}>Vista</span>
+      <span className={s.viewLabel}>Views</span>
       <button
         type="button"
         className={value === '4col' ? s.viewActive : s.viewInactive}
@@ -33,7 +33,7 @@ export default function ViewToggle({value}: {value: ViewMode}) {
         aria-pressed={value === '2col'}
         onClick={() => setView('2col')}
       >
-        3
+        2
       </button>
     </div>
   )
