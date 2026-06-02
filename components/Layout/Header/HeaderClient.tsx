@@ -3,6 +3,7 @@
 
 import {useCallback, useContext, useEffect, useRef, useState} from 'react'
 import Link from 'next/link'
+import {usePathname} from 'next/navigation'
 import {LazyImage} from '@/components/Common'
 import {CartContext} from '@/context/shopContext'
 import s from './Header.module.scss'
@@ -32,6 +33,15 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
   )
 
   const closeSearch = useCallback(() => setSearchOpen(false), [])
+  const pathname = usePathname()
+
+  // Al cambiar de ruta, cerrar cualquier menú/overlay abierto (mega-menú Shop,
+  // menú mobile y buscador), ya que el header no se desmonta entre páginas.
+  useEffect(() => {
+    setActiveKey(null)
+    setMobileOpen(false)
+    setSearchOpen(false)
+  }, [pathname])
 
   const open = (key: string) => {
     if (closeTimer.current) clearTimeout(closeTimer.current)

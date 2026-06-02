@@ -3,7 +3,9 @@
 .swiper {
   position: relative;
   width: 100%;
-  aspect-ratio: 1;
+  // Formato vertical 3:4 (igual que las cards del catálogo) para evitar el
+  // recorte que provocaba el formato cuadrado en fotos de producto verticales.
+  aspect-ratio: 3 / 4;
   background: map-get($colors, 'lightgray-bg');
   overflow: hidden;
 }
