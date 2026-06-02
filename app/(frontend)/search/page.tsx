@@ -60,7 +60,7 @@ export default async function SearchPage({searchParams}: Props) {
         <h1 className={s.title}>Resultados para «{q}»</h1>
         <p className={s.count}>{total} productos</p>
       </header>
-      <ShopToolbar view={view} />
+      <ShopToolbar view={view} flush />
       {total > 0 ? (
         <Suspense fallback={<ProductGridSkeleton view={view} />}>
           <ProductGrid products={products} view={view}>
