@@ -13,7 +13,10 @@
 
 .image {
   opacity: 0;
-  transition: opacity 0.35s ease;
+  // Incluye transform para que el zoom-in de hover en enlaces con imagen
+  // (definido en _base.scss) anime en vez de saltar. Esta clase gana en
+  // especificidad al selector global, por eso la transición vive aquí.
+  transition: opacity 0.35s ease, transform 0.5s ease;
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
