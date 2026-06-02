@@ -15,6 +15,7 @@ import orderProducts from './orderProductStructure'
 import category from './categoryStructure'
 import postTag from './postTagStructure'
 import look from './lookStructure'
+import orderLooks from './orderLookStructure'
 import set from './setStructure'
 
 /**
@@ -72,6 +73,7 @@ export const structure: StructureResolver = (S, context) =>
       products(S, context),
       orderProducts(S,context),
       look(S, context),
+      orderLooks(S, context),
       set(S, context),
       S.divider(),
       posts(S, context),

@@ -77,6 +77,16 @@ export default defineType({
         },
       },
     }),
+    // Visibilidad en el mega-menú de Shop (opt-out)
+    defineField({
+      name: 'hideFromShopMenu',
+      title: 'Ocultar del menú Shop',
+      type: 'boolean',
+      initialValue: false,
+      description:
+        'Si se marca, esta colección no aparecerá en el mega-menú de Shop (útil para colecciones como Sets que van como item propio en el nav).',
+      group: 'editorial',
+    }),
     // Orden manual (orderable plugin)
     defineField({
       name: 'orderRank',

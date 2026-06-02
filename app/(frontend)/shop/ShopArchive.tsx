@@ -16,6 +16,7 @@ import {
   parseSearchParams,
 } from '@/lib/shop/searchParams'
 import {expandProductsToCards} from '@/lib/shop/expandToCards'
+import {filterProductsByMaterial} from '@/lib/shop/materialFilter'
 import {applyCardFilters, sortCards} from '@/lib/shop/filterAndSortCards'
 import {ALL_HANDLE, CHUNK_SIZE, type ProductCardData, type ShopSearchParams} from '@/types/shop'
 
@@ -40,11 +41,17 @@ type ShopifyVariantNode = {
   } | null
 }
 
+type MaterialMetaobjectNode = {fields?: {key: string; value: string | null}[]}
+type MaterialMetafield = {references?: {nodes: MaterialMetaobjectNode[]} | null} | null
+
 type ShopifyProductNode = {
   id: string
   handle: string
   title: string
   tags?: string[]
+  coverMaterial?: MaterialMetafield
+  fillerMaterial?: MaterialMetafield
+  fabric?: MaterialMetafield
   featuredImage?: {url: string; altText?: string | null} | null
   priceRange: {
     minVariantPrice: {amount: string}
@@ -129,7 +136,9 @@ export default async function ShopArchive({handle, searchParams}: Props) {
     orderedProducts = matching
   }
 
-  const expanded = expandProductsToCards(orderedProducts, selectedColorGids)
+  const selectedMaterialSlugs = (params.material ?? '').split(',').filter(Boolean)
+  const materialFiltered = filterProductsByMaterial(orderedProducts, selectedMaterialSlugs)
+  const expanded = expandProductsToCards(materialFiltered, selectedColorGids)
   const filtered = applyCardFilters(expanded, params)
   const sorted = sortCards(filtered, sort)
 

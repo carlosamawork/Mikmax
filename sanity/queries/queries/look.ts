@@ -93,3 +93,46 @@ export async function getLookSEO(slug: string) {
     {next: {tags: ['look', `look:${slug}`], revalidate: 3600}},
   )
 }
+
+export type SanityLookComponentLite = {
+  color: string | null
+  productHandle: string | null
+}
+
+export type SanityLookListDoc = {
+  _id: string
+  title: string
+  slug: string
+  img: {imageUrl: string | null; alt: string | null} | null
+  discountStrategy: 'none' | 'sumMinusFixed' | 'sumMinusPercent' | null
+  discountValue: number | null
+  components: SanityLookComponentLite[] | null
+  orderRank: string | null
+}
+
+export const ALL_LOOKS_QUERY = groq`
+  *[_type == "look"
+     && defined(slug.current)
+     && !(_id in path('drafts.**'))] | order(coalesce(orderRank, title) asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    "img": editorialImages[0].image{ ${image}, "alt": alt },
+    discountStrategy,
+    discountValue,
+    "components": components[]{
+      color,
+      "productHandle": product->store.slug.current
+    },
+    orderRank
+  }
+`
+
+export async function getAllLooks(): Promise<SanityLookListDoc[]> {
+  const docs = await client.fetch<SanityLookListDoc[]>(
+    ALL_LOOKS_QUERY,
+    {},
+    {next: {tags: ['look'], revalidate: 3600}},
+  )
+  return docs ?? []
+}
