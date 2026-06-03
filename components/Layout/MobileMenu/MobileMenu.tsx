@@ -1,8 +1,9 @@
 // components/Layout/MobileMenu/MobileMenu.tsx
 'use client'
 
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
+import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
 import {CartContext} from '@/context/shopContext'
@@ -19,6 +20,7 @@ import type {
 interface Props {
   menu?: MenuData
   open: boolean
+  autoFocusSearch?: boolean
   onClose: () => void
 }
 
@@ -58,9 +60,12 @@ function Chevron({open}: {open: boolean}) {
   )
 }
 
-export default function MobileMenu({menu, open, onClose}: Props) {
+export default function MobileMenu({menu, open, autoFocusSearch = false, onClose}: Props) {
   const [expandedKey, setExpandedKey] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [query, setQuery] = useState('')
+  const router = useRouter()
+  const searchRef = useRef<HTMLInputElement | null>(null)
   const ctx = useContext<CartCtx>(CartContext as React.Context<CartCtx>)
   const cartCount = (ctx?.cart ?? []).reduce(
     (acc: number, item: CartItem) => acc + (item.quantity ?? 0),
@@ -80,6 +85,13 @@ export default function MobileMenu({menu, open, onClose}: Props) {
       }
     }
   }, [open])
+
+  // Cuando el menú se abre desde la lupa del header, enfocar el input de búsqueda.
+  useEffect(() => {
+    if (!open || !autoFocusSearch) return
+    const id = requestAnimationFrame(() => searchRef.current?.focus())
+    return () => cancelAnimationFrame(id)
+  }, [open, autoFocusSearch])
 
   if (!mounted || !open) return null
 
@@ -120,6 +132,14 @@ export default function MobileMenu({menu, open, onClose}: Props) {
     }
   }
 
+  function onSearchSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    const q = query.trim()
+    if (!q) return
+    onClose()
+    router.push(`/search?q=${encodeURIComponent(q)}`)
+  }
+
   return createPortal(
     <div className={s.drawer} role="dialog" aria-modal="true" aria-label="Menú principal">
       {/* Top bar — same shape as header but with × close instead of burger */}
@@ -135,16 +155,6 @@ export default function MobileMenu({menu, open, onClose}: Props) {
           />
         </Link>
         <div className={s.actions}>
-          <button type="button" className={s.iconBtn} aria-label="Search">
-            <LazyImage
-              src="/icons/search.svg"
-              alt=""
-              width={35}
-              height={35}
-              priority
-              className={s.iconImg}
-            />
-          </button>
           <Link
             href="/login"
             className={s.iconBtn}
@@ -178,13 +188,16 @@ export default function MobileMenu({menu, open, onClose}: Props) {
       </div>
 
       {/* Search row */}
-      <form className={s.searchRow} onSubmit={(e) => e.preventDefault()}>
+      <form className={s.searchRow} onSubmit={onSearchSubmit}>
         <div className={s.searchInputWrap}>
           <input
+            ref={searchRef}
             className={s.searchInput}
             type="search"
             placeholder="Search"
             aria-label="Buscar"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
         </div>
         <button type="submit" className={s.searchBtn}>

@@ -24,6 +24,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
   const [variant, setVariant] = useState<HeaderVariant>(initialVariant)
   const [activeKey, setActiveKey] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileSearchFocus, setMobileSearchFocus] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const ctx = useContext<CartCtx>(CartContext as React.Context<CartCtx>)
@@ -197,8 +198,11 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
               type="button"
               className={s.iconBtn}
               aria-label="Search"
-              aria-expanded={searchOpen}
-              onClick={() => setSearchOpen(true)}
+              aria-expanded={mobileOpen}
+              onClick={() => {
+                setMobileSearchFocus(true)
+                setMobileOpen(true)
+              }}
             >
               <LazyImage
                 src="/icons/search.svg"
@@ -232,7 +236,10 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
               className={s.burger}
               aria-label="Abrir menú"
               aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen(true)}
+              onClick={() => {
+                setMobileSearchFocus(false)
+                setMobileOpen(true)
+              }}
             >
               <span />
               <span />
@@ -253,7 +260,12 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
       <SearchOverlay open={searchOpen} onClose={closeSearch} />
 
       {/* Mobile menu drawer (rendered via portal, fixed full-screen) */}
-      <MobileMenu menu={menu} open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <MobileMenu
+        menu={menu}
+        open={mobileOpen}
+        autoFocusSearch={mobileSearchFocus}
+        onClose={() => setMobileOpen(false)}
+      />
     </header>
   )
 }
