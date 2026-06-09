@@ -1,26 +1,8 @@
-// sanity/queries/queries/home.ts
 import {groq} from 'next-sanity'
 import {client} from '..'
 import type {HomeData} from '@/sanity/types'
 import {seo} from '../fragments/seo'
-import {image} from '../fragments/image'
-import {productCardProjection, setCardProjection} from '../fragments/cards'
-
-// Projection for one image+video slot (used by heroCampaign and campaignImageVideo)
-const mediaProjection = `
-  mediaType,
-  image{
-    ${image},
-    "alt": alt
-  },
-  video{
-    src,
-    posterAlt,
-    poster{
-      ${image}
-    }
-  }
-`
+import {pageBuilderProjection} from '../fragments/pageBuilder'
 
 export async function getHome(): Promise<HomeData> {
   const result = await client.fetch<HomeData | null>(
@@ -29,79 +11,11 @@ export async function getHome(): Promise<HomeData> {
       pageBuilder[]{
         _key,
         _type,
-        _type == "block.heroCampaign" => {
-          slides[]{
-            _key,
-            ${mediaProjection},
-            title,
-            url
-          }
-        },
-        _type == "block.campaignImageVideo" => {
-          ${mediaProjection},
-          headline,
-          url,
-          aspectRatio,
-          fullBleed,
-          narrow
-        },
-        _type == "block.featuredSection" => {
-          slides[]{
-            _key,
-            image{
-              ${image},
-              "alt": alt
-            },
-            title,
-            url
-          }
-        },
-        _type == "block.imageWithProduct" => {
-          feature{
-            image{
-              ${image},
-              "alt": alt
-            },
-            title,
-            url
-          },
-          "product": product->{ ${productCardProjection} },
-          imagePosition
-        },
-        _type == "block.productModule" => {
-          title,
-          layout,
-          source,
-          "products": select(
-            source == "manual" => manualProducts[]->{ ${productCardProjection} },
-            // Collection mode requires a product↔collection link not yet present
-            // in the schema. Returns empty until Shopify Storefront-driven
-            // resolution lands in a later phase.
-            []
-          )
-        },
-        _type == "block.lookModule" => {
-          title,
-          layout,
-          "looks": looks[]->{ ${setCardProjection} }
-        },
-        _type == "block.setModule" => {
-          title,
-          subtitle,
-          "product": product->{ ${productCardProjection} },
-          images[]{
-            ${image},
-            "alt": alt
-          }
-        },
-        _type == "block.richText" => {
-          body
-        }
+        ${pageBuilderProjection}
       }
     }`,
     {},
-    // La home renderiza productos (imageWithProduct, productModule, setModule)
-    // y looks (lookModule): suscribirse a sus tipos para que publicarlos la refresque.
+    // La home renderiza productos y looks: suscribirse a sus tipos para refrescarla.
     {next: {tags: ['home', 'product', 'look'], revalidate: 3600}},
   )
   return result ?? {}
