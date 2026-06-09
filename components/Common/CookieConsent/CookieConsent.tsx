@@ -57,7 +57,7 @@ export default function CookieConsent() {
               analyse our traffic. We also share information about your use of our site with our
               social media, advertising, and analytics partners. To learn more about how we use
               cookies and how you can manage them, view our{' '}
-              <Link href="/privacy-policy" className={s.link}>
+              <Link href="/legal/privacy-policy" className={s.link}>
                 Cookie Notice
               </Link>
             </p>
