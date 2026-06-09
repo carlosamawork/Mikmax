@@ -8,6 +8,12 @@
   padding: px(13) px(4);
   text-decoration: none;
   color: inherit;
+  background: map-get($colors, 'white');
+
+  // La 1ª fila (y las impares) en blanco; las pares (2ª, 4ª, …) en gris claro.
+  &:nth-child(even) {
+    background: map-get($colors, 'lightgrey-bg');
+  }
 }
 
 .minis {
@@ -29,8 +35,8 @@
     gap: px(2);
 
     .mini {
-      flex: 0 0 px(358);
-      width: px(358);
+      flex: 0 0 25%;
+      width: 25%;
     }
     // Reset del centrado móvil en desktop
     .mini:last-child:nth-child(odd) {

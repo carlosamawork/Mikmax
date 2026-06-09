@@ -3,8 +3,9 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: px(40);
-  padding: px(20) 0;
+  // Sin gap: las filas van contiguas para que los fondos alternos (blanco /
+  // gris claro) formen una banda continua, como en el Figma.
+  padding: px(100) 0 px(20);
 }
 
 .empty {
