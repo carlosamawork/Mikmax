@@ -1,0 +1,93 @@
+@use '../../../styles/common/variables' as *;
+
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: px(20);
+  padding: px(13) px(4);
+  text-decoration: none;
+  color: inherit;
+}
+
+.minis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: px(1);
+  width: 100%;
+
+  // Número impar de minis → el último centrado a una columna
+  .mini:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - #{px(1)} / 2);
+  }
+
+  @media (min-width: 768px) {
+    display: flex;
+    justify-content: center;
+    gap: px(2);
+
+    .mini {
+      flex: 0 0 px(358);
+      width: px(358);
+    }
+    // Reset del centrado móvil en desktop
+    .mini:last-child:nth-child(odd) {
+      justify-self: auto;
+      width: px(358);
+    }
+  }
+}
+
+.mini {
+  position: relative;
+  aspect-ratio: 358 / 444;
+  overflow: hidden;
+  background: map-get($colors, 'gray');
+
+  > :global(.wrapper),
+  > div {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.caption {
+  text-align: center;
+
+  .kicker {
+    margin: 0;
+    font-family: $MonumentGrotesk;
+    font-size: px(13);
+    line-height: px(20);
+    color: map-get($colors, 'black');
+  }
+
+  .title {
+    margin: 0;
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    line-height: px(15);
+    letter-spacing: px(0.5);
+    color: map-get($colors, 'black');
+  }
+
+  .price {
+    margin: 0;
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    line-height: px(15);
+    letter-spacing: px(0.5);
+    color: map-get($colors, 'black');
+  }
+}
