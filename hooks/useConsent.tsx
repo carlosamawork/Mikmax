@@ -3,6 +3,8 @@
 import {getCookie, hasCookie, setCookie} from 'cookies-next'
 import {useEffect, useState} from 'react'
 
+import {applyConsentToGtag} from '@/lib/analytics/consent'
+
 export type ConsentPreferences = {
   analytics: boolean
   marketing: boolean
@@ -22,6 +24,7 @@ export function useConsent() {
     try {
       const stored = JSON.parse((getCookie(cookieName) as string) || '{}') as ConsentPreferences
       setConsent(stored)
+      applyConsentToGtag(stored)
     } catch {
       setConsent(null)
     }
@@ -30,6 +33,7 @@ export function useConsent() {
   const updateConsent = (prefs: ConsentPreferences) => {
     setCookie(cookieName, JSON.stringify(prefs), {maxAge: 60 * 60 * 24 * 60})
     setConsent(prefs)
+    applyConsentToGtag(prefs)
   }
 
   return {consent, updateConsent}
