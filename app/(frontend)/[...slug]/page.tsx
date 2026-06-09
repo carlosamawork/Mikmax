@@ -3,7 +3,6 @@ import {permanentRedirect} from 'next/navigation'
 import {Breadcrumb} from '@/components/Common'
 import {PageBuilder} from '@/components/PageBuilder'
 import {getPage, getPageSlugs} from '@/sanity/queries/queries/page'
-import {urlFor} from '@/sanity/queries'
 import {BASE_URL, siteTitle, siteDescription} from '@/utils/seoHelper'
 
 export const revalidate = 3600
@@ -26,7 +25,11 @@ export async function generateMetadata({
   const title = page.seo?.title || page.title
   const description = page.seo?.description || siteDescription
   const canonical = `${BASE_URL.origin}/${page.slug}`
-  const ogImageUrl = page.seo?.image ? urlFor(page.seo.image).width(1200).url() : undefined
+  // El fragmento `seo` aplana la imagen a {imageUrl, ...} (asset->url), no a una
+  // referencia que `urlFor` pueda resolver. Usamos el imageUrl proyectado y
+  // pedimos el ancho con el query param del CDN de Sanity.
+  const seoImageUrl = (page.seo?.image as {imageUrl?: string} | undefined)?.imageUrl
+  const ogImageUrl = seoImageUrl ? `${seoImageUrl}?w=1200&fit=max&auto=format` : undefined
 
   return {
     title: `${title} | ${siteTitle}`,
