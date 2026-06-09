@@ -2,7 +2,7 @@ import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 import {getSet, getSetSlugs, getSetSEO} from '@/sanity/queries/queries/set'
 import {getProductDetail, getProductCards} from '@/lib/shopify'
-import {buildLookView} from '@/lib/look/buildLookView'
+import {buildSetView} from '@/lib/set/buildSetView'
 import {BASE_URL, siteTitle} from '@/utils/seoHelper'
 import LookDetail from '@/components/Look/LookDetail'
 
@@ -52,7 +52,7 @@ export default async function SetPage({params}: {params: Promise<{slug: string}>
     .filter((h): h is string => !!h)
   const relatedCards = relatedHandles.length ? await getProductCards(relatedHandles) : []
 
-  const view = buildLookView(set, details, relatedCards)
+  const view = buildSetView(set, details, relatedCards)
 
   if (view.components.length === 0) notFound()
 
