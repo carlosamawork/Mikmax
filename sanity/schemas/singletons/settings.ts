@@ -19,6 +19,10 @@ export default defineType({
       title: 'Banner anuncio',
     },
     {
+      name: 'newsletterPopup',
+      title: 'Pop-up newsletter',
+    },
+    {
       name: 'notFoundPage',
       title: '404 page',
     },
@@ -48,6 +52,13 @@ export default defineType({
       title: 'Banner anuncio',
       type: 'announcementBanner',
       group: 'banner',
+    }),
+    // Newsletter popup
+    defineField({
+      name: 'newsletterPopup',
+      title: 'Pop-up newsletter',
+      type: 'newsletterPopup',
+      group: 'newsletterPopup',
     }),
     // Not found page
     defineField({

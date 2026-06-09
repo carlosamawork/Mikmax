@@ -37,6 +37,7 @@ const blocks = [body]
 
 // Object types
 import announcementBanner from './objects/global/announcementBanner'
+import newsletterPopup from './objects/global/newsletterPopup'
 import footer from './objects/global/footer'
 import imageWithProductHotspots from './objects/hotspot/imageWithProductHotspots'
 import inventory from './objects/shopify/inventory'
@@ -98,6 +99,7 @@ const objects = [
   ...blockSchemas,
   twoColumnCell,
   announcementBanner,
+  newsletterPopup,
   footer,
   imageWithProductHotspots,
   inventory,
