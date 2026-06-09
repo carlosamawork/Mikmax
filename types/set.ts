@@ -8,6 +8,7 @@ export type SetArchiveItem = {
   title: string
   slug: string
   components: SetArchiveComponent[]
+  // Rango de precio del set (suma de componentes), ya con el descuento aplicado.
   priceMin: number
   priceMax: number
 }

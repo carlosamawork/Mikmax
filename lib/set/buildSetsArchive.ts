@@ -57,19 +57,21 @@ function aggregateSet(
   const components: SetArchiveComponent[] = []
   let priceMin = 0
   let priceMax = 0
-  let valid = 0
   for (const comp of set.components ?? []) {
     if (!comp.productHandle || !comp.color) continue
     const node = productMap[comp.productHandle]
     if (!node) continue
     const {imageUrl, imageAlt, min, max, hasPrice} = componentImageAndPrice(node, comp.color)
-    if (!hasPrice || !imageUrl) continue
-    valid++
+    if (!hasPrice) continue
+    // El precio del set suma TODOS los componentes con precio; la imagen del
+    // mini solo se añade si existe (evita que un componente sin imagen
+    // subestime el rango de precio).
     priceMin += min
     priceMax += max
-    components.push({imageUrl, imageAlt})
+    if (imageUrl) components.push({imageUrl, imageAlt})
   }
-  if (valid === 0) return null
+  // Necesita al menos un mini (imagen) para renderizar la fila.
+  if (components.length === 0) return null
 
   const strategy = set.discountStrategy ?? 'none'
   const value = set.discountValue ?? 0
