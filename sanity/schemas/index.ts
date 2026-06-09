@@ -84,6 +84,7 @@ import video from './objects/module/video'
 import category from './taxonomies/categories'
 import postTag from './taxonomies/postTags'
 import bundleComponent from './objects/bundle/bundleComponent'
+import twoColumnCell from './objects/twoColumnCell'
 import {blockSchemas} from './objects/blocks'
 
 
@@ -94,6 +95,7 @@ import collectionLinks from './objects/collection/links'
 const objects = [
   bundleComponent,
   ...blockSchemas,
+  twoColumnCell,
   announcementBanner,
   footer,
   imageWithProductHotspots,
