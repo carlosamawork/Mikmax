@@ -67,3 +67,45 @@ export async function getSetSEO(slug: string) {
     {next: {tags: ['set', `set:${slug}`], revalidate: 3600}},
   )
 }
+
+export type SanitySetComponentLite = {
+  color: string | null
+  productHandle: string | null
+}
+
+export type SanitySetListDoc = {
+  _id: string
+  title: string
+  slug: string
+  discountStrategy: 'none' | 'sumMinusFixed' | 'sumMinusPercent' | null
+  discountValue: number | null
+  components: SanitySetComponentLite[] | null
+  orderRank: string | null
+}
+
+export const ALL_SETS_QUERY = groq`
+  *[_type == "set"
+     && defined(slug.current)
+     && !(_id in path('drafts.**'))] | order(coalesce(orderRank, title) asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    discountStrategy,
+    discountValue,
+    "components": components[]{
+      color,
+      "productHandle": product->store.slug.current
+    },
+    orderRank
+  }
+`
+
+export async function getAllSets(): Promise<SanitySetListDoc[]> {
+  const docs = await client.fetch<SanitySetListDoc[]>(
+    ALL_SETS_QUERY,
+    {},
+    // Lee product->store.slug.current en los componentes: suscribirse a `product`.
+    {next: {tags: ['set', 'product'], revalidate: 3600}},
+  )
+  return docs ?? []
+}
