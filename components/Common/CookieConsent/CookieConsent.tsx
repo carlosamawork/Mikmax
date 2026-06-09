@@ -41,115 +41,110 @@ export default function CookieConsent() {
   }
 
   const acceptAll = () => saveConsent({analytics: true, marketing: true})
-  const denyAll = () => saveConsent({analytics: false, marketing: false})
+  const onlyNecessary = () => saveConsent({analytics: false, marketing: false})
 
   if (!visible) return null
 
   return (
-    <div className={`fixed inset-0 z-[120] flex items-end justify-center bg-black/30 ${s.cookieConsent}`}>
-      {!showManage ? (
-        <div className="w-full bg-white p-6 shadow-xl">
-          <p className="mb-6">
-            We use cookies and similar technologies to enhance your experience, provide personalized
-            content, improve site functionality, and analyze traffic. You can accept all cookies or
-            customize your preferences. Learn more in our{' '}
-            <Link href="/privacy-policy" className="underline">
-              Privacy Policy
-            </Link>
-            .
-          </p>
+    <div className={s.wrap}>
+      <div className={s.card}>
+        <p className={s.title}>At Mikmax, we respect your privacy</p>
 
-          <div className="flex flex-col gap-[10px] sm:flex-row sm:justify-between">
-            <button
-              className="flex-1 border bg-white px-4 py-3 uppercase hover:bg-black hover:text-white"
-              onClick={() => setShowManage(true)}
-            >
-              Manage Preferences
-            </button>
-            <button
-              className="flex-1 border bg-white px-4 py-3 uppercase hover:bg-black hover:text-white"
-              onClick={acceptAll}
-            >
-              Accept All
-            </button>
-            <button
-              className="flex-1 border bg-white px-4 py-3 uppercase hover:bg-black hover:text-white"
-              onClick={denyAll}
-            >
-              Decline All
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="w-full bg-white p-6 shadow-xl">
-          <p className="mb-6">Learn more about the cookies we use, and choose which cookies to allow.</p>
+        {!showManage ? (
+          <>
+            <p className={s.text}>
+              We use cookies to personalise content and ads, provide social media features, and
+              analyse our traffic. We also share information about your use of our site with our
+              social media, advertising, and analytics partners. To learn more about how we use
+              cookies and how you can manage them, view our{' '}
+              <Link href="/privacy-policy" className={s.link}>
+                Cookie Notice
+              </Link>
+            </p>
 
-          <div className="mb-6 flex flex-col gap-[10px] sm:flex-row sm:justify-between">
-            <button
-              className="flex-1 border bg-white px-4 py-3 uppercase hover:bg-black hover:text-white"
-              onClick={acceptAll}
-            >
-              Accept All
-            </button>
-            <button
-              className="flex-1 border bg-white px-4 py-3 uppercase hover:bg-black hover:text-white"
-              onClick={denyAll}
-            >
-              Decline All
-            </button>
-            <button
-              className="flex-1 border bg-white px-4 py-3 uppercase hover:bg-black hover:text-white"
-              onClick={() => saveConsent(prefs)}
-            >
-              Save Preferences
-            </button>
-          </div>
-
-          <label className={`${s.checkboxWrapper} mb-4`}>
-            <input type="checkbox" checked disabled />
-            <div className={`${s.checkboxSquare} ${s.disabled}`} />
-            <div className={s.checkboxContent}>
-              <p>REQUIRED</p>
-              <p>
-                These cookies are necessary for the website to function properly, including features like
-                adding items to the cart. These cannot be disabled.
-              </p>
+            <div className={s.actions}>
+              <div className={s.row}>
+                <button type="button" className={`${s.btn} ${s.btnDark}`} onClick={onlyNecessary}>
+                  Only necessary
+                </button>
+                <button type="button" className={`${s.btn} ${s.btnDark}`} onClick={acceptAll}>
+                  Accept All
+                </button>
+              </div>
+              <button
+                type="button"
+                className={`${s.btn} ${s.btnGrey}`}
+                onClick={() => setShowManage(true)}
+              >
+                Manage settings
+              </button>
             </div>
-          </label>
+          </>
+        ) : (
+          <>
+            <div className={s.toggles}>
+              <label className={s.checkboxWrapper}>
+                <input type="checkbox" checked disabled readOnly />
+                <span className={`${s.checkboxSquare} ${s.disabled}`} />
+                <span className={s.checkboxContent}>
+                  <p>Required</p>
+                  <p>
+                    Necessary for the website to function, including features like adding items to
+                    the cart. These cannot be disabled.
+                  </p>
+                </span>
+              </label>
 
-          <label className={`${s.checkboxWrapper} mb-4`}>
-            <input
-              type="checkbox"
-              checked={prefs.marketing}
-              onChange={() => setPrefs((prev) => ({...prev, marketing: !prev.marketing}))}
-            />
-            <div className={`${s.checkboxSquare} ${prefs.marketing ? s.checked : ''}`} />
-            <div className={s.checkboxContent}>
-              <p>MARKETING</p>
-              <p>
-                These cookies help us optimize marketing communications and show you relevant ads on other
-                websites.
-              </p>
-            </div>
-          </label>
+              <label className={s.checkboxWrapper}>
+                <input
+                  type="checkbox"
+                  checked={prefs.marketing}
+                  onChange={() => setPrefs((p) => ({...p, marketing: !p.marketing}))}
+                />
+                <span className={`${s.checkboxSquare} ${prefs.marketing ? s.checked : ''}`} />
+                <span className={s.checkboxContent}>
+                  <p>Marketing</p>
+                  <p>Helps us optimise marketing and show you relevant ads on other websites.</p>
+                </span>
+              </label>
 
-          <label className={s.checkboxWrapper}>
-            <input
-              type="checkbox"
-              checked={prefs.analytics}
-              onChange={() => setPrefs((prev) => ({...prev, analytics: !prev.analytics}))}
-            />
-            <div className={`${s.checkboxSquare} ${prefs.analytics ? s.checked : ''}`} />
-            <div className={s.checkboxContent}>
-              <p>ANALYTICS</p>
-              <p>
-                These cookies help us understand how users interact with our site, allowing us to improve
-                functionality and user experience. Data may be anonymized.
-              </p>
+              <label className={s.checkboxWrapper}>
+                <input
+                  type="checkbox"
+                  checked={prefs.analytics}
+                  onChange={() => setPrefs((p) => ({...p, analytics: !p.analytics}))}
+                />
+                <span className={`${s.checkboxSquare} ${prefs.analytics ? s.checked : ''}`} />
+                <span className={s.checkboxContent}>
+                  <p>Analytics</p>
+                  <p>
+                    Helps us understand how users interact with our site to improve it. Data may be
+                    anonymized.
+                  </p>
+                </span>
+              </label>
             </div>
-          </label>
-        </div>
-      )}
+
+            <div className={s.actions}>
+              <div className={s.row}>
+                <button type="button" className={`${s.btn} ${s.btnDark}`} onClick={onlyNecessary}>
+                  Decline all
+                </button>
+                <button type="button" className={`${s.btn} ${s.btnDark}`} onClick={acceptAll}>
+                  Accept all
+                </button>
+              </div>
+              <button
+                type="button"
+                className={`${s.btn} ${s.btnGrey}`}
+                onClick={() => saveConsent(prefs)}
+              >
+                Save preferences
+              </button>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   )
 }
