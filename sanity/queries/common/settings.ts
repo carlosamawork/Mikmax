@@ -128,6 +128,13 @@ export async function getSettings(): Promise<SettingsData> {
           isDefault
         }
       },
+      newsletterPopup{
+        enabled,
+        image{ "imageUrl": asset->url, "alt": alt },
+        heading,
+        legalText,
+        delaySeconds
+      },
       seo{ ${seo} }
     }`,
     {},

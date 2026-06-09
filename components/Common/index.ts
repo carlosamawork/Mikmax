@@ -1,2 +1,4 @@
 export {default as LazyImage} from './LazyImage'
 export {default as LazyVideo} from './LazyVideo'
+export {default as Breadcrumb} from './Breadcrumb/Breadcrumb'
+export type {BreadcrumbItem} from './Breadcrumb/Breadcrumb'

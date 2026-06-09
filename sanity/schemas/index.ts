@@ -18,9 +18,10 @@ import post from './documents/post'
 import page from './documents/page'
 import product from './documents/product'
 import productVariant from './documents/productVariant'
+import set from './documents/set'
 
 
-const documents = [ collection, page, product, productVariant, post, look]
+const documents = [ collection, page, product, productVariant, post, look, set]
 
 // Singleton document types
 import home from './singletons/home'
@@ -36,6 +37,7 @@ const blocks = [body]
 
 // Object types
 import announcementBanner from './objects/global/announcementBanner'
+import newsletterPopup from './objects/global/newsletterPopup'
 import footer from './objects/global/footer'
 import imageWithProductHotspots from './objects/hotspot/imageWithProductHotspots'
 import inventory from './objects/shopify/inventory'
@@ -84,6 +86,7 @@ import video from './objects/module/video'
 import category from './taxonomies/categories'
 import postTag from './taxonomies/postTags'
 import bundleComponent from './objects/bundle/bundleComponent'
+import twoColumnCell from './objects/twoColumnCell'
 import {blockSchemas} from './objects/blocks'
 
 
@@ -94,7 +97,9 @@ import collectionLinks from './objects/collection/links'
 const objects = [
   bundleComponent,
   ...blockSchemas,
+  twoColumnCell,
   announcementBanner,
+  newsletterPopup,
   footer,
   imageWithProductHotspots,
   inventory,

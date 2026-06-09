@@ -1,0 +1,18 @@
+@use '../../../styles/common/variables' as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  // Sin gap: las filas van contiguas para que los fondos alternos (blanco /
+  // gris claro) formen una banda continua, como en el Figma.
+  padding: px(100) 0 px(20);
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  padding: px(80) px(15);
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  color: map-get($colors, 'gray');
+}

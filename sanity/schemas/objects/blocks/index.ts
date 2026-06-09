@@ -7,6 +7,7 @@ import lookModule from './lookModule'
 import productModule from './productModule'
 import richText from './richText'
 import setModule from './setModule'
+import twoColumn from './twoColumn'
 
 export const blockSchemas = [
   heroCampaign,
@@ -17,6 +18,7 @@ export const blockSchemas = [
   setModule,
   featuredSection,
   richText,
+  twoColumn,
 ]
 
 // Names used in pageBuilder array `of` config

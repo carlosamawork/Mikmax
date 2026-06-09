@@ -2,10 +2,9 @@
 'use client'
 
 import {FormEvent, useState} from 'react'
+import {useNewsletterSubscribe} from '@/hooks/useNewsletterSubscribe'
 import s from './NewsletterForm.module.scss'
 import type {NewsletterFormProps} from '@/types/footer'
-
-type Status = 'idle' | 'submitting' | 'success' | 'error' | 'already'
 
 export default function NewsletterForm({
   title = 'Keep in touch',
@@ -14,34 +13,12 @@ export default function NewsletterForm({
   buttonLabel = 'Subscribe',
 }: NewsletterFormProps) {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<Status>('idle')
+  const {status, subscribe} = useNewsletterSubscribe()
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (status === 'submitting') return
-    setStatus('submitting')
-
-    try {
-      const res = await fetch('/api/subscribeUser', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email}),
-      })
-      const json = (await res.json()) as {status?: number | string; error?: {title?: string}; data?: unknown}
-      if (res.ok) {
-        setStatus('success')
-      } else if (
-        typeof json.error === 'object' &&
-        json.error !== null &&
-        json.error.title?.toLowerCase().includes('member exists')
-      ) {
-        setStatus('already')
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
-    }
+    if (status === 'submitting' || status === 'success') return
+    await subscribe(email)
   }
 
   return (

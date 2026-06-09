@@ -1,0 +1,95 @@
+@use '@/styles/common/variables' as *;
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: px(1);
+  padding: 0 px(5);
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.cell {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  overflow: hidden;
+
+  @media (min-width: 1024px) {
+    height: px(450);
+  }
+}
+
+// --- Celda de texto ---
+.text {
+  display: flex;
+  align-items: flex-end;
+  background: map-get($colors, 'white');
+  padding: px(15);
+
+  .body {
+    font-size: px(16);
+    line-height: px(19);
+    letter-spacing: px(0.5);
+    color: map-get($colors, 'black-border');
+    max-width: px(680);
+  }
+}
+
+// --- Celda media ---
+.media {
+  aspect-ratio: 3 / 4;
+
+  @media (min-width: 1024px) {
+    aspect-ratio: auto;
+  }
+
+  // El className de LazyImage/LazyVideo cae en su wrapper (.wrapper):
+  // posicionarlo a sangre dentro de la celda (alcanza también a través de .link).
+  :global(.wrapper) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  // Cover-crop de los elementos reales <img>/<video>.
+  img,
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .link {
+    position: absolute;
+    inset: 0;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .caption {
+    position: absolute;
+    left: px(17);
+    bottom: px(29);
+    z-index: 1;
+    margin: 0;
+    font-size: px(14);
+    line-height: px(20);
+    font-family: $MonumentGrotesk;
+  }
+
+  .captionLight {
+    color: map-get($colors, 'white');
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  }
+
+  .captionDark {
+    color: map-get($colors, 'black-border');
+  }
+}

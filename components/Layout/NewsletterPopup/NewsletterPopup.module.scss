@@ -1,0 +1,201 @@
+@use '@/styles/common/variables' as *;
+
+// Título: Helvetica Neue (Figma). Resto de textos: Monument Grotesk ($MonumentGrotesk).
+$nlHeading: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: px(20);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: px(360);
+  background: map-get($colors, 'white');
+  overflow: hidden;
+
+  // Desktop: altura fija 362 y ancho máx 738 (Figma); flexible por debajo.
+  @media (min-width: 768px) {
+    flex-direction: row;
+    max-width: px(738);
+    height: px(362);
+  }
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: map-get($colors, 'gray');
+
+  // Desktop: mitad izquierda a altura completa.
+  @media (min-width: 768px) {
+    flex: 1 1 0;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  > :global(.wrapper),
+  > div {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: px(15);
+  padding: px(20) px(15);
+
+  // Desktop: mitad derecha a altura completa, con el espaciado del Figma
+  // (título en el tercio superior, formulario debajo, legal anclado abajo).
+  @media (min-width: 768px) {
+    flex: 1 1 0;
+    height: 100%;
+    gap: 0;
+    justify-content: flex-start;
+    padding: px(110) px(10) px(10);
+  }
+}
+
+// Close: pastilla gris (#f0f0f0) arriba-derecha (Figma 72×36).
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: px(72);
+  height: px(36);
+  padding: px(10);
+  border: none;
+  cursor: pointer;
+  background: map-get($colors, 'lightgrey-bg');
+  color: map-get($colors, 'black-border');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+}
+
+.heading {
+  margin: 0;
+  font-family: $nlHeading;
+  font-size: px(13);
+  line-height: px(20);
+  color: map-get($colors, 'black-border');
+}
+
+.form {
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+
+  @media (min-width: 768px) {
+    margin-top: px(64);
+  }
+}
+
+.input {
+  flex: 1 1 0;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: px(6) 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(10);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black-border');
+  background: transparent;
+
+  &::placeholder {
+    color: map-get($colors, 'gray-light');
+  }
+}
+
+.send {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: px(25);
+  padding: 0 px(16);
+  border: none;
+  cursor: pointer;
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.feedback {
+  margin: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black-border');
+
+  @media (min-width: 768px) {
+    margin-top: px(8);
+  }
+}
+
+.feedbackError {
+  margin: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'red');
+
+  @media (min-width: 768px) {
+    margin-top: px(8);
+  }
+}
+
+.legal {
+  margin: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'gray-light');
+
+  // Desktop: anclado al fondo de la tarjeta (altura fija).
+  @media (min-width: 768px) {
+    margin-top: auto;
+  }
+
+  .legalLink {
+    color: map-get($colors, 'black-border');
+    text-decoration: none;
+  }
+}

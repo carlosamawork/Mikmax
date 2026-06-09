@@ -7,6 +7,7 @@ import {CartContext} from '@/context/shopContext'
 import DesktopLayout from './Desktop/DesktopLayout'
 import MobileLayout from './Mobile/MobileLayout'
 import ProductInfoPanel from './shared/ProductInfoPanel'
+import {trackViewItem} from '@/lib/analytics/track'
 import type {ProductView, ProductInitialState} from '@/types/product'
 
 type CartItemInput = {
@@ -51,6 +52,19 @@ export default function ProductDetail({view, initial}: Props) {
     const target = qs ? `${pathname}?${qs}` : pathname
     router.replace(target, {scroll: false})
   }, [selectedColor, selectedSize, pathname, router, view.defaultColorSlug])
+
+  useEffect(() => {
+    trackViewItem({
+      // Mismo id que add_to_cart/begin_checkout (productId = view.id) para que
+      // GA4/Meta casen el mismo producto a lo largo del embudo.
+      id: view.id,
+      name: view.title,
+      price: view.minPrice,
+      quantity: 1,
+      currency: view.currency,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view.id])
 
   useEffect(() => {
     const root = document.documentElement

@@ -1,22 +1,106 @@
 @use '@/styles/common/variables' as *;
 
-.cookieConsent {
-  &,
-  p,
-  button,
-  * {
-    font-size: 16px;
-  }
+$cookieFont: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-  button {
-    font-weight: 300;
+.wrap {
+  position: fixed;
+  z-index: 120;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  // Desktop: tarjeta anclada abajo-derecha.
+  @media (min-width: 768px) {
+    left: auto;
+    right: 0;
+    width: px(300);
   }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: px(19);
+  background: map-get($colors, 'white');
+  padding: px(15) px(10) 0;
+  box-shadow: 0 px(-2) px(12) rgba(0, 0, 0, 0.08);
+
+  @media (min-width: 768px) {
+    box-shadow: px(-2) px(-2) px(12) rgba(0, 0, 0, 0.08);
+  }
+}
+
+.title {
+  margin: 0;
+  font-family: $cookieFont;
+  font-size: px(13);
+  line-height: px(20);
+  color: map-get($colors, 'black');
+}
+
+.text {
+  margin: 0;
+  font-family: $cookieFont;
+  font-size: px(11);
+  line-height: px(15);
+  color: map-get($colors, 'black');
+
+  .link {
+    color: map-get($colors, 'gray-light');
+    text-decoration: underline;
+  }
+}
+
+// --- Acciones (botones a sangre con los bordes de la tarjeta) ---
+.actions {
+  display: flex;
+  flex-direction: column;
+  margin: 0 px(-10);
+
+  .row {
+    display: flex;
+
+    .btn {
+      flex: 1 1 0;
+    }
+  }
+}
+
+.btn {
+  height: px(32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 px(10);
+  border: none;
+  cursor: pointer;
+  font-family: $cookieFont;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'white');
+}
+
+.btnDark {
+  background: map-get($colors, 'black-border');
+}
+
+.btnGrey {
+  width: 100%;
+  background: map-get($colors, 'gray-light');
+}
+
+// --- Panel "Manage settings" ---
+.toggles {
+  display: flex;
+  flex-direction: column;
+  gap: px(12);
 }
 
 .checkboxWrapper {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: px(10);
   cursor: pointer;
   position: relative;
 
@@ -26,16 +110,16 @@
 }
 
 .checkboxSquare {
-  width: 0.7em;
-  height: 0.7em;
-  border: 1px solid black;
+  width: px(11);
+  height: px(11);
+  border: 1px solid map-get($colors, 'black-border');
   flex-shrink: 0;
-  margin-top: 4px;
+  margin-top: px(2);
   transition: background-color 0.2s ease;
 }
 
 .checked {
-  background-color: black;
+  background-color: map-get($colors, 'black-border');
 }
 
 .disabled {
@@ -47,16 +131,17 @@
 .checkboxContent {
   display: flex;
   flex-direction: column;
+  font-family: $cookieFont;
 
   p {
     margin: 0;
+    font-size: px(11);
+    line-height: px(15);
+    color: map-get($colors, 'black');
 
     &:first-child {
-      margin-bottom: 0.5em;
-    }
-
-    &:last-child {
-      margin-bottom: 1em;
+      font-weight: 500;
+      margin-bottom: px(2);
     }
   }
 }
