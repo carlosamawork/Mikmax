@@ -2,6 +2,8 @@
 import {useContext, useEffect} from 'react'
 import {LazyImage} from '@/components/Common'
 import {CartContext} from '@/context/shopContext'
+import {trackBeginCheckout} from '@/lib/analytics/track'
+import {getStoreCurrency} from '@/lib/analytics/item'
 import s from './CartDrawer.module.scss'
 
 type CartItem = {
@@ -61,6 +63,17 @@ export default function CartDrawer() {
   }
 
   function goCheckout() {
+    trackBeginCheckout(
+      cart.map((it) => ({
+        id: it.productId || it.store.gid,
+        name: it.title || '',
+        price: typeof it.price === 'number' ? it.price : 0,
+        quantity: it.variantQuantity ?? 1,
+        variant:
+          [it.color, it.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
+        currency: getStoreCurrency(),
+      })),
+    )
     if (ctx?.checkoutUrl) {
       window.location.href = ctx.checkoutUrl
     }
