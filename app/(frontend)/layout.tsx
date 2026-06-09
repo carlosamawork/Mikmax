@@ -9,6 +9,7 @@ import ConsentGate from '@/components/Common/Analytics/consentGate'
 import FacebookPixel from '@/components/Common/Analytics/facebook'
 import Hotjar from '@/components/Common/Analytics/hotjar'
 import PinterestTag from '@/components/Common/Analytics/pinterest'
+import AnalyticsRouteTracker from '@/components/Common/Analytics/AnalyticsRouteTracker'
 import CookieConsent from '@/components/Common/CookieConsent/CookieConsent'
 import {Header, AnnouncementBanner} from '@/components/Layout'
 import FooterGate from '@/components/Layout/Footer/FooterGate'
@@ -37,20 +38,20 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             {children}
             <FooterGate data={footerData?.footer} />
             <CartDrawer />
-            {/* <CookieConsent />
+            <CookieConsent />
             {process.env.NODE_ENV === 'production' ? (
               <>
+                <Analytics />
+                <AnalyticsRouteTracker />
                 <ConsentGate category="analytics">
-                  <Analytics />
                   <Hotjar />
                 </ConsentGate>
-
                 <ConsentGate category="marketing">
                   <FacebookPixel />
                   <PinterestTag />
                 </ConsentGate>
               </>
-            ) : null} */}
+            ) : null}
           </ShopProvider>
         </Suspense>
       </body>
