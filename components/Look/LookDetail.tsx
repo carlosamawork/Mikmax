@@ -1,7 +1,8 @@
 'use client'
 
-import {useContext, useMemo, useState} from 'react'
+import {useContext, useEffect, useMemo, useState} from 'react'
 import {CartContext} from '@/context/shopContext'
+import {trackViewItem} from '@/lib/analytics/track'
 import {applyLookDiscount} from '@/lib/look/buildLookView'
 import type {LookView} from '@/types/look'
 import type {ProductMiniCard} from '@/types/product'
@@ -28,6 +29,17 @@ export default function LookDetail({view}: Props) {
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [mSizesOpen, setMSizesOpen] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
+
+  useEffect(() => {
+    trackViewItem({
+      id: view.slug,
+      name: view.title,
+      price: view.minTotal,
+      quantity: 1,
+      currency: view.currency,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view.slug])
 
   const allSelected =
     view.components.length > 0 && selected.every((sz) => sz !== undefined)
