@@ -42,6 +42,10 @@ export async function POST(req: NextRequest) {
       if (body.slug) tags.push(`page:${body.slug}`)
     }
 
+    if (body._type === 'set') {
+      if (body.slug) tags.push(`set:${body.slug}`)
+    }
+
     tags.forEach((tag) => revalidateTag(tag))
 
     return NextResponse.json({revalidated: true, tags, now: Date.now()})
