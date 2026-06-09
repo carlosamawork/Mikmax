@@ -21,7 +21,9 @@ export default defineField({
       title: 'Imagen',
       type: 'image',
       options: {hotspot: true},
-      fields: [defineField({name: 'alt', type: 'string'})],
+      fields: [
+        defineField({name: 'alt', type: 'string', validation: (Rule) => Rule.required()}),
+      ],
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const enabled = (context.parent as {enabled?: boolean})?.enabled
