@@ -46,7 +46,7 @@ export async function getSet(slug: string): Promise<SanitySetDoc | null> {
     SET_BY_SLUG_QUERY,
     {slug},
     // Lee product->store… (componentes y relatedProducts): suscribirse a `product`.
-    {next: {tags: ['set', 'product', `set:${slug}`], revalidate: 300}},
+    {next: {tags: ['set', 'product', `set:${slug}`], revalidate: 3600}},
   )
   return doc ?? null
 }
@@ -55,7 +55,7 @@ export async function getSetSlugs(): Promise<string[]> {
   const slugs = await client.fetch<string[]>(
     groq`*[_type == "set" && defined(slug.current) && !(_id in path('drafts.**'))].slug.current`,
     {},
-    {next: {tags: ['set'], revalidate: 300}},
+    {next: {tags: ['set'], revalidate: 3600}},
   )
   return slugs ?? []
 }
@@ -64,6 +64,6 @@ export async function getSetSEO(slug: string) {
   return client.fetch(
     groq`*[_type == "set" && slug.current == $slug && !(_id in path('drafts.**'))][0]{ "seo": seo{ ${seo} }, title }`,
     {slug},
-    {next: {tags: ['set', `set:${slug}`], revalidate: 300}},
+    {next: {tags: ['set', `set:${slug}`], revalidate: 3600}},
   )
 }
