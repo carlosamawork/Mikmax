@@ -41,29 +41,44 @@
 
 // --- Celda media ---
 .media {
-  display: flex;
-  align-items: flex-end;
-
-  .asset,
-  .img,
-  .video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
   aspect-ratio: 3 / 4;
 
   @media (min-width: 1024px) {
     aspect-ratio: auto;
   }
 
+  // El className de LazyImage/LazyVideo cae en su wrapper (.wrapper):
+  // posicionarlo a sangre dentro de la celda (alcanza también a través de .link).
+  :global(.wrapper) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  // Cover-crop de los elementos reales <img>/<video>.
+  img,
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .link {
+    position: absolute;
+    inset: 0;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
   .caption {
-    position: relative;
+    position: absolute;
+    left: px(17);
+    bottom: px(29);
     z-index: 1;
-    padding: px(29) px(17);
+    margin: 0;
     font-size: px(14);
     line-height: px(20);
     font-family: $MonumentGrotesk;
@@ -71,16 +86,10 @@
 
   .captionLight {
     color: map-get($colors, 'white');
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
   }
 
   .captionDark {
     color: map-get($colors, 'black-border');
   }
-}
-
-.link {
-  display: block;
-  height: 100%;
-  text-decoration: none;
-  color: inherit;
 }

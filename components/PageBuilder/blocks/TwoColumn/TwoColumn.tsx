@@ -17,7 +17,6 @@ function MediaInner({cell}: {cell: Extract<TwoColumnCell, {kind: 'media'}>}) {
           src={cell.video.src}
           poster={cell.video.poster?.imageUrl}
           posterAlt={cell.video.posterAlt}
-          className={s.asset}
           autoPlay
           muted
           loop
@@ -34,7 +33,6 @@ function MediaInner({cell}: {cell: Extract<TwoColumnCell, {kind: 'media'}>}) {
           alt={cell.image.alt ?? ''}
           width={w}
           height={h}
-          className={s.img}
         />
       )
     }
