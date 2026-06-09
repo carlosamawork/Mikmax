@@ -1,0 +1,86 @@
+@use '@/styles/common/variables' as *;
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: px(1);
+  padding: 0 px(5);
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.cell {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  overflow: hidden;
+
+  @media (min-width: 1024px) {
+    height: px(450);
+  }
+}
+
+// --- Celda de texto ---
+.text {
+  display: flex;
+  align-items: flex-end;
+  background: map-get($colors, 'white');
+  padding: px(15);
+
+  .body {
+    font-size: px(16);
+    line-height: px(19);
+    letter-spacing: px(0.5);
+    color: map-get($colors, 'black-border');
+    max-width: px(680);
+  }
+}
+
+// --- Celda media ---
+.media {
+  display: flex;
+  align-items: flex-end;
+
+  .asset,
+  .img,
+  .video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  aspect-ratio: 3 / 4;
+
+  @media (min-width: 1024px) {
+    aspect-ratio: auto;
+  }
+
+  .caption {
+    position: relative;
+    z-index: 1;
+    padding: px(29) px(17);
+    font-size: px(14);
+    line-height: px(20);
+    font-family: $MonumentGrotesk;
+  }
+
+  .captionLight {
+    color: map-get($colors, 'white');
+  }
+
+  .captionDark {
+    color: map-get($colors, 'black-border');
+  }
+}
+
+.link {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
