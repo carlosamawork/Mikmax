@@ -9,6 +9,8 @@ import {
   cartLinesRemove,
   cartDiscountCodesUpdate,
 } from '../lib/shopify'
+import {trackAddToCart} from '@/lib/analytics/track'
+import {getStoreCurrency} from '@/lib/analytics/item'
 
 const CartContext = createContext()
 
@@ -64,6 +66,15 @@ export default function ShopProvider({children}) {
   async function addToCart(newItem, quantity, productId, title, image) {
     const itemData = {...newItem, title, productId, variantQuantity: quantity, image}
 
+    const atcItem = {
+      id: productId || newItem.store.gid,
+      name: title || '',
+      price: typeof newItem.price === 'number' ? newItem.price : 0,
+      quantity,
+      variant: [newItem.color, newItem.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
+      currency: getStoreCurrency(),
+    }
+
     if (cart.length === 0) {
       setCartOpen(quantity === 1)
       setIsOpen(quantity > 1)
@@ -79,6 +90,7 @@ export default function ShopProvider({children}) {
         setCartId(apiCart.id)
         setCheckoutUrl(apiCart.checkoutUrl)
         saveToStorage([synced], {id: apiCart.id, checkoutUrl: apiCart.checkoutUrl})
+        trackAddToCart([atcItem])
       } catch (err) {
         console.error('cartCreate failed', err)
       }
@@ -115,6 +127,7 @@ export default function ShopProvider({children}) {
         setCart(updatedCart)
         setCheckoutUrl(meta.checkoutUrl)
         saveToStorage(updatedCart, meta)
+        trackAddToCart([atcItem])
       } catch (err) {
         console.error('addToCart failed', err)
       }
@@ -160,6 +173,15 @@ export default function ShopProvider({children}) {
       setCartId(currentCartId)
       setCheckoutUrl(meta.checkoutUrl)
       saveToStorage(synced, meta)
+      trackAddToCart(
+        lookLines.map((l) => ({
+          id: l.productId || l.store.gid,
+          name: l.title || '',
+          price: typeof l.price === 'number' ? l.price : 0,
+          quantity: l.quantity ?? 1,
+          currency: getStoreCurrency(),
+        })),
+      )
     } catch (err) {
       console.error('addLookToCart failed', err)
     }
