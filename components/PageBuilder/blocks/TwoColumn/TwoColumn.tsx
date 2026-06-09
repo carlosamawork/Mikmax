@@ -58,25 +58,31 @@ function Cell({cell}: {cell: TwoColumnCell}) {
 
   const inner = <MediaInner cell={cell} />
 
-  if (!cell.url) {
-    return <div className={`${s.cell} ${s.media}`}>{inner}</div>
-  }
-  if (cell.url.startsWith('/')) {
+  // Solo permitimos rutas internas (/…, no //…) o http(s) absolutas. Cualquier
+  // otro esquema (javascript:, data:, …) se descarta y la celda no enlaza.
+  const url = cell.url
+  const isInternal = !!url && url.startsWith('/') && !url.startsWith('//')
+  const isExternal = !!url && /^https?:\/\//i.test(url)
+
+  if (isInternal) {
     return (
       <div className={`${s.cell} ${s.media}`}>
-        <Link href={cell.url} className={s.link}>
+        <Link href={url} className={s.link}>
           {inner}
         </Link>
       </div>
     )
   }
-  return (
-    <div className={`${s.cell} ${s.media}`}>
-      <a href={cell.url} target="_blank" rel="noopener noreferrer" className={s.link}>
-        {inner}
-      </a>
-    </div>
-  )
+  if (isExternal) {
+    return (
+      <div className={`${s.cell} ${s.media}`}>
+        <a href={url} target="_blank" rel="noopener noreferrer" className={s.link}>
+          {inner}
+        </a>
+      </div>
+    )
+  }
+  return <div className={`${s.cell} ${s.media}`}>{inner}</div>
 }
 
 export default function TwoColumn({block}: Props) {

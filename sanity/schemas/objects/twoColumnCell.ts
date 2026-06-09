@@ -84,8 +84,10 @@ export default defineType({
     defineField({
       name: 'url',
       title: 'URL (opc)',
-      type: 'string',
-      description: 'Hace clicable la celda entera. Acepta rutas relativas (/...) o URLs absolutas.',
+      type: 'url',
+      description: 'Hace clicable la celda entera. Acepta rutas relativas (/...) o URLs http(s).',
+      validation: (Rule) =>
+        Rule.uri({scheme: ['http', 'https'], allowRelative: true, relativeOnly: false}),
       hidden: ({parent}) => parent?.kind !== 'media',
     }),
   ],
