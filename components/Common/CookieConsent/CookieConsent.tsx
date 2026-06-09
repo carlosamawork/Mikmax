@@ -1,8 +1,9 @@
 'use client'
 
-import {hasCookie, setCookie} from 'cookies-next'
+import {hasCookie} from 'cookies-next'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
+import {useConsent} from '@/hooks/useConsent'
 import s from './CookieConsent.module.scss'
 
 const POPUP_DELAY = 5000
@@ -16,6 +17,7 @@ export default function CookieConsent() {
   const [visible, setVisible] = useState(false)
   const [showManage, setShowManage] = useState(false)
   const [prefs, setPrefs] = useState<Preferences>({analytics: true, marketing: true})
+  const {updateConsent} = useConsent()
 
   const clientId = process.env.NEXT_PUBLIC_CLIENT_ID || 'site'
   const cookieName = `${clientId}_localConsent_25`
@@ -30,8 +32,10 @@ export default function CookieConsent() {
     return () => clearTimeout(timer)
   }, [cookieName])
 
+  // Pasa por useConsent: escribe la cookie, aplica Consent Mode v2 a gtag y
+  // notifica a los ConsentGate (montan/ocultan pixels en la misma sesión).
   const saveConsent = (preferences: Preferences) => {
-    setCookie(cookieName, JSON.stringify(preferences), {maxAge: 60 * 60 * 24 * 60})
+    updateConsent(preferences)
     setVisible(false)
     setShowManage(false)
   }

@@ -55,14 +55,16 @@ export default function ProductDetail({view, initial}: Props) {
 
   useEffect(() => {
     trackViewItem({
-      id: view.handle,
+      // Mismo id que add_to_cart/begin_checkout (productId = view.id) para que
+      // GA4/Meta casen el mismo producto a lo largo del embudo.
+      id: view.id,
       name: view.title,
       price: view.minPrice,
       quantity: 1,
       currency: view.currency,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view.handle])
+  }, [view.id])
 
   useEffect(() => {
     const root = document.documentElement
