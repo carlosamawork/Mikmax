@@ -4,8 +4,9 @@ import type {SetArchiveItem} from '@/types/set'
 import s from './SetRow.module.scss'
 
 function formatPrice(min: number, max: number): string {
-  const fmt = (n: number) => `€${Math.round(n)}`
-  return max > min ? `${fmt(min)}-${fmt(max)}` : fmt(min)
+  const rMin = Math.round(min)
+  const rMax = Math.round(max)
+  return rMax > rMin ? `€${rMin}-€${rMax}` : `€${rMin}`
 }
 
 export default function SetRow({item}: {item: SetArchiveItem}) {
