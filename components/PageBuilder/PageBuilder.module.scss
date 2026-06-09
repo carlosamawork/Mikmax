@@ -10,7 +10,7 @@
 
   // Figma frame 11:1991 has `flex-col gap-[100px]` between home modules.
   // Desktop only — mobile keeps modules tight.
-  @include from(md) {
-    gap: px(100);
-  }
+  // @include from(md) {
+  //   gap: px(100);
+  // }
 }
