@@ -15,6 +15,7 @@ import {Header, AnnouncementBanner} from '@/components/Layout'
 import FooterGate from '@/components/Layout/Footer/FooterGate'
 import CartDrawer from '@/components/Layout/CartDrawer/CartDrawer'
 import NewsletterPopup from '@/components/Layout/NewsletterPopup/NewsletterPopup'
+import WhatsAppButton from '@/components/Common/WhatsAppButton/WhatsAppButton'
 import {getFooter} from '@/sanity/queries/common/footer'
 import {getBanner} from '@/sanity/queries/common/banner'
 import {getNewsletterPopup} from '@/sanity/queries/common/newsletterPopup'
@@ -46,6 +47,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             <CartDrawer />
             <CookieConsent />
             <NewsletterPopup data={newsletterPopupData} />
+            <WhatsAppButton />
             {process.env.NODE_ENV === 'production' ? (
               <>
                 <Analytics />

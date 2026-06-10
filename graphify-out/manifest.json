@@ -1,0 +1,1902 @@
+{
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/.eslintrc.json": {
+    "mtime": 1772475778.6680136,
+    "ast_hash": "9b8be5ef96ddd69ecd1ddc1554c61a88",
+    "semantic_hash": "9b8be5ef96ddd69ecd1ddc1554c61a88"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(admin)/admin/[[...index]]/page.jsx": {
+    "mtime": 1772476643.018903,
+    "ast_hash": "a1785b29499e9403b7b5c706019ebdc3",
+    "semantic_hash": "a1785b29499e9403b7b5c706019ebdc3"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(admin)/layout.tsx": {
+    "mtime": 1772476637.081518,
+    "ast_hash": "e59916eedb2a596a092920ba7472207c",
+    "semantic_hash": "e59916eedb2a596a092920ba7472207c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/[...slug]/page.tsx": {
+    "mtime": 1781006979.4747796,
+    "ast_hash": "0a28ef9418165c4297411bd064b450db",
+    "semantic_hash": "0a28ef9418165c4297411bd064b450db"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/layout.tsx": {
+    "mtime": 1781019165.946864,
+    "ast_hash": "9539b0343d5c5baee48e57bcc269b05e",
+    "semantic_hash": "9539b0343d5c5baee48e57bcc269b05e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/legal/[section]/page.tsx": {
+    "mtime": 1780400993.5422838,
+    "ast_hash": "af99df8e8f555e62da32e21981c6c065",
+    "semantic_hash": "af99df8e8f555e62da32e21981c6c065"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/legal/page.tsx": {
+    "mtime": 1780400993.5425694,
+    "ast_hash": "04c31fc2f034bfcd73ad16c0ea587db1",
+    "semantic_hash": "04c31fc2f034bfcd73ad16c0ea587db1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/looks/LooksArchive.tsx": {
+    "mtime": 1780400993.5428357,
+    "ast_hash": "da27f07f738fe40563d5f61b825d70be",
+    "semantic_hash": "da27f07f738fe40563d5f61b825d70be"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/looks/[slug]/error.tsx": {
+    "mtime": 1780400993.5431023,
+    "ast_hash": "4f54b21653d33de350a243b051925a03",
+    "semantic_hash": "4f54b21653d33de350a243b051925a03"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/looks/[slug]/loading.tsx": {
+    "mtime": 1780400993.5433078,
+    "ast_hash": "490930546c4b7c1c2cc80126f980a7b1",
+    "semantic_hash": "490930546c4b7c1c2cc80126f980a7b1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/looks/[slug]/page.tsx": {
+    "mtime": 1780400993.544061,
+    "ast_hash": "50e06c86b0886a02b19b109f543a8b48",
+    "semantic_hash": "50e06c86b0886a02b19b109f543a8b48"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/looks/actions.ts": {
+    "mtime": 1780400993.5443242,
+    "ast_hash": "b88a42503642e94a795a08a7712cffc6",
+    "semantic_hash": "b88a42503642e94a795a08a7712cffc6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/looks/page.tsx": {
+    "mtime": 1780400993.544522,
+    "ast_hash": "faa19b4ea482f00bdeb7c7396862a279",
+    "semantic_hash": "faa19b4ea482f00bdeb7c7396862a279"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/not-found.tsx": {
+    "mtime": 1775642701.2332222,
+    "ast_hash": "a2d14944de659de0d248d0485a05ff52",
+    "semantic_hash": "a2d14944de659de0d248d0485a05ff52"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/page.tsx": {
+    "mtime": 1780400993.545592,
+    "ast_hash": "09edc641fc4034c75c0e440abed8129a",
+    "semantic_hash": "09edc641fc4034c75c0e440abed8129a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/products/[handle]/error.tsx": {
+    "mtime": 1780400993.5460382,
+    "ast_hash": "9f0e53829302367fdb8a6da78562069e",
+    "semantic_hash": "9f0e53829302367fdb8a6da78562069e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/products/[handle]/loading.tsx": {
+    "mtime": 1780400993.5462453,
+    "ast_hash": "186712d199d3e8ae0e4689c9d1d46d73",
+    "semantic_hash": "186712d199d3e8ae0e4689c9d1d46d73"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/products/[handle]/page.tsx": {
+    "mtime": 1780400993.5465279,
+    "ast_hash": "7c0b67b6b0f7aca36c719959f1087d75",
+    "semantic_hash": "7c0b67b6b0f7aca36c719959f1087d75"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/search/actions.ts": {
+    "mtime": 1780412009.5311956,
+    "ast_hash": "0c4d68fc63d5f51354ab5523284b9fde",
+    "semantic_hash": "0c4d68fc63d5f51354ab5523284b9fde"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/search/page.tsx": {
+    "mtime": 1780413768.2204049,
+    "ast_hash": "69e432320eb4e4a68db55dca14f5b612",
+    "semantic_hash": "69e432320eb4e4a68db55dca14f5b612"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/sets/SetsArchive.tsx": {
+    "mtime": 1781012514.6208947,
+    "ast_hash": "2ba6855ac56b3b63cc327b961e8a861f",
+    "semantic_hash": "2ba6855ac56b3b63cc327b961e8a861f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/sets/[slug]/error.tsx": {
+    "mtime": 1781010900.7188272,
+    "ast_hash": "b46a6471fa182b899ecced106696a91c",
+    "semantic_hash": "b46a6471fa182b899ecced106696a91c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/sets/[slug]/loading.tsx": {
+    "mtime": 1781010899.0737143,
+    "ast_hash": "490930546c4b7c1c2cc80126f980a7b1",
+    "semantic_hash": "490930546c4b7c1c2cc80126f980a7b1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/sets/[slug]/page.tsx": {
+    "mtime": 1781013478.6660905,
+    "ast_hash": "d788265f49ddfc87e7d06415c65479a5",
+    "semantic_hash": "d788265f49ddfc87e7d06415c65479a5"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/sets/page.tsx": {
+    "mtime": 1781012516.1696334,
+    "ast_hash": "4d8a969a6c6e6b5a45077f64bce0f554",
+    "semantic_hash": "4d8a969a6c6e6b5a45077f64bce0f554"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/shop/ShopArchive.tsx": {
+    "mtime": 1780411498.0399609,
+    "ast_hash": "c9ff0f8b7f0c72ba1a743432cfcb603d",
+    "semantic_hash": "c9ff0f8b7f0c72ba1a743432cfcb603d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/shop/[handle]/page.tsx": {
+    "mtime": 1780400993.5474994,
+    "ast_hash": "91f510df217151d2cfa1ecbe7c097e96",
+    "semantic_hash": "91f510df217151d2cfa1ecbe7c097e96"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/shop/actions.ts": {
+    "mtime": 1780411489.3228967,
+    "ast_hash": "a31781364d5cadc8e3722c032882b3c7",
+    "semantic_hash": "a31781364d5cadc8e3722c032882b3c7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/shop/page.tsx": {
+    "mtime": 1780400993.5481892,
+    "ast_hash": "59fe05fa25f5616d0df7f7877675cd5a",
+    "semantic_hash": "59fe05fa25f5616d0df7f7877675cd5a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/(frontend)/sitemap.ts": {
+    "mtime": 1773420743.506167,
+    "ast_hash": "93ef6b5f596fa80754d4bcddbec90386",
+    "semantic_hash": "93ef6b5f596fa80754d4bcddbec90386"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/api/revalidate/route.ts": {
+    "mtime": 1781011010.7669044,
+    "ast_hash": "f7ee54d14ce50f7bfbebdcdb4b589c7c",
+    "semantic_hash": "f7ee54d14ce50f7bfbebdcdb4b589c7c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/api/subscribeUser/route.tsx": {
+    "mtime": 1772473921.4258242,
+    "ast_hash": "3830d7f08da6f13810300adf2199e5fd",
+    "semantic_hash": "3830d7f08da6f13810300adf2199e5fd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/app/robots.tsx": {
+    "mtime": 1773942070.20548,
+    "ast_hash": "146aed0b34a0e1e4c062b29577c30deb",
+    "semantic_hash": "146aed0b34a0e1e4c062b29577c30deb"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/Analytics/AnalyticsRouteTracker.tsx": {
+    "mtime": 1781015046.3459065,
+    "ast_hash": "8b7f8a9697e3e5e69985676c8c8ceac8",
+    "semantic_hash": "8b7f8a9697e3e5e69985676c8c8ceac8"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/Analytics/consentGate.tsx": {
+    "mtime": 1772476842.5959048,
+    "ast_hash": "6256825cacf9c0fcd7fe0646f3b50332",
+    "semantic_hash": "6256825cacf9c0fcd7fe0646f3b50332"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/Analytics/facebook.tsx": {
+    "mtime": 1772986810.5629451,
+    "ast_hash": "c4ecf7ca47843f42d72853fdbcfa9147",
+    "semantic_hash": "c4ecf7ca47843f42d72853fdbcfa9147"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/Analytics/google.tsx": {
+    "mtime": 1781014955.6006951,
+    "ast_hash": "2613097295cf689b77037ba3afe81ba4",
+    "semantic_hash": "2613097295cf689b77037ba3afe81ba4"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/Analytics/hotjar.tsx": {
+    "mtime": 1772476834.1330533,
+    "ast_hash": "3d992b92188cf7dbaea66e579c7d0076",
+    "semantic_hash": "3d992b92188cf7dbaea66e579c7d0076"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/Analytics/pinterest.tsx": {
+    "mtime": 1772476834.1330562,
+    "ast_hash": "e415285f29dce161957767b4035857d8",
+    "semantic_hash": "e415285f29dce161957767b4035857d8"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/Breadcrumb/Breadcrumb.tsx": {
+    "mtime": 1781006316.9116106,
+    "ast_hash": "c37a8a3bfcf685cd3ff14e37c62e51f2",
+    "semantic_hash": "c37a8a3bfcf685cd3ff14e37c62e51f2"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/CookieConsent/CookieConsent.tsx": {
+    "mtime": 1781019166.6379979,
+    "ast_hash": "58c72cebe96c7706fb104317423f1c02",
+    "semantic_hash": "58c72cebe96c7706fb104317423f1c02"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/LazyImage/index.tsx": {
+    "mtime": 1772475968.7271197,
+    "ast_hash": "2285d46dbd03b0569c38d02680e05670",
+    "semantic_hash": "2285d46dbd03b0569c38d02680e05670"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/LazyVideo/index.tsx": {
+    "mtime": 1772476131.3929434,
+    "ast_hash": "498db89b28db515958ec5ebca1549c3d",
+    "semantic_hash": "498db89b28db515958ec5ebca1549c3d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Common/index.ts": {
+    "mtime": 1781006323.657974,
+    "ast_hash": "3171612a92f0c31a14ad013fa64a9c39",
+    "semantic_hash": "3171612a92f0c31a14ad013fa64a9c39"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Landing/index.tsx": {
+    "mtime": 1774255861.4203317,
+    "ast_hash": "a763000f8173bde560456d0815f33f6f",
+    "semantic_hash": "a763000f8173bde560456d0815f33f6f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/AnnouncementBanner/AnnouncementBanner.tsx": {
+    "mtime": 1780400993.5500443,
+    "ast_hash": "63e925f8501ecc8f748c810d6019ee05",
+    "semantic_hash": "63e925f8501ecc8f748c810d6019ee05"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/CartDrawer/CartDrawer.tsx": {
+    "mtime": 1781015341.2456243,
+    "ast_hash": "0f077b7946d30878acb494fb7bcc6660",
+    "semantic_hash": "0f077b7946d30878acb494fb7bcc6660"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/Footer/Footer.tsx": {
+    "mtime": 1780400993.5516279,
+    "ast_hash": "87db2d8eda8065fb74d3b1d33daf70d5",
+    "semantic_hash": "87db2d8eda8065fb74d3b1d33daf70d5"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/Footer/FooterGate.tsx": {
+    "mtime": 1780400993.551921,
+    "ast_hash": "0b648927e672e7b0a6abbbd7547e9de7",
+    "semantic_hash": "0b648927e672e7b0a6abbbd7547e9de7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/Footer/NewsletterForm.tsx": {
+    "mtime": 1781018854.1692991,
+    "ast_hash": "0ac244cb62709e668c0ce04f539d650a",
+    "semantic_hash": "0ac244cb62709e668c0ce04f539d650a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/Footer/RegionSelector.tsx": {
+    "mtime": 1780400993.553157,
+    "ast_hash": "9fd125c06e631a74686f23547e2bac1e",
+    "semantic_hash": "9fd125c06e631a74686f23547e2bac1e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/Header/Header.tsx": {
+    "mtime": 1780400993.5537512,
+    "ast_hash": "5265b6603b14b986c693cb7c27f2cde6",
+    "semantic_hash": "5265b6603b14b986c693cb7c27f2cde6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/Header/HeaderClient.tsx": {
+    "mtime": 1780499777.6548595,
+    "ast_hash": "9950e2f30f5dbf71cf2c983329ded397",
+    "semantic_hash": "9950e2f30f5dbf71cf2c983329ded397"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/Header/SearchOverlay.tsx": {
+    "mtime": 1780413363.651728,
+    "ast_hash": "52364be691c992fb30cdfc1dc3b6a8ba",
+    "semantic_hash": "52364be691c992fb30cdfc1dc3b6a8ba"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/MegaMenu/MegaMenu.tsx": {
+    "mtime": 1780400993.5547104,
+    "ast_hash": "6a890758009663a6fc60419c10822633",
+    "semantic_hash": "6a890758009663a6fc60419c10822633"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/MegaMenu/MegaMenuShop.tsx": {
+    "mtime": 1780400993.5549183,
+    "ast_hash": "52eb706eaba22928dfaf29109f8074bb",
+    "semantic_hash": "52eb706eaba22928dfaf29109f8074bb"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/MobileMenu/MobileMenu.tsx": {
+    "mtime": 1780499806.6695204,
+    "ast_hash": "aa16938930ce4197ad460e4ae9da2dd1",
+    "semantic_hash": "aa16938930ce4197ad460e4ae9da2dd1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/NewsletterPopup/NewsletterPopup.tsx": {
+    "mtime": 1781019010.1754887,
+    "ast_hash": "c4bd3a5df16ffe1faa4202bfbeee7cb1",
+    "semantic_hash": "c4bd3a5df16ffe1faa4202bfbeee7cb1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Layout/index.ts": {
+    "mtime": 1780400993.555778,
+    "ast_hash": "e258d6957506f54229261a65bd69d05e",
+    "semantic_hash": "e258d6957506f54229261a65bd69d05e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Legal/LegalLayout.tsx": {
+    "mtime": 1780400993.556532,
+    "ast_hash": "3ff787355ab7900729d786dc0b0af20d",
+    "semantic_hash": "3ff787355ab7900729d786dc0b0af20d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Legal/LegalSidebar.tsx": {
+    "mtime": 1780400993.557221,
+    "ast_hash": "3d2136e304aee706f8030f349951dc95",
+    "semantic_hash": "3d2136e304aee706f8030f349951dc95"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Look/LookDesktopBar.tsx": {
+    "mtime": 1780400993.5579515,
+    "ast_hash": "259471d63df78fee884a49508a3c9706",
+    "semantic_hash": "259471d63df78fee884a49508a3c9706"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Look/LookDetail.tsx": {
+    "mtime": 1781015158.511892,
+    "ast_hash": "bc24b678bac07b922c38406ee3879c6f",
+    "semantic_hash": "bc24b678bac07b922c38406ee3879c6f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Look/LookPrice.tsx": {
+    "mtime": 1780400993.559375,
+    "ast_hash": "eaddb0776cc6077a9935760775a4a48d",
+    "semantic_hash": "eaddb0776cc6077a9935760775a4a48d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Look/LookSizeList.tsx": {
+    "mtime": 1780400993.5603473,
+    "ast_hash": "9b5bb984952fab0104c0e5bff61ea8ea",
+    "semantic_hash": "9b5bb984952fab0104c0e5bff61ea8ea"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Look/index.ts": {
+    "mtime": 1780400993.5609944,
+    "ast_hash": "8aa240bbe7c5c2a8362e74b40c0c6aac",
+    "semantic_hash": "8aa240bbe7c5c2a8362e74b40c0c6aac"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Looks/LookCard/LookCard.tsx": {
+    "mtime": 1780400993.561819,
+    "ast_hash": "7b198156a7546e9b5ab984c618bdb331",
+    "semantic_hash": "7b198156a7546e9b5ab984c618bdb331"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Looks/LookGrid/LookGrid.tsx": {
+    "mtime": 1780400993.562799,
+    "ast_hash": "eb88fb30c941da1ee805845eb86d25e2",
+    "semantic_hash": "eb88fb30c941da1ee805845eb86d25e2"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/PageBuilder.tsx": {
+    "mtime": 1781005861.227024,
+    "ast_hash": "e730493e66126cd7a617095c9f9358b7",
+    "semantic_hash": "e730493e66126cd7a617095c9f9358b7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/PortableText/PortableText.tsx": {
+    "mtime": 1780400993.565414,
+    "ast_hash": "6f19e41adef66c55d3d22e461a2e782e",
+    "semantic_hash": "6f19e41adef66c55d3d22e461a2e782e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/PriceDisplay/PriceDisplay.tsx": {
+    "mtime": 1780400993.5667775,
+    "ast_hash": "cf91ffa7d797582967f2fff8301840af",
+    "semantic_hash": "cf91ffa7d797582967f2fff8301840af"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/ProductCard/ProductCard.tsx": {
+    "mtime": 1780400993.5681376,
+    "ast_hash": "066c6e37d0dc9dc1549a9a18e367dab8",
+    "semantic_hash": "066c6e37d0dc9dc1549a9a18e367dab8"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/SetCard/SetCard.tsx": {
+    "mtime": 1780400993.5688918,
+    "ast_hash": "348319487287f9bf28b9c09a88d46b53",
+    "semantic_hash": "348319487287f9bf28b9c09a88d46b53"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/blocks/CampaignImageVideo/CampaignImageVideo.tsx": {
+    "mtime": 1780400993.5696213,
+    "ast_hash": "0a9c9c652de13ab1afbc79f3063d6651",
+    "semantic_hash": "0a9c9c652de13ab1afbc79f3063d6651"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/blocks/FeaturedSection/FeaturedSection.tsx": {
+    "mtime": 1780400993.5706842,
+    "ast_hash": "d22dd0ccd0eb18b71dfa37f5bee38a18",
+    "semantic_hash": "d22dd0ccd0eb18b71dfa37f5bee38a18"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/blocks/HeroCampaign/HeroCampaign.tsx": {
+    "mtime": 1780400993.571463,
+    "ast_hash": "8749b7ab4b1ed90c733e525ae94ecc46",
+    "semantic_hash": "8749b7ab4b1ed90c733e525ae94ecc46"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/blocks/ImageWithProduct/ImageWithProduct.tsx": {
+    "mtime": 1780400993.572496,
+    "ast_hash": "9bb29da0ea1a5734db60f35655e8ab8e",
+    "semantic_hash": "9bb29da0ea1a5734db60f35655e8ab8e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/blocks/LookModule/LookModule.tsx": {
+    "mtime": 1780400993.5731425,
+    "ast_hash": "1ea974fb95cfa3bb6202fc51e5c36394",
+    "semantic_hash": "1ea974fb95cfa3bb6202fc51e5c36394"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/blocks/ProductModule/ProductModule.tsx": {
+    "mtime": 1780400993.5738096,
+    "ast_hash": "92a1b08b7b483cef4c962fa3383b2c77",
+    "semantic_hash": "92a1b08b7b483cef4c962fa3383b2c77"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/blocks/RichText/RichText.tsx": {
+    "mtime": 1780400993.5744214,
+    "ast_hash": "0936f3a4868a6c2e59bed9211e6367a1",
+    "semantic_hash": "0936f3a4868a6c2e59bed9211e6367a1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/blocks/SetModule/SetModule.tsx": {
+    "mtime": 1780400993.5754673,
+    "ast_hash": "61eca50396b09c516aeb4b0ee10eefee",
+    "semantic_hash": "61eca50396b09c516aeb4b0ee10eefee"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/blocks/TwoColumn/TwoColumn.tsx": {
+    "mtime": 1781007089.6272507,
+    "ast_hash": "4acbfeb67ca4b9cd2d01439ce1c45422",
+    "semantic_hash": "4acbfeb67ca4b9cd2d01439ce1c45422"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/PageBuilder/index.ts": {
+    "mtime": 1780400993.575834,
+    "ast_hash": "381f690d7e2687ef132c21b5608237ca",
+    "semantic_hash": "381f690d7e2687ef132c21b5608237ca"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/Desktop/DesktopLayout.tsx": {
+    "mtime": 1780400993.5763648,
+    "ast_hash": "7a7a0ef137e27e061e6a9cc58544ec1e",
+    "semantic_hash": "7a7a0ef137e27e061e6a9cc58544ec1e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/Desktop/DesktopToolbar.tsx": {
+    "mtime": 1780415418.2992778,
+    "ast_hash": "1852c8aa9b0345ef6d9f6659db4cb292",
+    "semantic_hash": "1852c8aa9b0345ef6d9f6659db4cb292"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/Desktop/GalleryHorizontal.tsx": {
+    "mtime": 1780400993.5775619,
+    "ast_hash": "43037f5ebc528d2810a453de34e89574",
+    "semantic_hash": "43037f5ebc528d2810a453de34e89574"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/Mobile/GallerySwiper.tsx": {
+    "mtime": 1780400993.5782816,
+    "ast_hash": "5945edc8d9c6613c5a5cdef06234f2fc",
+    "semantic_hash": "5945edc8d9c6613c5a5cdef06234f2fc"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/Mobile/MobileLayout.tsx": {
+    "mtime": 1780400993.5787249,
+    "ast_hash": "0f01c22fffe02a74bcc8fc5550fff7d9",
+    "semantic_hash": "0f01c22fffe02a74bcc8fc5550fff7d9"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/Mobile/MobileToolbar.tsx": {
+    "mtime": 1780415441.1456432,
+    "ast_hash": "349ac029d77fd594e30bdc3d22a28b71",
+    "semantic_hash": "349ac029d77fd594e30bdc3d22a28b71"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/Mobile/RelatedGrid.tsx": {
+    "mtime": 1780400993.5795946,
+    "ast_hash": "05e8c84ab7f2f19624b327149dffcb95",
+    "semantic_hash": "05e8c84ab7f2f19624b327149dffcb95"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/Mobile/StickyCTA.tsx": {
+    "mtime": 1780400993.580398,
+    "ast_hash": "c6495ca4aadd25316000b6271ffcfe57",
+    "semantic_hash": "c6495ca4aadd25316000b6271ffcfe57"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/ProductDetail.tsx": {
+    "mtime": 1781015744.7584112,
+    "ast_hash": "1993536737378aba3ea300b13a6772b9",
+    "semantic_hash": "1993536737378aba3ea300b13a6772b9"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/shared/ColorSwatches.tsx": {
+    "mtime": 1780415010.251416,
+    "ast_hash": "8430bc926dce7dd9455a8094a81e1b8c",
+    "semantic_hash": "8430bc926dce7dd9455a8094a81e1b8c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/shared/ImageLightbox.tsx": {
+    "mtime": 1780400993.5825763,
+    "ast_hash": "adc23fe0e4f3a7387e66f384ae04d8bc",
+    "semantic_hash": "adc23fe0e4f3a7387e66f384ae04d8bc"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/shared/PriceLabel.tsx": {
+    "mtime": 1780400993.582932,
+    "ast_hash": "a8c30c2e39d36ec38b2470c2daecbf2c",
+    "semantic_hash": "a8c30c2e39d36ec38b2470c2daecbf2c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/shared/ProductInfoPanel.tsx": {
+    "mtime": 1780400993.5835295,
+    "ast_hash": "8ad3946367355c0c014438bd1a3d6571",
+    "semantic_hash": "8ad3946367355c0c014438bd1a3d6571"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/shared/RelatedMiniCard.tsx": {
+    "mtime": 1780400993.5847337,
+    "ast_hash": "661208d4421048a4bfcb780a4ac3edfd",
+    "semantic_hash": "661208d4421048a4bfcb780a4ac3edfd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Product/shared/SizeSelector.tsx": {
+    "mtime": 1780400993.5855298,
+    "ast_hash": "1cfcc026a624cdef308f341c31172ace",
+    "semantic_hash": "1cfcc026a624cdef308f341c31172ace"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Sets/SetList/SetList.tsx": {
+    "mtime": 1781012355.9568107,
+    "ast_hash": "0522823f790b32c68e55af8fa1a2a8e6",
+    "semantic_hash": "0522823f790b32c68e55af8fa1a2a8e6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Sets/SetRow/SetRow.tsx": {
+    "mtime": 1781012748.5106552,
+    "ast_hash": "ad1eee49f584f08e449d4f9b750742ba",
+    "semantic_hash": "ad1eee49f584f08e449d4f9b750742ba"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/FilterDrawer/CheckboxList.tsx": {
+    "mtime": 1780400993.58598,
+    "ast_hash": "c4ccfc67d7c63a23f502594172c91d10",
+    "semantic_hash": "c4ccfc67d7c63a23f502594172c91d10"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/FilterDrawer/ColorSwatches.tsx": {
+    "mtime": 1780400993.586375,
+    "ast_hash": "9860a8f6a3e4d2199294abc05f5b01dd",
+    "semantic_hash": "9860a8f6a3e4d2199294abc05f5b01dd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/FilterDrawer/FilterAccordion.tsx": {
+    "mtime": 1780400993.5869122,
+    "ast_hash": "f4b49bb26e7b8f1173c0fc6fd8ea5ca6",
+    "semantic_hash": "f4b49bb26e7b8f1173c0fc6fd8ea5ca6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/FilterDrawer/FilterDrawer.tsx": {
+    "mtime": 1780411825.0892003,
+    "ast_hash": "f174bd03efad1f37acf4c7aece6ef6da",
+    "semantic_hash": "f174bd03efad1f37acf4c7aece6ef6da"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/FilterDrawer/MaterialChips.tsx": {
+    "mtime": 1780400993.5881457,
+    "ast_hash": "86816218ca6e0fa95ea19aa19c271527",
+    "semantic_hash": "86816218ca6e0fa95ea19aa19c271527"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/FilterDrawer/PriceRange.tsx": {
+    "mtime": 1780400993.5886064,
+    "ast_hash": "640e8733b29ca195fb120206219845d1",
+    "semantic_hash": "640e8733b29ca195fb120206219845d1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/FilterDrawer/SizeChips.tsx": {
+    "mtime": 1780400993.5889075,
+    "ast_hash": "e637792e6dcc33aae07c0935ab3d644d",
+    "semantic_hash": "e637792e6dcc33aae07c0935ab3d644d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/FilterDrawer/SortRadios.tsx": {
+    "mtime": 1780400993.5892556,
+    "ast_hash": "b776bdf39f39cdbf5f2683c74305749d",
+    "semantic_hash": "b776bdf39f39cdbf5f2683c74305749d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/InfiniteScrollSentinel/InfiniteScrollSentinel.tsx": {
+    "mtime": 1780400993.5896115,
+    "ast_hash": "a540b6af0d12e5de091f29bc08d87798",
+    "semantic_hash": "a540b6af0d12e5de091f29bc08d87798"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/ProductGrid/ProductGrid.tsx": {
+    "mtime": 1780400993.5904322,
+    "ast_hash": "6c6bb815dcf637caf6f975f864a8fa8f",
+    "semantic_hash": "6c6bb815dcf637caf6f975f864a8fa8f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/ShopToolbar/FilterTrigger.tsx": {
+    "mtime": 1780400993.5910242,
+    "ast_hash": "67ca64638f14bfa93b7a49e110161761",
+    "semantic_hash": "67ca64638f14bfa93b7a49e110161761"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/ShopToolbar/ShopToolbar.tsx": {
+    "mtime": 1780413749.828843,
+    "ast_hash": "58364420295511f657aec7185f2ff9f7",
+    "semantic_hash": "58364420295511f657aec7185f2ff9f7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Shop/ShopToolbar/ViewToggle.tsx": {
+    "mtime": 1780414014.4778433,
+    "ast_hash": "cd23050624e590b422c595b4704fafa1",
+    "semantic_hash": "cd23050624e590b422c595b4704fafa1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/components/Welcome/WelcomeComponent.tsx": {
+    "mtime": 1773420620.3565803,
+    "ast_hash": "1620a98e8737efb58fb85aca9e948768",
+    "semantic_hash": "1620a98e8737efb58fb85aca9e948768"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/context/shopContext.js": {
+    "mtime": 1781015245.1493871,
+    "ast_hash": "1491cc5b9253954c93c855013d0223c4",
+    "semantic_hash": "1491cc5b9253954c93c855013d0223c4"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/hooks/useConsent.tsx": {
+    "mtime": 1781015689.1269383,
+    "ast_hash": "a356f5d9d78fbb02059ef859628a42df",
+    "semantic_hash": "a356f5d9d78fbb02059ef859628a42df"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/hooks/useNewsletterSubscribe.ts": {
+    "mtime": 1781018848.0145345,
+    "ast_hash": "65d14f7da59afd2bd0a4a38c11da5a09",
+    "semantic_hash": "65d14f7da59afd2bd0a4a38c11da5a09"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/hooks/useReducedMotion.ts": {
+    "mtime": 1772986318.741765,
+    "ast_hash": "fd2bb6d420130b89eca87f12702ef185",
+    "semantic_hash": "fd2bb6d420130b89eca87f12702ef185"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/analytics/consent.ts": {
+    "mtime": 1781014779.3338172,
+    "ast_hash": "bd3f00e0be3d2f1dcb1b30877677ccf0",
+    "semantic_hash": "bd3f00e0be3d2f1dcb1b30877677ccf0"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/analytics/item.ts": {
+    "mtime": 1781014768.8109493,
+    "ast_hash": "eb7f8738af7c8319b5891afed1d6c284",
+    "semantic_hash": "eb7f8738af7c8319b5891afed1d6c284"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/analytics/track.ts": {
+    "mtime": 1781014776.8636081,
+    "ast_hash": "a2980e35a4fd515ee2b4cf794f1e753a",
+    "semantic_hash": "a2980e35a4fd515ee2b4cf794f1e753a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/analytics/types.ts": {
+    "mtime": 1781014765.650376,
+    "ast_hash": "50fd3dafc026e8165fa4bce62639f9bb",
+    "semantic_hash": "50fd3dafc026e8165fa4bce62639f9bb"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/handler/session.js": {
+    "mtime": 1772475778.6695182,
+    "ast_hash": "7e9d94697d89cf20ebcce0781a394037",
+    "semantic_hash": "7e9d94697d89cf20ebcce0781a394037"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/look/buildLookView.ts": {
+    "mtime": 1780400993.600741,
+    "ast_hash": "3dec6913c360fa82ee7e9b6bff906de5",
+    "semantic_hash": "3dec6913c360fa82ee7e9b6bff906de5"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/look/buildLooksArchive.ts": {
+    "mtime": 1780400993.60106,
+    "ast_hash": "df25d59992b1edbaabc80ab461ac1789",
+    "semantic_hash": "df25d59992b1edbaabc80ab461ac1789"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/product/buildProductView.ts": {
+    "mtime": 1780400993.6014855,
+    "ast_hash": "e5f5cc7684213f0362af1a025db999cd",
+    "semantic_hash": "e5f5cc7684213f0362af1a025db999cd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/product/findEquivalentSize.ts": {
+    "mtime": 1780400993.6018772,
+    "ast_hash": "4403922eee335ead77085dfdbc0397c4",
+    "semantic_hash": "4403922eee335ead77085dfdbc0397c4"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/product/resolveInitialState.ts": {
+    "mtime": 1780400993.6021285,
+    "ast_hash": "12591681fe8dfb7f76dbcc54d78337ea",
+    "semantic_hash": "12591681fe8dfb7f76dbcc54d78337ea"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/set/buildSetView.ts": {
+    "mtime": 1781013461.9126995,
+    "ast_hash": "20d08bd0d764dd27121519b964be869c",
+    "semantic_hash": "20d08bd0d764dd27121519b964be869c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/set/buildSetsArchive.ts": {
+    "mtime": 1781012280.4770973,
+    "ast_hash": "2b12f67b1eb7a7fb75f9f2f8db4cbb09",
+    "semantic_hash": "2b12f67b1eb7a7fb75f9f2f8db4cbb09"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/shop/buildCards.ts": {
+    "mtime": 1780411761.5114644,
+    "ast_hash": "fdd692347328ce57c75f7e8aa96bb548",
+    "semantic_hash": "fdd692347328ce57c75f7e8aa96bb548"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/shop/expandToCards.ts": {
+    "mtime": 1780400993.6024916,
+    "ast_hash": "f8c82d56f8206334ef3a74c7a6ec83bf",
+    "semantic_hash": "f8c82d56f8206334ef3a74c7a6ec83bf"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/shop/filterAndSortCards.ts": {
+    "mtime": 1780400993.6028762,
+    "ast_hash": "5087445442bfceb506c61be5e51e4784",
+    "semantic_hash": "5087445442bfceb506c61be5e51e4784"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/shop/materialFilter.ts": {
+    "mtime": 1780400993.6032116,
+    "ast_hash": "5f0fc64c0fd8dbb1eadb3b4b7e36e657",
+    "semantic_hash": "5f0fc64c0fd8dbb1eadb3b4b7e36e657"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/shop/searchParams.ts": {
+    "mtime": 1780411382.7677019,
+    "ast_hash": "5a6dd697244c5773d70d31c30435c914",
+    "semantic_hash": "5a6dd697244c5773d70d31c30435c914"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/lib/shopify.js": {
+    "mtime": 1780494224.585833,
+    "ast_hash": "59ac4310e1597409b92f3d9e81bd55b9",
+    "semantic_hash": "59ac4310e1597409b92f3d9e81bd55b9"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/next.config.js": {
+    "mtime": 1780049436.505223,
+    "ast_hash": "7d5085de854e665af73556f6e4c8d069",
+    "semantic_hash": "7d5085de854e665af73556f6e4c8d069"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/package.json": {
+    "mtime": 1773419574.4320679,
+    "ast_hash": "05c35afab3b60842999b1509aae76162",
+    "semantic_hash": "05c35afab3b60842999b1509aae76162"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/postcss.config.js": {
+    "mtime": 1772475778.6718366,
+    "ast_hash": "854b38759e7a8b4b82306ae2d9a3a833",
+    "semantic_hash": "854b38759e7a8b4b82306ae2d9a3a833"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity.cli.ts": {
+    "mtime": 1772475778.6722653,
+    "ast_hash": "1116850a0006579a2d2ac78f0e18b79f",
+    "semantic_hash": "1116850a0006579a2d2ac78f0e18b79f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity.config.ts": {
+    "mtime": 1773419184.2874157,
+    "ast_hash": "d398bedc416d371373b885c2338a954e",
+    "semantic_hash": "d398bedc416d371373b885c2338a954e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/hotspots/ProductTooltip.tsx": {
+    "mtime": 1772475778.6737657,
+    "ast_hash": "94892a848d04dd937aca0ef902889b1d",
+    "semantic_hash": "94892a848d04dd937aca0ef902889b1d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/icons/Shopify.tsx": {
+    "mtime": 1772475778.673963,
+    "ast_hash": "fa9d5de5f1962ebaf285c422b62ee9dd",
+    "semantic_hash": "fa9d5de5f1962ebaf285c422b62ee9dd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/inputs/BundleColorSelect.tsx": {
+    "mtime": 1780400993.6055293,
+    "ast_hash": "00e11dd83bd3668b38296523cd88c946",
+    "semantic_hash": "00e11dd83bd3668b38296523cd88c946"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/inputs/CollectionHidden.tsx": {
+    "mtime": 1772475778.6742291,
+    "ast_hash": "ae42ffccb497eb95d28d51fe2d44c0aa",
+    "semantic_hash": "ae42ffccb497eb95d28d51fe2d44c0aa"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/inputs/OrderingComponent.tsx": {
+    "mtime": 1772476385.1744847,
+    "ast_hash": "dc3035004f7896d97c4c1b28952f2b95",
+    "semantic_hash": "dc3035004f7896d97c4c1b28952f2b95"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/inputs/OrderingProductComponent.tsx": {
+    "mtime": 1772476400.4608486,
+    "ast_hash": "b38c7e61f93b8d003dc5df14dfb4ac00",
+    "semantic_hash": "b38c7e61f93b8d003dc5df14dfb4ac00"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/inputs/PlaceholderString.tsx": {
+    "mtime": 1772475778.6747804,
+    "ast_hash": "0dc528b2e531df1693105dfad0caffc7",
+    "semantic_hash": "0dc528b2e531df1693105dfad0caffc7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/inputs/ProductColorSelect.tsx": {
+    "mtime": 1780400993.605903,
+    "ast_hash": "b77758d73d54e125ccc06d7b36d3e445",
+    "semantic_hash": "b77758d73d54e125ccc06d7b36d3e445"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/inputs/ProductHidden.tsx": {
+    "mtime": 1772475778.6748846,
+    "ast_hash": "98567e8b5462a600996026c19eee182a",
+    "semantic_hash": "98567e8b5462a600996026c19eee182a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/inputs/ProductVariantHidden.tsx": {
+    "mtime": 1772475778.6749907,
+    "ast_hash": "340eb563a4bc7cad85a8328cad4c88aa",
+    "semantic_hash": "340eb563a4bc7cad85a8328cad4c88aa"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/inputs/ProxyString.tsx": {
+    "mtime": 1772475778.6750903,
+    "ast_hash": "494e1194e6d9a851f5c8f93d96a12b5a",
+    "semantic_hash": "494e1194e6d9a851f5c8f93d96a12b5a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/media/ColorTheme.tsx": {
+    "mtime": 1772475778.6752594,
+    "ast_hash": "69fecf228329bd3b58be87428b1c3bf1",
+    "semantic_hash": "69fecf228329bd3b58be87428b1c3bf1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/components/media/ShopifyDocumentStatus.tsx": {
+    "mtime": 1772475778.6753602,
+    "ast_hash": "b0fe26af387b3609de512d24f1d605d6",
+    "semantic_hash": "b0fe26af387b3609de512d24f1d605d6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/constants.ts": {
+    "mtime": 1772475778.6754549,
+    "ast_hash": "6d2c2e8b215c77dc6b38b9ad90b479f8",
+    "semantic_hash": "6d2c2e8b215c77dc6b38b9ad90b479f8"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/categoryStructure.ts": {
+    "mtime": 1772477407.6016142,
+    "ast_hash": "f3bc21a8a568b91bd780aa0345caa3d2",
+    "semantic_hash": "f3bc21a8a568b91bd780aa0345caa3d2"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/collectionStructure.ts": {
+    "mtime": 1772477407.6052227,
+    "ast_hash": "f851ba32381be8e2424f9ed1276874a6",
+    "semantic_hash": "f851ba32381be8e2424f9ed1276874a6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/homeStructure.ts": {
+    "mtime": 1772477407.611879,
+    "ast_hash": "d48fc3e172d1f8a805e9c68f7fc2608b",
+    "semantic_hash": "d48fc3e172d1f8a805e9c68f7fc2608b"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/index.ts": {
+    "mtime": 1781010659.7601671,
+    "ast_hash": "d241ddfc81e2c62a2d8bcc6f6b07c2ef",
+    "semantic_hash": "d241ddfc81e2c62a2d8bcc6f6b07c2ef"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/legalPageStructure.ts": {
+    "mtime": 1780400993.6065,
+    "ast_hash": "9b85f1540b17cce55a28b593f8dac758",
+    "semantic_hash": "9b85f1540b17cce55a28b593f8dac758"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/lookStructure.ts": {
+    "mtime": 1780400993.6068175,
+    "ast_hash": "6d79199787ae3407923caab067942865",
+    "semantic_hash": "6d79199787ae3407923caab067942865"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/orderCollectionStructure.ts": {
+    "mtime": 1780400993.6070065,
+    "ast_hash": "40cfeceac8649ae722cc0161fa5220ca",
+    "semantic_hash": "40cfeceac8649ae722cc0161fa5220ca"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/orderLookStructure.ts": {
+    "mtime": 1780400993.607203,
+    "ast_hash": "500acb49f221a9b5edbbd5b7ec5231dd",
+    "semantic_hash": "500acb49f221a9b5edbbd5b7ec5231dd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/orderPostStructure.ts": {
+    "mtime": 1772477423.8765235,
+    "ast_hash": "c00becf91916737bc7fa05bb13032b56",
+    "semantic_hash": "c00becf91916737bc7fa05bb13032b56"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/orderProductStructure.ts": {
+    "mtime": 1772477429.033502,
+    "ast_hash": "97f58f182529b146d77eccbb8a7dc0be",
+    "semantic_hash": "97f58f182529b146d77eccbb8a7dc0be"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/orderSetStructure.ts": {
+    "mtime": 1781010652.981769,
+    "ast_hash": "1dcb3945ffb7e5cd53c191a7e47e195d",
+    "semantic_hash": "1dcb3945ffb7e5cd53c191a7e47e195d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/pageStructure.ts": {
+    "mtime": 1772477407.6249347,
+    "ast_hash": "fe910eb93fb80762a64c2c83cde74ee0",
+    "semantic_hash": "fe910eb93fb80762a64c2c83cde74ee0"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/postStructure.ts": {
+    "mtime": 1772477407.6279778,
+    "ast_hash": "9b5327f1d485d1360c5e7ce522195245",
+    "semantic_hash": "9b5327f1d485d1360c5e7ce522195245"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/postTagStructure.ts": {
+    "mtime": 1772477407.631442,
+    "ast_hash": "b29afadca5636dcfb9194ed512f89f29",
+    "semantic_hash": "b29afadca5636dcfb9194ed512f89f29"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/productStructure.ts": {
+    "mtime": 1772477407.6348453,
+    "ast_hash": "e6bc193e8b5070bff1dc795d519c407f",
+    "semantic_hash": "e6bc193e8b5070bff1dc795d519c407f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/setStructure.ts": {
+    "mtime": 1780400993.607485,
+    "ast_hash": "01d3d7e8a028c2e0cd54cdf1f103262f",
+    "semantic_hash": "01d3d7e8a028c2e0cd54cdf1f103262f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/desk/settingStructure.ts": {
+    "mtime": 1772477407.6380181,
+    "ast_hash": "e1151cd39b6a321a798ad7af14794b21",
+    "semantic_hash": "e1151cd39b6a321a798ad7af14794b21"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/env.ts": {
+    "mtime": 1772476021.2655585,
+    "ast_hash": "31e97e631af65115276b5f50e1856184",
+    "semantic_hash": "31e97e631af65115276b5f50e1856184"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/common/banner.ts": {
+    "mtime": 1780400993.607933,
+    "ast_hash": "d98acfa095cc5e40f94148011c92a156",
+    "semantic_hash": "d98acfa095cc5e40f94148011c92a156"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/common/defaultSEO.ts": {
+    "mtime": 1772474784.7478566,
+    "ast_hash": "d45f00488d119a3f17aaccfd14c6e574",
+    "semantic_hash": "d45f00488d119a3f17aaccfd14c6e574"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/common/footer.ts": {
+    "mtime": 1780400993.60835,
+    "ast_hash": "a5e0a018a12a9d9b2caca5ba09d5dc7b",
+    "semantic_hash": "a5e0a018a12a9d9b2caca5ba09d5dc7b"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/common/header.ts": {
+    "mtime": 1780400993.6086457,
+    "ast_hash": "733b46359ab00ca4be37c97b02230c3e",
+    "semantic_hash": "733b46359ab00ca4be37c97b02230c3e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/common/newsletterPopup.ts": {
+    "mtime": 1781018740.9082189,
+    "ast_hash": "430a1eb06fc0b6f20901eba05f057148",
+    "semantic_hash": "430a1eb06fc0b6f20901eba05f057148"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/common/settings.ts": {
+    "mtime": 1781018739.3900523,
+    "ast_hash": "f772a3b9504812670793cc79bade5d1f",
+    "semantic_hash": "f772a3b9504812670793cc79bade5d1f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/fragments/body.ts": {
+    "mtime": 1780400993.6099844,
+    "ast_hash": "4db48c2da5515840932f7535e661ac82",
+    "semantic_hash": "4db48c2da5515840932f7535e661ac82"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/fragments/cards.ts": {
+    "mtime": 1780400993.6101823,
+    "ast_hash": "c5526fd42e63a8454381f3106d3e3617",
+    "semantic_hash": "c5526fd42e63a8454381f3106d3e3617"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/fragments/image.ts": {
+    "mtime": 1763369806.8534527,
+    "ast_hash": "11f7c58b72d11d05209f1c23b302717d",
+    "semantic_hash": "11f7c58b72d11d05209f1c23b302717d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/fragments/links.ts": {
+    "mtime": 1780400993.6106205,
+    "ast_hash": "39428cb5e80e89d189e3dde242fbf53c",
+    "semantic_hash": "39428cb5e80e89d189e3dde242fbf53c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/fragments/pageBuilder.ts": {
+    "mtime": 1781005652.1607232,
+    "ast_hash": "f935f681ef7e6757e78c7ac4fa73ac14",
+    "semantic_hash": "f935f681ef7e6757e78c7ac4fa73ac14"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/fragments/productHandle.ts": {
+    "mtime": 1780400993.6108296,
+    "ast_hash": "b1299ceda5399e0187ac4d21d185128b",
+    "semantic_hash": "b1299ceda5399e0187ac4d21d185128b"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/fragments/seo.ts": {
+    "mtime": 1780400993.6112652,
+    "ast_hash": "f28d72caf2c55446d86933604ad7434d",
+    "semantic_hash": "f28d72caf2c55446d86933604ad7434d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/index.tsx": {
+    "mtime": 1780400993.611644,
+    "ast_hash": "edb4e26acc98864359b5a357cb7513f1",
+    "semantic_hash": "edb4e26acc98864359b5a357cb7513f1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/primitives/imageData.ts": {
+    "mtime": 1780400993.6121578,
+    "ast_hash": "59f14ded5d372649bdb39ddfcf89c52a",
+    "semantic_hash": "59f14ded5d372649bdb39ddfcf89c52a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/primitives/imageSize.ts": {
+    "mtime": 1763368819.511594,
+    "ast_hash": "93d9c3d1465968421af68857775073b7",
+    "semantic_hash": "93d9c3d1465968421af68857775073b7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/queries/home.ts": {
+    "mtime": 1781005659.2758772,
+    "ast_hash": "7fbe386030dfc1dbd586ecb174a73573",
+    "semantic_hash": "7fbe386030dfc1dbd586ecb174a73573"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/queries/legal.ts": {
+    "mtime": 1780400993.6127539,
+    "ast_hash": "c9285cf6f217b15b7e677b14bfcbad8b",
+    "semantic_hash": "c9285cf6f217b15b7e677b14bfcbad8b"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/queries/look.ts": {
+    "mtime": 1780400993.6133263,
+    "ast_hash": "e01851881c9416ed5abe106369f3c5e6",
+    "semantic_hash": "e01851881c9416ed5abe106369f3c5e6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/queries/page.ts": {
+    "mtime": 1781005665.655104,
+    "ast_hash": "2d72c5e6f6d90c171b75e26c61310d11",
+    "semantic_hash": "2d72c5e6f6d90c171b75e26c61310d11"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/queries/product.ts": {
+    "mtime": 1780400993.61357,
+    "ast_hash": "2db0e7a5ff9cc8264b8954e41c83bafa",
+    "semantic_hash": "2db0e7a5ff9cc8264b8954e41c83bafa"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/queries/set.ts": {
+    "mtime": 1781011927.0973542,
+    "ast_hash": "789f772698f452f3d55793549cad4821",
+    "semantic_hash": "789f772698f452f3d55793549cad4821"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/queries/queries/shop.ts": {
+    "mtime": 1780400993.613898,
+    "ast_hash": "0ab1472e3ce834d0822a74cc8bd3a03f",
+    "semantic_hash": "0ab1472e3ce834d0822a74cc8bd3a03f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schema.ts": {
+    "mtime": 1772475778.6772044,
+    "ast_hash": "52861820dde160f770a3ad3a3bfed9af",
+    "semantic_hash": "52861820dde160f770a3ad3a3bfed9af"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/annotations/linkEmail.tsx": {
+    "mtime": 1772475778.6774669,
+    "ast_hash": "e620c0421ae20c729bea1ed6e01d8180",
+    "semantic_hash": "e620c0421ae20c729bea1ed6e01d8180"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/annotations/linkExternal.tsx": {
+    "mtime": 1772475778.6775904,
+    "ast_hash": "8e2cb5c876bc55ea6df18160c3c1ed54",
+    "semantic_hash": "8e2cb5c876bc55ea6df18160c3c1ed54"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/annotations/linkInternal.tsx": {
+    "mtime": 1772475778.6776888,
+    "ast_hash": "52d12183ca5c23c37c992574199c7469",
+    "semantic_hash": "52d12183ca5c23c37c992574199c7469"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/annotations/product.tsx": {
+    "mtime": 1772475778.6777864,
+    "ast_hash": "d3b27f38beb52c20cb2f855a12757e21",
+    "semantic_hash": "d3b27f38beb52c20cb2f855a12757e21"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/blocks/body.tsx": {
+    "mtime": 1780400993.615365,
+    "ast_hash": "28a58559b0e27ec065a402f85c4b0ad2",
+    "semantic_hash": "28a58559b0e27ec065a402f85c4b0ad2"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/documents/collection.tsx": {
+    "mtime": 1780400993.617615,
+    "ast_hash": "9ee961e48b1c27bb8be46846b69f16a8",
+    "semantic_hash": "9ee961e48b1c27bb8be46846b69f16a8"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/documents/look.tsx": {
+    "mtime": 1780400993.6184382,
+    "ast_hash": "5091af9c296fe470bb5ff7c95fa65cbd",
+    "semantic_hash": "5091af9c296fe470bb5ff7c95fa65cbd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/documents/page.ts": {
+    "mtime": 1780400993.619223,
+    "ast_hash": "d42c6f61a871ede41d9c483713ad2419",
+    "semantic_hash": "d42c6f61a871ede41d9c483713ad2419"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/documents/post.ts": {
+    "mtime": 1780400993.619529,
+    "ast_hash": "84902406b4bf3b10c8e16fb17857dced",
+    "semantic_hash": "84902406b4bf3b10c8e16fb17857dced"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/documents/product.tsx": {
+    "mtime": 1780400993.6200266,
+    "ast_hash": "6a78af40a105213b851ff678244cfa76",
+    "semantic_hash": "6a78af40a105213b851ff678244cfa76"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/documents/productVariant.tsx": {
+    "mtime": 1772475778.6787066,
+    "ast_hash": "9588d8c27bfb3fa41ea635ec82ae00ab",
+    "semantic_hash": "9588d8c27bfb3fa41ea635ec82ae00ab"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/documents/set.tsx": {
+    "mtime": 1781010489.112609,
+    "ast_hash": "cb75c11f9201d25948fc8c11e8022f39",
+    "semantic_hash": "cb75c11f9201d25948fc8c11e8022f39"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/index.ts": {
+    "mtime": 1781018613.3384798,
+    "ast_hash": "5bf602f2cd68eeb1ddbb94c43896c369",
+    "semantic_hash": "5bf602f2cd68eeb1ddbb94c43896c369"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/blocks/campaignImageVideo.ts": {
+    "mtime": 1780400993.620948,
+    "ast_hash": "2286deacfcca1c4f706fb4c36bd8dbcb",
+    "semantic_hash": "2286deacfcca1c4f706fb4c36bd8dbcb"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/blocks/featuredSection.ts": {
+    "mtime": 1780400993.6211782,
+    "ast_hash": "c781340e7fbe40c563cdef94c3c16751",
+    "semantic_hash": "c781340e7fbe40c563cdef94c3c16751"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/blocks/heroCampaign.ts": {
+    "mtime": 1780400993.6214054,
+    "ast_hash": "7e25bf653f2a2f24c2171cb4058a5a6b",
+    "semantic_hash": "7e25bf653f2a2f24c2171cb4058a5a6b"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/blocks/imageWithProduct.ts": {
+    "mtime": 1780400993.621907,
+    "ast_hash": "d11eed1194fe1328b5d356f791638605",
+    "semantic_hash": "d11eed1194fe1328b5d356f791638605"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/blocks/index.ts": {
+    "mtime": 1781005309.0451686,
+    "ast_hash": "d8b923cab99ecfa83478fd48d6f01d02",
+    "semantic_hash": "d8b923cab99ecfa83478fd48d6f01d02"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/blocks/lookModule.ts": {
+    "mtime": 1780400993.622353,
+    "ast_hash": "cd989380a94653b879f541fb635e6ae4",
+    "semantic_hash": "cd989380a94653b879f541fb635e6ae4"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/blocks/productModule.ts": {
+    "mtime": 1780400993.6226099,
+    "ast_hash": "8c2a173547464091b1e95396eb697d7c",
+    "semantic_hash": "8c2a173547464091b1e95396eb697d7c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/blocks/richText.ts": {
+    "mtime": 1780400993.6228902,
+    "ast_hash": "989ebbb58724f478845564f0731d6715",
+    "semantic_hash": "989ebbb58724f478845564f0731d6715"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/blocks/setModule.ts": {
+    "mtime": 1780400993.623113,
+    "ast_hash": "91fe3f7f6729fdd05246b64843744fe3",
+    "semantic_hash": "91fe3f7f6729fdd05246b64843744fe3"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/blocks/twoColumn.ts": {
+    "mtime": 1781005303.5959535,
+    "ast_hash": "c45ae5e177b7872ce04d86e7b8c45fc4",
+    "semantic_hash": "c45ae5e177b7872ce04d86e7b8c45fc4"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/bundle/bundleComponent.ts": {
+    "mtime": 1780400993.6233768,
+    "ast_hash": "d52023d73f65c1a9e5252804263bc16e",
+    "semantic_hash": "d52023d73f65c1a9e5252804263bc16e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/collection/group.ts": {
+    "mtime": 1772475778.6791146,
+    "ast_hash": "80dbcae3705b5ce0d56f161c4eead288",
+    "semantic_hash": "80dbcae3705b5ce0d56f161c4eead288"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/collection/links.ts": {
+    "mtime": 1772475778.6792264,
+    "ast_hash": "37f398de894fdbae32df0240bb5bd7e8",
+    "semantic_hash": "37f398de894fdbae32df0240bb5bd7e8"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/global/announcementBanner.ts": {
+    "mtime": 1780400993.6236453,
+    "ast_hash": "add821ad6ad883d4d5ba6318455aef5f",
+    "semantic_hash": "add821ad6ad883d4d5ba6318455aef5f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/global/footer.ts": {
+    "mtime": 1780400993.6239753,
+    "ast_hash": "4403b7fe0289f5529870d09fef0be0ca",
+    "semantic_hash": "4403b7fe0289f5529870d09fef0be0ca"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/global/linkExternal.ts": {
+    "mtime": 1772985529.1182518,
+    "ast_hash": "6b8fa4202b3d5dee8c2261b8ff93f8db",
+    "semantic_hash": "6b8fa4202b3d5dee8c2261b8ff93f8db"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/global/linkInternal.ts": {
+    "mtime": 1772475778.6801324,
+    "ast_hash": "3324016eac453c55a5c566c6e4bc03da",
+    "semantic_hash": "3324016eac453c55a5c566c6e4bc03da"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/global/linkSocial.ts": {
+    "mtime": 1780400993.6244767,
+    "ast_hash": "9e2c52b899236f9d0c6ef5ef820728ce",
+    "semantic_hash": "9e2c52b899236f9d0c6ef5ef820728ce"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/global/links.ts": {
+    "mtime": 1772475778.680331,
+    "ast_hash": "92fb3acb68929b9b538565568ea6324e",
+    "semantic_hash": "92fb3acb68929b9b538565568ea6324e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/global/menu.ts": {
+    "mtime": 1780400993.62487,
+    "ast_hash": "9e9ec50077b456b583728fa4a212068d",
+    "semantic_hash": "9e9ec50077b456b583728fa4a212068d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/global/newsletterPopup.ts": {
+    "mtime": 1781019379.4054646,
+    "ast_hash": "f78c77121a0e5c517f6f13b4fc60f139",
+    "semantic_hash": "f78c77121a0e5c517f6f13b4fc60f139"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/global/notFoundPage.ts": {
+    "mtime": 1780400993.6251352,
+    "ast_hash": "99adad9c0bacbfd8600556799587d56b",
+    "semantic_hash": "99adad9c0bacbfd8600556799587d56b"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/hero/home.tsx": {
+    "mtime": 1772475778.6808443,
+    "ast_hash": "030383419cb0fcd28f627b86b052812e",
+    "semantic_hash": "030383419cb0fcd28f627b86b052812e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/hero/page.tsx": {
+    "mtime": 1772475778.680949,
+    "ast_hash": "7d08c319c6eb0b4e5c1748b2fccdbcc6",
+    "semantic_hash": "7d08c319c6eb0b4e5c1748b2fccdbcc6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/hotspot/imageWithProductHotspots.ts": {
+    "mtime": 1772475778.6811435,
+    "ast_hash": "1bb5a3c32b422f188cd71836a6ad21cc",
+    "semantic_hash": "1bb5a3c32b422f188cd71836a6ad21cc"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/hotspot/productHotspots.tsx": {
+    "mtime": 1772475778.6812644,
+    "ast_hash": "5cffa3cb1fc88335816a6b76e27958d9",
+    "semantic_hash": "5cffa3cb1fc88335816a6b76e27958d9"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/hotspot/spot.tsx": {
+    "mtime": 1772475778.6813908,
+    "ast_hash": "148db88618dd3e416a3176709bc92c22",
+    "semantic_hash": "148db88618dd3e416a3176709bc92c22"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/accordion.ts": {
+    "mtime": 1772475778.6815746,
+    "ast_hash": "b995340fb6b043d387ca0d63feb07d7c",
+    "semantic_hash": "b995340fb6b043d387ca0d63feb07d7c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/accordionBody.ts": {
+    "mtime": 1772475778.6816776,
+    "ast_hash": "dd54ecc93ab6cd50fd364fe4b60584d5",
+    "semantic_hash": "dd54ecc93ab6cd50fd364fe4b60584d5"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/accordionGroup.ts": {
+    "mtime": 1772475778.6817734,
+    "ast_hash": "4b8cb0dee01d1330b6b4602784691120",
+    "semantic_hash": "4b8cb0dee01d1330b6b4602784691120"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/callToAction.tsx": {
+    "mtime": 1780400993.6253283,
+    "ast_hash": "d8e64a7902c8883e06a65582c30ab9f7",
+    "semantic_hash": "d8e64a7902c8883e06a65582c30ab9f7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/callout.ts": {
+    "mtime": 1780400993.6256537,
+    "ast_hash": "75b478c6595d0c846d2a6747eadfe6aa",
+    "semantic_hash": "75b478c6595d0c846d2a6747eadfe6aa"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/collection.tsx": {
+    "mtime": 1772475778.682197,
+    "ast_hash": "5426988d90b54a97900f7cdf897a9bf1",
+    "semantic_hash": "5426988d90b54a97900f7cdf897a9bf1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/forms.ts": {
+    "mtime": 1772475778.6822813,
+    "ast_hash": "91ffc6fadda105960b21168849150cb5",
+    "semantic_hash": "91ffc6fadda105960b21168849150cb5"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/grid.ts": {
+    "mtime": 1772475778.6823685,
+    "ast_hash": "fb4b5f0d0943eef1486ff05981fef8fe",
+    "semantic_hash": "fb4b5f0d0943eef1486ff05981fef8fe"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/gridItem.ts": {
+    "mtime": 1772475778.6824615,
+    "ast_hash": "aeeac1dbcbbe637f6a67864a921763a0",
+    "semantic_hash": "aeeac1dbcbbe637f6a67864a921763a0"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/htmlEmbed.ts": {
+    "mtime": 1772988075.4453597,
+    "ast_hash": "044b63c254fb98101b1dd58a8a34da09",
+    "semantic_hash": "044b63c254fb98101b1dd58a8a34da09"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/image.ts": {
+    "mtime": 1772985508.5412302,
+    "ast_hash": "d83dedfdf15cbeafc78fda9c4e94c6cd",
+    "semantic_hash": "d83dedfdf15cbeafc78fda9c4e94c6cd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/imageCallToAction.tsx": {
+    "mtime": 1780400993.6259542,
+    "ast_hash": "23ffad5ac387a30b28c298bfd1d391c8",
+    "semantic_hash": "23ffad5ac387a30b28c298bfd1d391c8"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/imageSide.ts": {
+    "mtime": 1772475778.6828418,
+    "ast_hash": "dd2c63954988f76bfff25792750f2e42",
+    "semantic_hash": "dd2c63954988f76bfff25792750f2e42"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/images.tsx": {
+    "mtime": 1772475778.6829443,
+    "ast_hash": "ed4d4faf2b0e7f554a5b0eeb82a5e768",
+    "semantic_hash": "ed4d4faf2b0e7f554a5b0eeb82a5e768"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/product.tsx": {
+    "mtime": 1772475778.6830454,
+    "ast_hash": "3c21008a2ab59aaf3e4110c6b8d5617f",
+    "semantic_hash": "3c21008a2ab59aaf3e4110c6b8d5617f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/products.tsx": {
+    "mtime": 1772475778.6831353,
+    "ast_hash": "b3bcde90a53b73e3cd8fe140004e27fb",
+    "semantic_hash": "b3bcde90a53b73e3cd8fe140004e27fb"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/module/video.tsx": {
+    "mtime": 1772475778.6832252,
+    "ast_hash": "ac21c64ee23f0e20dfe6e0aca1daf48f",
+    "semantic_hash": "ac21c64ee23f0e20dfe6e0aca1daf48f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/ordering/ordering.ts": {
+    "mtime": 1772475778.6833875,
+    "ast_hash": "f2c4b8f5e6b4834f801448e69e4ca805",
+    "semantic_hash": "f2c4b8f5e6b4834f801448e69e4ca805"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/ordering/orderingProducts.ts": {
+    "mtime": 1772475778.6834867,
+    "ast_hash": "24471151fc48b5d3e6c8d82ab1685dd3",
+    "semantic_hash": "24471151fc48b5d3e6c8d82ab1685dd3"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/relatedColorGroup.ts": {
+    "mtime": 1780400993.6263735,
+    "ast_hash": "ed2acb74702bd9887dfd7d6a580409fe",
+    "semantic_hash": "ed2acb74702bd9887dfd7d6a580409fe"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/seo/description.tsx": {
+    "mtime": 1772475778.6839411,
+    "ast_hash": "c62e9df99c3d3f648170756d8e603806",
+    "semantic_hash": "c62e9df99c3d3f648170756d8e603806"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/seo/home.tsx": {
+    "mtime": 1772987202.9474366,
+    "ast_hash": "d69d18fc3b0b9d3b72d9b8a5a453ce4f",
+    "semantic_hash": "d69d18fc3b0b9d3b72d9b8a5a453ce4f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/seo/page.tsx": {
+    "mtime": 1772987204.1890862,
+    "ast_hash": "fcee2ad54321cb42ddc5c6fc372ea769",
+    "semantic_hash": "fcee2ad54321cb42ddc5c6fc372ea769"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/seo/seo.ts": {
+    "mtime": 1772985538.29455,
+    "ast_hash": "70d492d8f7653fc3838a8e14771f0eab",
+    "semantic_hash": "70d492d8f7653fc3838a8e14771f0eab"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/seo/shopify.tsx": {
+    "mtime": 1772475778.6843724,
+    "ast_hash": "45f88d6cd2778735bf08f10274a96976",
+    "semantic_hash": "45f88d6cd2778735bf08f10274a96976"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/shopify/inventory.ts": {
+    "mtime": 1772475778.6845329,
+    "ast_hash": "09e0cb3820520ebe30f584ef35e32a25",
+    "semantic_hash": "09e0cb3820520ebe30f584ef35e32a25"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/shopify/option.tsx": {
+    "mtime": 1772475778.684734,
+    "ast_hash": "39dc5e64489642782cd2fa1181d33f3e",
+    "semantic_hash": "39dc5e64489642782cd2fa1181d33f3e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/shopify/placeholderString.ts": {
+    "mtime": 1772475778.68481,
+    "ast_hash": "b8a720a841eb53d85c7f577e1b5e7ad3",
+    "semantic_hash": "b8a720a841eb53d85c7f577e1b5e7ad3"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/shopify/priceRange.ts": {
+    "mtime": 1772475778.6848836,
+    "ast_hash": "6daebb94d627e76e39ac530f5881787f",
+    "semantic_hash": "6daebb94d627e76e39ac530f5881787f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/shopify/productWithVariant.tsx": {
+    "mtime": 1772475778.6850326,
+    "ast_hash": "314319a7577d80dfb11c592f1ae8ae41",
+    "semantic_hash": "314319a7577d80dfb11c592f1ae8ae41"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/shopify/proxyString.ts": {
+    "mtime": 1772475778.6851203,
+    "ast_hash": "a87475a792bdd26155a36fcdcc36848e",
+    "semantic_hash": "a87475a792bdd26155a36fcdcc36848e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/shopify/shopifyCollection.ts": {
+    "mtime": 1772475778.6852303,
+    "ast_hash": "605db47a60b0da157f5186592d77170c",
+    "semantic_hash": "605db47a60b0da157f5186592d77170c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/shopify/shopifyCollectionRule.tsx": {
+    "mtime": 1772475778.6853156,
+    "ast_hash": "6552330918e0f591c27d10b9019d7cec",
+    "semantic_hash": "6552330918e0f591c27d10b9019d7cec"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/shopify/shopifyProduct.ts": {
+    "mtime": 1772475778.6853983,
+    "ast_hash": "60ae5a18d2da8023488dd01410447dc8",
+    "semantic_hash": "60ae5a18d2da8023488dd01410447dc8"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/shopify/shopifyProductVariant.ts": {
+    "mtime": 1772475778.6854825,
+    "ast_hash": "310d84a6493acb0f63ba575bce9b55eb",
+    "semantic_hash": "310d84a6493acb0f63ba575bce9b55eb"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/objects/twoColumnCell.ts": {
+    "mtime": 1781007954.1542885,
+    "ast_hash": "4dab20cd4fd3eab2fb5c1542fc8bd365",
+    "semantic_hash": "4dab20cd4fd3eab2fb5c1542fc8bd365"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/singletons/home.ts": {
+    "mtime": 1780400993.626726,
+    "ast_hash": "92a6f68bddfbeeed28059b82713349cf",
+    "semantic_hash": "92a6f68bddfbeeed28059b82713349cf"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/singletons/legal.ts": {
+    "mtime": 1780400993.6270728,
+    "ast_hash": "2558dc3edfe6ff127af378c0b375b20d",
+    "semantic_hash": "2558dc3edfe6ff127af378c0b375b20d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/singletons/settings.ts": {
+    "mtime": 1781018622.6933148,
+    "ast_hash": "c1cae5f07dfec3392bda1b09e13123f4",
+    "semantic_hash": "c1cae5f07dfec3392bda1b09e13123f4"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/taxonomies/categories.ts": {
+    "mtime": 1772475778.6858253,
+    "ast_hash": "3a9be4d74b13e12b722fb624e1ab8906",
+    "semantic_hash": "3a9be4d74b13e12b722fb624e1ab8906"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/schemas/taxonomies/postTags.ts": {
+    "mtime": 1772475778.6859007,
+    "ast_hash": "15b60e1faebffee5cd22e5e6c48fbb7e",
+    "semantic_hash": "15b60e1faebffee5cd22e5e6c48fbb7e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/documents/index.ts": {
+    "mtime": 1772474784.750909,
+    "ast_hash": "74944174d913aea141bc947826c7159b",
+    "semantic_hash": "74944174d913aea141bc947826c7159b"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/index.ts": {
+    "mtime": 1772985866.300494,
+    "ast_hash": "b055433d29622502a1176d90dd35e420",
+    "semantic_hash": "b055433d29622502a1176d90dd35e420"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/blocks/campaignImageVideo.ts": {
+    "mtime": 1780400993.6276593,
+    "ast_hash": "f87ee87086580b3e65396142bb1e8858",
+    "semantic_hash": "f87ee87086580b3e65396142bb1e8858"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/blocks/featuredSection.ts": {
+    "mtime": 1780400993.6278863,
+    "ast_hash": "3e7a70b614b9102f6802a01e05681388",
+    "semantic_hash": "3e7a70b614b9102f6802a01e05681388"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/blocks/heroCampaign.ts": {
+    "mtime": 1780400993.6282234,
+    "ast_hash": "532f6e1c0691009ad598d9602f4e6ca5",
+    "semantic_hash": "532f6e1c0691009ad598d9602f4e6ca5"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/blocks/imageWithProduct.ts": {
+    "mtime": 1780400993.6284506,
+    "ast_hash": "6103d0eb031d51561fb9135215ee46bd",
+    "semantic_hash": "6103d0eb031d51561fb9135215ee46bd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/blocks/index.ts": {
+    "mtime": 1781005511.4234633,
+    "ast_hash": "0cdae149a7e1bb26a7a79db611f4d708",
+    "semantic_hash": "0cdae149a7e1bb26a7a79db611f4d708"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/blocks/lookModule.ts": {
+    "mtime": 1780400993.628979,
+    "ast_hash": "713c8e230bbae3a660196c85eabc71e6",
+    "semantic_hash": "713c8e230bbae3a660196c85eabc71e6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/blocks/productModule.ts": {
+    "mtime": 1780400993.6294374,
+    "ast_hash": "5ac91c3000292aa365e1b0c751f62760",
+    "semantic_hash": "5ac91c3000292aa365e1b0c751f62760"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/blocks/richText.ts": {
+    "mtime": 1780400993.6297917,
+    "ast_hash": "5fd49dae1d08cad1d94478a09a886e92",
+    "semantic_hash": "5fd49dae1d08cad1d94478a09a886e92"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/blocks/setModule.ts": {
+    "mtime": 1780400993.6299703,
+    "ast_hash": "240d4a2cfecab0d184373b910d27f1c7",
+    "semantic_hash": "240d4a2cfecab0d184373b910d27f1c7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/blocks/twoColumn.ts": {
+    "mtime": 1781005499.459786,
+    "ast_hash": "091b1951b1fee38ec1bb389064f00eb4",
+    "semantic_hash": "091b1951b1fee38ec1bb389064f00eb4"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/cards.ts": {
+    "mtime": 1780400993.6301565,
+    "ast_hash": "5d487c39e436fbec9d8c5017d91496ec",
+    "semantic_hash": "5d487c39e436fbec9d8c5017d91496ec"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/global/announcementBanner.ts": {
+    "mtime": 1780400993.6304076,
+    "ast_hash": "131f1a0fd2c5c0a2c079cd2fc9589907",
+    "semantic_hash": "131f1a0fd2c5c0a2c079cd2fc9589907"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/global/footer.ts": {
+    "mtime": 1780400993.630678,
+    "ast_hash": "6012d85bcdde6aca4be47b22db9ab448",
+    "semantic_hash": "6012d85bcdde6aca4be47b22db9ab448"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/global/header.ts": {
+    "mtime": 1780400993.6310148,
+    "ast_hash": "1fc48534f9d53e209e8e361874f3f8a7",
+    "semantic_hash": "1fc48534f9d53e209e8e361874f3f8a7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/global/index.ts": {
+    "mtime": 1781018748.6171255,
+    "ast_hash": "e64daebc6cba252801f676cfb2d28870",
+    "semantic_hash": "e64daebc6cba252801f676cfb2d28870"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/global/links.ts": {
+    "mtime": 1780400993.633009,
+    "ast_hash": "7246eae8a11f0d42b8651604f28168b8",
+    "semantic_hash": "7246eae8a11f0d42b8651604f28168b8"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/global/menu.ts": {
+    "mtime": 1780400993.633434,
+    "ast_hash": "9db5b1e3f20f12a76f4360234f428c7a",
+    "semantic_hash": "9db5b1e3f20f12a76f4360234f428c7a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/global/newsletterPopup.ts": {
+    "mtime": 1781018733.3960192,
+    "ast_hash": "4bd9c2f91355512502705d1dcc714c91",
+    "semantic_hash": "4bd9c2f91355512502705d1dcc714c91"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/global/settings.ts": {
+    "mtime": 1781018737.7359567,
+    "ast_hash": "7d16b189998fae8724c55129d525de5f",
+    "semantic_hash": "7d16b189998fae8724c55129d525de5f"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/index.ts": {
+    "mtime": 1780400993.6347256,
+    "ast_hash": "9d6c8024a7860cbc4e56777a729fb6a9",
+    "semantic_hash": "9d6c8024a7860cbc4e56777a729fb6a9"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/module/homeProjectMedia.ts": {
+    "mtime": 1772474784.7516367,
+    "ast_hash": "751bddb8a6522cafb50da1962f2cc3e7",
+    "semantic_hash": "751bddb8a6522cafb50da1962f2cc3e7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/module/index.ts": {
+    "mtime": 1772474784.7517083,
+    "ast_hash": "770ecf81460cb9222fb7ae860d6ebeaf",
+    "semantic_hash": "770ecf81460cb9222fb7ae860d6ebeaf"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/module/projectsProjectMedia.ts": {
+    "mtime": 1772474784.7517736,
+    "ast_hash": "520c746fdbba50a724216b42d951ead6",
+    "semantic_hash": "520c746fdbba50a724216b42d951ead6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/seo/index.ts": {
+    "mtime": 1772474784.7518866,
+    "ast_hash": "aff471c7a7017fab708c4e6a506f67e9",
+    "semantic_hash": "aff471c7a7017fab708c4e6a506f67e9"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/objects/seo/seo.ts": {
+    "mtime": 1772474784.7519548,
+    "ast_hash": "f176c8a98aadb1de434f84a7a18ee34d",
+    "semantic_hash": "f176c8a98aadb1de434f84a7a18ee34d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/primitives/image.ts": {
+    "mtime": 1772474784.7520926,
+    "ast_hash": "3d4a784c7ef4e455e9f25fc452dad94d",
+    "semantic_hash": "3d4a784c7ef4e455e9f25fc452dad94d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/primitives/index.ts": {
+    "mtime": 1772474784.752163,
+    "ast_hash": "339764ded46bab4f6ec03d47da72c7a9",
+    "semantic_hash": "339764ded46bab4f6ec03d47da72c7a9"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/projects/projects.ts": {
+    "mtime": 1772474784.7522771,
+    "ast_hash": "ced814a3d5ed62ebec506de1d5b03627",
+    "semantic_hash": "ced814a3d5ed62ebec506de1d5b03627"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/projects/singleProject.ts": {
+    "mtime": 1772474784.7523448,
+    "ast_hash": "b5205f1b3352daccb1f09ed0a4689212",
+    "semantic_hash": "b5205f1b3352daccb1f09ed0a4689212"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/singletons/home.ts": {
+    "mtime": 1780400993.6350129,
+    "ast_hash": "780ba6724f0136038493060a8c17b4b2",
+    "semantic_hash": "780ba6724f0136038493060a8c17b4b2"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/singletons/index.ts": {
+    "mtime": 1780400993.6354914,
+    "ast_hash": "21767b2fac46f16a19cc951276aac8e4",
+    "semantic_hash": "21767b2fac46f16a19cc951276aac8e4"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/singletons/information.ts": {
+    "mtime": 1772474784.7525136,
+    "ast_hash": "1457cd1525a9063a3f8827c3e84c7490",
+    "semantic_hash": "1457cd1525a9063a3f8827c3e84c7490"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/singletons/legal.ts": {
+    "mtime": 1780400993.6357346,
+    "ast_hash": "d3faa2589e6c0d555ff91a5cb6619762",
+    "semantic_hash": "d3faa2589e6c0d555ff91a5cb6619762"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/types/singletons/settings.ts": {
+    "mtime": 1772474784.7525978,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/utils/blocksToText.ts": {
+    "mtime": 1772475778.6861749,
+    "ast_hash": "6eaed58195279ecb147dfa0eebd53a85",
+    "semantic_hash": "6eaed58195279ecb147dfa0eebd53a85"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/utils/defineStructure.ts": {
+    "mtime": 1772477386.2807343,
+    "ast_hash": "4a52c981f5336ca89d94c93a3d0cc643",
+    "semantic_hash": "4a52c981f5336ca89d94c93a3d0cc643"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/utils/getPriceRange.ts": {
+    "mtime": 1772475778.6863472,
+    "ast_hash": "32aa0aa584e87fdac87f7b430736d162",
+    "semantic_hash": "32aa0aa584e87fdac87f7b430736d162"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/utils/shopifyUrls.ts": {
+    "mtime": 1772475778.686428,
+    "ast_hash": "6a9101ca4ee0406853a1c339d912b53a",
+    "semantic_hash": "6a9101ca4ee0406853a1c339d912b53a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/utils/validateSlug.ts": {
+    "mtime": 1772475778.6865087,
+    "ast_hash": "1c02b91c35f80a39f6641e952825506d",
+    "semantic_hash": "1c02b91c35f80a39f6641e952825506d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/scripts/inspect-product-materials.mjs": {
+    "mtime": 1780400993.6359677,
+    "ast_hash": "fad3add653fd38942b2949e3d076f6b9",
+    "semantic_hash": "fad3add653fd38942b2949e3d076f6b9"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/scripts/inspect-shopify-filters.mjs": {
+    "mtime": 1780400993.636137,
+    "ast_hash": "d344675df0459bb2ee4f0ed6441730ee",
+    "semantic_hash": "d344675df0459bb2ee4f0ed6441730ee"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/scripts/verify-material-filter.mjs": {
+    "mtime": 1780400993.6363118,
+    "ast_hash": "5309636d6380029b59e8fa3c8fcf5fd6",
+    "semantic_hash": "5309636d6380029b59e8fa3c8fcf5fd6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/tailwind.config.ts": {
+    "mtime": 1772475778.6876626,
+    "ast_hash": "a5568e19b632d4b9e2e746abee9446fe",
+    "semantic_hash": "a5568e19b632d4b9e2e746abee9446fe"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/tsconfig.json": {
+    "mtime": 1780049432.9583662,
+    "ast_hash": "130469b4894d9a3d8783798ab6587893",
+    "semantic_hash": "130469b4894d9a3d8783798ab6587893"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/types/analytics.d.ts": {
+    "mtime": 1772476881.8516552,
+    "ast_hash": "9c1391850445fa137d7273bbedb42ed1",
+    "semantic_hash": "9c1391850445fa137d7273bbedb42ed1"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/types/footer.ts": {
+    "mtime": 1780400993.645345,
+    "ast_hash": "033e4916bb384e83412b3edc0f2e3971",
+    "semantic_hash": "033e4916bb384e83412b3edc0f2e3971"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/types/header.ts": {
+    "mtime": 1780400993.645567,
+    "ast_hash": "760584f9188863b0ffa128eeaa35043c",
+    "semantic_hash": "760584f9188863b0ffa128eeaa35043c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/types/look.ts": {
+    "mtime": 1780400993.645958,
+    "ast_hash": "ee7f09baf782d2509d4ae2d68b5c72fd",
+    "semantic_hash": "ee7f09baf782d2509d4ae2d68b5c72fd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/types/menu.ts": {
+    "mtime": 1780400993.646169,
+    "ast_hash": "459d7b6f4c0cf6389744461d93f0e252",
+    "semantic_hash": "459d7b6f4c0cf6389744461d93f0e252"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/types/product.ts": {
+    "mtime": 1780400993.6465085,
+    "ast_hash": "cc6d7d447eda52735bf39c6361faf73a",
+    "semantic_hash": "cc6d7d447eda52735bf39c6361faf73a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/types/set.ts": {
+    "mtime": 1781012291.0748699,
+    "ast_hash": "05df8d59d21ee326e3545cdc697ae7c6",
+    "semantic_hash": "05df8d59d21ee326e3545cdc697ae7c6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/types/shop.ts": {
+    "mtime": 1780411226.4794452,
+    "ast_hash": "d9e0b889272fda08a39f92b17c4501ae",
+    "semantic_hash": "d9e0b889272fda08a39f92b17c4501ae"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/types/styles.d.ts": {
+    "mtime": 1772476138.988423,
+    "ast_hash": "9e00fb2cf6e7046f1a0af249db685bf6",
+    "semantic_hash": "9e00fb2cf6e7046f1a0af249db685bf6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/utils/fbTypes.d.ts": {
+    "mtime": 1772474784.7532215,
+    "ast_hash": "c5c93aa16a9069a3f3be055f2b5aaa90",
+    "semantic_hash": "c5c93aa16a9069a3f3be055f2b5aaa90"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/utils/isMobileClient.ts": {
+    "mtime": 1763368819.5132937,
+    "ast_hash": "bbff7cb06217be17cc5f9082db09fb3d",
+    "semantic_hash": "bbff7cb06217be17cc5f9082db09fb3d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/utils/portableText/portableText.tsx": {
+    "mtime": 1772988101.2176616,
+    "ast_hash": "df409ade889019edb4bef94cbe035e8b",
+    "semantic_hash": "df409ade889019edb4bef94cbe035e8b"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/utils/portableText/portableTextAbout.tsx": {
+    "mtime": 1772988102.586007,
+    "ast_hash": "253adde1679e20f30ff247fd52d517fc",
+    "semantic_hash": "253adde1679e20f30ff247fd52d517fc"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/utils/portableText/portableTextCredits.tsx": {
+    "mtime": 1772988107.5819917,
+    "ast_hash": "f72699146176bd03043cb79755f13881",
+    "semantic_hash": "f72699146176bd03043cb79755f13881"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/utils/portableText/portableTextTerms.tsx": {
+    "mtime": 1772988106.2074947,
+    "ast_hash": "7cfb1feb7419f17c4c14f903b1388898",
+    "semantic_hash": "7cfb1feb7419f17c4c14f903b1388898"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/utils/sanitizeFilename.ts": {
+    "mtime": 1762878339.221132,
+    "ast_hash": "d1de82d7b745f02a205a8de236311cef",
+    "semantic_hash": "d1de82d7b745f02a205a8de236311cef"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/utils/seoHelper.ts": {
+    "mtime": 1773942016.7339122,
+    "ast_hash": "fd021670de71b35bf8c251ce3a8b88df",
+    "semantic_hash": "fd021670de71b35bf8c251ce3a8b88df"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/README.md": {
+    "mtime": 1772476902.961512,
+    "ast_hash": "bd3b310e4a36cd5a5175c6aa8b86ec89",
+    "semantic_hash": "bd3b310e4a36cd5a5175c6aa8b86ec89"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-05-05-mikmax-mvp-phase-1-2.md": {
+    "mtime": 1780400993.5938191,
+    "ast_hash": "c37115b4cd4ce08f66c2f2eedd8c7ed4",
+    "semantic_hash": "c37115b4cd4ce08f66c2f2eedd8c7ed4"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-05-07-mikmax-mvp-phase-3.md": {
+    "mtime": 1780400993.5941455,
+    "ast_hash": "3dec4b95ccf7cd0f301db615aa85badf",
+    "semantic_hash": "3dec4b95ccf7cd0f301db615aa85badf"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-05-09-mikmax-mvp-phase-4.md": {
+    "mtime": 1780400993.594559,
+    "ast_hash": "c0e274b6a7768a9b856bb3ca856a9882",
+    "semantic_hash": "c0e274b6a7768a9b856bb3ca856a9882"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-05-11-mikmax-shop-archive.md": {
+    "mtime": 1780400993.594999,
+    "ast_hash": "4b197897801bfd5519cf30071776e45d",
+    "semantic_hash": "4b197897801bfd5519cf30071776e45d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-05-12-pdp-implementation.md": {
+    "mtime": 1780400993.595496,
+    "ast_hash": "9d263144c1642cb7d003582d48734c55",
+    "semantic_hash": "9d263144c1642cb7d003582d48734c55"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-05-19-legal-page.md": {
+    "mtime": 1780400993.595895,
+    "ast_hash": "620cd28636f560b56b8e3545559ee3f7",
+    "semantic_hash": "620cd28636f560b56b8e3545559ee3f7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-05-28-lookbook-detail-page.md": {
+    "mtime": 1780400993.5963454,
+    "ast_hash": "40805fb1ce94c5558a2825d6b321658a",
+    "semantic_hash": "40805fb1ce94c5558a2825d6b321658a"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-05-29-archive-lookbooks.md": {
+    "mtime": 1780400993.5968823,
+    "ast_hash": "47d9b14f8fbba05d7c1a053cf8da5eb0",
+    "semantic_hash": "47d9b14f8fbba05d7c1a053cf8da5eb0"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-05-29-filtro-materiales.md": {
+    "mtime": 1780400993.597204,
+    "ast_hash": "fbb648c3a50b3a6fcbe5b8281587ef37",
+    "semantic_hash": "fbb648c3a50b3a6fcbe5b8281587ef37"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-06-02-buscador-productos.md": {
+    "mtime": 1780410697.3716505,
+    "ast_hash": "189b61b4b4a1b68ec7f51da4ed102926",
+    "semantic_hash": "189b61b4b4a1b68ec7f51da4ed102926"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-06-09-bilingue-es-en.md": {
+    "mtime": 1781022849.6718726,
+    "ast_hash": "609c04003d216ffabee0183ba90b05da",
+    "semantic_hash": "609c04003d216ffabee0183ba90b05da"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-06-09-newsletter-popup.md": {
+    "mtime": 1781018511.2209425,
+    "ast_hash": "837f4afb2e639f70d490954ae2d34285",
+    "semantic_hash": "837f4afb2e639f70d490954ae2d34285"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-06-09-our-story-page.md": {
+    "mtime": 1781004677.6968856,
+    "ast_hash": "8102512168f05369c053e70fa95123c6",
+    "semantic_hash": "8102512168f05369c053e70fa95123c6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-06-09-sets-archive.md": {
+    "mtime": 1781011864.9090824,
+    "ast_hash": "033136fcf32d26043f5e96ca3522959e",
+    "semantic_hash": "033136fcf32d26043f5e96ca3522959e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-06-09-sets-single-view.md": {
+    "mtime": 1781010404.8479993,
+    "ast_hash": "ab6b3ebee456c950df0ab906cdbf837c",
+    "semantic_hash": "ab6b3ebee456c950df0ab906cdbf837c"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/plans/2026-06-09-storefront-analytics-events.md": {
+    "mtime": 1781014684.9315548,
+    "ast_hash": "ef1bebcf9b5f6eec98fd2d84fd96470e",
+    "semantic_hash": "ef1bebcf9b5f6eec98fd2d84fd96470e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-05-05-mikmax-arquitectura-mvp-design.md": {
+    "mtime": 1780400993.5977826,
+    "ast_hash": "4b38e86c2c400e173ef9093558d3eee8",
+    "semantic_hash": "4b38e86c2c400e173ef9093558d3eee8"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-05-11-mikmax-shop-archive-design.md": {
+    "mtime": 1780400993.5983374,
+    "ast_hash": "72bba69fd046de857fa9a873f4e0f518",
+    "semantic_hash": "72bba69fd046de857fa9a873f4e0f518"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-05-12-pdp-design.md": {
+    "mtime": 1780400993.5986097,
+    "ast_hash": "31f7369f811224646c333f804198d979",
+    "semantic_hash": "31f7369f811224646c333f804198d979"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-05-19-legal-page-design.md": {
+    "mtime": 1780400993.5991116,
+    "ast_hash": "3afd80cb966841c8ea008d20b517359d",
+    "semantic_hash": "3afd80cb966841c8ea008d20b517359d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-05-28-lookbooks-look-detail-design.md": {
+    "mtime": 1780400993.5994036,
+    "ast_hash": "b217d51268a355a659c829aea990aff9",
+    "semantic_hash": "b217d51268a355a659c829aea990aff9"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-05-29-archive-lookbooks-design.md": {
+    "mtime": 1780400993.5996695,
+    "ast_hash": "3b1300ba2d224d5689e2f3ff52e3c83b",
+    "semantic_hash": "3b1300ba2d224d5689e2f3ff52e3c83b"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-05-29-coleccion-fuera-de-shop-design.md": {
+    "mtime": 1780400993.599995,
+    "ast_hash": "9c58e722ce860a7a37c5c01323304060",
+    "semantic_hash": "9c58e722ce860a7a37c5c01323304060"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-05-29-filtro-materiales-design.md": {
+    "mtime": 1780400993.6003559,
+    "ast_hash": "68f2a31aade1a07658518edf239df9ac",
+    "semantic_hash": "68f2a31aade1a07658518edf239df9ac"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-06-02-buscador-productos-design.md": {
+    "mtime": 1780409389.8001573,
+    "ast_hash": "0cdec8126b73fb99403619854e341f1d",
+    "semantic_hash": "0cdec8126b73fb99403619854e341f1d"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-06-09-newsletter-popup-design.md": {
+    "mtime": 1781018292.6827598,
+    "ast_hash": "1164e55bc7da791dfe3726803fafba75",
+    "semantic_hash": "1164e55bc7da791dfe3726803fafba75"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-06-09-our-story-page-design.md": {
+    "mtime": 1781004225.4188333,
+    "ast_hash": "9135666e224303c3699078dd06e8a9e7",
+    "semantic_hash": "9135666e224303c3699078dd06e8a9e7"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-06-09-sets-archive-design.md": {
+    "mtime": 1781011683.2832458,
+    "ast_hash": "85f06d2a659468fa5475940a63a739fd",
+    "semantic_hash": "85f06d2a659468fa5475940a63a739fd"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-06-09-sets-single-view-design.md": {
+    "mtime": 1781010060.7282648,
+    "ast_hash": "80426be02d3960a2819425a29697d8d6",
+    "semantic_hash": "80426be02d3960a2819425a29697d8d6"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/docs/superpowers/specs/2026-06-09-storefront-analytics-events-design.md": {
+    "mtime": 1781014403.4110506,
+    "ast_hash": "d61f9daaa426e552f6e00b1cbbe4ebfc",
+    "semantic_hash": "d61f9daaa426e552f6e00b1cbbe4ebfc"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/sanity/docs/features.md": {
+    "mtime": 1772475778.6769016,
+    "ast_hash": "95d3fa13771e2f6910b57f84ec488446",
+    "semantic_hash": "95d3fa13771e2f6910b57f84ec488446"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/public/icons/account.svg": {
+    "mtime": 1780400993.6043277,
+    "ast_hash": "bc9aa0b641ad7fb416fc8caa8d48f059",
+    "semantic_hash": "bc9aa0b641ad7fb416fc8caa8d48f059"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/public/icons/mikmax.svg": {
+    "mtime": 1780400993.604562,
+    "ast_hash": "bf079d08a056b79bfddb4c178fff6252",
+    "semantic_hash": "bf079d08a056b79bfddb4c178fff6252"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/public/icons/search.svg": {
+    "mtime": 1780400993.6052232,
+    "ast_hash": "00bd35b7c2307fbf860f008bdbc82aaf",
+    "semantic_hash": "00bd35b7c2307fbf860f008bdbc82aaf"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/public/landing-hero.jpg": {
+    "mtime": 1773663605.322187,
+    "ast_hash": "3b6b928fe6cd0a46e6318631141348bf",
+    "semantic_hash": "3b6b928fe6cd0a46e6318631141348bf"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/public/mikmax-logo.svg": {
+    "mtime": 1773422110.0830371,
+    "ast_hash": "3c6f241afb89987adbccad26b8626ccc",
+    "semantic_hash": "3c6f241afb89987adbccad26b8626ccc"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/public/next.svg": {
+    "mtime": 1772475778.6720102,
+    "ast_hash": "8e061864f388b47f33a1c3780831193e",
+    "semantic_hash": "8e061864f388b47f33a1c3780831193e"
+  },
+  "/Users/carlossalvador/Desktop/development/propios/22. Mikmax/mikmax/public/vercel.svg": {
+    "mtime": 1772475778.6721482,
+    "ast_hash": "61c6b19abff40ea7acd577be818f3976",
+    "semantic_hash": "61c6b19abff40ea7acd577be818f3976"
+  }
+}

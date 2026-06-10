@@ -1,6 +1,6 @@
 'use client'
 
-import {hasCookie, setCookie} from 'cookies-next'
+import {hasCookie} from 'cookies-next'
 import Link from 'next/link'
 import {FormEvent, useEffect, useState} from 'react'
 import {LazyImage} from '@/components/Common'
@@ -16,11 +16,21 @@ export default function NewsletterPopup({data}: {data?: NewsletterPopupData}) {
   const clientId = process.env.NEXT_PUBLIC_CLIENT_ID || 'site'
   const seenCookie = `${clientId}_newsletter_25`
   const consentCookie = `${clientId}_localConsent_25`
+  // Gate por pestaña/sesión: al cerrarlo se guarda aquí, no en cookie persistente,
+  // de modo que reaparece en una pestaña nueva o una sesión nueva del navegador.
+  const sessionKey = `${clientId}_newsletter_session`
   const enabled = Boolean(data?.enabled)
   const delayMs = (data?.delaySeconds ?? 10) * 1000
 
   useEffect(() => {
+    // seenCookie (30 días) = ya suscrito → no volver a mostrar.
     if (!enabled || hasCookie(seenCookie)) return
+    // sessionKey = ya cerrado en esta pestaña/sesión → no repetir hasta pestaña/sesión nueva.
+    try {
+      if (sessionStorage.getItem(sessionKey)) return
+    } catch {
+      // sessionStorage no disponible (modo privado): se mostrará igualmente.
+    }
 
     let shown = false
     let delayDone = false
@@ -46,11 +56,16 @@ export default function NewsletterPopup({data}: {data?: NewsletterPopupData}) {
       clearTimeout(timer)
       window.removeEventListener('mikmax:consentchange', onConsent)
     }
-  }, [enabled, delayMs, seenCookie, consentCookie])
+  }, [enabled, delayMs, seenCookie, consentCookie, sessionKey])
 
   function dismiss() {
     setVisible(false)
-    setCookie(seenCookie, '1', {maxAge: 60 * 60 * 24 * 30})
+    // Por pestaña/sesión, no persistente: reaparece en pestaña o sesión nueva.
+    try {
+      sessionStorage.setItem(sessionKey, '1')
+    } catch {
+      // sessionStorage no disponible: el pop-up podría reaparecer al recargar.
+    }
   }
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
