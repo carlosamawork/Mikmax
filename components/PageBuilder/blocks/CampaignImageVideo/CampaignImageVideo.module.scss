@@ -6,6 +6,9 @@
   position: relative;
   width: 100%;
   display: block;
+  @include from(md) {
+    margin: px(100) 0 0;
+  }
 
   &.bleed { /* 100% width already */ }
   &.contained {

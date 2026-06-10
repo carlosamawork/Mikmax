@@ -10,6 +10,7 @@
 
   @include from(md) {
     padding: 0 px(5);
+    margin: px(100) 0 0;
 
     &.cols2 {
       grid-template-columns: 1fr 1fr;

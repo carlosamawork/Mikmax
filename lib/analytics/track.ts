@@ -63,6 +63,11 @@ export function trackAddToCart(items: AnalyticsItem[]) {
   )
 }
 
+export function trackWhatsAppClick(location: string) {
+  ga4('whatsapp_click', {method: 'whatsapp', location})
+  meta('Contact', {contact_method: 'whatsapp'}, newEventId())
+}
+
 export function trackBeginCheckout(items: AnalyticsItem[]) {
   if (!items.length) return
   const currency = items[0].currency || getStoreCurrency()

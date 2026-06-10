@@ -10,5 +10,6 @@
 
   @include from(md) {
     padding: px(80) px(30);
+    margin: px(100) auto 0;
   }
 }

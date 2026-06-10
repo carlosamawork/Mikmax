@@ -10,6 +10,7 @@
 
   @include from(md) {
     padding: px(5) px(5) px(20);
+    margin: px(100) 0 0;
   }
 
   .link {

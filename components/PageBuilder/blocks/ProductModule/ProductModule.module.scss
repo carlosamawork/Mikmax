@@ -9,6 +9,9 @@
   gap: px(20);
   width: 100%;
   position: relative;
+  @include from(md) {
+    margin: px(100) 0 0;
+  }
 }
 
 .title {
