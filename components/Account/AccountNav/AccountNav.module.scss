@@ -1,0 +1,33 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+// Nav horizontal de cuenta (Figma: Helvetica Neue 13px, gap 52, activo negro / resto gris).
+$navFont: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: px(24);
+  padding: px(40) px(20) px(60);
+
+  @include from(sm) {
+    gap: px(52);
+  }
+}
+
+.item {
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: $navFont;
+  font-size: px(13);
+  line-height: px(20);
+  color: map-get($colors, 'gray-light'); // #a4a4a4
+  cursor: pointer;
+}
+
+.active {
+  color: map-get($colors, 'black-border'); // #000
+}

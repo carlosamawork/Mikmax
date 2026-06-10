@@ -22,6 +22,7 @@ interface Props {
   open: boolean
   autoFocusSearch?: boolean
   onClose: () => void
+  isLoggedIn?: boolean
 }
 
 type CartItem = {quantity?: number}
@@ -60,7 +61,13 @@ function Chevron({open}: {open: boolean}) {
   )
 }
 
-export default function MobileMenu({menu, open, autoFocusSearch = false, onClose}: Props) {
+export default function MobileMenu({
+  menu,
+  open,
+  autoFocusSearch = false,
+  onClose,
+  isLoggedIn = false,
+}: Props) {
   const [expandedKey, setExpandedKey] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
   const [query, setQuery] = useState('')
@@ -156,9 +163,9 @@ export default function MobileMenu({menu, open, autoFocusSearch = false, onClose
         </Link>
         <div className={s.actions}>
           <Link
-            href="/login"
+            href={isLoggedIn ? '/account' : '/login'}
             className={s.iconBtn}
-            aria-label="Account"
+            aria-label={isLoggedIn ? 'My account' : 'Log in'}
             onClick={onClose}
           >
             <LazyImage

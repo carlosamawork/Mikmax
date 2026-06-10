@@ -141,6 +141,11 @@
 .ctaActive { background: map-get($colors, 'black-border'); }
 .ctaInactive { background: map-get($colors, 'gray-light'); cursor: not-allowed; }
 
+.favoriteWrap {
+  position: relative;
+  display: inline-flex;
+}
+
 .favorite {
   width: px(25);
   background: map-get($colors, 'black-border');
@@ -150,9 +155,36 @@
   align-items: flex-start;
   justify-content: center;
   padding: px(10) 0;
+  cursor: pointer;
 
+  // Bookmark: tenue sin guardar, pleno al guardar.
   svg {
-    width: px(12);
-    height: px(11);
+    width: px(7);
+    height: px(9);
+    opacity: 0.55;
   }
+
+  &[aria-pressed='true'] svg {
+    opacity: 1;
+  }
+}
+
+.favoriteHint {
+  position: absolute;
+  top: calc(100% + #{px(6)});
+  right: 0;
+  z-index: 2;
+  padding: px(6) px(10);
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  white-space: nowrap;
+}
+
+.favoriteHintLink {
+  color: map-get($colors, 'white');
+  text-decoration: underline;
 }

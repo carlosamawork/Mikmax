@@ -1,0 +1,218 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.order {
+  width: 100%;
+}
+
+// Fila de meta (desktop): Pedido realizado · n.º · Enviar a · Total.
+.metaRow {
+  display: none;
+
+  @include from(sm) {
+    display: flex;
+    gap: 0; // columnas de 160px contiguas → alinean con las del card
+    margin-bottom: px(10);
+  }
+}
+
+// Fecha encima del card (solo mobile).
+.dateMobile {
+  margin-bottom: px(12);
+
+  @include from(sm) {
+    display: none;
+  }
+}
+
+.pair {
+  display: flex;
+  flex-direction: column;
+  gap: px(5);
+
+  @include from(sm) {
+    width: px(160); // paso de columna (meta y card comparten rejilla)
+  }
+}
+
+// Mobile 13/17, desktop 11/15 (Figma).
+.label {
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black-border');
+
+  @include from(sm) {
+    font-size: px(11);
+    line-height: px(15);
+  }
+}
+
+.value {
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'gray-light');
+  word-break: break-word;
+
+  @include from(sm) {
+    font-size: px(11);
+    line-height: px(15);
+  }
+}
+
+// Card. Mobile: sin fondo, imagen izq + texto der, botones debajo (wrap).
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: px(1) px(12); // fila 1px (contenido → botones) · columna 12px (imagen → texto)
+  margin-bottom: px(24);
+
+  @include from(sm) {
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0;
+    min-height: px(127);
+    margin-bottom: px(10);
+    background: map-get($colors, 'lightgray-bg'); // gris solo en desktop
+  }
+}
+
+// Slot de columna de la imagen (desktop 160 = paso de rejilla).
+.mediaCol {
+  flex-shrink: 0;
+
+  @include from(sm) {
+    width: px(160);
+  }
+}
+
+.media {
+  position: relative;
+  width: px(95);
+  height: px(127);
+  overflow: hidden;
+}
+
+.img {
+  object-fit: cover;
+}
+
+// Columnas de datos. Mobile: columna junto a la imagen. Desktop: fila alineada.
+.cols {
+  display: flex;
+  flex: 1;
+  min-width: px(150);
+  flex-direction: column;
+  gap: px(8);
+
+  @include from(sm) {
+    flex: 0 1 auto;
+    min-width: 0;
+    flex-direction: row;
+    gap: 0;
+    align-self: flex-start;
+    padding: px(10) 0;
+  }
+}
+
+// Mobile colapsa (toggle "More information"); desktop fluye en la fila (display: contents).
+.collapse {
+  display: none;
+  flex-direction: column;
+  gap: px(8);
+
+  &.open {
+    display: flex;
+  }
+
+  @include from(sm) {
+    display: contents;
+  }
+}
+
+.mobileOnly {
+  @include from(sm) {
+    display: none;
+  }
+}
+
+// Botones. Mobile: fila completa debajo → More info (izq) + stack (der).
+// Desktop: apilados abajo-derecha.
+.actions {
+  display: flex;
+  gap: px(1);
+  width: 100%;
+  align-items: stretch;
+
+  @include from(sm) {
+    width: auto;
+    align-self: flex-end;
+    margin-left: auto;
+  }
+}
+
+.moreBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: map-get($colors, 'lightgray-bg');
+  color: map-get($colors, 'black-border');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  cursor: pointer;
+
+  @include from(sm) {
+    display: none; // "More information" es solo mobile
+  }
+}
+
+.btnStack {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: px(1);
+
+  @include from(sm) {
+    flex: 0 0 auto;
+  }
+}
+
+.btnLight,
+.btnDark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: px(36);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  text-align: center;
+
+  @include from(sm) {
+    width: px(146);
+  }
+}
+
+// Ver producto: gris en mobile, blanco en desktop (Figma).
+.btnLight {
+  background: map-get($colors, 'lightgray-bg');
+  color: map-get($colors, 'black-border');
+
+  @include from(sm) {
+    background: map-get($colors, 'white');
+  }
+}
+
+.btnDark {
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+}

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
+import WishlistButton from '@/components/Account/WishlistButton/WishlistButton'
 import PriceDisplay from '../PriceDisplay/PriceDisplay'
 import type {ProductCardData} from '@/sanity/types'
 import s from './ProductCard.module.scss'
@@ -43,6 +44,13 @@ export default function ProductCard({product, className, showTag = true}: Props)
         )}
         {tag && <p className={s.tag}>{tag}</p>}
         {soldOut && <p className={s.soldOut}>Agotado</p>}
+        {product.handle && (
+          <WishlistButton
+            handle={product.handle}
+            color={product.colorSlug}
+            className={s.wishlist}
+          />
+        )}
       </div>
       <div className={s.info}>
         {product.title && <p className={s.title}>{product.title}</p>}

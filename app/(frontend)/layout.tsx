@@ -4,6 +4,7 @@ import {buildDefaultMetadata} from '@/utils/seoHelper'
 import '../../styles/main.scss'
 import React, {Suspense} from 'react'
 import ShopProvider from '../../context/shopContext'
+import WishlistProvider from '../../context/wishlistContext'
 import Analytics from '@/components/Common/Analytics/google'
 import ConsentGate from '@/components/Common/Analytics/consentGate'
 import FacebookPixel from '@/components/Common/Analytics/facebook'
@@ -40,27 +41,29 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <body>
         <Suspense fallback={<div className="loader">Loading...</div>}>
           <ShopProvider>
-            <AnnouncementBanner data={bannerData} />
-            <Header />
-            {children}
-            <FooterGate data={footerData?.footer} />
-            <CartDrawer />
-            <CookieConsent />
-            <NewsletterPopup data={newsletterPopupData} />
-            <WhatsAppButton />
-            {process.env.NODE_ENV === 'production' ? (
-              <>
-                <Analytics />
-                <AnalyticsRouteTracker />
-                <ConsentGate category="analytics">
-                  <Hotjar />
-                </ConsentGate>
-                <ConsentGate category="marketing">
-                  <FacebookPixel />
-                  <PinterestTag />
-                </ConsentGate>
-              </>
-            ) : null}
+            <WishlistProvider>
+              <AnnouncementBanner data={bannerData} />
+              <Header />
+              {children}
+              <FooterGate data={footerData?.footer} />
+              <CartDrawer />
+              <CookieConsent />
+              <NewsletterPopup data={newsletterPopupData} />
+              <WhatsAppButton />
+              {process.env.NODE_ENV === 'production' ? (
+                <>
+                  <Analytics />
+                  <AnalyticsRouteTracker />
+                  <ConsentGate category="analytics">
+                    <Hotjar />
+                  </ConsentGate>
+                  <ConsentGate category="marketing">
+                    <FacebookPixel />
+                    <PinterestTag />
+                  </ConsentGate>
+                </>
+              ) : null}
+            </WishlistProvider>
           </ShopProvider>
         </Suspense>
       </body>

@@ -3,6 +3,7 @@ import {useState} from 'react'
 import PriceLabel from '../shared/PriceLabel'
 import ColorSwatches from '../shared/ColorSwatches'
 import SizeSelector from '../shared/SizeSelector'
+import WishlistButton from '@/components/Account/WishlistButton/WishlistButton'
 import type {ProductView, ProductColor} from '@/types/product'
 import s from './MobileToolbar.module.scss'
 
@@ -34,6 +35,7 @@ export default function MobileToolbar({
   return (
     <div className={s.wrap}>
       <div className={s.titleBlock}>
+        <WishlistButton handle={view.handle} color={selectedColor} className={s.favorite} />
         <div className={s.title}>
           {view.title}
           {currentColor.label && <span className={s.titleColor}>{currentColor.label}</span>}

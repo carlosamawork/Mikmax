@@ -1,0 +1,123 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+// Estilos compartidos de los formularios de auth (register, login, forgot, reset).
+// Título: Helvetica Neue (Figma). Sin webfont en el proyecto → system fallback (igual que NewsletterPopup).
+$authHeading: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+// Cuerpo del formulario, centrado verticalmente por AuthLayout .formCol.
+// Figma: body 288.75px en desktop, full-width en mobile.
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+
+  @include from(sm) {
+    max-width: px(288.75);
+  }
+}
+
+.heading {
+  font-family: $authHeading;
+  font-size: px(13);
+  line-height: px(20);
+  color: map-get($colors, 'primary-text');
+  text-align: center;
+}
+
+// El margen reproduce el hueco que en el Figma ocupa la barra de pestañas (vacía en email-only).
+.fields {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: px(40);
+}
+
+// Botón pegado a los campos (Figma: sin separación).
+.submit {
+  width: 100%;
+  height: px(36);
+  border: none;
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.error {
+  width: 100%;
+  margin-top: px(8);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  color: map-get($colors, 'red');
+  text-align: center;
+}
+
+// Términos: pt 20px respecto al botón (Figma).
+// La tipografía va sobre los <p> (clase+elemento) para ganar al `p { font-size:16px }` global de _base.scss.
+.terms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: px(4.331);
+  width: 100%;
+  padding-top: px(20);
+  text-align: center;
+
+  p {
+    margin: 0;
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    line-height: px(15);
+    letter-spacing: px(0.5);
+    color: map-get($colors, 'secondary-text');
+  }
+}
+
+.termsLink {
+  color: map-get($colors, 'gray-light');
+}
+
+// Enlace "Forgot your password?" en el login.
+.forgot {
+  margin-top: px(12);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'gray-light');
+  text-decoration: underline;
+}
+
+// Enlace inferior — fijado al fondo de la columna (Figma: top 859 en frame de 900).
+.altBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: px(26);
+  display: flex;
+  justify-content: center;
+  gap: px(5.775);
+  padding: 0 px(20);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  color: map-get($colors, 'secondary-text');
+}
+
+.altLink {
+  color: map-get($colors, 'gray-light'); // #a4a4a4 (Figma)
+}

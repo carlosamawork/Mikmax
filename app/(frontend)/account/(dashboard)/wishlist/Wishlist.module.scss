@@ -1,0 +1,21 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: px(1);
+
+  @include from(sm) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.empty {
+  padding: px(20) px(10);
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'gray-light');
+}

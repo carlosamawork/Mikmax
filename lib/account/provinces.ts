@@ -1,0 +1,67 @@
+// Provincias/estados por país (mercado). El formulario muestra un selector para
+// cualquier país presente en este mapa; el resto usa campo de texto libre.
+// Ampliar según mercados = añadir una clave (el nombre debe coincidir con el de
+// lib/account/countries.ts).
+
+const ES_PROVINCES: string[] = [
+  'A Coruña',
+  'Álava',
+  'Albacete',
+  'Alicante',
+  'Almería',
+  'Asturias',
+  'Ávila',
+  'Badajoz',
+  'Barcelona',
+  'Bizkaia',
+  'Burgos',
+  'Cáceres',
+  'Cádiz',
+  'Cantabria',
+  'Castellón',
+  'Ceuta',
+  'Ciudad Real',
+  'Córdoba',
+  'Cuenca',
+  'Gipuzkoa',
+  'Girona',
+  'Granada',
+  'Guadalajara',
+  'Huelva',
+  'Huesca',
+  'Illes Balears',
+  'Jaén',
+  'La Rioja',
+  'Las Palmas',
+  'León',
+  'Lleida',
+  'Lugo',
+  'Madrid',
+  'Málaga',
+  'Melilla',
+  'Murcia',
+  'Navarra',
+  'Ourense',
+  'Palencia',
+  'Pontevedra',
+  'Salamanca',
+  'Santa Cruz de Tenerife',
+  'Segovia',
+  'Sevilla',
+  'Soria',
+  'Tarragona',
+  'Teruel',
+  'Toledo',
+  'Valencia',
+  'Valladolid',
+  'Zamora',
+  'Zaragoza',
+]
+
+export const PROVINCES_BY_COUNTRY: Record<string, string[]> = {
+  Spain: ES_PROVINCES,
+  // Añadir más mercados aquí, p. ej.:
+  // 'United States': US_STATES,
+  // 'France': FR_DEPARTMENTS,
+}
+
