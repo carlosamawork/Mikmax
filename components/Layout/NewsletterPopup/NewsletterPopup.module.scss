@@ -1,4 +1,5 @@
 @use '@/styles/common/variables' as *;
+@use '@/styles/common/tokens' as *;
 
 // Título: Helvetica Neue (Figma). Resto de textos: Monument Grotesk ($MonumentGrotesk).
 $nlHeading: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -6,12 +7,15 @@ $nlHeading: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 130;
+  z-index: $z-newsletter-overlay;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: px(20);
-  background: rgba(0, 0, 0, 0.4);
+  // Figma (node 20:8436): tinte oscuro + desenfoque del fondo.
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(px(9.2));
+  -webkit-backdrop-filter: blur(px(9.2));
 }
 
 .card {
