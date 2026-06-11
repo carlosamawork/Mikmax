@@ -2,7 +2,7 @@ import type {Metadata} from 'next'
 import {getCurrentCustomer} from '@/lib/auth/customer'
 import {getCustomerWishlist, getProductCardsByHandles} from '@/lib/shopify'
 import {expandProductsToCards} from '@/lib/shop/expandToCards'
-import ProductCard from '@/components/PageBuilder/ProductCard/ProductCard'
+import WishlistGrid from './WishlistGrid'
 import s from './Wishlist.module.scss'
 
 export const metadata: Metadata = {
@@ -52,7 +52,26 @@ export default async function WishlistPage() {
       const byColor = item.color
         ? cards.find((c) => c.handle === item.handle && c.colorSlug === item.color)
         : undefined
-      return byColor ?? cards.find((c) => c.handle === item.handle) ?? null
+      const card = byColor ?? cards.find((c) => c.handle === item.handle) ?? null
+      if (!card) return null
+      // La identidad del favorito debe reflejar el color GUARDADO, no el de la tarjeta
+      // resuelta — así el marcador coincide con la entrada del metafield y se puede quitar.
+      const id = item.color ? `${item.handle}::${item.color}` : item.handle
+      return {
+        id,
+        card: {
+          _id: card.id,
+          title: card.title,
+          handle: card.handle,
+          imageUrl: card.imageUrl,
+          minPrice: card.minPrice,
+          maxPrice: card.maxPrice,
+          compareAtPrice: card.compareAtPrice,
+          tags: card.tags,
+          availableForSale: card.availableForSale,
+          colorSlug: item.color ?? undefined,
+        },
+      }
     })
     .filter((c): c is NonNullable<typeof c> => c !== null)
 
@@ -60,25 +79,5 @@ export default async function WishlistPage() {
     return <p className={s.empty}>Your wishlist is empty.</p>
   }
 
-  return (
-    <div className={s.grid}>
-      {resolved.map((p, i) => (
-        <ProductCard
-          key={`${p.id}-${i}`}
-          product={{
-            _id: p.id,
-            title: p.title,
-            handle: p.handle,
-            imageUrl: p.imageUrl,
-            minPrice: p.minPrice,
-            maxPrice: p.maxPrice,
-            compareAtPrice: p.compareAtPrice,
-            tags: p.tags,
-            availableForSale: p.availableForSale,
-            colorSlug: p.colorSlug,
-          }}
-        />
-      ))}
-    </div>
-  )
+  return <WishlistGrid items={resolved} />
 }

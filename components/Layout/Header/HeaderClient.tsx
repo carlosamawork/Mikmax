@@ -198,6 +198,13 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
             >
               Search
             </button>
+            <Link
+              href={isLoggedIn ? '/account' : '/login'}
+              className={s.actionBtn}
+              aria-label={isLoggedIn ? 'My account' : 'Log in'}
+            >
+              {isLoggedIn ? 'Account' : 'Login'}
+            </Link>
             <button
               type="button"
               className={s.actionBtn}
