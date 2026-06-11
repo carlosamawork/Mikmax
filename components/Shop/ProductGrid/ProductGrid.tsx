@@ -11,6 +11,23 @@ interface Props {
   children?: ReactNode
 }
 
+// Mapea el ProductCardData del feed al shape que espera ProductCard.
+export function toCardProps(p: ProductCardData) {
+  return {
+    _id: p.id,
+    title: p.title,
+    handle: p.handle,
+    imageUrl: p.imageUrl,
+    secondaryImageUrl: p.secondaryImageUrl,
+    minPrice: p.minPrice,
+    maxPrice: p.maxPrice,
+    compareAtPrice: p.compareAtPrice,
+    tags: p.tags,
+    availableForSale: p.availableForSale,
+    colorSlug: p.colorSlug,
+  }
+}
+
 export default function ProductGrid({products, view, hasActiveFilters, children}: Props) {
   if (products.length === 0) {
     return (
@@ -33,24 +50,10 @@ export default function ProductGrid({products, view, hasActiveFilters, children}
   return (
     <div
       className={s.grid}
-      style={{['--cols' as string]: view === '4col' ? 4 : 2} as CSSProperties}
+      style={{['--cols' as string]: view === '2col' ? 2 : 4} as CSSProperties}
     >
       {products.map((p) => (
-        <ProductCard
-          key={p.id}
-          product={{
-            _id: p.id,
-            title: p.title,
-            handle: p.handle,
-            imageUrl: p.imageUrl,
-            minPrice: p.minPrice,
-            maxPrice: p.maxPrice,
-            compareAtPrice: p.compareAtPrice,
-            tags: p.tags,
-            availableForSale: p.availableForSale,
-            colorSlug: p.colorSlug,
-          }}
-        />
+        <ProductCard key={p.id} product={toCardProps(p)} />
       ))}
       {children}
     </div>
@@ -58,11 +61,11 @@ export default function ProductGrid({products, view, hasActiveFilters, children}
 }
 
 export function ProductGridSkeleton({view}: {view: ViewMode}) {
-  const count = view === '4col' ? 8 : 6
+  const count = view === '2col' ? 6 : 8
   return (
     <div
       className={s.grid}
-      style={{['--cols' as string]: view === '4col' ? 4 : 2} as CSSProperties}
+      style={{['--cols' as string]: view === '2col' ? 2 : 4} as CSSProperties}
     >
       {Array.from({length: count}).map((_, i) => (
         <div key={i} className={s.skeleton} />

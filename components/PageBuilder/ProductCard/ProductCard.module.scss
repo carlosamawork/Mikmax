@@ -17,6 +17,21 @@
   }
 }
 
+// Variante "fill": la card llena el alto de su celda (grid editorial Vista 2),
+// con la imagen flexible en vez del aspect-ratio fijo. Solo en desktop: en móvil
+// el grid fluye natural y la imagen conserva su aspect (si no, colapsaría).
+.cardFill {
+  @include from(md) {
+    height: 100%;
+
+    .media {
+      flex: 1;
+      min-height: 0;
+      aspect-ratio: auto;
+    }
+  }
+}
+
 .media {
   position: relative;
   width: 100%;

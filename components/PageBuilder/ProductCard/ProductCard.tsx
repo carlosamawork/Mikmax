@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import type {CSSProperties} from 'react'
 import {LazyImage} from '@/components/Common'
 import WishlistButton from '@/components/Account/WishlistButton/WishlistButton'
 import PriceDisplay from '../PriceDisplay/PriceDisplay'
@@ -10,6 +11,11 @@ interface Props {
   className?: string
   // Set to false to hide the "Novedades" badge even if the product has the tag.
   showTag?: boolean
+  // Llena el alto de su celda (grid editorial Vista 2) en vez de usar el aspect fijo.
+  fill?: boolean
+  // Usa la 2ª imagen de la galería de la variante (tile destacada de Vista 2).
+  preferSecondary?: boolean
+  style?: CSSProperties
 }
 
 function hasNovedadTag(tags?: string): boolean {
@@ -21,7 +27,14 @@ function hasNovedadTag(tags?: string): boolean {
     .some((t) => t === 'novedad' || t === 'novedades' || t === 'new')
 }
 
-export default function ProductCard({product, className, showTag = true}: Props) {
+export default function ProductCard({
+  product,
+  className,
+  showTag = true,
+  fill = false,
+  preferSecondary = false,
+  style,
+}: Props) {
   const href = product.handle
     ? product.colorSlug
       ? `/products/${product.handle}?color=${product.colorSlug}`
@@ -29,16 +42,23 @@ export default function ProductCard({product, className, showTag = true}: Props)
     : '#'
   const tag = showTag && hasNovedadTag(product.tags) ? 'Novedades' : null
   const soldOut = product.availableForSale === false
+  const imageUrl =
+    preferSecondary && product.secondaryImageUrl ? product.secondaryImageUrl : product.imageUrl
 
   return (
-    <Link href={href} className={`${s.card} ${className ?? ''}`.trim()}>
+    <Link
+      href={href}
+      className={`${s.card} ${fill ? s.cardFill : ''} ${className ?? ''}`.trim()}
+      style={style}
+    >
       <div className={s.media}>
-        {product.imageUrl && (
+        {imageUrl && (
           <LazyImage
-            src={product.imageUrl}
+            src={imageUrl}
             alt={product.title ?? ''}
             width={357}
             height={476}
+            sizes={fill ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 50vw, 25vw'}
             className={s.img}
           />
         )}

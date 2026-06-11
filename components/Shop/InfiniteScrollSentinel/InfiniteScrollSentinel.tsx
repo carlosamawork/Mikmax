@@ -1,6 +1,7 @@
 'use client'
 import {useEffect, useRef, useState} from 'react'
 import ProductCard from '@/components/PageBuilder/ProductCard/ProductCard'
+import {toCardProps} from '@/components/Shop/ProductGrid/ProductGrid'
 import {fetchShopChunk} from '@/app/(frontend)/shop/actions'
 import type {ProductCardData, ShopSearchParams} from '@/types/shop'
 
@@ -57,29 +58,9 @@ export default function InfiniteScrollSentinel({
   return (
     <>
       {items.map((p) => (
-        <ProductCard
-          key={p.id}
-          product={{
-            _id: p.id,
-            title: p.title,
-            handle: p.handle,
-            imageUrl: p.imageUrl,
-            minPrice: p.minPrice,
-            maxPrice: p.maxPrice,
-            compareAtPrice: p.compareAtPrice,
-            tags: p.tags,
-            availableForSale: p.availableForSale,
-            colorSlug: p.colorSlug,
-          }}
-        />
+        <ProductCard key={p.id} product={toCardProps(p)} />
       ))}
-      {hasMore && (
-        <div
-          ref={ref}
-          style={{height: 1, gridColumn: '1 / -1'}}
-          aria-hidden="true"
-        />
-      )}
+      {hasMore && <div ref={ref} style={{height: 1, gridColumn: '1 / -1'}} aria-hidden="true" />}
     </>
   )
 }

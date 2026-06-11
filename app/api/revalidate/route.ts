@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
 
     if (body._type === 'collection') {
       tags.push('settings')
+      if (body.slug) tags.push(`collection:${body.slug}`)
     }
 
     if (body._type === 'look') {
