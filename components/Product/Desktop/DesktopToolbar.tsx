@@ -1,8 +1,10 @@
 'use client'
 import {useState} from 'react'
+import Link from 'next/link'
 import PriceLabel from '../shared/PriceLabel'
 import ColorSwatches from '../shared/ColorSwatches'
 import SizeSelector from '../shared/SizeSelector'
+import {useWishlistItem} from '@/context/wishlistContext'
 import type {ProductView, ProductColor} from '@/types/product'
 import s from './DesktopToolbar.module.scss'
 
@@ -38,6 +40,8 @@ export default function DesktopToolbar({
   const hoveredLabel = hovered
     ? view.colors.find((c) => c.slug === hovered)?.label
     : undefined
+  // Wishlist por color elegido.
+  const fav = useWishlistItem(view.handle, selectedColor)
   return (
     <div className={s.toolbar}>
       <div className={s.titleBlock}>
@@ -94,21 +98,30 @@ export default function DesktopToolbar({
         {canAddToCart ? 'Add to Cart' : 'Please Select Size'}
       </button>
 
-      <button
-        type="button"
-        className={s.favorite}
-        aria-label="Add to favorites"
-        aria-disabled="true"
-      >
-        <svg viewBox="0 0 12 11" fill="none" aria-hidden>
-          <path
-            d="M6 10C6 10 1 6.5 1 3.5C1 1.84 2.34 0.5 4 0.5C5 0.5 5.5 1 6 1.5C6.5 1 7 0.5 8 0.5C9.66 0.5 11 1.84 11 3.5C11 6.5 6 10 6 10Z"
-            stroke="currentColor"
-            strokeWidth="1"
-            fill="none"
-          />
-        </svg>
-      </button>
+      <span className={s.favoriteWrap}>
+        <button
+          type="button"
+          className={s.favorite}
+          onClick={fav.onClick}
+          aria-pressed={fav.active}
+          aria-label={fav.active ? 'Remove from wishlist' : 'Add to wishlist'}
+        >
+          <svg viewBox="0 0 7 9" fill="none" aria-hidden>
+            <path
+              d="M0.0185414 0H6.99937C6.98115 2.9491 6.95575 8.79725 6.99717 8.99486C6.99992 8.99826 7.00069 9 6.99937 9C6.99862 9 6.99788 8.99827 6.99717 8.99486C6.90662 8.883 4.66551 6.97253 3.52286 6.00299L0 8.91924L0.0185414 0Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+        {fav.hint && (
+          <span className={s.favoriteHint} role="alert">
+            <Link href="/login" className={s.favoriteHintLink}>
+              Log in
+            </Link>{' '}
+            to save it
+          </span>
+        )}
+      </span>
     </div>
   )
 }

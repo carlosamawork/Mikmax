@@ -1,0 +1,16 @@
+@use '@/styles/common/variables' as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: px(40);
+}
+
+.empty {
+  padding: px(20) px(10);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'gray-light');
+}

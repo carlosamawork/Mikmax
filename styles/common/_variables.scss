@@ -31,7 +31,14 @@ $colors: (
 
   // borders
   "black-border": #000,
-  "grey-border": #2b2b2b1a
+  "grey-border": #2b2b2b1a,
+
+  // account / forms (Figma tokens)
+  "primary-text": #0c0d0e,
+  "placeholder": #c1c4ce,
+  "secondary-text": #515961,
+  "hyperlink": #0151fc,
+  "icon": #828c97
 );
 
 @function px($size) {

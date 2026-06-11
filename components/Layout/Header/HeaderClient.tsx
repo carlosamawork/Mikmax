@@ -22,6 +22,7 @@ type CartCtx = {
 
 export default function HeaderClient({menu, initialVariant = 'default'}: HeaderProps) {
   const [variant, setVariant] = useState<HeaderVariant>(initialVariant)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [activeKey, setActiveKey] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileSearchFocus, setMobileSearchFocus] = useState(false)
@@ -42,6 +43,21 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
     setActiveKey(null)
     setMobileOpen(false)
     setSearchOpen(false)
+  }, [pathname])
+
+  // Estado de sesión (cookie httpOnly) consultado en cliente para no romper el render
+  // estático de las páginas. Reconsulta al cambiar de ruta (login/logout).
+  useEffect(() => {
+    let active = true
+    fetch('/api/auth/status')
+      .then((r) => r.json())
+      .then((d) => {
+        if (active) setIsLoggedIn(Boolean(d?.loggedIn))
+      })
+      .catch(() => {})
+    return () => {
+      active = false
+    }
   }, [pathname])
 
   const open = (key: string) => {
@@ -182,6 +198,13 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
             >
               Search
             </button>
+            <Link
+              href={isLoggedIn ? '/account' : '/login'}
+              className={s.actionBtn}
+              aria-label={isLoggedIn ? 'My account' : 'Log in'}
+            >
+              {isLoggedIn ? 'Account' : 'Login'}
+            </Link>
             <button
               type="button"
               className={s.actionBtn}
@@ -213,7 +236,11 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
                 priority
               />
             </button>
-            <Link href="/login" className={s.iconBtn} aria-label="Account">
+            <Link
+              href={isLoggedIn ? '/account' : '/login'}
+              className={s.iconBtn}
+              aria-label={isLoggedIn ? 'My account' : 'Log in'}
+            >
               <LazyImage
                 src="/icons/account.svg"
                 alt=""
@@ -265,6 +292,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
         open={mobileOpen}
         autoFocusSearch={mobileSearchFocus}
         onClose={() => setMobileOpen(false)}
+        isLoggedIn={isLoggedIn}
       />
     </header>
   )

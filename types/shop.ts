@@ -1,4 +1,16 @@
-export type ViewMode = '4col' | '2col'
+export type ViewMode = '4col' | 'editorial' | '2col'
+
+// Imagen editorial intercalada en el grid de productos (Vista 2). Proviene del
+// campo `imagenesDestacadas` (module.image) del documento collection en Sanity.
+export type EditorialImage = {
+  imageUrl: string
+  alt: string
+  caption?: string
+  href?: string
+  blurDataURL?: string
+  width?: number
+  height?: number
+}
 
 export type SortKey =
   | 'featured'      // Sanity orderRank (default en /shop)
@@ -53,6 +65,9 @@ export type ProductCardData = {
   title: string
   imageUrl?: string
   imageAlt?: string
+  // 2ª imagen de la galería de la variante (fallback featured). La usa la tile
+  // destacada del grid editorial (Vista 2).
+  secondaryImageUrl?: string
   minPrice?: number
   maxPrice?: number
   compareAtPrice?: number

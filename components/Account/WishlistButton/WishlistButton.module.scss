@@ -1,0 +1,50 @@
+@use '@/styles/common/variables' as *;
+
+.wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: px(25);
+  height: px(25);
+  padding: 0;
+  border: none;
+  background: none;
+  color: #d9d9d9; // bookmark sin guardar (Figma)
+  cursor: pointer;
+
+  svg {
+    display: block;
+    width: px(25);
+    height: px(25);
+  }
+
+  &.active {
+    color: map-get($colors, 'black-border'); // guardado → marcador negro
+  }
+}
+
+// Mensaje "Log in to save it" cuando no hay sesión.
+.hint {
+  position: absolute;
+  top: calc(100% + #{px(6)});
+  right: 0;
+  z-index: 2;
+  padding: px(6) px(10);
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  white-space: nowrap;
+}
+
+.hintLink {
+  color: map-get($colors, 'white');
+  text-decoration: underline;
+}

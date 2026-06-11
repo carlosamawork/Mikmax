@@ -30,7 +30,7 @@ export default function LookGrid({looks, view, hasActiveFilters}: Props) {
   return (
     <div
       className={s.grid}
-      style={{['--cols' as string]: view === '4col' ? 4 : 2} as CSSProperties}
+      style={{['--cols' as string]: view === '2col' ? 2 : 4} as CSSProperties}
     >
       {looks.map((look) => (
         <LookCard key={look.id} look={look} />

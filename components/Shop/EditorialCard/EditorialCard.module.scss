@@ -1,0 +1,62 @@
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.card {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+// Variante "fill": llena el alto de la tile destacada 2×2 (solo desktop; en móvil
+// va a ancho completo conservando su aspect).
+.cardFill {
+  @include from(md) {
+    height: 100%;
+  }
+}
+
+.mediaFill {
+  @include from(md) {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 716 / 953;
+  overflow: hidden;
+  background: map-get($colors, 'gray');
+
+  // LazyImage wrapper specificity boost (mismo patrón que ProductCard).
+  > :global(.wrapper),
+  > div {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.caption {
+  position: absolute;
+  left: px(15);
+  bottom: px(15);
+  margin: 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: 0.5px;
+  color: #fff;
+  z-index: 2;
+}

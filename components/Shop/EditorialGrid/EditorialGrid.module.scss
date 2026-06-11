@@ -1,0 +1,47 @@
+@use '../../../styles/common/variables' as *;
+@use '../../../styles/common/tokens' as *;
+@use '../../../styles/mixins/mixins' as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // móvil: flujo simple en 2 columnas
+  gap: px(1);
+
+  @include from(md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// Celda de producto. En móvil fluye natural; en desktop se coloca explícitamente
+// (col/fila vía CSS vars) y un aspect fijo define el alto de la fila para que el
+// destacado 2×2 encaje en dos filas.
+.cell {
+  @include from(md) {
+    grid-column: var(--col) / span 1;
+    grid-row: var(--row) / span 1;
+    aspect-ratio: 357 / 580;
+  }
+}
+
+// Destacado 2×2. Móvil: ancho completo. Desktop: 2 columnas × 2 filas.
+.featured {
+  grid-column: 1 / -1;
+
+  @include from(md) {
+    grid-column: var(--col) / span 2;
+    grid-row: var(--row) / span 2;
+  }
+}
+
+// Hueco invisible que ancla el alto de fila en el bloque 3. No se muestra en móvil.
+.spacer {
+  display: none;
+
+  @include from(md) {
+    display: block;
+  }
+}
+
+.sentinel {
+  height: 1px;
+}

@@ -32,6 +32,8 @@ type ShopifyVariantNode = {
   price: {amount: string}
   compareAtPrice?: {amount: string} | null
   selectedOptions: {name: string; value: string}[]
+  // Galería de imágenes de la variante de color (metafield custom.gallery).
+  gallery?: {references?: {nodes: {image?: {url: string; altText?: string | null} | null}[]} | null} | null
 }
 
 export type ShopifyProductNode = {
@@ -158,6 +160,7 @@ function productOnlyCard(p: ShopifyProductNode): ProductCardData {
     title: p.title,
     imageUrl: p.featuredImage?.url,
     imageAlt: p.featuredImage?.altText ?? undefined,
+    secondaryImageUrl: p.featuredImage?.url,
     minPrice: Number.isFinite(min) ? min : undefined,
     maxPrice: Number.isFinite(max) && max !== min ? max : undefined,
     compareAtPrice: Number.isFinite(compare) && compare > 0 ? compare : undefined,
@@ -173,12 +176,18 @@ function variantCard(
   const price = Number(variant.price.amount)
   const compareAt = variant.compareAtPrice ? Number(variant.compareAtPrice.amount) : NaN
   const title = composeTitle(p.title, colorValue)
+  // 2ª imagen de la galería de la variante (la usa la tile destacada de Vista 2);
+  // fallback a la featured del producto.
+  const galleryUrls = (variant.gallery?.references?.nodes ?? [])
+    .map((n) => n.image?.url)
+    .filter((u): u is string => Boolean(u))
   return {
     id: `${p.id}::${variant.id}`,
     handle: p.handle,
     title,
     imageUrl: variant.image?.url ?? p.featuredImage?.url,
     imageAlt: variant.image?.altText ?? p.featuredImage?.altText ?? undefined,
+    secondaryImageUrl: galleryUrls[1] ?? p.featuredImage?.url,
     minPrice: Number.isFinite(price) ? price : undefined,
     maxPrice: undefined,
     compareAtPrice: Number.isFinite(compareAt) && compareAt > 0 ? compareAt : undefined,

@@ -1,0 +1,41 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: map-get($colors, 'white');
+
+  @include from(sm) {
+    flex-direction: row;
+  }
+}
+
+// Columna del formulario — centrada. En desktop ocupa la mitad izquierda.
+// position: relative para anclar el enlace inferior (.altBottom).
+.formCol {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: px(60) px(20);
+
+  @include from(sm) {
+    padding: px(40);
+  }
+}
+
+// Imagen lateral — solo desktop (Figma: imagen a sangre a la derecha).
+.imageCol {
+  display: none;
+
+  @include from(sm) {
+    display: block;
+    flex: 1;
+    background-image: url('/account/register-side.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+}

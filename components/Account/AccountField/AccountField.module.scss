@@ -1,0 +1,39 @@
+@use '@/styles/common/variables' as *;
+
+// Campo de cuenta: label gris encima + input (fila 50px, fondo #f0f0f0).
+.field {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  padding: px(10) px(10) px(4);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'gray-light'); // #a4a4a4
+}
+
+.input {
+  display: block;
+  width: 100%;
+  height: px(50);
+  padding: 0 px(10);
+  border: none;
+  border-bottom: px(1) solid map-get($colors, 'white');
+  background: map-get($colors, 'lightgray-bg'); // #f0f0f0
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(15);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black-border'); // negro
+
+  &::placeholder {
+    color: map-get($colors, 'gray-light');
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
