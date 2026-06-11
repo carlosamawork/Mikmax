@@ -3,16 +3,8 @@ import {useRouter, usePathname, useSearchParams} from 'next/navigation'
 import type {ViewMode} from '@/types/shop'
 import s from './ShopToolbar.module.scss'
 
-// `hasEditorial`: solo cuando la colección tiene imágenes destacadas se ofrece la
-// vista editorial. Sin ella, hay 2 vistas (1 = 4col, 2 = 2col); con ella, 3
-// (1 = 4col, 2 = editorial, 3 = 2col).
-export default function ViewToggle({
-  value,
-  hasEditorial = false,
-}: {
-  value: ViewMode
-  hasEditorial?: boolean
-}) {
+// Las 3 vistas están siempre disponibles: 1 = 4col, 2 = editorial, 3 = 2col.
+export default function ViewToggle({value}: {value: ViewMode}) {
   const router = useRouter()
   const path = usePathname()
   const params = useSearchParams()
@@ -36,23 +28,21 @@ export default function ViewToggle({
       >
         1
       </button>
-      {hasEditorial && (
-        <button
-          type="button"
-          className={value === 'editorial' ? s.viewActive : s.viewInactive}
-          aria-pressed={value === 'editorial'}
-          onClick={() => setView('editorial')}
-        >
-          2
-        </button>
-      )}
+      <button
+        type="button"
+        className={value === 'editorial' ? s.viewActive : s.viewInactive}
+        aria-pressed={value === 'editorial'}
+        onClick={() => setView('editorial')}
+      >
+        2
+      </button>
       <button
         type="button"
         className={value === '2col' ? s.viewActive : s.viewInactive}
         aria-pressed={value === '2col'}
         onClick={() => setView('2col')}
       >
-        {hasEditorial ? '3' : '2'}
+        3
       </button>
     </div>
   )

@@ -5,7 +5,8 @@
 // FILA COMPLETA de 4 productos sin destacar (separador) → 3 filas por bloque:
 //   Bloque 1: destacado 2×2 a la IZQ (cols 1-2) + 4 productos a la DER (cols 3-4)
 //   Bloque 2: destacado 2×2 a la DER (cols 3-4) + 4 productos a la IZQ (cols 1-2)
-//   Bloque 3: destacado 2×2 a la IZQ + 1 producto (col 3, fila sup) + hueco blanco
+//   Bloque 3: destacado 2×2 a la IZQ + 1 producto en la esquina OPUESTA (col 4,
+//             fila sup, sin tocar el destacado) + hueco blanco entre ambos
 //   ...y debajo de cada bloque, una fila de 4 productos.
 // Cada destacado es un PRODUCTO grande (usa su 2ª imagen) salvo que ese slot haya
 // sido elegido para una IMAGEN de la lista de la colección. Las imágenes caen en
@@ -91,9 +92,10 @@ export function buildVista2Layout(
 
     // --- Productos del bloque (junto al destacado) ---
     if (type === 2) {
-      // 1 producto en la fila superior, junto al destacado; resto hueco (anclado).
-      const prodCol = fCol === 1 ? 3 : 1
-      const empties = fCol === 1 ? [[4, row], [3, row + 1], [4, row + 1]] : [[2, row], [1, row + 1], [2, row + 1]]
+      // 1 producto en la fila superior, en el EXTREMO opuesto al destacado (sin
+      // tocarlo); el hueco queda entre el destacado y ese producto. El resto, hueco.
+      const prodCol = fCol === 1 ? 4 : 1
+      const empties = fCol === 1 ? [[3, row], [3, row + 1], [4, row + 1]] : [[2, row], [1, row + 1], [2, row + 1]]
       const p = next()
       if (p) slots.push({kind: 'product', key: p.id, product: p, col: prodCol, row})
       else empties.unshift([prodCol, row])

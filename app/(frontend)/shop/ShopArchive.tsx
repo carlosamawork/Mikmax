@@ -19,13 +19,10 @@ export default async function ShopArchive({handle, searchParams}: Props) {
 
   const {cards, facets} = await buildAllCards(handle, params)
   // Editoriales solo en páginas de colección; /shop ('all') no tiene documento
-  // collection. Se piden siempre (no solo en la vista editorial) para decidir si
-  // ofrecer la vista 2 en el toggle.
+  // collection. La vista 2 (editorial) está SIEMPRE disponible: sin imágenes de
+  // colección el grid editorial se compone únicamente de productos destacados.
   const editorials = handle !== ALL_HANDLE ? await getCollectionEditorialImages(handle) : []
-  const hasEditorial = editorials.length > 0
-  // La vista editorial solo es válida si hay imágenes; si no, cae a 4col.
-  const requested = params.view ?? '4col'
-  const view = requested === 'editorial' && !hasEditorial ? '4col' : requested
+  const view = params.view ?? '4col'
   const total = cards.length
   const products: ProductCardData[] = cards.slice(0, CHUNK_SIZE)
   const hasMore = total > CHUNK_SIZE
@@ -33,7 +30,7 @@ export default async function ShopArchive({handle, searchParams}: Props) {
 
   return (
     <>
-      <ShopToolbar view={view} hasEditorial={hasEditorial} />
+      <ShopToolbar view={view} />
       {view === 'editorial' ? (
         <EditorialGrid
           handle={handle}
