@@ -1008,6 +1008,14 @@ git commit -m "feat(b2b): protected professional area (minimal)"
 **Files:**
 - Modify: contenido de Sanity (singleton `settings` → menú) — no es cambio de código si el menú es data-driven.
 
+> **RESUELTO (2026-06-16):** El nav ES data-driven desde Sanity. El header se construye a partir de `settings.menu.links[]` en `sanity/queries/common/settings.ts` (array de `lnInternal`/`lnExternal`/`MenuGroup`/`MenuShop`). NO hay array hardcodeado en ningún componente. Por tanto Task 7 es una **acción de contenido**, no de código.
+>
+> **Acción para el usuario (en Sanity Studio):** Singleton `settings` → `menu` → `links` → añadir un nuevo link **interno/externo** con:
+> - Label / title: `Mikmax for Business`
+> - Destino / url: `/b2b`
+>
+> No se genera commit de código para Task 7.
+
 - [ ] **Step 1: Comprobar cómo se renderiza el nav**
 
 Run: `npx rg -n "Mikmax for Business" app components` y `npx rg -n "menu" sanity/queries/common/header.ts`
