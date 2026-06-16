@@ -42,6 +42,11 @@
 .imageWrap {
   display: block;
   width: 100%;
+
+  // Figma: la imagen ocupa la mitad izquierda (celda de 717px), derecha libre.
+  @include from(sm) {
+    width: 50%;
+  }
 }
 
 .image {
