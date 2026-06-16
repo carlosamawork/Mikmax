@@ -1,5 +1,6 @@
 import {type NextRequest, NextResponse} from 'next/server'
 import {parseBody} from 'next-sanity/webhook'
+import {B2B_ENABLED} from '@/lib/b2b/flag'
 import {getB2bApplication, resolveB2bApplication} from '@/lib/b2b/application'
 import {createReviewedB2bCustomer} from '@/lib/b2b/shopify'
 import {customerRecover} from '@/lib/shopify'
@@ -14,6 +15,8 @@ export const runtime = 'nodejs'
 type WebhookBody = {_id?: string; adminAction?: string}
 
 export async function POST(req: NextRequest) {
+  if (!B2B_ENABLED) return NextResponse.json({error: 'not_found'}, {status: 404})
+
   let isValidSignature: boolean | null
   let body: WebhookBody | null
   try {

@@ -1,4 +1,5 @@
 import {NextResponse} from 'next/server'
+import {B2B_ENABLED} from '@/lib/b2b/flag'
 import type {B2bRegisterInput, ValidationSignals} from '@/types/b2b'
 import {checkVies} from '@/lib/b2b/validation/vies'
 import {checkCompaniesHouse} from '@/lib/b2b/validation/companiesHouse'
@@ -32,6 +33,8 @@ function isValidPayload(b: Partial<B2bRegisterInput>): b is B2bRegisterInput {
 }
 
 export async function POST(req: Request) {
+  if (!B2B_ENABLED) return NextResponse.json({error: 'not_found'}, {status: 404})
+
   let input: Partial<B2bRegisterInput>
   try {
     input = await req.json()

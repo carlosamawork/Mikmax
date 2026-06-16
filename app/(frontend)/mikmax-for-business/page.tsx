@@ -1,8 +1,10 @@
 import type {Metadata} from 'next'
+import {notFound} from 'next/navigation'
 import {B2bHero} from '@/components/B2B'
 import PageBuilder from '@/components/PageBuilder/PageBuilder'
 import {getMikmaxForBusiness} from '@/sanity/queries/queries/mikmaxForBusiness'
 import {urlFor} from '@/sanity/queries'
+import {B2B_ENABLED} from '@/lib/b2b/flag'
 import s from './B2b.module.scss'
 
 export const metadata: Metadata = {
@@ -14,6 +16,7 @@ export const metadata: Metadata = {
 const HERO_IMAGE = '/images/b2b/hero.jpg'
 
 export default async function B2bLandingPage() {
+  if (!B2B_ENABLED) notFound()
   const data = await getMikmaxForBusiness()
 
   const heroImage = data?.heroImage
