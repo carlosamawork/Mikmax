@@ -14,36 +14,22 @@
   }
 }
 
-// Con imagen: la imagen ocupa el bloque y el botón va superpuesto.
+// Con imagen: mismo margen lateral que el módulo twoColumn (0 px(5)).
 .withImage {
-  position: relative;
   display: block;
-  padding: 0;
+  padding: 0 px(5);
 
   @include from(sm) {
-    padding: 0;
-  }
-
-  .button {
-    position: absolute;
-    top: px(5);
-    left: px(5);
-    z-index: 1;
-    width: px(142);
-    height: px(47);
-    padding: 0;
-  }
-
-  .description {
-    padding: px(16) px(24);
+    padding: 0 px(5);
   }
 }
 
+// La imagen ocupa la mitad izquierda en desktop (celda de 717px del Figma).
 .imageWrap {
+  position: relative;
   display: block;
   width: 100%;
 
-  // Figma: la imagen ocupa la mitad izquierda (celda de 717px), derecha libre.
   @include from(sm) {
     width: 50%;
   }
@@ -58,10 +44,10 @@
 .description {
   max-width: px(600);
   margin: 0;
+  padding: px(16) px(24);
   font-family: $MonumentGrotesk;
   font-size: px(12);
   line-height: px(18);
-  text-align: center;
 }
 
 .button {
@@ -75,4 +61,15 @@
   font-family: $MonumentGrotesk;
   font-size: px(11);
   letter-spacing: px(0.5);
+}
+
+// Con imagen: botón pegado a la esquina superior izquierda de la imagen.
+.withImage .button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: px(142);
+  height: px(47);
+  padding: 0;
 }

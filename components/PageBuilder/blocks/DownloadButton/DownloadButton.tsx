@@ -13,21 +13,22 @@ export default function DownloadButton({block}: Props) {
   const w = img?.metadata?.dimensions?.width ?? 1440
   const h = img?.metadata?.dimensions?.height ?? 900
 
+  const button = (
+    <a className={s.button} href={block.fileUrl} download>
+      {block.title}
+    </a>
+  )
+
   return (
     <section className={`${s.section} ${hasImage ? s.withImage : ''}`.trim()}>
-      {hasImage && (
-        <LazyImage
-          src={img!.imageUrl}
-          alt={img!.alt ?? ''}
-          width={w}
-          height={h}
-          className={s.image}
-          wrapperClassName={s.imageWrap}
-        />
+      {hasImage ? (
+        <div className={s.imageWrap}>
+          <LazyImage src={img!.imageUrl} alt={img!.alt ?? ''} width={w} height={h} className={s.image} />
+          {button}
+        </div>
+      ) : (
+        button
       )}
-      <a className={s.button} href={block.fileUrl} download>
-        {block.title}
-      </a>
       {block.description && <p className={s.description}>{block.description}</p>}
     </section>
   )
