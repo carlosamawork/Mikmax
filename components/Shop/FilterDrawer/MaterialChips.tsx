@@ -23,8 +23,8 @@ export default function MaterialChips({values, selected, onToggle}: Props) {
             style={{
               padding: '6px 10px',
               border: '1px solid #c4c4c4',
-              background: checked ? '#111' : '#fff',
-              color: checked ? '#fff' : '#111',
+              background: checked ? '#2b2b2b' : '#fff',
+              color: checked ? '#fff' : '#2b2b2b',
               cursor: v.count === 0 && !checked ? 'not-allowed' : 'pointer',
               fontSize: 11,
               letterSpacing: 0.5,
