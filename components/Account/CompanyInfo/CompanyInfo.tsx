@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import type {B2bCompanyInfo} from '@/types/b2b'
 import s from '../accountForm.module.scss'
 import c from './CompanyInfo.module.scss'
@@ -25,9 +24,9 @@ export default function CompanyInfo({company}: {company: B2bCompanyInfo}) {
       <h2 className={s.title}>Company information</h2>
       <p className={c.note}>
         These details were verified at registration and can’t be edited.{' '}
-        <Link href="/contact" className={c.noteLink}>
+        <a href="mailto:contact@mikmax.com" className={c.noteLink}>
           Contact us
-        </Link>{' '}
+        </a>{' '}
         to update them.
       </p>
       {rows.map((r) => (
