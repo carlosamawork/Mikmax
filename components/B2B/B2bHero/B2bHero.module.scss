@@ -43,7 +43,7 @@
   flex: 1;
   padding: px(17);
   background: map-get($colors, 'lightgray-bg');
-
+  min-height: px(300);
   @include from(sm) {
     min-height: px(450);
   }

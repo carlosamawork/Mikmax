@@ -17,6 +17,7 @@
   position: relative;
   flex: 1 0 0;
   min-width: 0;
+  min-height: px(300);
 
   // min-height (no height fijo) para que el texto largo crezca en vez de recortarse.
   @media (min-width: 1024px) {
