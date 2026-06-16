@@ -42,7 +42,7 @@
 .formBlock {
   flex: 1;
   padding: px(17);
-  background: #f0f0f0;
+  background: #dddddd;
 
   @include from(sm) {
     min-height: px(450);
