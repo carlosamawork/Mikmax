@@ -5,7 +5,12 @@
   display: flex;
   flex-direction: column;
   gap: px(1);
-  padding: 25vh px(5) 0;
+  padding: 0 px(5);
+
+  // El hueco superior del Figma es solo desktop; en mobile el heading va bajo el header.
+  @include from(sm) {
+    padding-top: 25vh;
+  }
 }
 
 // "Create a business account" — franja superior (Helvetica Neue, Figma).
@@ -47,10 +52,14 @@
 
 .imageCol {
   position: relative;
-  flex: 1;
-  min-height: px(320);
+  width: 100%;
+  // Mobile: altura definida vía aspect-ratio para que el fill funcione.
+  aspect-ratio: 1 / 1;
 
   @include from(sm) {
+    width: auto;
+    flex: 1;
+    aspect-ratio: auto;
     min-height: px(450);
   }
 }
