@@ -75,7 +75,7 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{__html: JSON.stringify(webPageSchema)}}
       />
-      <PageBuilder blocks={data?.pageBuilder} />
+      <PageBuilder blocks={data?.pageBuilder} spaced />
     </>
   )
 }

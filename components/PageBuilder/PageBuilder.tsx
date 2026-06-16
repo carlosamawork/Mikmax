@@ -25,13 +25,15 @@ import s from './PageBuilder.module.scss'
 
 interface PageBuilderProps {
   blocks?: PageBuilderBlock[]
+  // Aplica separación entre módulos (home y landings). El B2B va sin él (grid apretado).
+  spaced?: boolean
 }
 
-export default function PageBuilder({blocks}: PageBuilderProps) {
+export default function PageBuilder({blocks, spaced}: PageBuilderProps) {
   if (!blocks?.length) return null
 
   return (
-    <div className={s.list}>
+    <div className={`${s.list} ${spaced ? s.spaced : ''}`.trim()}>
       {blocks.map((block) => {
         switch (block._type) {
           case 'block.heroCampaign':
