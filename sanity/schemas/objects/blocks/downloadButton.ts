@@ -9,9 +9,17 @@ export default defineType({
   icon: DownloadIcon,
   fields: [
     defineField({
+      name: 'image',
+      title: 'Imagen de fondo',
+      type: 'image',
+      options: {hotspot: true},
+      fields: [defineField({name: 'alt', title: 'Alt', type: 'string'})],
+    }),
+    defineField({
       name: 'title',
-      title: 'Título',
+      title: 'Texto del botón',
       type: 'string',
+      initialValue: 'Descargar',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -21,7 +29,7 @@ export default defineType({
     }),
     defineField({
       name: 'file',
-      title: 'Archivo',
+      title: 'Archivo (PDF)',
       type: 'file',
       options: {accept: '.pdf'},
       validation: (Rule) => Rule.required(),

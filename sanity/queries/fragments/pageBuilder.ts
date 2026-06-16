@@ -95,6 +95,7 @@ export const pageBuilderProjection = `
   _type == "block.downloadButton" => {
     title,
     description,
+    image{ ${image}, "alt": alt },
     "fileUrl": file.asset->url,
     "fileName": file.asset->originalFilename
   }

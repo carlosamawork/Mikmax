@@ -1,6 +1,7 @@
 @use '@/styles/common/variables' as *;
 @use '@/styles/mixins/mixins' as *;
 
+// Sin imagen: botón centrado en flujo normal.
 .section {
   display: flex;
   flex-direction: column;
@@ -11,6 +12,39 @@
   @include from(sm) {
     padding: px(48) px(30);
   }
+}
+
+// Con imagen: la imagen ocupa el bloque y el botón va superpuesto.
+.withImage {
+  position: relative;
+  display: block;
+  padding: 0;
+
+  @include from(sm) {
+    padding: 0;
+  }
+
+  .button {
+    position: absolute;
+    top: px(16);
+    left: px(16);
+    z-index: 1;
+  }
+
+  .description {
+    padding: px(16) px(24);
+  }
+}
+
+.imageWrap {
+  display: block;
+  width: 100%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .description {
