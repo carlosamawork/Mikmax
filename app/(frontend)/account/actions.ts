@@ -58,7 +58,10 @@ export async function updateShipping(input: ShippingInput): Promise<ActionResult
   if (!token || !session) return {ok: false, error: 'Session expired. Please log in again.'}
 
   const phoneE164 = `${input.phoneCountry}${input.phone.replace(/\s+/g, '')}`.trim()
+  // Nombre/apellido de la cuenta en la dirección → el checkout los precarga.
   const address = {
+    firstName: session.customer.firstName || undefined,
+    lastName: session.customer.lastName || undefined,
     address1: input.address1.trim(),
     city: input.city.trim(),
     province: input.province.trim() || undefined,
