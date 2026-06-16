@@ -5,11 +5,10 @@
   display: flex;
   flex-direction: column;
   gap: px(1);
-  padding: 0 px(5);
 
-  // El hueco superior del Figma es solo desktop; en mobile el heading va bajo el header.
+  // Mobile: full-bleed (sin margen lateral). Desktop: hueco superior + 5px lados (grid Figma).
   @include from(sm) {
-    padding-top: 25vh;
+    padding: 25vh px(5) 0;
   }
 }
 

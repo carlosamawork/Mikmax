@@ -14,10 +14,9 @@
   }
 }
 
-// Con imagen: mismo margen lateral que el módulo twoColumn (0 px(5)).
+// Con imagen: mobile full-bleed; desktop con margen lateral (como twoColumn).
 .withImage {
   display: block;
-  padding: 0 px(5);
 
   @include from(sm) {
     padding: 0 px(5);
