@@ -28,8 +28,9 @@ const documents = [ collection, page, product, productVariant, post, look, set, 
 import home from './singletons/home'
 import settings from './singletons/settings'
 import legalPage from './singletons/legal'
+import mikmaxForBusiness from './singletons/mikmaxForBusiness'
 
-const singletons = [home, settings, legalPage]
+const singletons = [home, settings, legalPage, mikmaxForBusiness]
 
 // Block content
 import body from './blocks/body'

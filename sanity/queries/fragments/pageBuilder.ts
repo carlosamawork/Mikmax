@@ -91,5 +91,11 @@ export const pageBuilderProjection = `
   _type == "block.twoColumn" => {
     left{ kind, body, ${mediaProjection}, caption, captionTheme, url },
     right{ kind, body, ${mediaProjection}, caption, captionTheme, url }
+  },
+  _type == "block.downloadButton" => {
+    title,
+    description,
+    "fileUrl": file.asset->url,
+    "fileName": file.asset->originalFilename
   }
 `

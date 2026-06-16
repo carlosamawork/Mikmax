@@ -9,6 +9,7 @@ import type {
   LookModuleBlock,
   SetModuleBlock,
   TwoColumnBlock,
+  DownloadButtonBlock,
 } from '@/sanity/types'
 import HeroCampaign from './blocks/HeroCampaign/HeroCampaign'
 import CampaignImageVideo from './blocks/CampaignImageVideo/CampaignImageVideo'
@@ -19,6 +20,7 @@ import ProductModule from './blocks/ProductModule/ProductModule'
 import LookModule from './blocks/LookModule/LookModule'
 import SetModule from './blocks/SetModule/SetModule'
 import TwoColumn from './blocks/TwoColumn/TwoColumn'
+import DownloadButton from './blocks/DownloadButton/DownloadButton'
 import s from './PageBuilder.module.scss'
 
 interface PageBuilderProps {
@@ -50,6 +52,8 @@ export default function PageBuilder({blocks}: PageBuilderProps) {
             return <SetModule key={block._key} block={block as SetModuleBlock} />
           case 'block.twoColumn':
             return <TwoColumn key={block._key} block={block as TwoColumnBlock} />
+          case 'block.downloadButton':
+            return <DownloadButton key={block._key} block={block as DownloadButtonBlock} />
           default:
             return null
         }
