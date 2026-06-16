@@ -1,5 +1,6 @@
 // sanity/schemas/objects/blocks/index.ts
 import campaignImageVideo from './campaignImageVideo'
+import downloadButton from './downloadButton'
 import featuredSection from './featuredSection'
 import heroCampaign from './heroCampaign'
 import imageWithProduct from './imageWithProduct'
@@ -19,6 +20,7 @@ export const blockSchemas = [
   featuredSection,
   richText,
   twoColumn,
+  downloadButton,
 ]
 
 // Names used in pageBuilder array `of` config

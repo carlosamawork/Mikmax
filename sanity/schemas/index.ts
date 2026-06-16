@@ -19,16 +19,18 @@ import page from './documents/page'
 import product from './documents/product'
 import productVariant from './documents/productVariant'
 import set from './documents/set'
+import b2bApplication from './documents/b2bApplication'
 
 
-const documents = [ collection, page, product, productVariant, post, look, set]
+const documents = [ collection, page, product, productVariant, post, look, set, b2bApplication]
 
 // Singleton document types
 import home from './singletons/home'
 import settings from './singletons/settings'
 import legalPage from './singletons/legal'
+import mikmaxForBusiness from './singletons/mikmaxForBusiness'
 
-const singletons = [home, settings, legalPage]
+const singletons = [home, settings, legalPage, mikmaxForBusiness]
 
 // Block content
 import body from './blocks/body'

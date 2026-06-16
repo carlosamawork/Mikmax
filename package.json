@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@portabletext/react": "^3.2.4",
@@ -35,6 +37,7 @@
     "sanity-plugin-hotspot-array": "^1.0.1",
     "sanity-plugin-media": "^2.4.2",
     "sass": "^1.97.3",
+    "server-only": "^0.0.1",
     "slug": "^8.2.2",
     "styled-components": "^6.1.15"
   },
@@ -51,7 +54,8 @@
     "postcss": "^8.5.6",
     "prettier": "^3.8.1",
     "tailwindcss": "^3.4.19",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
   },
   "prettier": {
     "semi": false,

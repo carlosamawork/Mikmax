@@ -18,6 +18,8 @@ import look from './lookStructure'
 import orderLooks from './orderLookStructure'
 import set from './setStructure'
 import orderSets from './orderSetStructure'
+import b2bApplication from './b2bApplicationStructure'
+import mikmaxForBusiness from './mikmaxForBusinessStructure'
 
 /**
  * Desk structure overrides
@@ -59,6 +61,8 @@ const hiddenDocTypes = (listItem: {getId?: () => string | undefined}) => {
     'set',
     'orderable.set',
     'legalPage',
+    'b2bApplication',
+    'mikmaxForBusiness',
   ].includes(id)
 }
 
@@ -85,6 +89,9 @@ export const structure: StructureResolver = (S, context) =>
       S.divider(),
       settings(S, context),
       legalPage(S, context),
+      S.divider(),
+      mikmaxForBusiness(S, context),
+      b2bApplication(S, context),
       S.divider(),
       ...S.documentTypeListItems().filter(hiddenDocTypes),
     ])

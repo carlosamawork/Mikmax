@@ -1,0 +1,76 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+// Sin imagen: botón centrado en flujo normal.
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: px(16);
+  padding: px(32) px(24);
+
+  @include from(sm) {
+    padding: px(48) px(30);
+  }
+}
+
+// Con imagen: mobile full-bleed; desktop con margen lateral (como twoColumn).
+// padding:0 explícito para anular el padding de .section (px(32) px(24)).
+.withImage {
+  display: block;
+  padding: 0;
+
+  @include from(sm) {
+    padding: 0 px(5);
+  }
+}
+
+// La imagen ocupa la mitad izquierda en desktop (celda de 717px del Figma).
+.imageWrap {
+  position: relative;
+  display: block;
+  width: 100%;
+
+  @include from(sm) {
+    width: 50%;
+  }
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.description {
+  max-width: px(600);
+  margin: 0;
+  padding: px(16) px(24);
+  font-family: $MonumentGrotesk;
+  font-size: px(12);
+  line-height: px(18);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: px(36);
+  padding: 0 px(24);
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+}
+
+// Con imagen: botón pegado a la esquina superior izquierda de la imagen.
+.withImage .button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: px(142);
+  height: px(47);
+  padding: 0;
+}

@@ -4,6 +4,7 @@ import {LazyImage} from '@/components/Common'
 import {CartContext} from '@/context/shopContext'
 import {trackBeginCheckout} from '@/lib/analytics/track'
 import {getStoreCurrency} from '@/lib/analytics/item'
+import {prepareCheckout} from '@/app/(frontend)/checkout/actions'
 import s from './CartDrawer.module.scss'
 
 type CartItem = {
@@ -24,6 +25,7 @@ type CartCtx = {
   setCartOpen?: (open: boolean) => void
   removeCartItem?: (gid: string) => void
   updateCartItem?: (item: CartItem, qty: number) => void
+  cartId?: string
   checkoutUrl?: string
 }
 
@@ -62,7 +64,8 @@ export default function CartDrawer() {
     }
   }
 
-  function goCheckout() {
+  async function goCheckout() {
+    if (!ctx?.checkoutUrl) return
     trackBeginCheckout(
       cart.map((it) => ({
         id: it.productId || it.store.gid,
@@ -74,9 +77,10 @@ export default function CartDrawer() {
         currency: getStoreCurrency(),
       })),
     )
-    if (ctx?.checkoutUrl) {
-      window.location.href = ctx.checkoutUrl
-    }
+    // Si hay sesión, asocia el carrito al cliente para que el checkout salga logueado
+    // y con la dirección precargada. Si no, redirige tal cual.
+    const {checkoutUrl} = await prepareCheckout(ctx.cartId ?? '', ctx.checkoutUrl)
+    window.location.href = checkoutUrl
   }
 
   return (

@@ -7,10 +7,13 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+}
 
-  // Figma frame 11:1991 has `flex-col gap-[100px]` between home modules.
-  // Desktop only — mobile keeps modules tight.
-  // @include from(md) {
-  //   gap: px(100);
-  // }
+// Separación entre módulos (opt-in vía prop `spaced`). Figma home 11:1991: gap 100px desktop.
+.spaced {
+  gap: px(40);
+
+  @include from(md) {
+    gap: px(100);
+  }
 }

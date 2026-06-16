@@ -234,6 +234,7 @@ export default function ShopProvider({children}) {
         setIsOpen,
         addToCart,
         addLookToCart,
+        cartId,
         checkoutUrl,
         removeCartItem,
         updateCartItem,

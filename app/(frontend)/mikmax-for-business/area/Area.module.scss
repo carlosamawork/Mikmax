@@ -1,0 +1,36 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.area {
+  max-width: px(720);
+  margin: 0 auto;
+  padding: px(48) px(24);
+}
+
+.title {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: px(20);
+  margin-bottom: px(24);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: px(12);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: px(1) solid map-get($colors, 'black-border');
+  padding-bottom: px(8);
+  font-family: $MonumentGrotesk;
+  font-size: px(12);
+}
+
+.note {
+  margin-top: px(24);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  line-height: px(16);
+}

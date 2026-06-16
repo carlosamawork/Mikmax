@@ -8,6 +8,7 @@ export * from './lookModule'
 export * from './setModule'
 export * from './richText'
 export * from './twoColumn'
+export * from './downloadButton'
 
 import type {HeroCampaignBlock} from './heroCampaign'
 import type {CampaignImageVideoBlock} from './campaignImageVideo'
@@ -18,6 +19,7 @@ import type {LookModuleBlock} from './lookModule'
 import type {SetModuleBlock} from './setModule'
 import type {RichTextBlock} from './richText'
 import type {TwoColumnBlock} from './twoColumn'
+import type {DownloadButtonBlock} from './downloadButton'
 
 export type PageBuilderBlock =
   | HeroCampaignBlock
@@ -29,4 +31,5 @@ export type PageBuilderBlock =
   | SetModuleBlock
   | RichTextBlock
   | TwoColumnBlock
+  | DownloadButtonBlock
   | {_key: string; _type: string} // forward-compat for any future block type

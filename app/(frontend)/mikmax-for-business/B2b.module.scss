@@ -1,0 +1,90 @@
+// TODO(figma): pixel-perfect pass + real exported images
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.page {
+  width: 100%;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+
+  @include from(sm) {
+    flex-direction: row;
+  }
+}
+
+.heroLogin {
+  padding: px(24);
+
+  @include from(sm) {
+    flex: 1;
+    padding: px(48);
+  }
+}
+
+.heroImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  @include from(sm) {
+    flex: 1;
+    aspect-ratio: auto;
+  }
+}
+
+.consultancy {
+  display: flex;
+  flex-direction: column;
+
+  @include from(sm) {
+    flex-direction: row;
+  }
+}
+
+.consultancyImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+
+  @include from(sm) {
+    flex: 1;
+  }
+}
+
+.consultancyText {
+  padding: px(24);
+  font-family: $MonumentGrotesk;
+  font-size: px(12);
+  line-height: px(18);
+
+  @include from(sm) {
+    flex: 1;
+    padding: px(48);
+  }
+}
+
+.catalog {
+  display: flex;
+  justify-content: center;
+  padding: px(32) px(24);
+}
+
+.catalogCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: px(36);
+  padding: 0 px(24);
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+}
+
+.newsletter {
+  padding: px(32) px(24);
+}
