@@ -41,27 +41,36 @@
 .fields {
   display: flex;
   flex-direction: column;
-  gap: px(8);
   width: 100%;
   margin-top: px(20);
 }
 
+// Coherente con el input estándar del sitio (AuthField): campo sobre lightgray-bg,
+// borde inferior blanco, input transparente, Monument Grotesk 11px, apilados a ras.
 .input,
 .select,
 .textarea {
   width: 100%;
-  height: px(36);
-  padding: 0 px(12);
-  border: px(1) solid map-get($colors, 'black-border');
-  background: map-get($colors, 'white');
+  padding: px(10);
+  border: none;
+  border-bottom: px(1) solid map-get($colors, 'white');
+  background: map-get($colors, 'lightgray-bg');
   font-family: $MonumentGrotesk;
-  font-size: px(12);
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
   color: map-get($colors, 'primary-text');
+
+  &::placeholder {
+    color: map-get($colors, 'placeholder');
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .textarea {
-  height: auto;
-  padding: px(10) px(12);
   resize: vertical;
 }
 
