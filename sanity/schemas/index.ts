@@ -19,9 +19,10 @@ import page from './documents/page'
 import product from './documents/product'
 import productVariant from './documents/productVariant'
 import set from './documents/set'
+import b2bApplication from './documents/b2bApplication'
 
 
-const documents = [ collection, page, product, productVariant, post, look, set]
+const documents = [ collection, page, product, productVariant, post, look, set, b2bApplication]
 
 // Singleton document types
 import home from './singletons/home'
