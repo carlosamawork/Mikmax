@@ -1,0 +1,142 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  @include from(sm) {
+    max-width: px(360);
+  }
+}
+
+.heading {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: px(13);
+  line-height: px(20);
+  color: map-get($colors, 'primary-text');
+  text-align: center;
+}
+
+.clientType {
+  display: flex;
+  gap: px(16);
+  justify-content: center;
+  width: 100%;
+  margin-top: px(20);
+  border: none;
+  padding: 0;
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: px(6);
+  font-family: $MonumentGrotesk;
+  font-size: px(12);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: px(8);
+  width: 100%;
+  margin-top: px(20);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  height: px(36);
+  padding: 0 px(12);
+  border: px(1) solid map-get($colors, 'black-border');
+  background: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(12);
+  color: map-get($colors, 'primary-text');
+}
+
+.textarea {
+  height: auto;
+  padding: px(10) px(12);
+  resize: vertical;
+}
+
+.submit {
+  width: 100%;
+  height: px(36);
+  margin-top: px(16);
+  border: none;
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.error {
+  width: 100%;
+  margin-top: px(8);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  color: map-get($colors, 'red');
+  text-align: center;
+}
+
+.altBottom {
+  margin-top: px(20);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  text-align: center;
+}
+
+.altLink {
+  text-decoration: underline;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: px(12);
+  text-align: center;
+
+  @include from(sm) {
+    max-width: px(360);
+  }
+}
+
+.resultTitle {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: px(15);
+}
+
+.resultBody {
+  font-family: $MonumentGrotesk;
+  font-size: px(12);
+  line-height: px(18);
+}
+
+.resultLink {
+  margin-top: px(8);
+  text-decoration: underline;
+  font-family: $MonumentGrotesk;
+  font-size: px(12);
+}
+
+.srOnly {
+  position: absolute;
+  width: px(1);
+  height: px(1);
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
