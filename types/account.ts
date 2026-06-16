@@ -53,6 +53,8 @@ export type Customer = {
   acceptsMarketing?: boolean
   defaultAddress?: CustomerAddress | null
   metafield?: {value: string} | null
+  b2bValidated?: {value: string} | null
+  b2bClientType?: {value: string} | null
   orders?: {edges: {node: RawOrderNode}[]} | null
 }
 
