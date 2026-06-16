@@ -15,8 +15,10 @@
 }
 
 // Con imagen: mobile full-bleed; desktop con margen lateral (como twoColumn).
+// padding:0 explícito para anular el padding de .section (px(32) px(24)).
 .withImage {
   display: block;
+  padding: 0;
 
   @include from(sm) {
     padding: 0 px(5);
