@@ -1,6 +1,6 @@
 import 'server-only'
 import {sanityWriteClient} from '@/lib/sanityWriteClient'
-import type {B2bRegisterInput, B2bStatus} from '@/types/b2b'
+import type {B2bRegisterInput, B2bStatus, B2bCompanyInfo} from '@/types/b2b'
 
 interface CreateArgs {
   input: B2bRegisterInput
@@ -53,6 +53,16 @@ export async function getB2bApplication(id: string) {
       _id, corporateEmail, companyName, clientType, country, status, shopifyCustomerId, adminAction
     }`,
     {id},
+  )
+}
+
+// Datos de empresa de un cliente B2B aprobado (para mostrar en su perfil de cuenta).
+export async function getB2bCompanyInfo(shopifyCustomerId: string): Promise<B2bCompanyInfo | null> {
+  return sanityWriteClient.fetch(
+    `*[_type == "b2bApplication" && shopifyCustomerId == $id && status == "approved"][0]{
+      companyName, vatNumber, country, clientType, fiscalAddress, companyWebsite
+    }`,
+    {id: shopifyCustomerId},
   )
 }
 

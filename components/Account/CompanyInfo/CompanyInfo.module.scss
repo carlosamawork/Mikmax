@@ -1,0 +1,30 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.list {
+  margin: 0;
+}
+
+// Fila read-only con el mismo look que los campos de cuenta (lightgray-bg + separador blanco).
+.row {
+  padding: px(10);
+  background: map-get($colors, 'lightgray-bg');
+  border-bottom: px(1) solid map-get($colors, 'white');
+}
+
+.label {
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  color: map-get($colors, 'gray-light');
+}
+
+.value {
+  margin: px(2) 0 0;
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  color: map-get($colors, 'primary-text');
+}

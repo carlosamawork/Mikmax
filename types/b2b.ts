@@ -32,3 +32,13 @@ export interface ScoreResult {
   score: number
   decision: B2bDecision
 }
+
+// Datos de empresa que se muestran (read-only) en el perfil de un cliente B2B.
+export interface B2bCompanyInfo {
+  companyName?: string
+  vatNumber?: string
+  country?: string
+  clientType?: B2bClientType
+  fiscalAddress?: string
+  companyWebsite?: string
+}
