@@ -25,7 +25,7 @@ export default function B2bLogin() {
       setError(res.error)
       return
     }
-    router.push('/b2b/area')
+    router.push('/mikmax-for-business/area')
     router.refresh()
   }
 
@@ -65,7 +65,7 @@ export default function B2bLogin() {
       </Link>
       <p className={s.alt}>
         New to Mikmax?{' '}
-        <Link href="/b2b/register" className={s.altLink}>
+        <Link href="/mikmax-for-business/register" className={s.altLink}>
           Sign up here
         </Link>
       </p>

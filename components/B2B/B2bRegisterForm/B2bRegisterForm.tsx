@@ -93,7 +93,7 @@ export default function B2bRegisterForm() {
         <p className={s.resultTitle}>{copy.title}</p>
         <p className={s.resultBody}>{copy.body}</p>
         {result === 'approved' && (
-          <Link href="/b2b" className={s.resultLink}>
+          <Link href="/mikmax-for-business" className={s.resultLink}>
             Ir a iniciar sesión
           </Link>
         )}
@@ -199,7 +199,7 @@ export default function B2bRegisterForm() {
 
       <p className={s.altBottom}>
         Already have a business account?{' '}
-        <Link href="/b2b" className={s.altLink}>
+        <Link href="/mikmax-for-business" className={s.altLink}>
           Sign in
         </Link>
       </p>

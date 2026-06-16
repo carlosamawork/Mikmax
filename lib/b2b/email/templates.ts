@@ -28,19 +28,21 @@ export function approvedEmail(companyName: string) {
     html: wrap(
       `<p>Hola ${e(companyName)},</p>
        <p>Tu cuenta de empresa ha sido aprobada. Ya puedes iniciar sesión y comprar con tus condiciones.</p>
-       <p><a href="${safeUrl(`${SITE}/b2b`)}">Acceder a Mikmax for Business</a></p>`,
+       <p><a href="${safeUrl(`${SITE}/mikmax-for-business`)}">Acceder a Mikmax for Business</a></p>`,
     ),
   }
 }
 
-// Para aprobaciones desde el panel (REVIEW): incluye enlace para fijar contraseña.
+// Para aprobaciones desde el panel (REVIEW): aviso de bienvenida.
+// El enlace para fijar contraseña llega en un email separado (reset de Shopify).
 export function approvedWithActivationEmail(companyName: string, activationUrl: string) {
   return {
-    subject: 'Tu cuenta B2B de Mikmax está activa — crea tu contraseña',
+    subject: 'Tu cuenta B2B de Mikmax está activa',
     html: wrap(
       `<p>Hola ${e(companyName)},</p>
-       <p>Hemos aprobado tu cuenta de empresa. Crea tu contraseña para empezar:</p>
-       <p><a href="${safeUrl(activationUrl)}">Crear contraseña y acceder</a></p>`,
+       <p>Hemos aprobado tu cuenta de empresa. En breve recibirás un correo aparte con un enlace
+       para crear tu contraseña y empezar a comprar con tus condiciones.</p>
+       <p><a href="${safeUrl(activationUrl)}">Ir a Mikmax for Business</a></p>`,
     ),
   }
 }
