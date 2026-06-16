@@ -1,18 +1,14 @@
 @use '@/styles/common/variables' as *;
 @use '@/styles/mixins/mixins' as *;
 
-.list {
-  margin: 0;
+.field {
+  width: 100%;
 }
 
-// Fila read-only con el mismo look que los campos de cuenta (lightgray-bg + separador blanco).
-.row {
-  padding: px(10);
-  background: map-get($colors, 'lightgray-bg');
-  border-bottom: px(1) solid map-get($colors, 'white');
-}
-
+// Label arriba, sobre blanco (igual que AccountField).
 .label {
+  display: block;
+  padding: px(10) px(10) px(4);
   font-family: $MonumentGrotesk;
   font-size: px(11);
   letter-spacing: px(0.5);
@@ -20,8 +16,15 @@
   color: map-get($colors, 'gray-light');
 }
 
+// Valor en caja gris (mismo look que el input, pero read-only).
 .value {
-  margin: px(2) 0 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: px(50);
+  padding: px(8) px(10);
+  border-bottom: px(1) solid map-get($colors, 'white');
+  background: map-get($colors, 'lightgray-bg');
   font-family: $MonumentGrotesk;
   font-size: px(11);
   letter-spacing: px(0.5);

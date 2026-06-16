@@ -8,6 +8,7 @@ const CONDITION: Record<string, string> = {
 }
 
 // Sección read-only con los datos de empresa de un cliente B2B (validados en el alta).
+// Mismo patrón que AccountField: label arriba (fuera de la caja) + valor en caja gris.
 export default function CompanyInfo({company}: {company: B2bCompanyInfo}) {
   const rows: {label: string; value?: string}[] = [
     {label: 'Company', value: company.companyName},
@@ -21,14 +22,12 @@ export default function CompanyInfo({company}: {company: B2bCompanyInfo}) {
   return (
     <section className={s.section}>
       <h2 className={s.title}>Company information</h2>
-      <dl className={c.list}>
-        {rows.map((r) => (
-          <div className={c.row} key={r.label}>
-            <dt className={c.label}>{r.label}</dt>
-            <dd className={c.value}>{r.value}</dd>
-          </div>
-        ))}
-      </dl>
+      {rows.map((r) => (
+        <div className={c.field} key={r.label}>
+          <span className={c.label}>{r.label}</span>
+          <div className={c.value}>{r.value}</div>
+        </div>
+      ))}
     </section>
   )
 }
