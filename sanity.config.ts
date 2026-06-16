@@ -9,6 +9,7 @@ import {colorInput} from '@sanity/color-input'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
 import {dataset, projectId} from './sanity/env'
+import {b2bApprove, b2bReject, b2bMoreInfo} from './sanity/actions/b2bActions'
 
 const devOnlyPlugins = [visionTool()]
 
@@ -28,6 +29,13 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    actions: (prev, ctx) =>
+      ctx.schemaType === 'b2bApplication'
+        ? [...prev, b2bApprove, b2bReject, b2bMoreInfo]
+        : prev,
   },
 
   form: {
