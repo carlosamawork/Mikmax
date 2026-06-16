@@ -1,6 +1,22 @@
 @use '@/styles/common/variables' as *;
 @use '@/styles/mixins/mixins' as *;
 
+// Aviso de solo-lectura.
+.note {
+  margin: 0;
+  padding: 0 px(10) px(12);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  color: map-get($colors, 'gray-light');
+}
+
+.noteLink {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .field {
   width: 100%;
 }
