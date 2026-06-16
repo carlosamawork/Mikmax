@@ -24,8 +24,9 @@
   padding: px(15);
   background: map-get($colors, 'white');
 
+  // Figma: el heading es su propia fila de 450px (texto abajo).
   @include from(sm) {
-    min-height: px(200);
+    min-height: px(450);
   }
 }
 
@@ -42,6 +43,11 @@
   flex: 1;
   padding: px(17);
   background: #f0f0f0;
+
+  // Figma: el form es su propia fila de 450px (form arriba, gris debajo).
+  @include from(sm) {
+    min-height: px(450);
+  }
 }
 
 .right {
