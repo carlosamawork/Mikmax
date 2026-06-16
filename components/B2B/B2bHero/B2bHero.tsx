@@ -20,6 +20,7 @@ export default function B2bHero({imageSrc, imageAlt}: {imageSrc?: string; imageA
             alt={imageAlt || 'Mikmax for Business'}
             fill
             sizes="(max-width:768px) 100vw, 50vw"
+            wrapperClassName={s.imageWrap}
             className={s.image}
           />
         </div>
