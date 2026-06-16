@@ -12,6 +12,8 @@
 # next.js
 /.next/
 /.next-build/
+/.next-b2bcheck/
+.next-*/
 /out/
 
 # production
