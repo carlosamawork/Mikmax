@@ -42,7 +42,7 @@
 .formBlock {
   flex: 1;
   padding: px(17);
-  background: #dddddd;
+  background: map-get($colors, 'lightgray-bg');
 
   @include from(sm) {
     min-height: px(450);
