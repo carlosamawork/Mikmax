@@ -26,9 +26,12 @@
 
   .button {
     position: absolute;
-    top: px(16);
-    left: px(16);
+    top: px(5);
+    left: px(5);
     z-index: 1;
+    width: px(142);
+    height: px(47);
+    padding: 0;
   }
 
   .description {
@@ -67,5 +70,4 @@
   font-family: $MonumentGrotesk;
   font-size: px(11);
   letter-spacing: px(0.5);
-  text-transform: uppercase;
 }

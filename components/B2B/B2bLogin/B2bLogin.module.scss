@@ -1,33 +1,55 @@
 @use '@/styles/common/variables' as *;
 @use '@/styles/mixins/mixins' as *;
 
+$grey: #a4a4a4;
+
 .login {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   width: 100%;
+  max-width: px(398);
+}
 
-  @include from(sm) {
-    max-width: px(320);
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.input {
+  height: px(35);
+  padding-left: px(10);
+  border: none;
+  background: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black-border');
+
+  &::placeholder {
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    letter-spacing: px(0.5);
+    color: $grey;
+  }
+
+  &:focus {
+    outline: none;
   }
 }
 
-.heading {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: px(13);
-  line-height: px(20);
-}
-
-.fields {
-  display: flex;
-  flex-direction: column;
-  gap: px(8);
-  margin-top: px(16);
-}
-
 .submit {
-  width: 100%;
-  height: px(36);
-  margin-top: px(12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: px(33);
   border: none;
   background: map-get($colors, 'black-border');
   color: map-get($colors, 'white');
@@ -38,23 +60,40 @@
 
   &:disabled {
     opacity: 0.6;
+    cursor: default;
   }
 }
 
 .error {
-  margin-top: px(8);
+  margin: 0;
   font-family: $MonumentGrotesk;
   font-size: px(11);
   color: map-get($colors, 'red');
 }
 
-.forgot,
-.alt {
-  margin-top: px(12);
+.forgot {
+  display: flex;
+  align-items: center;
+  height: px(35);
+  padding-left: px(10);
   font-family: $MonumentGrotesk;
   font-size: px(11);
+  letter-spacing: px(0.5);
+  color: $grey;
+}
+
+.alt {
+  display: flex;
+  align-items: center;
+  gap: px(7);
+  margin: 0;
+  padding-left: px(10);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  color: map-get($colors, 'black-border');
 }
 
 .altLink {
-  text-decoration: underline;
+  color: $grey;
 }
