@@ -30,6 +30,16 @@ export default defineType({
     defineField({name: 'shopifyCustomerId', title: 'Shopify Customer ID', type: 'string'}),
     defineField({name: 'createdAt', title: 'Creado', type: 'datetime'}),
     defineField({name: 'updatedAt', title: 'Actualizado', type: 'datetime'}),
+    // Flag interno que escriben los botones del panel (Aprobar/Rechazar/Pedir info).
+    // Un webhook firmado de Sanity lo procesa en /api/b2b/admin y luego lo limpia.
+    defineField({
+      name: 'adminAction',
+      title: 'Acción admin (interna)',
+      type: 'string',
+      options: {list: ['approve', 'reject', 'more_info']},
+      hidden: true,
+      readOnly: true,
+    }),
   ],
   preview: {
     select: {title: 'companyName', subtitle: 'status'},

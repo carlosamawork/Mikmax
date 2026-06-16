@@ -46,12 +46,25 @@ export async function updateB2bApplication(
     .commit()
 }
 
-// Lee una aplicación (para la route admin: necesita email/clientType para crear el customer).
+// Lee una aplicación (para la route admin: necesita email/clientType + el flag adminAction).
 export async function getB2bApplication(id: string) {
   return sanityWriteClient.fetch(
     `*[_type == "b2bApplication" && _id == $id][0]{
-      _id, corporateEmail, companyName, clientType, country, status, shopifyCustomerId
+      _id, corporateEmail, companyName, clientType, country, status, shopifyCustomerId, adminAction
     }`,
     {id},
   )
+}
+
+// Aplica el cambio final Y limpia el flag adminAction en una sola escritura.
+// Al quedar adminAction sin definir, el webhook (filtro defined(adminAction)) no se re-dispara.
+export async function resolveB2bApplication(
+  id: string,
+  patch: {status?: B2bStatus; shopifyCustomerId?: string; internalNotes?: string},
+): Promise<void> {
+  await sanityWriteClient
+    .patch(id)
+    .set({...patch, updatedAt: new Date().toISOString()})
+    .unset(['adminAction'])
+    .commit()
 }
