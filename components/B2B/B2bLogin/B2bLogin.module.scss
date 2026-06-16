@@ -1,0 +1,60 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+.login {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @include from(sm) {
+    max-width: px(320);
+  }
+}
+
+.heading {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: px(13);
+  line-height: px(20);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: px(8);
+  margin-top: px(16);
+}
+
+.submit {
+  width: 100%;
+  height: px(36);
+  margin-top: px(12);
+  border: none;
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+.error {
+  margin-top: px(8);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  color: map-get($colors, 'red');
+}
+
+.forgot,
+.alt {
+  margin-top: px(12);
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+}
+
+.altLink {
+  text-decoration: underline;
+}
