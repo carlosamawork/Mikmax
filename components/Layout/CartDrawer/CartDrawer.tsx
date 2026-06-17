@@ -6,6 +6,7 @@ import {trackBeginCheckout} from '@/lib/analytics/track'
 import {getStoreCurrency} from '@/lib/analytics/item'
 import {prepareCheckout} from '@/app/(frontend)/checkout/actions'
 import type {CartCost} from '@/types/cart'
+import {nextTierNudge} from '@/lib/b2b/cartCost'
 import s from './CartDrawer.module.scss'
 
 type CartItem = {
@@ -29,6 +30,7 @@ type CartCtx = {
   cartId?: string
   checkoutUrl?: string
   cartCost?: CartCost | null
+  b2bCartContext?: {isDesigner: boolean; designerTiers: {minSubtotal: number; percent: number}[]}
 }
 
 const FMT = new Intl.NumberFormat('es-ES', {
@@ -180,6 +182,25 @@ export default function CartDrawer() {
                 <span>−{FMT.format(ctx.cartCost.discount)}</span>
               </div>
             )}
+            {ctx?.b2bCartContext?.isDesigner &&
+              ctx?.cartCost &&
+              (() => {
+                const nudge = nextTierNudge(
+                  ctx.cartCost.subtotal,
+                  ctx.b2bCartContext!.designerTiers,
+                )
+                const maxPercent = ctx.b2bCartContext!.designerTiers.reduce(
+                  (m, t) => Math.max(m, t.percent),
+                  0,
+                )
+                return (
+                  <div className={`${s.summaryRow} ${s.nudge}`}>
+                    {nudge
+                      ? `Añade ${FMT.format(nudge.gap)} más para alcanzar el ${nudge.percent}%`
+                      : `Tienes el descuento profesional máximo (${maxPercent}%)`}
+                  </div>
+                )
+              })()}
             <div className={`${s.summaryRow} ${s.summaryTotal}`}>
               <span>Total</span>
               <span>{FMT.format(ctx.cartCost.total)}</span>

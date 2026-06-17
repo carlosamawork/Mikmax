@@ -1,5 +1,21 @@
 import type {CartCost} from '@/types/cart'
 
+export interface DesignerTierLite {
+  minSubtotal: number
+  percent: number
+}
+
+// Siguiente tramo de descuento alcanzable, o null si ya está en el máximo.
+export function nextTierNudge(
+  subtotal: number,
+  tiers: DesignerTierLite[],
+): {gap: number; percent: number} | null {
+  const sorted = [...tiers].sort((a, b) => a.minSubtotal - b.minSubtotal)
+  const next = sorted.find((t) => t.minSubtotal > subtotal)
+  if (!next) return null
+  return {gap: next.minSubtotal - subtotal, percent: next.percent}
+}
+
 // Extrae el coste de un carrito de Shopify (con cost + discountAllocations en el fragment).
 export function parseCartCost(cart: unknown): CartCost | null {
   const c = cart as

@@ -11,7 +11,7 @@ import {
 } from '../lib/shopify'
 import {trackAddToCart} from '@/lib/analytics/track'
 import {getStoreCurrency} from '@/lib/analytics/item'
-import {syncCartBuyer, getCartCost} from '@/app/(frontend)/cart/actions'
+import {syncCartBuyer, getCartCost, getB2bCartContext} from '@/app/(frontend)/cart/actions'
 import {parseCartCost} from '@/lib/b2b/cartCost'
 
 const CartContext = createContext()
@@ -34,6 +34,7 @@ export default function ShopProvider({children}) {
   const [pageIsLoaded, setPageIsLoaded] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [cartCost, setCartCost] = useState(null)
+  const [b2bCartContext, setB2bCartContext] = useState({isDesigner: false, designerTiers: []})
 
   function handleDocumentClick(e) {
     const cartEl = document.getElementById('cart-slide')
@@ -55,6 +56,9 @@ export default function ShopProvider({children}) {
           .then((r) => setCartCost(r.cost))
           .catch(() => {})
       }
+      getB2bCartContext()
+        .then(setB2bCartContext)
+        .catch(() => {})
     }
 
     document.addEventListener('click', handleDocumentClick, true)
@@ -253,11 +257,15 @@ export default function ShopProvider({children}) {
         menuOpen,
         setMenuOpen,
         cartCost,
+        b2bCartContext,
         refreshCartBuyer: () => {
           if (cartId)
             syncCartBuyer(cartId)
               .then((r) => setCartCost(r.cost))
               .catch(() => {})
+          getB2bCartContext()
+            .then(setB2bCartContext)
+            .catch(() => {})
         },
       }}
     >
