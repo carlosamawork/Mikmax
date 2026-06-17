@@ -21,16 +21,16 @@ import productVariant from './documents/productVariant'
 import set from './documents/set'
 import b2bApplication from './documents/b2bApplication'
 
-
-const documents = [ collection, page, product, productVariant, post, look, set, b2bApplication]
+const documents = [collection, page, product, productVariant, post, look, set, b2bApplication]
 
 // Singleton document types
 import home from './singletons/home'
 import settings from './singletons/settings'
 import legalPage from './singletons/legal'
 import mikmaxForBusiness from './singletons/mikmaxForBusiness'
+import b2bArea from './singletons/b2bArea'
 
-const singletons = [home, settings, legalPage, mikmaxForBusiness]
+const singletons = [home, settings, legalPage, mikmaxForBusiness, b2bArea]
 
 // Block content
 import body from './blocks/body'
@@ -90,7 +90,7 @@ import postTag from './taxonomies/postTags'
 import bundleComponent from './objects/bundle/bundleComponent'
 import twoColumnCell from './objects/twoColumnCell'
 import {blockSchemas} from './objects/blocks'
-
+import b2bAreaGroup from './objects/b2bAreaGroup'
 
 // Collections
 import collectionGroup from './objects/collection/group'
@@ -98,6 +98,7 @@ import collectionLinks from './objects/collection/links'
 
 const objects = [
   bundleComponent,
+  b2bAreaGroup,
   ...blockSchemas,
   twoColumnCell,
   announcementBanner,
