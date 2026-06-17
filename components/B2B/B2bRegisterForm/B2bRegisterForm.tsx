@@ -3,20 +3,8 @@
 import {FormEvent, useState} from 'react'
 import Link from 'next/link'
 import type {B2bClientType, B2bRegisterInput} from '@/types/b2b'
+import {COUNTRIES} from '@/lib/b2b/countries'
 import s from './B2bRegisterForm.module.scss'
-
-// Países soportados en Fase 1 (EU + UK). Ampliable.
-const COUNTRIES: {code: string; name: string}[] = [
-  {code: 'ES', name: 'España'},
-  {code: 'FR', name: 'France'},
-  {code: 'IT', name: 'Italia'},
-  {code: 'DE', name: 'Deutschland'},
-  {code: 'PT', name: 'Portugal'},
-  {code: 'NL', name: 'Netherlands'},
-  {code: 'BE', name: 'Belgique'},
-  {code: 'IE', name: 'Ireland'},
-  {code: 'GB', name: 'United Kingdom'},
-]
 
 type ResultStatus = 'approved' | 'review' | 'rejected'
 
