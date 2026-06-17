@@ -13,6 +13,8 @@ export type ColorSize = {
   price: number
   compareAtPrice?: number
   availableForSale: boolean
+  // Precio descontado SOLO para mostrar (reseller). El cart sigue usando `price`.
+  displayPrice?: number
 }
 
 export type ProductColor = {

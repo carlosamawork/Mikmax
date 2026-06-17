@@ -117,6 +117,10 @@ export default async function ProductPage({
           colors: view.colors.map((color) => ({
             ...color,
             related: color.related?.map((card) => applyResellerToCard(card, resellerPercent)),
+            sizes: color.sizes?.map((size) => ({
+              ...size,
+              displayPrice: resellerPrice(size.price, resellerPercent),
+            })),
           })),
         }
       : view
