@@ -12,14 +12,16 @@ export const PRODUCT_BY_HANDLE_QUERY = groq`
     usoRecomendado,
     "relatedItems": relatedProducts[]{
       "handle": product->store.slug.current,
-      "variantColor": variant->store.option1,
+      "optionNames": product->store.options[].name,
+      "variantOptions": [variant->store.option1, variant->store.option2, variant->store.option3],
       "variantImageUrl": variant->store.previewImageUrl
     },
     "relatedByColor": relatedByColor[]{
       color,
       "products": products[]{
         "handle": product->store.slug.current,
-        "variantColor": variant->store.option1,
+        "optionNames": product->store.options[].name,
+        "variantOptions": [variant->store.option1, variant->store.option2, variant->store.option3],
         "variantImageUrl": variant->store.previewImageUrl
       }
     },
@@ -30,7 +32,8 @@ export const PRODUCT_BY_HANDLE_QUERY = groq`
 
 export type SanityRelatedItem = {
   handle: string | null
-  variantColor: string | null
+  optionNames: (string | null)[] | null
+  variantOptions: (string | null)[] | null
   variantImageUrl: string | null
 }
 

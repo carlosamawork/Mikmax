@@ -74,15 +74,27 @@ export default async function ProductPage({
   if (!shopifyProduct) notFound()
 
   const relatedItems = (sanityDoc?.relatedItems ?? []).filter(
-    (it): it is {handle: string; variantColor: string | null; variantImageUrl: string | null} =>
-      typeof it.handle === 'string' && it.handle.length > 0,
+    (
+      it,
+    ): it is {
+      handle: string
+      optionNames: (string | null)[] | null
+      variantOptions: (string | null)[] | null
+      variantImageUrl: string | null
+    } => typeof it.handle === 'string' && it.handle.length > 0,
   )
   const relatedByColor = (sanityDoc?.relatedByColor ?? [])
     .map((g) => ({
       color: g.color,
       products: (g.products ?? []).filter(
-        (it): it is {handle: string; variantColor: string | null; variantImageUrl: string | null} =>
-          typeof it.handle === 'string' && it.handle.length > 0,
+        (
+          it,
+        ): it is {
+          handle: string
+          optionNames: (string | null)[] | null
+          variantOptions: (string | null)[] | null
+          variantImageUrl: string | null
+        } => typeof it.handle === 'string' && it.handle.length > 0,
       ),
     }))
     .filter((g) => typeof g.color === 'string' && g.color.length > 0)
