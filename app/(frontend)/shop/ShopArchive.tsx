@@ -8,6 +8,7 @@ import {parseSearchParams} from '@/lib/shop/searchParams'
 import {buildAllCards} from '@/lib/shop/buildCards'
 import {getCollectionEditorialImages} from '@/sanity/queries/queries/shop'
 import {ALL_HANDLE, CHUNK_SIZE, type ProductCardData, type ShopSearchParams} from '@/types/shop'
+import {getResellerPercent, applyResellerToCard} from '@/lib/b2b/pricing'
 
 interface Props {
   handle: string
@@ -24,7 +25,11 @@ export default async function ShopArchive({handle, searchParams}: Props) {
   const editorials = handle !== ALL_HANDLE ? await getCollectionEditorialImages(handle) : []
   const view = params.view ?? '4col'
   const total = cards.length
-  const products: ProductCardData[] = cards.slice(0, CHUNK_SIZE)
+  const rawProducts: ProductCardData[] = cards.slice(0, CHUNK_SIZE)
+  const resellerPercent = await getResellerPercent()
+  const products = resellerPercent
+    ? rawProducts.map((c) => applyResellerToCard(c, resellerPercent))
+    : rawProducts
   const hasMore = total > CHUNK_SIZE
   const isOpen = params.filters === 'open'
 
