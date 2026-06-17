@@ -2,6 +2,7 @@
 'use server'
 
 import {buildAllCards} from '@/lib/shop/buildCards'
+import {getResellerPercent, applyResellerToCard} from '@/lib/b2b/pricing'
 import {CHUNK_SIZE} from '@/types/shop'
 import type {ShopChunkResult, ShopSearchParams} from '@/types/shop'
 
@@ -13,7 +14,11 @@ export async function fetchShopChunk(args: {
 }): Promise<ShopChunkResult> {
   const offset = args.offset ?? 0
   const {cards} = await buildAllCards(args.handle, args.params)
-  const slice = cards.slice(offset, offset + CHUNK_SIZE)
+  const rawSlice = cards.slice(offset, offset + CHUNK_SIZE)
+  const resellerPercent = await getResellerPercent()
+  const slice = resellerPercent
+    ? rawSlice.map((c) => applyResellerToCard(c, resellerPercent))
+    : rawSlice
   return {
     products: slice,
     hasMore: offset + CHUNK_SIZE < cards.length,
