@@ -29,9 +29,7 @@ export default function MobileToolbar({
   isInfoOpen,
 }: Props) {
   const [hovered, setHovered] = useState<string | null>(null)
-  const hoveredLabel = hovered
-    ? view.colors.find((c) => c.slug === hovered)?.label
-    : undefined
+  const hoveredLabel = hovered ? view.colors.find((c) => c.slug === hovered)?.label : undefined
   return (
     <div className={s.wrap}>
       <div className={s.titleBlock}>
@@ -41,10 +39,16 @@ export default function MobileToolbar({
           {currentColor.label && <span className={s.titleColor}>{currentColor.label}</span>}
         </div>
         <div className={s.price}>
-          <PriceLabel min={view.minPrice} max={view.maxPrice} currency={view.currency} />
+          <PriceLabel
+            min={view.minPrice}
+            max={view.maxPrice}
+            currency={view.currency}
+            compareMin={view.compareMinPrice}
+          />
         </div>
         <div className={s.delivery}>
-          Complimentary gift wrapping<br />
+          Complimentary gift wrapping
+          <br />
           30- day returns
         </div>
       </div>
@@ -74,12 +78,7 @@ export default function MobileToolbar({
         {isInfoOpen ? (
           <span aria-hidden>×</span>
         ) : (
-          <svg
-            className={s.caret}
-            viewBox="0 0 10 6"
-            fill="none"
-            aria-hidden
-          >
+          <svg className={s.caret} viewBox="0 0 10 6" fill="none" aria-hidden>
             <path
               d="M1 1L5 5L9 1"
               stroke="currentColor"

@@ -32,14 +32,11 @@ export default function DesktopToolbar({
   onAddToCart,
 }: Props) {
   const canAddToCart =
-    !!selectedSize &&
-    !!currentColor.sizes.find((sz) => sz.label === selectedSize)?.availableForSale
+    !!selectedSize && !!currentColor.sizes.find((sz) => sz.label === selectedSize)?.availableForSale
   const [hovered, setHovered] = useState<string | null>(null)
   // Nombre del color bajo el cursor (vacío sin hover). El título muestra siempre
   // el color seleccionado con click.
-  const hoveredLabel = hovered
-    ? view.colors.find((c) => c.slug === hovered)?.label
-    : undefined
+  const hoveredLabel = hovered ? view.colors.find((c) => c.slug === hovered)?.label : undefined
   // Wishlist por color elegido.
   const fav = useWishlistItem(view.handle, selectedColor)
   return (
@@ -50,7 +47,12 @@ export default function DesktopToolbar({
           {currentColor.label && <span className={s.titleColor}>{currentColor.label}</span>}
         </div>
         <div className={s.priceBg}>
-          <PriceLabel min={view.minPrice} max={view.maxPrice} currency={view.currency} />
+          <PriceLabel
+            min={view.minPrice}
+            max={view.maxPrice}
+            currency={view.currency}
+            compareMin={view.compareMinPrice}
+          />
         </div>
       </div>
 
@@ -82,9 +84,12 @@ export default function DesktopToolbar({
       </div>
 
       <button type="button" className={s.infoBlock} onClick={onToggleInfo}>
-        <div className={s.infoTitle}>{isInfoOpen ? 'Close Information' : 'Product Information'}</div>
+        <div className={s.infoTitle}>
+          {isInfoOpen ? 'Close Information' : 'Product Information'}
+        </div>
         <div className={s.infoMeta}>
-          Complimentary gift wrapping<br />
+          Complimentary gift wrapping
+          <br />
           30-day returns
         </div>
       </button>

@@ -2,6 +2,8 @@ interface Props {
   min: number
   max?: number
   currency: string
+  // Precio original (tachado) cuando hay descuento B2B aplicado al display.
+  compareMin?: number
 }
 
 const FMT = new Intl.NumberFormat('es-ES', {
@@ -10,7 +12,7 @@ const FMT = new Intl.NumberFormat('es-ES', {
   maximumFractionDigits: 0,
 })
 
-export default function PriceLabel({min, max, currency}: Props) {
+export default function PriceLabel({min, max, currency, compareMin}: Props) {
   if (currency !== 'EUR') {
     return (
       <span>
@@ -20,6 +22,14 @@ export default function PriceLabel({min, max, currency}: Props) {
     )
   }
   const minStr = FMT.format(min)
-  if (max === undefined || max === min) return <span>{minStr}</span>
-  return <span>{minStr} - {FMT.format(max)}</span>
+  const priceStr = max === undefined || max === min ? minStr : `${minStr} - ${FMT.format(max)}`
+  if (typeof compareMin === 'number' && compareMin > min) {
+    return (
+      <span>
+        <s style={{opacity: 0.5, marginRight: 8}}>{FMT.format(compareMin)}</s>
+        {priceStr}
+      </span>
+    )
+  }
+  return <span>{priceStr}</span>
 }

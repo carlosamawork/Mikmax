@@ -5,13 +5,17 @@ import {getSanityProduct} from '@/sanity/queries/queries/product'
 import {buildProductView} from '@/lib/product/buildProductView'
 import {resolveInitialState} from '@/lib/product/resolveInitialState'
 import {BASE_URL, siteTitle} from '@/utils/seoHelper'
+import {getResellerPercent, resellerPrice, applyResellerToCard} from '@/lib/b2b/pricing'
 import ProductDetail from '@/components/Product/ProductDetail'
 
 export const revalidate = 300
 
 function stripHtml(html: string | null | undefined): string {
   if (!html) return ''
-  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+  return html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
 }
 
 export async function generateMetadata({
@@ -100,5 +104,22 @@ export default async function ProductPage({
   )
   const initial = resolveInitialState(view, search)
 
-  return <ProductDetail view={view} initial={initial} />
+  const resellerPercent = await getResellerPercent()
+  const viewForDisplay =
+    resellerPercent && typeof view.minPrice === 'number'
+      ? {
+          ...view,
+          compareMinPrice: view.minPrice,
+          compareMaxPrice: view.maxPrice,
+          minPrice: resellerPrice(view.minPrice, resellerPercent),
+          maxPrice: resellerPrice(view.maxPrice, resellerPercent),
+          related: view.related.map((card) => applyResellerToCard(card, resellerPercent)),
+          colors: view.colors.map((color) => ({
+            ...color,
+            related: color.related?.map((card) => applyResellerToCard(card, resellerPercent)),
+          })),
+        }
+      : view
+
+  return <ProductDetail view={viewForDisplay} initial={initial} />
 }

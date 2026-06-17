@@ -8,18 +8,18 @@ export type GalleryImage = {
 }
 
 export type ColorSize = {
-  variantId: string         // gid://shopify/ProductVariant/...
-  label: string             // '240X220'
+  variantId: string // gid://shopify/ProductVariant/...
+  label: string // '240X220'
   price: number
   compareAtPrice?: number
   availableForSale: boolean
 }
 
 export type ProductColor = {
-  slug: string                  // 'cardon-seed'
-  label: string                 // 'CARDON SEED'
-  hex: string                   // '#757331'
-  taxonomyValueGids: string[]   // ['gid://shopify/TaxonomyValue/9']
+  slug: string // 'cardon-seed'
+  label: string // 'CARDON SEED'
+  hex: string // '#757331'
+  taxonomyValueGids: string[] // ['gid://shopify/TaxonomyValue/9']
   images: GalleryImage[]
   sizes: ColorSize[]
   // Optional per-color override of the related products. When set, the PDP
@@ -42,6 +42,8 @@ export type ProductMiniCard = {
   imageAlt?: string
   minPrice?: number
   maxPrice?: number
+  /** Original (struck-through) price when a B2B display discount is applied. */
+  compareAtPrice?: number
   /** Color slug for the variant chosen in Sanity (used in link query). */
   colorSlug?: string
 }
@@ -53,6 +55,10 @@ export type ProductView = {
   currency: string
   minPrice: number
   maxPrice: number
+  /** Original (struck-through) min price when a B2B display discount is applied. */
+  compareMinPrice?: number
+  /** Original (struck-through) max price when a B2B display discount is applied. */
+  compareMaxPrice?: number
   featuredImageUrl?: string
   editorial: ProductEditorial
   hasEditorial: boolean
