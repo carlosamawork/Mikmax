@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import {useContext} from 'react'
-import {usePathname} from 'next/navigation'
+import {usePathname, useRouter} from 'next/navigation'
 import {logout} from '@/app/(frontend)/account/actions'
 import {CartContext} from '@/context/shopContext'
 import s from './AccountNav.module.scss'
@@ -18,10 +18,12 @@ export default function AccountNav() {
   // trailingSlash: true → el pathname llega como '/account/' o '/account/orders/'.
   const current = pathname.replace(/\/+$/, '') || '/'
   const ctx = useContext(CartContext)
+  const router = useRouter()
 
   async function handleLogout() {
-    ctx?.refreshCartBuyer?.()
     await logout()
+    ctx?.refreshCartBuyer?.()
+    router.push('/')
   }
 
   return (

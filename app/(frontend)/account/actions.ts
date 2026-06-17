@@ -1,6 +1,5 @@
 'use server'
 
-import {redirect} from 'next/navigation'
 import {
   customerAddressCreate,
   customerAddressUpdate,
@@ -94,5 +93,4 @@ export async function logout(): Promise<void> {
   const token = await getCustomerToken()
   if (token) await logoutToken(token)
   await clearCustomerSession()
-  redirect('/')
 }

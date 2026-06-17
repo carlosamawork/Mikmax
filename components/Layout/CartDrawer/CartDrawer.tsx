@@ -5,6 +5,7 @@ import {CartContext} from '@/context/shopContext'
 import {trackBeginCheckout} from '@/lib/analytics/track'
 import {getStoreCurrency} from '@/lib/analytics/item'
 import {prepareCheckout} from '@/app/(frontend)/checkout/actions'
+import type {CartCost} from '@/types/cart'
 import s from './CartDrawer.module.scss'
 
 type CartItem = {
@@ -17,14 +18,6 @@ type CartItem = {
   color?: string
   price?: number
   lineId?: string
-}
-
-type CartCost = {
-  subtotal: number
-  total: number
-  discount: number
-  discountTitle: string | null
-  currency: string
 }
 
 type CartCtx = {
