@@ -1,36 +1,26 @@
 'use server'
 
-import {cartBuyerIdentityUpdate} from '@/lib/shopify'
+import {cartBuyerIdentityUpdate, getCart} from '@/lib/shopify'
 import {getCurrentCustomer} from '@/lib/auth/customer'
 import {isB2bApproved} from '@/lib/b2b/isB2bApproved'
+import {parseCartCost} from '@/lib/b2b/cartCost'
+import type {CartCost} from '@/types/cart'
 
-export interface CartCost {
-  subtotal: number
-  total: number
-  discount: number
-  discountTitle: string | null
-  currency: string
+// Descarta el objeto de error {error} que devuelven los helpers de carrito en fallo.
+function okCart(cart: unknown): unknown | null {
+  return cart && !(cart as {error?: unknown}).error ? cart : null
 }
 
-function readCost(cart: any): CartCost | null {
-  const c = cart?.cost
-  if (!c?.subtotalAmount) return null
-  const subtotal = Number(c.subtotalAmount.amount)
-  const total = Number(c.totalAmount?.amount ?? c.subtotalAmount.amount)
-  const alloc = Array.isArray(cart.discountAllocations) ? cart.discountAllocations[0] : null
-  return {
-    subtotal,
-    total,
-    discount: Math.max(0, subtotal - total),
-    discountTitle: alloc?.title ?? alloc?.code ?? null,
-    currency: c.subtotalAmount.currencyCode ?? 'EUR',
-  }
+// Solo lectura: coste actual del carrito (para hidratar en mount sin mutar nada).
+export async function getCartCost(cartId: string): Promise<{cost: CartCost | null}> {
+  if (!cartId) return {cost: null}
+  const cart = okCart(await getCart(cartId))
+  return {cost: cart ? parseCartCost(cart) : null}
 }
 
-// Syncs the cart's buyerIdentity with the session:
-//   B2B validado  -> setea customerAccessToken (la Function aplica y el carrito refleja el descuento)
-//   resto/logout  -> limpia el buyerIdentity
-// Devuelve el coste actualizado para pintar subtotal/descuento/total.
+// Muta el buyerIdentity del carrito según la sesión (SOLO en login/logout):
+//   B2B validado -> setea customerAccessToken (la Function aplica el descuento)
+//   resto/logout -> limpia el buyerIdentity
 export async function syncCartBuyer(cartId: string): Promise<{cost: CartCost | null}> {
   if (!cartId) return {cost: null}
   const session = await getCurrentCustomer()
@@ -38,6 +28,6 @@ export async function syncCartBuyer(cartId: string): Promise<{cost: CartCost | n
     session && isB2bApproved(session.customer)
       ? {customerAccessToken: session.token}
       : {customerAccessToken: null}
-  const cart = await cartBuyerIdentityUpdate(cartId, buyerIdentity)
-  return {cost: cart ? readCost(cart) : null}
+  const cart = okCart(await cartBuyerIdentityUpdate(cartId, buyerIdentity))
+  return {cost: cart ? parseCartCost(cart) : null}
 }

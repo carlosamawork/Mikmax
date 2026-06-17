@@ -11,7 +11,8 @@ import {
 } from '../lib/shopify'
 import {trackAddToCart} from '@/lib/analytics/track'
 import {getStoreCurrency} from '@/lib/analytics/item'
-import {syncCartBuyer} from '@/app/(frontend)/cart/actions'
+import {syncCartBuyer, getCartCost} from '@/app/(frontend)/cart/actions'
+import {parseCartCost} from '@/lib/b2b/cartCost'
 
 const CartContext = createContext()
 
@@ -50,7 +51,7 @@ export default function ShopProvider({children}) {
       if (savedMeta?.id) setCartId(savedMeta.id)
       if (savedMeta?.checkoutUrl) setCheckoutUrl(savedMeta.checkoutUrl)
       if (savedMeta?.id) {
-        syncCartBuyer(savedMeta.id)
+        getCartCost(savedMeta.id)
           .then((r) => setCartCost(r.cost))
           .catch(() => {})
       }
@@ -96,9 +97,7 @@ export default function ShopProvider({children}) {
         setCartId(apiCart.id)
         setCheckoutUrl(apiCart.checkoutUrl)
         saveToStorage([synced], {id: apiCart.id, checkoutUrl: apiCart.checkoutUrl})
-        syncCartBuyer(apiCart.id)
-          .then((r) => setCartCost(r.cost))
-          .catch(() => {})
+        setCartCost(parseCartCost(apiCart))
         trackAddToCart([atcItem])
       } catch (err) {
         console.error('cartCreate failed', err)
@@ -134,9 +133,7 @@ export default function ShopProvider({children}) {
         setCart(updatedCart)
         setCheckoutUrl(meta.checkoutUrl)
         saveToStorage(updatedCart, meta)
-        syncCartBuyer(cartId)
-          .then((r) => setCartCost(r.cost))
-          .catch(() => {})
+        setCartCost(parseCartCost(apiCart))
         trackAddToCart([atcItem])
       } catch (err) {
         console.error('addToCart failed', err)
@@ -183,9 +180,7 @@ export default function ShopProvider({children}) {
       setCartId(currentCartId)
       setCheckoutUrl(meta.checkoutUrl)
       saveToStorage(synced, meta)
-      syncCartBuyer(currentCartId)
-        .then((r) => setCartCost(r.cost))
-        .catch(() => {})
+      setCartCost(parseCartCost(apiCart))
       trackAddToCart(
         lookLines.map((l) => ({
           id: l.productId || l.store.gid,
@@ -214,9 +209,7 @@ export default function ShopProvider({children}) {
       setCart(updatedCart)
       setCheckoutUrl(meta.checkoutUrl)
       saveToStorage(updatedCart, meta)
-      syncCartBuyer(cartId)
-        .then((r) => setCartCost(r.cost))
-        .catch(() => {})
+      setCartCost(parseCartCost(apiCart))
     } catch (err) {
       console.error('updateCartItem failed', err)
     }
@@ -235,9 +228,7 @@ export default function ShopProvider({children}) {
       setCart(updatedCart)
       setCheckoutUrl(meta.checkoutUrl)
       saveToStorage(updatedCart, meta)
-      syncCartBuyer(cartId)
-        .then((r) => setCartCost(r.cost))
-        .catch(() => {})
+      setCartCost(parseCartCost(apiCart))
     } catch (err) {
       console.error('removeCartItem failed', err)
     }
