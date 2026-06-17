@@ -26,6 +26,7 @@ export interface ValidationSignals {
   websitePresent: boolean
   countryMatchesVat: boolean
   clientTypeDeclared: boolean
+  countryVerifiable: boolean // true si el país es UE o UK (VIES/Companies House disponible)
 }
 
 export interface ScoreResult {
