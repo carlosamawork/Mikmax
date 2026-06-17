@@ -2,13 +2,15 @@
 
 import Link from 'next/link'
 import {useRouter} from 'next/navigation'
-import {FormEvent, useState} from 'react'
+import {FormEvent, useContext, useState} from 'react'
 import AuthField from '@/components/Account/AuthField/AuthField'
 import {loginAction} from '@/app/(frontend)/login/actions'
+import {CartContext} from '@/context/shopContext'
 import s from '../authForm.module.scss'
 
 export default function LoginForm() {
   const router = useRouter()
+  const ctx = useContext(CartContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -31,6 +33,7 @@ export default function LoginForm() {
       setError(res.error)
       return
     }
+    ctx?.refreshCartBuyer?.()
     router.push('/account')
     router.refresh()
   }

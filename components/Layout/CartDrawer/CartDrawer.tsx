@@ -19,6 +19,14 @@ type CartItem = {
   lineId?: string
 }
 
+type CartCost = {
+  subtotal: number
+  total: number
+  discount: number
+  discountTitle: string | null
+  currency: string
+}
+
 type CartCtx = {
   cart?: CartItem[]
   cartOpen?: boolean
@@ -27,6 +35,7 @@ type CartCtx = {
   updateCartItem?: (item: CartItem, qty: number) => void
   cartId?: string
   checkoutUrl?: string
+  cartCost?: CartCost | null
 }
 
 const FMT = new Intl.NumberFormat('es-ES', {
@@ -72,8 +81,7 @@ export default function CartDrawer() {
         name: it.title || '',
         price: typeof it.price === 'number' ? it.price : 0,
         quantity: it.variantQuantity ?? 1,
-        variant:
-          [it.color, it.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
+        variant: [it.color, it.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
         currency: getStoreCurrency(),
       })),
     )
@@ -126,9 +134,7 @@ export default function CartDrawer() {
               </div>
             </div>
 
-            <div className={s.size}>
-              {item.size && item.size !== 'Default' ? item.size : ''}
-            </div>
+            <div className={s.size}>{item.size && item.size !== 'Default' ? item.size : ''}</div>
 
             <div className={s.qty}>
               <button
@@ -169,6 +175,24 @@ export default function CartDrawer() {
       </ul>
 
       <footer className={s.footer}>
+        {ctx?.cartCost && (
+          <div className={s.summary}>
+            <div className={s.summaryRow}>
+              <span>Subtotal</span>
+              <span>{FMT.format(ctx.cartCost.subtotal)}</span>
+            </div>
+            {ctx.cartCost.discount > 0 && (
+              <div className={`${s.summaryRow} ${s.summaryDiscount}`}>
+                <span>{ctx.cartCost.discountTitle ?? 'Descuento'}</span>
+                <span>−{FMT.format(ctx.cartCost.discount)}</span>
+              </div>
+            )}
+            <div className={`${s.summaryRow} ${s.summaryTotal}`}>
+              <span>Total</span>
+              <span>{FMT.format(ctx.cartCost.total)}</span>
+            </div>
+          </div>
+        )}
         <button type="button" className={s.viewItems} onClick={close}>
           View Items
         </button>

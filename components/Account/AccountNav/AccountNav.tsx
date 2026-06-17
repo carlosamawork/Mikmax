@@ -1,8 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import {useContext} from 'react'
 import {usePathname} from 'next/navigation'
 import {logout} from '@/app/(frontend)/account/actions'
+import {CartContext} from '@/context/shopContext'
 import s from './AccountNav.module.scss'
 
 const ITEMS = [
@@ -15,6 +17,12 @@ export default function AccountNav() {
   const pathname = usePathname()
   // trailingSlash: true → el pathname llega como '/account/' o '/account/orders/'.
   const current = pathname.replace(/\/+$/, '') || '/'
+  const ctx = useContext(CartContext)
+
+  async function handleLogout() {
+    ctx?.refreshCartBuyer?.()
+    await logout()
+  }
 
   return (
     <nav className={s.nav}>
@@ -26,7 +34,7 @@ export default function AccountNav() {
           </Link>
         )
       })}
-      <form action={logout}>
+      <form action={handleLogout}>
         <button type="submit" className={s.item}>
           Logout
         </button>

@@ -1,13 +1,15 @@
 'use client'
 
-import {FormEvent, useState} from 'react'
+import {FormEvent, useContext, useState} from 'react'
 import Link from 'next/link'
 import {useRouter} from 'next/navigation'
 import {loginAction} from '@/app/(frontend)/login/actions'
+import {CartContext} from '@/context/shopContext'
 import s from './B2bLogin.module.scss'
 
 export default function B2bLogin() {
   const router = useRouter()
+  const ctx = useContext(CartContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -24,6 +26,7 @@ export default function B2bLogin() {
       setError(res.error)
       return
     }
+    ctx?.refreshCartBuyer?.()
     router.push('/mikmax-for-business/area')
     router.refresh()
   }
