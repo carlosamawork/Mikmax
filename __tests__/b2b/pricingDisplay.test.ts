@@ -1,4 +1,9 @@
-import {describe, it, expect} from 'vitest'
+import {describe, it, expect, vi} from 'vitest'
+
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('react')>()
+  return {...actual, cache: (fn: unknown) => fn}
+})
 import {parsePricingConfig, resellerPrice, applyResellerToCard} from '@/lib/b2b/pricing'
 
 const CFG = {
@@ -27,6 +32,10 @@ describe('resellerPrice', () => {
     expect(resellerPrice(100, 50)).toBe(50)
     expect(resellerPrice(99.9, 50)).toBe(49.95)
     expect(resellerPrice(100, 0)).toBe(100)
+  })
+  it('clamps percent fuera de rango [0,100]', () => {
+    expect(resellerPrice(100, -10)).toBe(100)
+    expect(resellerPrice(100, 150)).toBe(0)
   })
 })
 

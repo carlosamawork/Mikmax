@@ -35,8 +35,9 @@ export function parsePricingConfig(json: string | null | undefined): PricingConf
 
 // Precio reseller redondeado a 2 decimales. percent 0 → sin cambios.
 export function resellerPrice(amount: number, percent: number): number {
-  if (!percent) return amount
-  return Math.round(amount * (1 - percent / 100) * 100) / 100
+  const pct = Math.max(0, Math.min(percent, 100))
+  if (!pct) return amount
+  return Math.round(amount * (1 - pct / 100) * 100) / 100
 }
 
 type CardLike = {minPrice?: number; maxPrice?: number; compareAtPrice?: number}
@@ -48,7 +49,8 @@ export function applyResellerToCard<T extends CardLike>(card: T, percent: number
     ...card,
     compareAtPrice: card.minPrice,
     minPrice: resellerPrice(card.minPrice, percent),
-    maxPrice: typeof card.maxPrice === 'number' ? resellerPrice(card.maxPrice, percent) : card.maxPrice,
+    maxPrice:
+      typeof card.maxPrice === 'number' ? resellerPrice(card.maxPrice, percent) : card.maxPrice,
   }
 }
 
