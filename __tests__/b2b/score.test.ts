@@ -85,7 +85,7 @@ describe('scoreApplication — país verificable vs no verificable', () => {
       'approved',
     )
     expect(scoreApplication({...base, vatValid: false, countryVerifiable: true}).decision).toBe(
-      'review',
+      'rejected',
     )
     expect(
       scoreApplication({
