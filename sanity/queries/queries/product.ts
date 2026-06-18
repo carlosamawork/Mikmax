@@ -1,15 +1,17 @@
 // sanity/queries/queries/product.ts
 import {groq} from 'next-sanity'
 import {client} from '..'
+import {localizedField} from '@/lib/i18n/groq'
+import type {Locale} from '@/lib/i18n/config'
 
 export const PRODUCT_BY_HANDLE_QUERY = groq`
   *[_type == "product"
      && store.slug.current == $handle
      && !(_id in path('drafts.**'))][0] {
     _id,
-    propiedadesMaterial,
-    recomendacionesLavado,
-    usoRecomendado,
+    ${localizedField('propiedadesMaterial')},
+    ${localizedField('recomendacionesLavado')},
+    ${localizedField('usoRecomendado')},
     "relatedItems": relatedProducts[]{
       "handle": product->store.slug.current,
       "optionNames": product->store.options[].name,
@@ -53,10 +55,13 @@ export type SanityProductDoc = {
   slug: string
 }
 
-export async function getSanityProduct(handle: string): Promise<SanityProductDoc | null> {
+export async function getSanityProduct(
+  handle: string,
+  lang: Locale,
+): Promise<SanityProductDoc | null> {
   const doc = await client.fetch<SanityProductDoc | null>(
     PRODUCT_BY_HANDLE_QUERY,
-    {handle},
+    {handle, lang},
     {next: {tags: ['product', `product:${handle}`], revalidate: 3600}},
   )
   return doc ?? null
