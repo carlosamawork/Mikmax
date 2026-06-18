@@ -9,6 +9,7 @@ const base: ValidationSignals = {
   websitePresent: false,
   countryMatchesVat: false,
   clientTypeDeclared: false,
+  countryVerifiable: true,
 }
 
 describe('scoreApplication', () => {
@@ -66,5 +67,55 @@ describe('scoreApplication', () => {
       countryMatchesVat: true,
     })
     expect(r.decision).toBe('approved')
+  })
+})
+
+describe('scoreApplication — país verificable vs no verificable', () => {
+  const base: ValidationSignals = {
+    vatValid: false,
+    vatServiceAvailable: true,
+    corporateEmail: true,
+    websitePresent: true,
+    countryMatchesVat: false,
+    clientTypeDeclared: true,
+    countryVerifiable: true,
+  }
+  it('verificable: umbrales normales', () => {
+    expect(scoreApplication({...base, vatValid: true, countryVerifiable: true}).decision).toBe(
+      'approved',
+    )
+    expect(scoreApplication({...base, vatValid: false, countryVerifiable: true}).decision).toBe(
+      'rejected',
+    )
+    expect(
+      scoreApplication({
+        vatValid: false,
+        vatServiceAvailable: true,
+        corporateEmail: false,
+        websitePresent: false,
+        countryMatchesVat: false,
+        clientTypeDeclared: true,
+        countryVerifiable: true,
+      }).decision,
+    ).toBe('rejected')
+  })
+  it('NO verificable: siempre review', () => {
+    expect(scoreApplication({...base, vatValid: false, countryVerifiable: false}).decision).toBe(
+      'review',
+    )
+    expect(
+      scoreApplication({
+        vatValid: false,
+        vatServiceAvailable: true,
+        corporateEmail: false,
+        websitePresent: false,
+        countryMatchesVat: false,
+        clientTypeDeclared: true,
+        countryVerifiable: false,
+      }).decision,
+    ).toBe('review')
+    expect(scoreApplication({...base, vatValid: true, countryVerifiable: false}).decision).toBe(
+      'review',
+    )
   })
 })

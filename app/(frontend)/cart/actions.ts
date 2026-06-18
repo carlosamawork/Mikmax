@@ -1,0 +1,51 @@
+'use server'
+
+import {cartBuyerIdentityUpdate, getCart} from '@/lib/shopify'
+import {getCurrentCustomer} from '@/lib/auth/customer'
+import {isB2bApproved} from '@/lib/b2b/isB2bApproved'
+import {parseCartCost} from '@/lib/b2b/cartCost'
+import {getB2bPricingConfig} from '@/lib/b2b/pricing'
+import type {CartCost} from '@/types/cart'
+
+// Descarta el objeto de error {error} que devuelven los helpers de carrito en fallo.
+function okCart(cart: unknown): unknown | null {
+  return cart && !(cart as {error?: unknown}).error ? cart : null
+}
+
+// Solo lectura: coste actual del carrito (para hidratar en mount sin mutar nada).
+export async function getCartCost(cartId: string): Promise<{cost: CartCost | null}> {
+  if (!cartId) return {cost: null}
+  const cart = okCart(await getCart(cartId))
+  return {cost: cart ? parseCartCost(cart) : null}
+}
+
+export interface B2bCartContext {
+  isDesigner: boolean
+  designerTiers: {minSubtotal: number; percent: number}[]
+}
+
+// Si la sesión es un designer validado, devuelve sus tramos (para el nudge del carrito).
+export async function getB2bCartContext(): Promise<B2bCartContext> {
+  const session = await getCurrentCustomer()
+  const isDesigner =
+    !!session &&
+    isB2bApproved(session.customer) &&
+    session.customer.b2bClientType?.value === 'designer'
+  if (!isDesigner) return {isDesigner: false, designerTiers: []}
+  const cfg = await getB2bPricingConfig()
+  return {isDesigner: true, designerTiers: cfg?.designerTiers ?? []}
+}
+
+// Muta el buyerIdentity del carrito según la sesión (SOLO en login/logout):
+//   B2B validado -> setea customerAccessToken (la Function aplica el descuento)
+//   resto/logout -> limpia el buyerIdentity
+export async function syncCartBuyer(cartId: string): Promise<{cost: CartCost | null}> {
+  if (!cartId) return {cost: null}
+  const session = await getCurrentCustomer()
+  const buyerIdentity =
+    session && isB2bApproved(session.customer)
+      ? {customerAccessToken: session.token}
+      : {customerAccessToken: null}
+  const cart = okCart(await cartBuyerIdentityUpdate(cartId, buyerIdentity))
+  return {cost: cart ? parseCartCost(cart) : null}
+}

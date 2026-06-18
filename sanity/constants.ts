@@ -5,7 +5,13 @@ export const DEFAULT_CURRENCY_CODE = 'USD'
 // Document types which:
 // - cannot be created in the 'new document' menu
 // - cannot be duplicated, unpublished or deleted
-export const LOCKED_DOCUMENT_TYPES = ['settings', 'home', 'media.tag', 'mikmaxForBusiness']
+export const LOCKED_DOCUMENT_TYPES = [
+  'settings',
+  'home',
+  'media.tag',
+  'mikmaxForBusiness',
+  'b2bArea',
+]
 
 // Document types which:
 // - cannot be created in the 'new document' menu

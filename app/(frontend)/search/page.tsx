@@ -7,6 +7,7 @@ import FilterDrawer from '@/components/Shop/FilterDrawer/FilterDrawer'
 import {parseSearchParams} from '@/lib/shop/searchParams'
 import {buildAllCards} from '@/lib/shop/buildCards'
 import {ALL_HANDLE, CHUNK_SIZE, type ProductCardData, type SortKey} from '@/types/shop'
+import {getResellerPercent, applyResellerToCard} from '@/lib/b2b/pricing'
 import s from './search.module.scss'
 
 export const dynamic = 'force-dynamic'
@@ -39,19 +40,23 @@ export default async function SearchPage({searchParams}: Props) {
 
   const {cards, facets} = await buildAllCards(ALL_HANDLE, params)
   const total = cards.length
-  const products: ProductCardData[] = cards.slice(0, CHUNK_SIZE)
+  const rawProducts: ProductCardData[] = cards.slice(0, CHUNK_SIZE)
+  const resellerPercent = await getResellerPercent()
+  const products = resellerPercent
+    ? rawProducts.map((c) => applyResellerToCard(c, resellerPercent))
+    : rawProducts
   const hasMore = total > CHUNK_SIZE
   const isOpen = params.filters === 'open'
   // Whether the user has narrowed the search with filters (beyond the query itself).
   const hasFilters = Boolean(
     params.productType ||
-      params.color ||
-      params.size ||
-      params.pattern ||
-      params.material ||
-      params.priceMin ||
-      params.priceMax ||
-      params.available,
+    params.color ||
+    params.size ||
+    params.pattern ||
+    params.material ||
+    params.priceMin ||
+    params.priceMax ||
+    params.available,
   )
 
   return (

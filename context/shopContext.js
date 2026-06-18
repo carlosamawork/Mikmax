@@ -11,15 +11,15 @@ import {
 } from '../lib/shopify'
 import {trackAddToCart} from '@/lib/analytics/track'
 import {getStoreCurrency} from '@/lib/analytics/item'
+import {syncCartBuyer, getCartCost, getB2bCartContext} from '@/app/(frontend)/cart/actions'
+import {parseCartCost} from '@/lib/b2b/cartCost'
 
 const CartContext = createContext()
 
 // Sync local cart items with Cart API line IDs using variant GID as key
 function syncLineIds(localCart, apiLines) {
-  const lineMap = new Map(
-    apiLines.map(({id, merchandise}) => [merchandise.id, id])
-  )
-  return localCart.map(item => ({
+  const lineMap = new Map(apiLines.map(({id, merchandise}) => [merchandise.id, id]))
+  return localCart.map((item) => ({
     ...item,
     lineId: lineMap.get(item.store.gid) ?? item.lineId,
   }))
@@ -33,6 +33,8 @@ export default function ShopProvider({children}) {
   const [checkoutUrl, setCheckoutUrl] = useState('')
   const [pageIsLoaded, setPageIsLoaded] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [cartCost, setCartCost] = useState(null)
+  const [b2bCartContext, setB2bCartContext] = useState({isDesigner: false, designerTiers: []})
 
   function handleDocumentClick(e) {
     const cartEl = document.getElementById('cart-slide')
@@ -49,6 +51,14 @@ export default function ShopProvider({children}) {
       }
       if (savedMeta?.id) setCartId(savedMeta.id)
       if (savedMeta?.checkoutUrl) setCheckoutUrl(savedMeta.checkoutUrl)
+      if (savedMeta?.id) {
+        getCartCost(savedMeta.id)
+          .then((r) => setCartCost(r.cost))
+          .catch(() => {})
+      }
+      getB2bCartContext()
+        .then(setB2bCartContext)
+        .catch(() => {})
     }
 
     document.addEventListener('click', handleDocumentClick, true)
@@ -71,7 +81,8 @@ export default function ShopProvider({children}) {
       name: title || '',
       price: typeof newItem.price === 'number' ? newItem.price : 0,
       quantity,
-      variant: [newItem.color, newItem.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
+      variant:
+        [newItem.color, newItem.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
       currency: getStoreCurrency(),
     }
 
@@ -83,20 +94,21 @@ export default function ShopProvider({children}) {
         const apiCart = await cartCreate(newItem.store.gid, quantity)
         if (!apiCart || apiCart.error) return
 
-        const lines = apiCart.lines.edges.map(e => e.node)
+        const lines = apiCart.lines.edges.map((e) => e.node)
         const [synced] = syncLineIds([itemData], lines)
 
         setCart([synced])
         setCartId(apiCart.id)
         setCheckoutUrl(apiCart.checkoutUrl)
         saveToStorage([synced], {id: apiCart.id, checkoutUrl: apiCart.checkoutUrl})
+        setCartCost(parseCartCost(apiCart))
         trackAddToCart([atcItem])
       } catch (err) {
         console.error('cartCreate failed', err)
       }
     } else {
       setIsOpen(true)
-      const existing = cart.find(item => item.store.gid === newItem.store.gid)
+      const existing = cart.find((item) => item.store.gid === newItem.store.gid)
 
       try {
         let updatedCart
@@ -105,15 +117,13 @@ export default function ShopProvider({children}) {
         if (existing) {
           const newQty = existing.variantQuantity + quantity
           apiCart = await cartLinesUpdate(cartId, existing.lineId, newQty)
-          updatedCart = cart.map(item =>
-            item.store.gid === newItem.store.gid
-              ? {...item, variantQuantity: newQty}
-              : item
+          updatedCart = cart.map((item) =>
+            item.store.gid === newItem.store.gid ? {...item, variantQuantity: newQty} : item,
           )
         } else {
           apiCart = await cartLinesAdd(cartId, newItem.store.gid, quantity)
           if (apiCart && !apiCart.error) {
-            const lines = apiCart.lines.edges.map(e => e.node)
+            const lines = apiCart.lines.edges.map((e) => e.node)
             const [synced] = syncLineIds([itemData], lines)
             updatedCart = [...cart, synced]
           } else {
@@ -127,6 +137,7 @@ export default function ShopProvider({children}) {
         setCart(updatedCart)
         setCheckoutUrl(meta.checkoutUrl)
         saveToStorage(updatedCart, meta)
+        setCartCost(parseCartCost(apiCart))
         trackAddToCart([atcItem])
       } catch (err) {
         console.error('addToCart failed', err)
@@ -173,6 +184,7 @@ export default function ShopProvider({children}) {
       setCartId(currentCartId)
       setCheckoutUrl(meta.checkoutUrl)
       saveToStorage(synced, meta)
+      setCartCost(parseCartCost(apiCart))
       trackAddToCart(
         lookLines.map((l) => ({
           id: l.productId || l.store.gid,
@@ -194,31 +206,33 @@ export default function ShopProvider({children}) {
       const apiCart = await cartLinesUpdate(cartId, item.lineId, quantity)
       if (!apiCart || apiCart.error) return
 
-      const updatedCart = cart.map(c =>
-        c.store.gid === item.store.gid ? {...c, variantQuantity: quantity} : c
+      const updatedCart = cart.map((c) =>
+        c.store.gid === item.store.gid ? {...c, variantQuantity: quantity} : c,
       )
       const meta = {id: cartId, checkoutUrl: apiCart.checkoutUrl ?? checkoutUrl}
       setCart(updatedCart)
       setCheckoutUrl(meta.checkoutUrl)
       saveToStorage(updatedCart, meta)
+      setCartCost(parseCartCost(apiCart))
     } catch (err) {
       console.error('updateCartItem failed', err)
     }
   }
 
   async function removeCartItem(variantGid) {
-    const item = cart.find(c => c.store.gid === variantGid)
+    const item = cart.find((c) => c.store.gid === variantGid)
     if (!item?.lineId) return
 
     try {
       const apiCart = await cartLinesRemove(cartId, [item.lineId])
       if (!apiCart || apiCart.error) return
 
-      const updatedCart = cart.filter(c => c.store.gid !== variantGid)
+      const updatedCart = cart.filter((c) => c.store.gid !== variantGid)
       const meta = {id: cartId, checkoutUrl: apiCart.checkoutUrl ?? checkoutUrl}
       setCart(updatedCart)
       setCheckoutUrl(meta.checkoutUrl)
       saveToStorage(updatedCart, meta)
+      setCartCost(parseCartCost(apiCart))
     } catch (err) {
       console.error('removeCartItem failed', err)
     }
@@ -242,6 +256,17 @@ export default function ShopProvider({children}) {
         pageIsLoaded,
         menuOpen,
         setMenuOpen,
+        cartCost,
+        b2bCartContext,
+        refreshCartBuyer: () => {
+          if (cartId)
+            syncCartBuyer(cartId)
+              .then((r) => setCartCost(r.cost))
+              .catch(() => {})
+          getB2bCartContext()
+            .then(setB2bCartContext)
+            .catch(() => {})
+        },
       }}
     >
       {children}

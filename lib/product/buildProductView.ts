@@ -128,8 +128,19 @@ type RelatedShopifyCard = {
 
 type SanityRelatedItem = {
   handle: string
-  variantColor: string | null
+  optionNames: (string | null)[] | null
+  variantOptions: (string | null)[] | null
   variantImageUrl: string | null
+}
+
+// El color de un related sale de la opción llamada "Color" del producto destino,
+// no de una posición fija: el orden de opciones (Size/Color) varía entre productos.
+function relatedColorSlug(it: SanityRelatedItem): string | undefined {
+  const names = it.optionNames ?? []
+  const idx = names.findIndex((n) => n?.toLowerCase() === 'color')
+  if (idx < 0) return undefined
+  const value = it.variantOptions?.[idx]
+  return value ? slugify(value) : undefined
 }
 
 type SanityRelatedByColorGroup = {
@@ -155,9 +166,7 @@ export function buildProductView(
   const colorsMap = new Map<string, ProductColor>()
 
   if (!colorOption) {
-    const fallbackImages: GalleryImage[] = variants.length
-      ? readVariantGallery(variants[0])
-      : []
+    const fallbackImages: GalleryImage[] = variants.length ? readVariantGallery(variants[0]) : []
     if (fallbackImages.length === 0 && shopify.featuredImage?.url) {
       fallbackImages.push({
         url: shopify.featuredImage.url,
@@ -191,7 +200,7 @@ export function buildProductView(
         colorsMap.set(slug, {
           slug,
           label: colorValue,
-          hex: meta ? metaobjectField(meta, 'color') ?? '#a4a4a4' : '#a4a4a4',
+          hex: meta ? (metaobjectField(meta, 'color') ?? '#a4a4a4') : '#a4a4a4',
           taxonomyValueGids: meta ? readBaseGids(meta) : [],
           images: [],
           sizes: [],
@@ -231,8 +240,10 @@ export function buildProductView(
 
   const editorial: ProductView['editorial'] = {
     descripcion: shopify.descriptionHtml?.trim() ? shopify.descriptionHtml : null,
-    propiedadesMaterial: (sanity?.propiedadesMaterial ?? null) as ProductView['editorial']['propiedadesMaterial'],
-    recomendacionesLavado: (sanity?.recomendacionesLavado ?? null) as ProductView['editorial']['recomendacionesLavado'],
+    propiedadesMaterial: (sanity?.propiedadesMaterial ??
+      null) as ProductView['editorial']['propiedadesMaterial'],
+    recomendacionesLavado: (sanity?.recomendacionesLavado ??
+      null) as ProductView['editorial']['recomendacionesLavado'],
     usoRecomendado: (sanity?.usoRecomendado ?? null) as ProductView['editorial']['usoRecomendado'],
   }
   const hasEditorial = !!(
@@ -243,7 +254,7 @@ export function buildProductView(
   )
 
   // Index the Shopify cards by handle so per-color groups can quickly turn
-  // editor picks (handle + variantColor) into rendered mini-cards.
+  // editor picks (handle + variant options) into rendered mini-cards.
   const shopifyByHandle = new Map<string, RelatedShopifyCard>()
   for (const p of related) {
     if (p.handle !== shopify.handle) shopifyByHandle.set(p.handle, p)
@@ -261,7 +272,7 @@ export function buildProductView(
         imageAlt: card.featuredImage?.altText ?? undefined,
         minPrice: Number(card.priceRange.minVariantPrice.amount),
         maxPrice: Number(card.priceRange.maxVariantPrice.amount),
-        colorSlug: it.variantColor ? slugify(it.variantColor) : undefined,
+        colorSlug: relatedColorSlug(it),
       })
     }
     return out

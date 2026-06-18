@@ -33,7 +33,12 @@ export default function RelatedMiniCard({product, currency}: Props) {
         <div className={s.title}>{product.title}</div>
         {product.minPrice !== undefined && (
           <div className={s.price}>
-            <PriceLabel min={product.minPrice} max={product.maxPrice} currency={currency} />
+            <PriceLabel
+              min={product.minPrice}
+              max={product.maxPrice}
+              currency={currency}
+              compareMin={product.compareAtPrice}
+            />
           </div>
         )}
       </div>

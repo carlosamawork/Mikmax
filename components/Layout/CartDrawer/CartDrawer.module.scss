@@ -18,7 +18,7 @@
     max-width: px(1072);
   }
 
-  @include responsive("md") {
+  @include responsive('md') {
     top: 60px;
     bottom: 0;
     left: 0;
@@ -47,7 +47,7 @@
   letter-spacing: px(0.5);
   text-align: center;
 
-  @include responsive("md") {
+  @include responsive('md') {
     grid-column: 1;
     justify-self: start;
     text-align: left;
@@ -58,12 +58,16 @@
 .titleDesktop {
   display: inline;
   padding-left: px(15);
-  @include responsive("md") { display: none; }
+  @include responsive('md') {
+    display: none;
+  }
 }
 
 .titleMobile {
   display: none;
-  @include responsive("md") { display: inline; }
+  @include responsive('md') {
+    display: inline;
+  }
 }
 
 .close {
@@ -104,17 +108,17 @@
   @include from(md) {
     grid-template-columns: px(135) 1fr px(120) px(100) px(100) px(50);
     grid-template-rows: 1fr;
-    grid-template-areas: "image info size qty price remove";
+    grid-template-areas: 'image info size qty price remove';
     align-items: stretch;
     min-height: px(135);
   }
 
-  @include responsive("md") {
+  @include responsive('md') {
     grid-template-columns: px(110) auto 1fr auto px(50);
     grid-template-rows: auto auto;
     grid-template-areas:
-      "image info info  info  remove"
-      "image size qty   price price";
+      'image info info  info  remove'
+      'image size qty   price price';
     min-height: px(110);
     align-items: stretch;
   }
@@ -131,18 +135,17 @@
   display: contents;
   padding: 0;
 
-  @include responsive("md") {
+  @include responsive('md') {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
   }
 }
 
 .bodyTop {
   display: contents;
 
-  @include responsive("md") {
+  @include responsive('md') {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -153,7 +156,7 @@
 .bodyBottom {
   display: contents;
 
-  @include responsive("md") {
+  @include responsive('md') {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -171,7 +174,7 @@
   background: map-get($colors, 'lightgray-bg');
   overflow: hidden;
 
-  @include responsive("md") {
+  @include responsive('md') {
     width: px(110);
     height: px(110);
   }
@@ -194,11 +197,10 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-end;
   padding: px(20) px(20) 0;
   min-width: 0;
 
-  @include responsive("md") {
+  @include responsive('md') {
     align-items: flex-start;
     padding: px(15);
     flex: 1;
@@ -232,7 +234,7 @@
   font-size: px(11);
   letter-spacing: px(0.5);
 
-  @include responsive("md") {
+  @include responsive('md') {
     padding: 0 0 px(15) px(15);
     align-items: center;
   }
@@ -246,7 +248,7 @@
   gap: px(10);
   font-size: px(11);
 
-  @include responsive("md") {
+  @include responsive('md') {
     padding: 0 0 px(15);
     align-items: center;
     justify-content: center;
@@ -284,7 +286,7 @@
   letter-spacing: px(0.5);
   color: map-get($colors, 'black-border');
 
-  @include responsive("md") {
+  @include responsive('md') {
     padding: 0 px(15) px(15) 0;
     align-items: center;
     justify-content: flex-end;
@@ -318,6 +320,36 @@
   grid-template-columns: 1fr 2fr;
   flex-shrink: 0;
   background: map-get($colors, 'white');
+
+  .summary {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px px(15);
+
+    .summaryRow {
+      display: flex;
+      justify-content: space-between;
+      font-size: px(11);
+      letter-spacing: px(0.5);
+    }
+
+    .summaryDiscount {
+      color: #2b2b2b;
+    }
+
+    .nudge {
+      font-size: 13px;
+      color: #2b2b2b;
+      opacity: 0.8;
+      justify-content: flex-start;
+    }
+
+    .summaryTotal {
+      font-weight: 700;
+    }
+  }
 }
 
 .viewItems {

@@ -59,7 +59,7 @@ export default function ProductDetail({view, initial}: Props) {
       // GA4/Meta casen el mismo producto a lo largo del embudo.
       id: view.id,
       name: view.title,
-      price: view.minPrice,
+      price: view.compareMinPrice ?? view.minPrice,
       quantity: 1,
       currency: view.currency,
     })

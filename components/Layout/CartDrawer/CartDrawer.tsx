@@ -5,6 +5,8 @@ import {CartContext} from '@/context/shopContext'
 import {trackBeginCheckout} from '@/lib/analytics/track'
 import {getStoreCurrency} from '@/lib/analytics/item'
 import {prepareCheckout} from '@/app/(frontend)/checkout/actions'
+import type {CartCost} from '@/types/cart'
+import {nextTierNudge} from '@/lib/b2b/cartCost'
 import s from './CartDrawer.module.scss'
 
 type CartItem = {
@@ -27,6 +29,8 @@ type CartCtx = {
   updateCartItem?: (item: CartItem, qty: number) => void
   cartId?: string
   checkoutUrl?: string
+  cartCost?: CartCost | null
+  b2bCartContext?: {isDesigner: boolean; designerTiers: {minSubtotal: number; percent: number}[]}
 }
 
 const FMT = new Intl.NumberFormat('es-ES', {
@@ -72,8 +76,7 @@ export default function CartDrawer() {
         name: it.title || '',
         price: typeof it.price === 'number' ? it.price : 0,
         quantity: it.variantQuantity ?? 1,
-        variant:
-          [it.color, it.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
+        variant: [it.color, it.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
         currency: getStoreCurrency(),
       })),
     )
@@ -126,9 +129,7 @@ export default function CartDrawer() {
               </div>
             </div>
 
-            <div className={s.size}>
-              {item.size && item.size !== 'Default' ? item.size : ''}
-            </div>
+            <div className={s.size}>{item.size && item.size !== 'Default' ? item.size : ''}</div>
 
             <div className={s.qty}>
               <button
@@ -169,6 +170,43 @@ export default function CartDrawer() {
       </ul>
 
       <footer className={s.footer}>
+        {ctx?.cartCost && (
+          <div className={s.summary}>
+            <div className={s.summaryRow}>
+              <span>Subtotal</span>
+              <span>{FMT.format(ctx.cartCost.subtotal)}</span>
+            </div>
+            {ctx.cartCost.discount > 0 && (
+              <div className={`${s.summaryRow} ${s.summaryDiscount}`}>
+                <span>{ctx.cartCost.discountTitle ?? 'Descuento'}</span>
+                <span>−{FMT.format(ctx.cartCost.discount)}</span>
+              </div>
+            )}
+            {ctx?.b2bCartContext?.isDesigner &&
+              ctx?.cartCost &&
+              (() => {
+                const nudge = nextTierNudge(
+                  ctx.cartCost.subtotal,
+                  ctx.b2bCartContext!.designerTiers,
+                )
+                const maxPercent = ctx.b2bCartContext!.designerTiers.reduce(
+                  (m, t) => Math.max(m, t.percent),
+                  0,
+                )
+                return (
+                  <div className={`${s.summaryRow} ${s.nudge}`}>
+                    {nudge
+                      ? `Añade ${FMT.format(nudge.gap)} más para alcanzar el ${nudge.percent}%`
+                      : `Tienes el descuento profesional máximo (${maxPercent}%)`}
+                  </div>
+                )
+              })()}
+            <div className={`${s.summaryRow} ${s.summaryTotal}`}>
+              <span>Total</span>
+              <span>{FMT.format(ctx.cartCost.total)}</span>
+            </div>
+          </div>
+        )}
         <button type="button" className={s.viewItems} onClick={close}>
           View Items
         </button>

@@ -5,13 +5,17 @@ import {getSanityProduct} from '@/sanity/queries/queries/product'
 import {buildProductView} from '@/lib/product/buildProductView'
 import {resolveInitialState} from '@/lib/product/resolveInitialState'
 import {BASE_URL, siteTitle} from '@/utils/seoHelper'
+import {getResellerPercent, resellerPrice, applyResellerToCard} from '@/lib/b2b/pricing'
 import ProductDetail from '@/components/Product/ProductDetail'
 
 export const revalidate = 300
 
 function stripHtml(html: string | null | undefined): string {
   if (!html) return ''
-  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+  return html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
 }
 
 export async function generateMetadata({
@@ -70,15 +74,27 @@ export default async function ProductPage({
   if (!shopifyProduct) notFound()
 
   const relatedItems = (sanityDoc?.relatedItems ?? []).filter(
-    (it): it is {handle: string; variantColor: string | null; variantImageUrl: string | null} =>
-      typeof it.handle === 'string' && it.handle.length > 0,
+    (
+      it,
+    ): it is {
+      handle: string
+      optionNames: (string | null)[] | null
+      variantOptions: (string | null)[] | null
+      variantImageUrl: string | null
+    } => typeof it.handle === 'string' && it.handle.length > 0,
   )
   const relatedByColor = (sanityDoc?.relatedByColor ?? [])
     .map((g) => ({
       color: g.color,
       products: (g.products ?? []).filter(
-        (it): it is {handle: string; variantColor: string | null; variantImageUrl: string | null} =>
-          typeof it.handle === 'string' && it.handle.length > 0,
+        (
+          it,
+        ): it is {
+          handle: string
+          optionNames: (string | null)[] | null
+          variantOptions: (string | null)[] | null
+          variantImageUrl: string | null
+        } => typeof it.handle === 'string' && it.handle.length > 0,
       ),
     }))
     .filter((g) => typeof g.color === 'string' && g.color.length > 0)
@@ -100,5 +116,26 @@ export default async function ProductPage({
   )
   const initial = resolveInitialState(view, search)
 
-  return <ProductDetail view={view} initial={initial} />
+  const resellerPercent = await getResellerPercent()
+  const viewForDisplay =
+    resellerPercent && typeof view.minPrice === 'number'
+      ? {
+          ...view,
+          compareMinPrice: view.minPrice,
+          compareMaxPrice: view.maxPrice,
+          minPrice: resellerPrice(view.minPrice, resellerPercent),
+          maxPrice: resellerPrice(view.maxPrice, resellerPercent),
+          related: view.related.map((card) => applyResellerToCard(card, resellerPercent)),
+          colors: view.colors.map((color) => ({
+            ...color,
+            related: color.related?.map((card) => applyResellerToCard(card, resellerPercent)),
+            sizes: color.sizes?.map((size) => ({
+              ...size,
+              displayPrice: resellerPrice(size.price, resellerPercent),
+            })),
+          })),
+        }
+      : view
+
+  return <ProductDetail view={viewForDisplay} initial={initial} />
 }

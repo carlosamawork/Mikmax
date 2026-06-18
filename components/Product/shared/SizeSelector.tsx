@@ -46,7 +46,14 @@ export default function SizeSelector({
           <>
             <span className={s.value}>{current.label}</span>
             <span className={s.price}>
-              {currency === 'EUR' ? FMT.format(current.price) : `${current.price} ${currency}`}
+              {current.displayPrice !== undefined && current.displayPrice < current.price && (
+                <s style={{opacity: 0.5, marginRight: 6}}>
+                  {currency === 'EUR' ? FMT.format(current.price) : `${current.price} ${currency}`}
+                </s>
+              )}
+              {currency === 'EUR'
+                ? FMT.format(current.displayPrice ?? current.price)
+                : `${current.displayPrice ?? current.price} ${currency}`}
             </span>
           </>
         ) : (
@@ -92,7 +99,14 @@ export default function SizeSelector({
               <span className={s.rowIndex} aria-hidden />
               <span className={s.rowLabel}>{sz.label}</span>
               <span className={s.rowPrice}>
-                {currency === 'EUR' ? FMT.format(sz.price) : `${sz.price} ${currency}`}
+                {sz.displayPrice !== undefined && sz.displayPrice < sz.price && (
+                  <s style={{opacity: 0.5, marginRight: 6}}>
+                    {currency === 'EUR' ? FMT.format(sz.price) : `${sz.price} ${currency}`}
+                  </s>
+                )}
+                {currency === 'EUR'
+                  ? FMT.format(sz.displayPrice ?? sz.price)
+                  : `${sz.displayPrice ?? sz.price} ${currency}`}
               </span>
               <button
                 type="button"

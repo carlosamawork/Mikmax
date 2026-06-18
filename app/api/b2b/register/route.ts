@@ -6,6 +6,7 @@ import {checkCompaniesHouse} from '@/lib/b2b/validation/companiesHouse'
 import {isCorporateEmail} from '@/lib/b2b/validation/email'
 import {countryMatchesVat} from '@/lib/b2b/validation/country'
 import {scoreApplication} from '@/lib/b2b/validation/score'
+import {isVerifiableCountry} from '@/lib/b2b/validation/vatPrefixes'
 import {createB2bApplication} from '@/lib/b2b/application'
 import {createApprovedB2bCustomer} from '@/lib/b2b/shopify'
 import {sendEmail} from '@/lib/b2b/email/mailgun'
@@ -21,14 +22,14 @@ export const runtime = 'nodejs'
 function isValidPayload(b: Partial<B2bRegisterInput>): b is B2bRegisterInput {
   return Boolean(
     b &&
-      (b.clientType === 'reseller' || b.clientType === 'designer') &&
-      b.country &&
-      b.legalCompanyName &&
-      b.vatNumber &&
-      b.corporateEmail &&
-      b.fiscalAddress &&
-      b.password &&
-      b.password.length >= 8,
+    (b.clientType === 'reseller' || b.clientType === 'designer') &&
+    b.country &&
+    b.legalCompanyName &&
+    b.vatNumber &&
+    b.corporateEmail &&
+    b.fiscalAddress &&
+    b.password &&
+    b.password.length >= 8,
   )
 }
 
@@ -45,8 +46,12 @@ export async function POST(req: Request) {
     return NextResponse.json({error: 'invalid_payload'}, {status: 400})
   }
 
-  const isUK = input.country.toUpperCase() === 'GB'
-  const vies = isUK ? {valid: false, available: false} : await checkVies(input.vatNumber)
+  const country = input.country.toUpperCase()
+  const verifiable = isVerifiableCountry(country)
+  const isUK = country === 'GB'
+  // VIES solo para UE (verificable y no UK); Companies House solo UK; resto se salta (neutral).
+  const vies =
+    verifiable && !isUK ? await checkVies(input.vatNumber) : {valid: false, available: false}
   const ch = isUK ? await checkCompaniesHouse(input.vatNumber) : {valid: false, available: false}
 
   const vatValid = vies.valid || ch.valid
@@ -59,6 +64,7 @@ export async function POST(req: Request) {
     websitePresent: Boolean(input.companyWebsite),
     countryMatchesVat: countryMatchesVat(input.country, input.vatNumber),
     clientTypeDeclared: Boolean(input.clientType),
+    countryVerifiable: verifiable,
   }
 
   const {score, decision} = scoreApplication(signals)
@@ -109,7 +115,12 @@ export async function POST(req: Request) {
 
   // --- REVIEW ---
   if (decision === 'review') {
-    await createB2bApplication({input, status: 'pending', validationScore: score, internalNotes: notes})
+    await createB2bApplication({
+      input,
+      status: 'pending',
+      validationScore: score,
+      internalNotes: notes,
+    })
     const toCustomer = reviewEmail(input.legalCompanyName)
     await sendEmail({to: input.corporateEmail, ...toCustomer})
     const internal = internalReviewEmail({

@@ -23,5 +23,9 @@ export function scoreApplication(signals: ValidationSignals): ScoreResult {
   if (score >= APPROVE_AT) decision = 'approved'
   else if (score >= REVIEW_AT) decision = 'review'
 
+  // País no verificable (fuera de UE+UK): no se puede validar el VAT, así que nunca
+  // se auto-aprueba ni se auto-rechaza — siempre a revisión manual.
+  if (!signals.countryVerifiable) decision = 'review'
+
   return {score, decision}
 }
