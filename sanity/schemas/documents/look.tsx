@@ -1,6 +1,6 @@
 // sanity/schemas/documents/look.tsx
 import {StackIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import {defineField, defineType, type SanityDocument} from 'sanity'
 
 const GROUPS = [
   {name: 'editorial', title: 'Editorial', default: true},
@@ -17,40 +17,44 @@ export default defineType({
   fields: [
     defineField({
       name: 'title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: (Rule) => Rule.required(),
       group: 'editorial',
     }),
     defineField({
       name: 'slug',
       type: 'slug',
-      options: {source: 'title'},
+      options: {
+        source: (doc: SanityDocument) => {
+          const title = doc.title as {_key: string; value?: string}[] | undefined
+          return title?.find((t) => t._key === 'en')?.value ?? ''
+        },
+      },
       validation: (Rule) => Rule.required(),
       group: 'editorial',
     }),
     defineField({
       name: 'description',
       title: 'Descripción',
-      type: 'text',
-      rows: 3,
+      type: 'internationalizedArrayText',
       group: 'editorial',
     }),
     defineField({
       name: 'propiedadesMaterial',
       title: 'Propiedades del material',
-      type: 'body',
+      type: 'internationalizedArrayBody',
       group: 'editorial',
     }),
     defineField({
       name: 'recomendacionesLavado',
       title: 'Recomendaciones de lavado',
-      type: 'body',
+      type: 'internationalizedArrayBody',
       group: 'editorial',
     }),
     defineField({
       name: 'usoRecomendado',
       title: 'Uso recomendado',
-      type: 'body',
+      type: 'internationalizedArrayBody',
       group: 'editorial',
     }),
     defineField({
@@ -129,9 +133,14 @@ export default defineType({
   preview: {
     select: {title: 'title', media: 'editorialImages.0.image'},
     prepare({title, media}) {
-      return {title, subtitle: 'Look Book', media}
+      const displayTitle = Array.isArray(title)
+        ? (title.find((t: {_key: string; value?: string}) => t._key === 'en')?.value ?? title[0]?.value ?? '')
+        : title
+      return {title: displayTitle, subtitle: 'Look Book', media}
     },
   },
+  // NOTE: ordering by `title` on a localized array field is a Studio-only
+  // degradation (sorts by array reference, not extracted value). Deferred.
   orderings: [
     {name: 'titleAsc', title: 'Título A-Z', by: [{field: 'title', direction: 'asc'}]},
   ],
