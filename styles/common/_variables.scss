@@ -4,7 +4,7 @@ $MonumentGrotesk: 'Monument Grotesk', Helvetica, Arial, sans-serif;
 
 $colors: (
   // text
-  "black": #3f3f3f,
+  "black": #000,
   "white": #fff,
   "lighter": #f8f8f8,
   "darker": #2b2b2b,
@@ -22,7 +22,7 @@ $colors: (
 
   // backgrounds
   "grey-bg": #959595,
-  "black-bg": #2b2b2b,
+  "black-bg": #000,
   "red-bg": #DDDDDD,
   "lightgray-bg": #DDDDDD,
   "lightgrey-bg": #DDDDDD,
@@ -30,7 +30,7 @@ $colors: (
   "header-bg": #DDDDDD,
 
   // borders
-  "black-border": #2b2b2b,
+  "black-border": #000,
   "grey-border": #2b2b2b1a,
 
   // account / forms (Figma tokens)
@@ -115,4 +115,4 @@ $ease-in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 
-$border: px(1) solid rgba(#3f3f3f, 0.1);
+$border: px(1) solid rgba(#000, 0.1);
