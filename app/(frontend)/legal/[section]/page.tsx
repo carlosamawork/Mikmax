@@ -3,12 +3,14 @@ import {notFound} from 'next/navigation'
 import {getLegalPage} from '@/sanity/queries/queries/legal'
 import {siteTitle, siteDescription, localeAlternates, buildUrl} from '@/utils/seoHelper'
 import {urlFor} from '@/sanity/queries'
+import {getLocale} from '@/lib/i18n/getLocale'
 import LegalLayout from '@/components/Legal/LegalLayout'
 
 export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const data = await getLegalPage()
+  const locale = await getLocale()
+  const data = await getLegalPage(locale)
   return (data?.sections ?? []).map((sec) => ({section: sec.slug}))
 }
 
@@ -18,7 +20,8 @@ export async function generateMetadata({
   params: Promise<{section: string}>
 }): Promise<Metadata> {
   const {section: slug} = await params
-  const data = await getLegalPage()
+  const locale = await getLocale()
+  const data = await getLegalPage(locale)
   const section = data?.sections.find((sec) => sec.slug === slug)
   if (!section) return {title: `Not found | ${siteTitle}`}
 
@@ -49,7 +52,8 @@ export default async function LegalSectionPage({
   params: Promise<{section: string}>
 }) {
   const {section: slug} = await params
-  const data = await getLegalPage()
+  const locale = await getLocale()
+  const data = await getLegalPage(locale)
   if (!data) notFound()
   const section = data.sections.find((sec) => sec.slug === slug)
   if (!section) notFound()

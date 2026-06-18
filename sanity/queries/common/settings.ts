@@ -9,6 +9,7 @@ import type {
   FooterColumnShop,
   FooterCollectionParent,
 } from '@/sanity/types'
+import type {Locale} from '@/lib/i18n/config'
 import {seo} from '../fragments/seo'
 
 // Everything below is inlined (no fragment interpolation) on purpose. Once
@@ -64,7 +65,7 @@ async function fetchCollectionTree(): Promise<CollectionTreeParent[]> {
   }))
 }
 
-export async function getSettings(): Promise<SettingsData> {
+export async function getSettings(lang: Locale = 'en'): Promise<SettingsData> {
   const result = await client.fetch<SettingsData | null>(
     groq`*[_type == "settings"][0]{
       menu{
@@ -137,7 +138,7 @@ export async function getSettings(): Promise<SettingsData> {
       },
       seo{ ${seo} }
     }`,
-    {},
+    {lang},
     {next: {tags: ['settings'], revalidate: 3600}},
   )
 

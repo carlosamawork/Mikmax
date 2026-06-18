@@ -4,6 +4,7 @@ import {getSet, getSetSlugs, getSetSEO} from '@/sanity/queries/queries/set'
 import {getProductDetail, getProductCards} from '@/lib/shopify'
 import {buildSetView} from '@/lib/set/buildSetView'
 import {siteTitle, localeAlternates, buildUrl} from '@/utils/seoHelper'
+import {getLocale} from '@/lib/i18n/getLocale'
 import LookDetail from '@/components/Look/LookDetail'
 
 export const revalidate = 300
@@ -19,7 +20,8 @@ export async function generateMetadata({
   params: Promise<{slug: string}>
 }): Promise<Metadata> {
   const {slug} = await params
-  const data = await getSetSEO(slug)
+  const locale = await getLocale()
+  const data = await getSetSEO(slug, locale)
   if (!data) return {title: `Set not found | ${siteTitle}`}
   const seo = (data.seo ?? {}) as {title?: string; description?: string}
   const title = seo.title || data.title
@@ -34,7 +36,8 @@ export async function generateMetadata({
 
 export default async function SetPage({params}: {params: Promise<{slug: string}>}) {
   const {slug} = await params
-  const set = await getSet(slug)
+  const locale = await getLocale()
+  const set = await getSet(slug, locale)
   if (!set) notFound()
 
   // Unique product handles across components, fetched live from Shopify in parallel.

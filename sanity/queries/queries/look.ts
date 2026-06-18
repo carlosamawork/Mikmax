@@ -1,6 +1,7 @@
 // sanity/queries/queries/look.ts
 import {groq} from 'next-sanity'
 import {client} from '..'
+import type {Locale} from '@/lib/i18n/config'
 import {image} from '../fragments/image'
 import {seo} from '../fragments/seo'
 
@@ -68,10 +69,10 @@ export type SanityLookDoc = {
   relatedProducts: Array<{handle: string | null}> | null
 }
 
-export async function getLook(slug: string): Promise<SanityLookDoc | null> {
+export async function getLook(slug: string, lang: Locale): Promise<SanityLookDoc | null> {
   const doc = await client.fetch<SanityLookDoc | null>(
     LOOK_BY_SLUG_QUERY,
-    {slug},
+    {slug, lang},
     // Lee product->store… (componentes y relatedProducts): suscribirse a `product`.
     {next: {tags: ['look', 'product', `look:${slug}`], revalidate: 3600}},
   )
@@ -87,10 +88,10 @@ export async function getLookSlugs(): Promise<string[]> {
   return slugs ?? []
 }
 
-export async function getLookSEO(slug: string) {
+export async function getLookSEO(slug: string, lang: Locale) {
   return client.fetch(
     groq`*[_type == "look" && slug.current == $slug && !(_id in path('drafts.**'))][0]{ "seo": seo{ ${seo} }, title }`,
-    {slug},
+    {slug, lang},
     {next: {tags: ['look', `look:${slug}`], revalidate: 3600}},
   )
 }

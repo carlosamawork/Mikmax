@@ -1,6 +1,7 @@
 // sanity/queries/queries/set.ts
 import {groq} from 'next-sanity'
 import {client} from '..'
+import type {Locale} from '@/lib/i18n/config'
 import {image} from '../fragments/image'
 import {seo} from '../fragments/seo'
 import type {SanityLookDoc} from './look'
@@ -41,10 +42,10 @@ export const SET_BY_SLUG_QUERY = groq`
   }
 `
 
-export async function getSet(slug: string): Promise<SanitySetDoc | null> {
+export async function getSet(slug: string, lang: Locale): Promise<SanitySetDoc | null> {
   const doc = await client.fetch<SanitySetDoc | null>(
     SET_BY_SLUG_QUERY,
-    {slug},
+    {slug, lang},
     // Lee product->store… (componentes y relatedProducts): suscribirse a `product`.
     {next: {tags: ['set', 'product', `set:${slug}`], revalidate: 3600}},
   )
@@ -60,10 +61,10 @@ export async function getSetSlugs(): Promise<string[]> {
   return slugs ?? []
 }
 
-export async function getSetSEO(slug: string) {
+export async function getSetSEO(slug: string, lang: Locale) {
   return client.fetch(
     groq`*[_type == "set" && slug.current == $slug && !(_id in path('drafts.**'))][0]{ "seo": seo{ ${seo} }, title }`,
-    {slug},
+    {slug, lang},
     {next: {tags: ['set', `set:${slug}`], revalidate: 3600}},
   )
 }

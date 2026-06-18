@@ -4,6 +4,7 @@ import {Breadcrumb} from '@/components/Common'
 import {PageBuilder} from '@/components/PageBuilder'
 import {getPage, getPageSlugs} from '@/sanity/queries/queries/page'
 import {siteTitle, siteDescription, localeAlternates, buildUrl} from '@/utils/seoHelper'
+import {getLocale} from '@/lib/i18n/getLocale'
 
 export const revalidate = 3600
 
@@ -19,7 +20,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const {slug} = await params
   const handle = slug?.join('/') ?? ''
-  const page = await getPage(handle)
+  const locale = await getLocale()
+  const page = await getPage(handle, locale)
   if (!page) return {title: `Not found | ${siteTitle}`}
 
   const title = page.seo?.title || page.title
@@ -47,7 +49,8 @@ export async function generateMetadata({
 export default async function CatchAllPage({params}: {params: Promise<{slug: string[]}>}) {
   const {slug} = await params
   const handle = slug?.join('/') ?? ''
-  const page = await getPage(handle)
+  const locale = await getLocale()
+  const page = await getPage(handle, locale)
 
   // Slug desconocido → conserva el comportamiento previo (redirección a home).
   if (!page) permanentRedirect('/')
