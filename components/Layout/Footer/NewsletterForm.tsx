@@ -15,14 +15,23 @@ const DEFAULT_COPY: Dictionary['newsletter'] = {
 }
 
 export default function NewsletterForm({
-  title = 'Keep in touch',
-  subtitle = 'Subscribe to our newsletter to get the latest updates on new releases, pre-orders, and exclusive content.',
-  placeholder = 'Enter your email',
-  buttonLabel = 'Subscribe',
+  title,
+  subtitle,
+  placeholder,
+  buttonLabel,
   copy = DEFAULT_COPY,
 }: NewsletterFormProps & {copy?: Dictionary['newsletter']}) {
   const [email, setEmail] = useState('')
   const {status, subscribe} = useNewsletterSubscribe()
+
+  // Fall back when the CMS value is null/empty (a JS default param only covers undefined,
+  // but the localized GROQ projection returns null when the field is unset in Sanity).
+  const titleText = title || 'Keep in touch'
+  const subtitleText =
+    subtitle ||
+    'Subscribe to our newsletter to get the latest updates on new releases, pre-orders, and exclusive content.'
+  const placeholderText = placeholder || 'Enter your email'
+  const buttonText = buttonLabel || 'Subscribe'
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -32,8 +41,8 @@ export default function NewsletterForm({
 
   return (
     <form className={s.form} onSubmit={onSubmit} noValidate>
-      <p className={s.title}>{title}</p>
-      <p className={s.subtitle}>{subtitle}</p>
+      <p className={s.title}>{titleText}</p>
+      <p className={s.subtitle}>{subtitleText}</p>
 
       <label htmlFor="newsletter-email" className={s.srOnly}>
         {copy.emailLabel}
@@ -45,7 +54,7 @@ export default function NewsletterForm({
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder={placeholder}
+          placeholder={placeholderText}
           className={s.input}
           disabled={status === 'submitting' || status === 'success'}
         />
@@ -54,7 +63,7 @@ export default function NewsletterForm({
           className={s.button}
           disabled={status === 'submitting' || status === 'success' || !email}
         >
-          {status === 'submitting' ? '…' : buttonLabel}
+          {status === 'submitting' ? '…' : buttonText}
         </button>
       </div>
 
