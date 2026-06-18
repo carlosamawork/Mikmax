@@ -1,4 +1,6 @@
 import type {Metadata} from 'next'
+import {isI18nEnabled} from '@/lib/i18n/config'
+import {localizedHref} from '@/lib/i18n/localizedHref'
 
 // lib/seoHelper.js
 
@@ -90,4 +92,16 @@ export function formatSlug(slug: string) {
 	return slug
 		.replace(/[-_]/g, ' ')
 		.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+export function localeAlternates(path: string) {
+  const canonical = buildUrl(path)
+  if (!isI18nEnabled()) return {canonical}
+  return {
+    canonical,
+    languages: {
+      en: buildUrl(localizedHref(path, 'en')),
+      es: buildUrl(localizedHref(path, 'es')),
+    },
+  }
 }
