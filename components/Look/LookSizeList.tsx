@@ -1,18 +1,24 @@
 import {LazyImage} from '@/components/Common'
 import type {LookComponentView} from '@/types/look'
+import {formatMoney} from '@/lib/money'
 import s from './LookSizeList.module.scss'
 
 interface Props {
   components: LookComponentView[]
   selected: (string | undefined)[]
   onSelect: (componentIndex: number, size: string) => void
+  currency: string
 }
 
 // Shared list of the look's pieces and their selectable sizes. The size rows
 // mirror the PDP SizeSelector (44px index rail, #f0f0f0 Select button, selected
 // row turns #f7f7f7 with index + button flipped to white). Each piece adds a
 // header with the product thumbnail, since a look spans several products.
-export default function LookSizeList({components, selected, onSelect}: Props) {
+export default function LookSizeList({components, selected, onSelect, currency}: Props) {
+  // Client component: locale flag is OFF in production so 'en' is correct today.
+  // Locale-threading is deferred to a later pass.
+  const fmt = (n: number) => formatMoney({amount: n, currencyCode: currency}, 'en')
+
   return (
     <div className={s.list}>
       {components.map((comp, i) => (
@@ -48,7 +54,7 @@ export default function LookSizeList({components, selected, onSelect}: Props) {
               >
                 <span className={s.sizeIndex} aria-hidden />
                 <span className={s.sizeName}>{opt.size}</span>
-                <span className={s.sizePrice}>€{opt.price.toFixed(2)}</span>
+                <span className={s.sizePrice}>{fmt(opt.price)}</span>
                 <button
                   type="button"
                   className={s.sizeSelect}

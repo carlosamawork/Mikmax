@@ -5,6 +5,7 @@ import {applyLookDiscount} from '@/lib/look/buildLookView'
 import {findVariantBaseGids, type ShopifyProductNode} from '@/lib/shop/expandToCards'
 import {productMaterialSlugs, type ProductWithMaterials} from '@/lib/shop/materialFilter'
 import {extractSelectedColorGids, slugify} from '@/lib/shop/searchParams'
+import {getLocale} from '@/lib/i18n/getLocale'
 import type {FilterDefinition, ShopSearchParams} from '@/types/shop'
 import type {LookArchiveItem} from '@/types/look'
 
@@ -121,7 +122,8 @@ export async function getLookArchiveItems(
   params: ShopSearchParams,
   facets: FilterDefinition[],
 ): Promise<LookArchiveItem[]> {
-  const looks = await getAllLooks()
+  const lang = await getLocale()
+  const looks = await getAllLooks(lang)
   const handles = Array.from(
     new Set(
       looks.flatMap((l) =>

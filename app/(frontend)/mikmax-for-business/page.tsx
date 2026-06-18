@@ -4,6 +4,7 @@ import {B2bHero} from '@/components/B2B'
 import PageBuilder from '@/components/PageBuilder/PageBuilder'
 import {getMikmaxForBusiness} from '@/sanity/queries/queries/mikmaxForBusiness'
 import {urlFor} from '@/sanity/queries'
+import {getLocale} from '@/lib/i18n/getLocale'
 import {B2B_ENABLED} from '@/lib/b2b/flag'
 import s from './B2b.module.scss'
 
@@ -17,7 +18,8 @@ const HERO_IMAGE = '/images/b2b/hero.jpg'
 
 export default async function B2bLandingPage() {
   if (!B2B_ENABLED) notFound()
-  const data = await getMikmaxForBusiness()
+  const locale = await getLocale()
+  const data = await getMikmaxForBusiness(locale)
 
   const heroImage = data?.heroImage
   const heroSrc = heroImage?.ref

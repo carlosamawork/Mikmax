@@ -9,7 +9,9 @@ import type {
   FooterColumnShop,
   FooterCollectionParent,
 } from '@/sanity/types'
+import type {Locale} from '@/lib/i18n/config'
 import {seo} from '../fragments/seo'
+import {localizedField} from '@/lib/i18n/groq'
 
 // Everything below is inlined (no fragment interpolation) on purpose. Once
 // linkResolved/linkInternalHref were interpolated 3-4 levels deep with
@@ -64,7 +66,7 @@ async function fetchCollectionTree(): Promise<CollectionTreeParent[]> {
   }))
 }
 
-export async function getSettings(): Promise<SettingsData> {
+export async function getSettings(lang: Locale = 'en'): Promise<SettingsData> {
   const result = await client.fetch<SettingsData | null>(
     groq`*[_type == "settings"][0]{
       menu{
@@ -74,7 +76,7 @@ export async function getSettings(): Promise<SettingsData> {
           title,
           url,
           newWindow,
-          label,
+          ${localizedField('label')},
           "ref": reference->{ _type, "slug": coalesce(store.slug.current, slug.current) },
           items[]{
             _key,
@@ -94,15 +96,20 @@ export async function getSettings(): Promise<SettingsData> {
       },
       banner{
         enabled,
-        text,
+        ${localizedField('text')},
         url
       },
       footer{
-        newsletter,
+        newsletter{
+          ${localizedField('title')},
+          ${localizedField('body')},
+          ${localizedField('placeholder')},
+          ${localizedField('buttonLabel')}
+        },
         columns[]{
           _key,
           _type,
-          title,
+          ${localizedField('title')},
           links[]{
             _key,
             _type,
@@ -123,7 +130,7 @@ export async function getSettings(): Promise<SettingsData> {
         regions[]{
           _key,
           code,
-          label,
+          ${localizedField('label')},
           currency,
           isDefault
         }
@@ -131,13 +138,13 @@ export async function getSettings(): Promise<SettingsData> {
       newsletterPopup{
         enabled,
         image{ "imageUrl": asset->url, "alt": alt },
-        heading,
-        legalText,
+        ${localizedField('heading')},
+        ${localizedField('legalText')},
         delaySeconds
       },
       seo{ ${seo} }
     }`,
-    {},
+    {lang},
     {next: {tags: ['settings'], revalidate: 3600}},
   )
 

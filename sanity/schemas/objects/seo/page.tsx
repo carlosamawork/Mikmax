@@ -10,14 +10,14 @@ export default defineField({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: (Rule) =>
         Rule.max(50).warning('Longer titles may be truncated by search engines'),
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'seo.description',
+      type: 'internationalizedArrayText',
     }),
     defineField({
       name: 'image',

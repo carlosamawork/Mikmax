@@ -20,7 +20,7 @@ export default defineField({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: (Rule) => Rule.required(),
       group: 'editorial',
     }),
@@ -28,7 +28,14 @@ export default defineField({
     defineField({
         name: 'slug',
         type: 'slug',
-        options: {source: 'title'},
+        options: {
+          source: (doc) => {
+            const title = doc?.title as
+              | {_key: string; value?: string}[]
+              | undefined
+            return title?.find((t) => t._key === 'en')?.value ?? ''
+          },
+        },
         // @ts-ignore - TODO - fix this TS error
         validation: validateSlug,
         group: 'editorial',
@@ -58,7 +65,7 @@ export default defineField({
     defineField({
       name: 'content',
       title: 'Contenido',
-      type: 'body',
+      type: 'internationalizedArrayBody',
       group: 'editorial',
     }),
     defineField({
@@ -104,12 +111,19 @@ export default defineField({
     prepare(selection) {
       let {title, order} = selection
 
+      const titleText =
+        (Array.isArray(title)
+          ? title.find((t) => t._key === 'en')?.value
+          : title) ?? ''
+
+      let displayTitle = titleText
+
       if (order) {
-        title = `${order}. ${title}`
-      } 
-      
+        displayTitle = `${order}. ${displayTitle}`
+      }
+
       return {
-        title,
+        title: displayTitle,
       }
     },
   },

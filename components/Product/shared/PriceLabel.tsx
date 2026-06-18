@@ -1,32 +1,23 @@
+import {formatMoney} from '@/lib/money'
+import type {Locale} from '@/lib/i18n/config'
+
 interface Props {
   min: number
   max?: number
   currency: string
+  locale?: Locale
   // Precio original (tachado) cuando hay descuento B2B aplicado al display.
   compareMin?: number
 }
 
-const FMT = new Intl.NumberFormat('es-ES', {
-  style: 'currency',
-  currency: 'EUR',
-  maximumFractionDigits: 0,
-})
-
-export default function PriceLabel({min, max, currency, compareMin}: Props) {
-  if (currency !== 'EUR') {
-    return (
-      <span>
-        {min}
-        {max && max !== min ? ` - ${max}` : ''} {currency}
-      </span>
-    )
-  }
-  const minStr = FMT.format(min)
-  const priceStr = max === undefined || max === min ? minStr : `${minStr} - ${FMT.format(max)}`
+export default function PriceLabel({min, max, currency, locale = 'en', compareMin}: Props) {
+  const fmt = (n: number) => formatMoney({amount: n, currencyCode: currency}, locale)
+  const minStr = fmt(min)
+  const priceStr = max === undefined || max === min ? minStr : `${minStr} - ${fmt(max)}`
   if (typeof compareMin === 'number' && compareMin > min) {
     return (
       <span>
-        <s style={{opacity: 0.5, marginRight: 8}}>{FMT.format(compareMin)}</s>
+        <s style={{opacity: 0.5, marginRight: 8}}>{fmt(compareMin)}</s>
         {priceStr}
       </span>
     )

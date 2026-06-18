@@ -5,14 +5,16 @@ import {useEffect, useRef, useState} from 'react'
 import Link from 'next/link'
 import s from './AnnouncementBanner.module.scss'
 import type {AnnouncementBanner} from '@/sanity/types'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 
 interface Props {
   data?: AnnouncementBanner
+  copy: Dictionary['banner']
 }
 
 const STORAGE_KEY = 'mikmax_banner_dismissed_text'
 
-export default function AnnouncementBanner({data}: Props) {
+export default function AnnouncementBanner({data, copy}: Props) {
   const text = data?.text ?? ''
   const enabled = !!data?.enabled && !!text
   const url = data?.url
@@ -40,7 +42,7 @@ export default function AnnouncementBanner({data}: Props) {
     }
     const node = bannerRef.current
     const h = node?.offsetHeight ?? 21
-    root.style.setProperty('--announcement-height', `${h+3}px`)
+    root.style.setProperty('--announcement-height', `${h + 3}px`)
     window.dispatchEvent(new Event('scroll'))
     return () => {
       root.style.setProperty('--announcement-height', '0px')
@@ -76,13 +78,13 @@ export default function AnnouncementBanner({data}: Props) {
   })()
 
   return (
-    <div ref={bannerRef} className={s.banner} role="region" aria-label="Site announcement">
+    <div ref={bannerRef} className={s.banner} role="region" aria-label={copy.regionAriaLabel}>
       <div className={s.body}>{inner}</div>
       <button
         type="button"
         className={s.close}
         onClick={handleClose}
-        aria-label="Cerrar banner"
+        aria-label={copy.closeLabel}
       >
         ×
       </button>

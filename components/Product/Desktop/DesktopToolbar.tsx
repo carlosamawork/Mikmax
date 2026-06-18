@@ -6,6 +6,7 @@ import ColorSwatches from '../shared/ColorSwatches'
 import SizeSelector from '../shared/SizeSelector'
 import {useWishlistItem} from '@/context/wishlistContext'
 import type {ProductView, ProductColor} from '@/types/product'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 import s from './DesktopToolbar.module.scss'
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
   onToggleInfo: () => void
   isInfoOpen: boolean
   onAddToCart: () => void
+  pdpCopy: Dictionary['pdp']
 }
 
 export default function DesktopToolbar({
@@ -30,6 +32,7 @@ export default function DesktopToolbar({
   onToggleInfo,
   isInfoOpen,
   onAddToCart,
+  pdpCopy,
 }: Props) {
   const canAddToCart =
     !!selectedSize && !!currentColor.sizes.find((sz) => sz.label === selectedSize)?.availableForSale
@@ -58,7 +61,7 @@ export default function DesktopToolbar({
 
       <div className={s.variantBlock}>
         <div className={s.variantRow}>
-          <div className={[s.variantLabel, s.variantLabelSize].join(' ')}>Size:</div>
+          <div className={[s.variantLabel, s.variantLabelSize].join(' ')}>{pdpCopy.sizeLabel}</div>
           <SizeSelector
             sizes={currentColor.sizes}
             selected={selectedSize}
@@ -67,11 +70,12 @@ export default function DesktopToolbar({
             hideLabel
             widePanel
             productSubtitle={view.title}
+            copy={pdpCopy}
           />
         </div>
         <div className={s.variantRow}>
           <div className={[s.variantLabel, s.variantLabelColor].join(' ')}>
-            <span>Colors:</span>
+            <span>{pdpCopy.colorsLabel}</span>
             <span className={s.hoverName}>{hoveredLabel ?? ''}</span>
           </div>
           <ColorSwatches
@@ -85,12 +89,12 @@ export default function DesktopToolbar({
 
       <button type="button" className={s.infoBlock} onClick={onToggleInfo}>
         <div className={s.infoTitle}>
-          {isInfoOpen ? 'Close Information' : 'Product Information'}
+          {isInfoOpen ? pdpCopy.closeInformation : pdpCopy.productInformation}
         </div>
         <div className={s.infoMeta}>
-          Complimentary gift wrapping
+          {pdpCopy.giftWrapping}
           <br />
-          30-day returns
+          {pdpCopy.returns}
         </div>
       </button>
 
@@ -100,7 +104,7 @@ export default function DesktopToolbar({
         onClick={onAddToCart}
         disabled={!canAddToCart}
       >
-        {canAddToCart ? 'Add to Cart' : 'Please Select Size'}
+        {canAddToCart ? pdpCopy.addToCart : pdpCopy.selectSizeCta}
       </button>
 
       <span className={s.favoriteWrap}>
@@ -109,7 +113,7 @@ export default function DesktopToolbar({
           className={s.favorite}
           onClick={fav.onClick}
           aria-pressed={fav.active}
-          aria-label={fav.active ? 'Remove from wishlist' : 'Add to wishlist'}
+          aria-label={fav.active ? pdpCopy.removeFromWishlist : pdpCopy.addToWishlist}
         >
           <svg viewBox="0 0 7 9" fill="none" aria-hidden>
             <path
@@ -121,9 +125,9 @@ export default function DesktopToolbar({
         {fav.hint && (
           <span className={s.favoriteHint} role="alert">
             <Link href="/login" className={s.favoriteHintLink}>
-              Log in
+              {pdpCopy.logIn}
             </Link>{' '}
-            to save it
+            {pdpCopy.logInToSave}
           </span>
         )}
       </span>

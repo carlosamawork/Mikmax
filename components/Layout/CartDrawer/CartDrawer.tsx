@@ -7,6 +7,8 @@ import {getStoreCurrency} from '@/lib/analytics/item'
 import {prepareCheckout} from '@/app/(frontend)/checkout/actions'
 import type {CartCost} from '@/types/cart'
 import {nextTierNudge} from '@/lib/b2b/cartCost'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
+import {formatMoney} from '@/lib/money'
 import s from './CartDrawer.module.scss'
 
 type CartItem = {
@@ -33,17 +35,21 @@ type CartCtx = {
   b2bCartContext?: {isDesigner: boolean; designerTiers: {minSubtotal: number; percent: number}[]}
 }
 
-const FMT = new Intl.NumberFormat('es-ES', {
-  style: 'currency',
-  currency: 'EUR',
-  maximumFractionDigits: 0,
-})
+interface Props {
+  copy: Dictionary['cart']
+}
 
-export default function CartDrawer() {
+export default function CartDrawer({copy}: Props) {
   const ctx = useContext<CartCtx>(CartContext as unknown as React.Context<CartCtx>)
   const cart = ctx?.cart ?? []
   const open = !!ctx?.cartOpen
   const close = () => ctx?.setCartOpen?.(false)
+
+  // Client component: locale flag is OFF in production so 'en' is correct today.
+  // Locale-threading is deferred to a later pass.
+  // Currency comes from cartCost (Shopify) or falls back to getStoreCurrency().
+  const currency = ctx?.cartCost?.currency ?? getStoreCurrency()
+  const fmt = (n: number) => formatMoney({amount: n, currencyCode: currency}, 'en')
 
   useEffect(() => {
     if (!open) return
@@ -87,19 +93,22 @@ export default function CartDrawer() {
   }
 
   return (
-    <div className={s.drawer} role="dialog" aria-modal="true" aria-label="Cart">
+    <div className={s.drawer} role="dialog" aria-modal="true" aria-label={copy.title}>
       <header className={s.header}>
         <span className={s.title}>
-          <span className={s.titleDesktop}>Cart</span>
-          <span className={s.titleMobile}>Cart [ {itemCount} ]</span>
+          <span className={s.titleDesktop}>{copy.title}</span>
+          <span className={s.titleMobile}>{copy.title} [ {itemCount} ]</span>
         </span>
-        <button type="button" className={s.close} onClick={close} aria-label="Close cart">
-          Close
+        <button type="button" className={s.close} onClick={close} aria-label={copy.closeLabel}>
+          {copy.close}
         </button>
       </header>
 
-      <ul className={s.items} aria-label={`${itemCount} item${itemCount === 1 ? '' : 's'} in cart`}>
-        {cart.length === 0 && <li className={s.empty}>Your cart is empty.</li>}
+      <ul
+        className={s.items}
+        aria-label={`${itemCount} item${itemCount === 1 ? '' : 's'} in cart`}
+      >
+        {cart.length === 0 && <li className={s.empty}>{copy.empty}</li>}
         {cart.map((item, idx) => (
           <li
             key={item.store.gid}
@@ -135,7 +144,7 @@ export default function CartDrawer() {
               <button
                 type="button"
                 onClick={() => changeQty(item, -1)}
-                aria-label="Decrease quantity"
+                aria-label={copy.decreaseQuantity}
                 className={s.qtyBtn}
               >
                 −
@@ -144,7 +153,7 @@ export default function CartDrawer() {
               <button
                 type="button"
                 onClick={() => changeQty(item, 1)}
-                aria-label="Increase quantity"
+                aria-label={copy.increaseQuantity}
                 className={s.qtyBtn}
               >
                 +
@@ -153,7 +162,7 @@ export default function CartDrawer() {
 
             <div className={s.price}>
               {typeof item.price === 'number'
-                ? FMT.format(item.price * (item.variantQuantity ?? 1))
+                ? fmt(item.price * (item.variantQuantity ?? 1))
                 : '—'}
             </div>
 
@@ -161,7 +170,7 @@ export default function CartDrawer() {
               type="button"
               className={s.remove}
               onClick={() => ctx?.removeCartItem?.(item.store.gid)}
-              aria-label="Remove item"
+              aria-label={copy.removeItem}
             >
               ×
             </button>
@@ -173,13 +182,13 @@ export default function CartDrawer() {
         {ctx?.cartCost && (
           <div className={s.summary}>
             <div className={s.summaryRow}>
-              <span>Subtotal</span>
-              <span>{FMT.format(ctx.cartCost.subtotal)}</span>
+              <span>{copy.subtotal}</span>
+              <span>{fmt(ctx.cartCost.subtotal)}</span>
             </div>
             {ctx.cartCost.discount > 0 && (
               <div className={`${s.summaryRow} ${s.summaryDiscount}`}>
                 <span>{ctx.cartCost.discountTitle ?? 'Descuento'}</span>
-                <span>−{FMT.format(ctx.cartCost.discount)}</span>
+                <span>−{fmt(ctx.cartCost.discount)}</span>
               </div>
             )}
             {ctx?.b2bCartContext?.isDesigner &&
@@ -196,19 +205,19 @@ export default function CartDrawer() {
                 return (
                   <div className={`${s.summaryRow} ${s.nudge}`}>
                     {nudge
-                      ? `Añade ${FMT.format(nudge.gap)} más para alcanzar el ${nudge.percent}%`
+                      ? `Añade ${fmt(nudge.gap)} más para alcanzar el ${nudge.percent}%`
                       : `Tienes el descuento profesional máximo (${maxPercent}%)`}
                   </div>
                 )
               })()}
             <div className={`${s.summaryRow} ${s.summaryTotal}`}>
-              <span>Total</span>
-              <span>{FMT.format(ctx.cartCost.total)}</span>
+              <span>{copy.total}</span>
+              <span>{fmt(ctx.cartCost.total)}</span>
             </div>
           </div>
         )}
         <button type="button" className={s.viewItems} onClick={close}>
-          View Items
+          {copy.viewItems}
         </button>
         <button
           type="button"
@@ -216,7 +225,7 @@ export default function CartDrawer() {
           onClick={goCheckout}
           disabled={!ctx?.checkoutUrl || cart.length === 0}
         >
-          Go to Checkout
+          {copy.goToCheckout}
         </button>
       </footer>
     </div>

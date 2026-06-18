@@ -1,6 +1,7 @@
 // sanity/schemas/objects/blocks/setModule.ts
 import {StackCompactIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {enText} from '../i18n/enText'
 
 export default defineType({
   name: 'block.setModule',
@@ -11,12 +12,12 @@ export default defineType({
     defineField({
       name: 'title',
       title: 'Título',
-      type: 'string',
+      type: 'internationalizedArrayString',
     }),
     defineField({
       name: 'subtitle',
       title: 'Subtítulo',
-      type: 'string',
+      type: 'internationalizedArrayString',
     }),
     defineField({
       name: 'product',
@@ -56,8 +57,8 @@ export default defineType({
     },
     prepare({title, subtitle, media, productTitle}) {
       return {
-        title: title || 'Módulo Set',
-        subtitle: subtitle || (productTitle ? `→ ${productTitle}` : 'Sin subtítulo'),
+        title: enText(title as unknown) || 'Módulo Set',
+        subtitle: enText(subtitle as unknown) || (productTitle ? `→ ${productTitle}` : 'Sin subtítulo'),
         media,
       }
     },

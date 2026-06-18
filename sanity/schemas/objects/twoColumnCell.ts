@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {enText} from './i18n/enText'
 
 export default defineType({
   name: 'twoColumnCell',
@@ -23,7 +24,7 @@ export default defineType({
     defineField({
       name: 'body',
       title: 'Texto',
-      type: 'body',
+      type: 'internationalizedArrayBody',
       hidden: ({parent}) => parent?.kind !== 'text',
     }),
     // --- Media ---
@@ -63,7 +64,7 @@ export default defineType({
     defineField({
       name: 'caption',
       title: 'Rótulo (opc)',
-      type: 'string',
+      type: 'internationalizedArrayString',
       description: 'Texto superpuesto sobre la imagen/vídeo. Vacío = sin rótulo.',
       hidden: ({parent}) => parent?.kind !== 'media',
     }),
@@ -100,9 +101,15 @@ export default defineType({
     select: {kind: 'kind', caption: 'caption', media: 'image', body: 'body'},
     prepare({kind, caption, media, body}) {
       if (kind === 'media') {
-        return {title: 'Celda media', subtitle: caption || '(sin rótulo)', media}
+        return {title: 'Celda media', subtitle: enText(caption as unknown) || '(sin rótulo)', media}
       }
-      const firstBlock = Array.isArray(body) ? body[0] : null
+      // body is internationalizedArrayBody: [{_key:'en', value:[blocks...]}, ...]
+      const bodyArr = body as {_key?: string; value?: unknown}[] | null
+      const langEntry = Array.isArray(bodyArr)
+        ? (bodyArr.find((v) => v?._key === 'en') ?? bodyArr[0])
+        : null
+      const blocks = Array.isArray(langEntry?.value) ? (langEntry.value as {children?: {text?: string}[]}[]) : []
+      const firstBlock = blocks[0] ?? null
       const text =
         firstBlock?.children
           ?.map((c: {text?: string}) => c.text)

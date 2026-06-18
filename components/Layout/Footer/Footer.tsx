@@ -118,10 +118,11 @@ function ShopColumn({
   )
 }
 
-export default function Footer({data}: FooterProps) {
+export default function Footer({data, footerCopy, newsletterCopy}: FooterProps) {
   const newsletter = data?.newsletter
   const columns: FooterColumnAny[] = data?.columns ?? []
   const regions = data?.regions ?? []
+  const regionLabel = footerCopy?.regionLabel ?? 'Country: {label} ({currency})'
 
   return (
     <footer className={s.footer}>
@@ -132,6 +133,7 @@ export default function Footer({data}: FooterProps) {
             subtitle={newsletter?.body}
             placeholder={newsletter?.placeholder}
             buttonLabel={newsletter?.buttonLabel}
+            copy={newsletterCopy}
           />
           <span className={s.copyright}>© {new Date().getFullYear()} Mikmax</span>
         </div>
@@ -162,7 +164,7 @@ export default function Footer({data}: FooterProps) {
           })}
 
           <div className={s.regionWrap}>
-            <RegionSelector regions={regions} />
+            <RegionSelector regions={regions} regionLabel={regionLabel} />
           </div>
         </div>
       </div>

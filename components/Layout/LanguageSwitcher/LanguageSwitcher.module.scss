@@ -1,0 +1,16 @@
+.switcher {
+  display: inline-flex;
+  gap: 8px;
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.5;
+
+    &[aria-pressed='true'] {
+      opacity: 1;
+      font-weight: 700;
+    }
+  }
+}

@@ -1,9 +1,10 @@
-import { imageData } from "../primitives/imageData";
-import { imageSize } from "../primitives/imageSize";
+import {localizedField} from '@/lib/i18n/groq'
+import {imageData} from '../primitives/imageData'
+import {imageSize} from '../primitives/imageSize'
 
 export const seo = `
-    title,
-    description,
+    ${localizedField('title')},
+    ${localizedField('description')},
     image{
         ${imageData},
         ${imageSize}

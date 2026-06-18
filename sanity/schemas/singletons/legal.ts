@@ -1,5 +1,6 @@
 import {DocumentTextIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {enText} from '../objects/i18n/enText'
 
 const TITLE = 'Legal Page'
 
@@ -16,9 +17,7 @@ export default defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
-      initialValue: 'Legal',
-      validation: (Rule) => Rule.required(),
+      type: 'internationalizedArrayString',
       group: 'editorial',
     }),
     defineField({
@@ -37,8 +36,7 @@ export default defineType({
             defineField({
               name: 'title',
               title: 'Title',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
+              type: 'internationalizedArrayString',
             }),
             defineField({
               name: 'slug',
@@ -50,7 +48,7 @@ export default defineType({
             defineField({
               name: 'body',
               title: 'Body',
-              type: 'body',
+              type: 'internationalizedArrayBody',
             }),
             defineField({
               name: 'seo',
@@ -60,6 +58,9 @@ export default defineType({
           ],
           preview: {
             select: {title: 'title', subtitle: 'slug.current'},
+            prepare({title, subtitle}) {
+              return {title: enText(title as unknown) || 'Untitled', subtitle}
+            },
           },
         }),
       ],

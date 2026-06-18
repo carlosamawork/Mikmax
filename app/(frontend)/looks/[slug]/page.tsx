@@ -3,7 +3,8 @@ import {notFound} from 'next/navigation'
 import {getLook, getLookSlugs, getLookSEO} from '@/sanity/queries/queries/look'
 import {getProductDetail, getProductCards} from '@/lib/shopify'
 import {buildLookView} from '@/lib/look/buildLookView'
-import {BASE_URL, siteTitle} from '@/utils/seoHelper'
+import {siteTitle, localeAlternates, buildUrl} from '@/utils/seoHelper'
+import {getLocale} from '@/lib/i18n/getLocale'
 import LookDetail from '@/components/Look/LookDetail'
 
 export const revalidate = 300
@@ -19,22 +20,24 @@ export async function generateMetadata({
   params: Promise<{slug: string}>
 }): Promise<Metadata> {
   const {slug} = await params
-  const data = await getLookSEO(slug)
+  const locale = await getLocale()
+  const data = await getLookSEO(slug, locale)
   if (!data) return {title: `Look not found | ${siteTitle}`}
   const seo = (data.seo ?? {}) as {title?: string; description?: string}
   const title = seo.title || data.title
-  const canonical = `${BASE_URL.origin}/looks/${slug}`
+  const lookPath = '/looks/' + slug
   return {
     title: `${title} | ${siteTitle}`,
     description: seo.description,
-    alternates: {canonical},
-    openGraph: {title, description: seo.description, url: canonical},
+    alternates: localeAlternates(lookPath),
+    openGraph: {title, description: seo.description, url: buildUrl(lookPath)},
   }
 }
 
 export default async function LookPage({params}: {params: Promise<{slug: string}>}) {
   const {slug} = await params
-  const look = await getLook(slug)
+  const locale = await getLocale()
+  const look = await getLook(slug, locale)
   if (!look) notFound()
 
   // Unique product handles across components, fetched live from Shopify in parallel.

@@ -7,11 +7,16 @@ import type {FooterRegion} from '@/sanity/types'
 
 interface Props {
   regions: FooterRegion[]
+  regionLabel: string
 }
 
 const STORAGE_KEY = 'mikmax_region'
 
-export default function RegionSelector({regions}: Props) {
+function formatRegionLabel(template: string, label: string, currency: string): string {
+  return template.replace('{label}', label).replace('{currency}', currency)
+}
+
+export default function RegionSelector({regions, regionLabel}: Props) {
   const defaultRegion = useMemo(
     () => regions.find((r) => r.isDefault)?.code ?? regions[0]?.code,
     [regions],
@@ -44,8 +49,10 @@ export default function RegionSelector({regions}: Props) {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        <span>País: {current.label} ({current.currency})</span>
-        <span className={s.icon} aria-hidden>{open ? '−' : '+'}</span>
+        <span>{formatRegionLabel(regionLabel, current.label, current.currency)}</span>
+        <span className={s.icon} aria-hidden>
+          {open ? '−' : '+'}
+        </span>
       </button>
 
       {open && (

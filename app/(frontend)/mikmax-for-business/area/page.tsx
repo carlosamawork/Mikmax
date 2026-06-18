@@ -1,5 +1,6 @@
 import {getCurrentCustomer} from '@/lib/auth/customer'
 import {getB2bArea} from '@/sanity/queries/queries/b2bArea'
+import {getLocale} from '@/lib/i18n/getLocale'
 import PortableText from '@/components/PageBuilder/PortableText/PortableText'
 import s from './Area.module.scss'
 
@@ -9,7 +10,8 @@ export default async function B2bAreaPage() {
   const isDesigner = clientType === 'designer'
   const condition = isDesigner ? 'Interior Designer' : 'Reseller'
 
-  const data = await getB2bArea()
+  const locale = await getLocale()
+  const data = await getB2bArea(locale)
   const group = isDesigner ? data?.designer : data?.reseller
   const contactEmail = group?.contactEmail || 'business@mikmax.com'
 
