@@ -1,3 +1,4 @@
+import {formatMoney} from '@/lib/money'
 import s from './LookPrice.module.scss'
 
 interface Props {
@@ -10,10 +11,6 @@ interface Props {
   currency: string
 }
 
-function fmt(n: number): string {
-  return `€${n.toFixed(2)}`
-}
-
 export default function LookPrice({
   allSelected,
   minTotal,
@@ -21,7 +18,12 @@ export default function LookPrice({
   summedTotal,
   discountedTotal,
   hasDiscount,
+  currency,
 }: Props) {
+  // Server component: locale flag is OFF in production so 'en' is correct today.
+  // Locale-threading is deferred to a later pass.
+  const fmt = (n: number) => formatMoney({amount: n, currencyCode: currency}, 'en')
+
   if (!allSelected) {
     const range = minTotal === maxTotal ? fmt(minTotal) : `${fmt(minTotal)} – ${fmt(maxTotal)}`
     return <p className={s.price}>{range}</p>

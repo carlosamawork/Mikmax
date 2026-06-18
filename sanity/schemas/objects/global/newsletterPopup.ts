@@ -34,19 +34,13 @@ export default defineField({
     defineField({
       name: 'heading',
       title: 'Título / oferta',
-      type: 'string',
+      type: 'internationalizedArrayString',
       description: 'P. ej. "Subscribe for 10% off your next order".',
-      validation: (Rule) =>
-        Rule.custom((value, context) => {
-          const enabled = (context.parent as {enabled?: boolean})?.enabled
-          if (enabled && !value) return 'Título requerido cuando el pop-up está activado.'
-          return true
-        }),
     }),
     defineField({
       name: 'legalText',
       title: 'Texto legal',
-      type: 'string',
+      type: 'internationalizedArrayString',
       description:
         'Texto bajo el formulario. El enlace "privacy policy" (a /legal/privacy-policy) se añade automáticamente al final.',
     }),

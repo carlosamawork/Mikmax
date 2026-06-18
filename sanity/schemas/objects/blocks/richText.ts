@@ -10,14 +10,20 @@ export default defineType({
   fields: [
     defineField({
       name: 'body',
-      type: 'body', // reuses existing block content schema
+      type: 'internationalizedArrayBody', // reuses existing block content schema
       validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {
     select: {body: 'body'},
     prepare({body}) {
-      const firstBlock = Array.isArray(body) ? body[0] : null
+      // body is internationalizedArrayBody: [{_key:'en', value:[blocks...]}, ...]
+      const bodyArr = body as {_key?: string; value?: unknown}[] | null
+      const langEntry = Array.isArray(bodyArr)
+        ? (bodyArr.find((v) => v?._key === 'en') ?? bodyArr[0])
+        : null
+      const blocks = Array.isArray(langEntry?.value) ? (langEntry.value as {children?: {text?: string}[]}[]) : []
+      const firstBlock = blocks[0] ?? null
       const text =
         firstBlock?.children
           ?.map((c: {text?: string}) => c.text)

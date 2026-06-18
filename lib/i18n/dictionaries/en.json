@@ -1,0 +1,68 @@
+{
+  "cart": {
+    "empty": "Your cart is empty.",
+    "subtotal": "Subtotal",
+    "title": "Cart",
+    "closeLabel": "Close cart",
+    "close": "Close",
+    "decreaseQuantity": "Decrease quantity",
+    "increaseQuantity": "Increase quantity",
+    "removeItem": "Remove item",
+    "total": "Total",
+    "viewItems": "View Items",
+    "goToCheckout": "Go to Checkout"
+  },
+  "common": {
+    "error": "Something went wrong. Try again.",
+    "required": "Required"
+  },
+  "newsletter": {
+    "success": "Thanks for subscribing.",
+    "alreadySubscribed": "You're already subscribed.",
+    "emailLabel": "Email",
+    "error": "Something went wrong. Try again."
+  },
+  "header": {
+    "logoAriaLabel": "Mikmax — home",
+    "navAriaLabel": "Main",
+    "search": "Search",
+    "account": "Account",
+    "cart": "Cart",
+    "login": "Login",
+    "myAccount": "My account",
+    "logIn": "Log in",
+    "openMenu": "Open menu"
+  },
+  "search": {
+    "placeholder": "Search...",
+    "dialogAriaLabel": "Search products",
+    "inputAriaLabel": "Search products",
+    "closeLabel": "Close",
+    "searching": "Searching…",
+    "noResults": "No results for «{query}».",
+    "viewAll": "View all {total} results →"
+  },
+  "banner": {
+    "closeLabel": "Close banner",
+    "regionAriaLabel": "Site announcement"
+  },
+  "footer": {
+    "regionLabel": "Country: {label} ({currency})"
+  },
+  "pdp": {
+    "sizeLabel": "Size:",
+    "colorsLabel": "Colors:",
+    "selectSizePlaceholder": "Please select a size",
+    "selectSize": "Select",
+    "productInformation": "Product Information",
+    "closeInformation": "Close Information",
+    "addToCart": "Add to Cart",
+    "selectSizeCta": "Please Select Size",
+    "giftWrapping": "Complimentary gift wrapping",
+    "returns": "30-day returns",
+    "addToWishlist": "Add to wishlist",
+    "removeFromWishlist": "Remove from wishlist",
+    "logIn": "Log in",
+    "logInToSave": "to save it"
+  }
+}

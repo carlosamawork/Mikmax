@@ -2,6 +2,7 @@
 import {getAllSets, type SanitySetListDoc} from '@/sanity/queries/queries/set'
 import {getProductCardsByHandles} from '@/lib/shopify'
 import {applyLookDiscount} from '@/lib/look/buildLookView'
+import {getLocale} from '@/lib/i18n/getLocale'
 import type {SetArchiveItem, SetArchiveComponent} from '@/types/set'
 
 // Forma mínima del nodo de producto que leemos de getProductCardsByHandles
@@ -91,7 +92,8 @@ function aggregateSet(
  * getAllSets (orderRank asc).
  */
 export async function getSetArchiveItems(): Promise<SetArchiveItem[]> {
-  const sets = await getAllSets()
+  const lang = await getLocale()
+  const sets = await getAllSets(lang)
   const handles = Array.from(
     new Set(
       sets.flatMap((s) =>

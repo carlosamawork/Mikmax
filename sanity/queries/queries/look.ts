@@ -1,20 +1,23 @@
 // sanity/queries/queries/look.ts
 import {groq} from 'next-sanity'
 import {client} from '..'
+import type {Locale} from '@/lib/i18n/config'
+import {localizedField} from '@/lib/i18n/groq'
 import {image} from '../fragments/image'
 import {seo} from '../fragments/seo'
+import {body} from '../fragments/body'
 
 export const LOOK_BY_SLUG_QUERY = groq`
   *[_type == "look"
      && slug.current == $slug
      && !(_id in path('drafts.**'))][0] {
     _id,
-    title,
+    ${localizedField('title')},
     "slug": slug.current,
-    description,
-    propiedadesMaterial,
-    recomendacionesLavado,
-    usoRecomendado,
+    ${localizedField('description')},
+    "propiedadesMaterial": coalesce(propiedadesMaterial[_key == $lang][0].value[]{ ${body} }, propiedadesMaterial[_key == "en"][0].value[]{ ${body} }, propiedadesMaterial[]{ ${body} }),
+    "recomendacionesLavado": coalesce(recomendacionesLavado[_key == $lang][0].value[]{ ${body} }, recomendacionesLavado[_key == "en"][0].value[]{ ${body} }, recomendacionesLavado[]{ ${body} }),
+    "usoRecomendado": coalesce(usoRecomendado[_key == $lang][0].value[]{ ${body} }, usoRecomendado[_key == "en"][0].value[]{ ${body} }, usoRecomendado[]{ ${body} }),
     "seo": seo{ ${seo} },
     editorialImages[]{
       image{
@@ -68,10 +71,10 @@ export type SanityLookDoc = {
   relatedProducts: Array<{handle: string | null}> | null
 }
 
-export async function getLook(slug: string): Promise<SanityLookDoc | null> {
+export async function getLook(slug: string, lang: Locale): Promise<SanityLookDoc | null> {
   const doc = await client.fetch<SanityLookDoc | null>(
     LOOK_BY_SLUG_QUERY,
-    {slug},
+    {slug, lang},
     // Lee product->store… (componentes y relatedProducts): suscribirse a `product`.
     {next: {tags: ['look', 'product', `look:${slug}`], revalidate: 3600}},
   )
@@ -87,10 +90,10 @@ export async function getLookSlugs(): Promise<string[]> {
   return slugs ?? []
 }
 
-export async function getLookSEO(slug: string) {
+export async function getLookSEO(slug: string, lang: Locale) {
   return client.fetch(
-    groq`*[_type == "look" && slug.current == $slug && !(_id in path('drafts.**'))][0]{ "seo": seo{ ${seo} }, title }`,
-    {slug},
+    groq`*[_type == "look" && slug.current == $slug && !(_id in path('drafts.**'))][0]{ "seo": seo{ ${seo} }, ${localizedField('title')} }`,
+    {slug, lang},
     {next: {tags: ['look', `look:${slug}`], revalidate: 3600}},
   )
 }
@@ -116,7 +119,7 @@ export const ALL_LOOKS_QUERY = groq`
      && defined(slug.current)
      && !(_id in path('drafts.**'))] | order(coalesce(orderRank, title) asc) {
     _id,
-    title,
+    ${localizedField('title')},
     "slug": slug.current,
     "img": editorialImages[0].image{ ${image}, "alt": alt },
     discountStrategy,
@@ -129,10 +132,10 @@ export const ALL_LOOKS_QUERY = groq`
   }
 `
 
-export async function getAllLooks(): Promise<SanityLookListDoc[]> {
+export async function getAllLooks(lang: Locale): Promise<SanityLookListDoc[]> {
   const docs = await client.fetch<SanityLookListDoc[]>(
     ALL_LOOKS_QUERY,
-    {},
+    {lang},
     // Lee product->store.slug.current en los componentes: suscribirse a `product`.
     {next: {tags: ['look', 'product'], revalidate: 3600}},
   )

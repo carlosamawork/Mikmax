@@ -7,6 +7,7 @@ import {structure} from './sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {colorInput} from '@sanity/color-input'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
+import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
 import {dataset, projectId} from './sanity/env'
 import {b2bApprove, b2bReject, b2bMoreInfo} from './sanity/actions/b2bActions'
@@ -24,6 +25,14 @@ export default defineConfig({
     colorInput(),
     imageHotspotArrayPlugin(),
     media(),
+    internationalizedArray({
+      languages: [
+        {id: 'en', title: 'English'},
+        {id: 'es', title: 'Español'},
+      ],
+      defaultLanguages: ['en'],
+      fieldTypes: ['string', 'text', 'body'],
+    }),
     ...(isDev ? devOnlyPlugins : []),
   ],
 

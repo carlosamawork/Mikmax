@@ -1,5 +1,6 @@
 import {groq} from 'next-sanity'
 import {client} from '..'
+import type {Locale} from '@/lib/i18n/config'
 import {seo} from '../fragments/seo'
 import {pageBuilderProjection} from '../fragments/pageBuilder'
 import type {PageBuilderBlock} from '@/sanity/types'
@@ -25,7 +26,7 @@ export async function getPageSlugs(): Promise<string[]> {
   return slugs ?? []
 }
 
-export async function getPage(slug: string): Promise<PageData | null> {
+export async function getPage(slug: string, lang: Locale): Promise<PageData | null> {
   const result = await client.fetch<PageData | null>(
     groq`*[_type == "page" && slug.current == $slug][0]{
       _id,
@@ -40,7 +41,7 @@ export async function getPage(slug: string): Promise<PageData | null> {
         ${seo}
       }
     }`,
-    {slug},
+    {slug, lang},
     {next: {tags: ['page', 'product', 'look', `page:${slug}`], revalidate: 3600}},
   )
   return result ?? null

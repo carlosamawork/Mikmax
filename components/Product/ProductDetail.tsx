@@ -9,6 +9,7 @@ import MobileLayout from './Mobile/MobileLayout'
 import ProductInfoPanel from './shared/ProductInfoPanel'
 import {trackViewItem} from '@/lib/analytics/track'
 import type {ProductView, ProductInitialState} from '@/types/product'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 
 type CartItemInput = {
   store: {gid: string}
@@ -32,9 +33,10 @@ const ImageLightbox = dynamic(() => import('./shared/ImageLightbox'), {ssr: fals
 interface Props {
   view: ProductView
   initial: ProductInitialState
+  pdpCopy: Dictionary['pdp']
 }
 
-export default function ProductDetail({view, initial}: Props) {
+export default function ProductDetail({view, initial, pdpCopy}: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const shop = useContext<ShopCtx>(CartContext as unknown as React.Context<ShopCtx>)
@@ -115,6 +117,7 @@ export default function ProductDetail({view, initial}: Props) {
         isInfoOpen={isInfoOpen}
         onAddToCart={handleAddToCart}
         onZoom={(i) => setLightbox({open: true, index: i})}
+        pdpCopy={pdpCopy}
       />
       <MobileLayout
         view={view}
@@ -127,6 +130,7 @@ export default function ProductDetail({view, initial}: Props) {
         isInfoOpen={isInfoOpen}
         onAddToCart={handleAddToCart}
         onZoom={(i) => setLightbox({open: true, index: i})}
+        pdpCopy={pdpCopy}
       />
       <ProductInfoPanel
         open={isInfoOpen}

@@ -4,6 +4,7 @@ import MobileToolbar from './MobileToolbar'
 import RelatedGrid from './RelatedGrid'
 import StickyCTA from './StickyCTA'
 import type {ProductView, ProductColor} from '@/types/product'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 import s from './MobileLayout.module.scss'
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
   isInfoOpen: boolean
   onAddToCart: () => void
   onZoom: (index: number) => void
+  pdpCopy: Dictionary['pdp']
 }
 
 export default function MobileLayout(props: Props) {
@@ -35,12 +37,13 @@ export default function MobileLayout(props: Props) {
         onSelectSize={props.onSelectSize}
         onToggleInfo={props.onToggleInfo}
         isInfoOpen={props.isInfoOpen}
+        pdpCopy={props.pdpCopy}
       />
       <RelatedGrid
         products={props.currentColor.related ?? props.view.related}
         currency={props.view.currency}
       />
-      <StickyCTA canAddToCart={canAddToCart} onAddToCart={props.onAddToCart} />
+      <StickyCTA canAddToCart={canAddToCart} onAddToCart={props.onAddToCart} copy={props.pdpCopy} />
     </div>
   )
 }

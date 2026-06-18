@@ -16,25 +16,21 @@ export default defineField({
       fields: [
         defineField({
           name: 'title',
-          type: 'string',
-          initialValue: 'Keep in touch',
+          type: 'internationalizedArrayString',
           validation: (Rule) => Rule.required(),
         }),
         defineField({
           name: 'body',
-          type: 'text',
-          rows: 3,
+          type: 'internationalizedArrayText',
           description: 'Texto introductorio del newsletter.',
         }),
         defineField({
           name: 'placeholder',
-          type: 'string',
-          initialValue: 'Enter your email',
+          type: 'internationalizedArrayString',
         }),
         defineField({
           name: 'buttonLabel',
-          type: 'string',
-          initialValue: 'Send',
+          type: 'internationalizedArrayString',
         }),
       ],
     }),
@@ -54,7 +50,7 @@ export default defineField({
           fields: [
             defineField({
               name: 'title',
-              type: 'string',
+              type: 'internationalizedArrayString',
             }),
             defineField({
               name: 'links',
@@ -65,7 +61,8 @@ export default defineField({
           preview: {
             select: {title: 'title', count: 'links.length'},
             prepare({title, count}) {
-              return {title: title || '(sin título)', subtitle: `${count || 0} links`}
+              const label = Array.isArray(title) ? (title[0]?.value ?? '(sin título)') : (title ?? '(sin título)')
+              return {title: label, subtitle: `${count || 0} links`}
             },
           },
         },
@@ -77,8 +74,7 @@ export default defineField({
           fields: [
             defineField({
               name: 'title',
-              type: 'string',
-              initialValue: 'Shop',
+              type: 'internationalizedArrayString',
               validation: (Rule) => Rule.required(),
             }),
             defineField({
@@ -93,8 +89,9 @@ export default defineField({
           preview: {
             select: {title: 'title'},
             prepare({title}) {
+              const label = Array.isArray(title) ? (title[0]?.value ?? 'Shop') : (title ?? 'Shop')
               return {
-                title: title || 'Shop',
+                title: label,
                 subtitle: 'Colecciones padre (auto) + extras',
               }
             },
@@ -108,8 +105,7 @@ export default defineField({
           fields: [
             defineField({
               name: 'title',
-              type: 'string',
-              initialValue: 'Social Media',
+              type: 'internationalizedArrayString',
               validation: (Rule) => Rule.required(),
             }),
             defineField({
@@ -122,7 +118,8 @@ export default defineField({
           preview: {
             select: {title: 'title', count: 'links.length'},
             prepare({title, count}) {
-              return {title: title || 'Social', subtitle: `${count || 0} redes`}
+              const label = Array.isArray(title) ? (title[0]?.value ?? 'Social') : (title ?? 'Social')
+              return {title: label, subtitle: `${count || 0} redes`}
             },
           },
         },
@@ -151,7 +148,7 @@ export default defineField({
             defineField({
               name: 'label',
               title: 'Nombre visible',
-              type: 'string',
+              type: 'internationalizedArrayString',
               description: 'Ej. España, France, United States.',
               validation: (Rule) => Rule.required(),
             }),
@@ -172,8 +169,9 @@ export default defineField({
           preview: {
             select: {label: 'label', currency: 'currency', code: 'code', isDefault: 'isDefault'},
             prepare({label, currency, code, isDefault}) {
+              const displayLabel = Array.isArray(label) ? (label[0]?.value ?? code) : (label ?? code)
               return {
-                title: `${label} (${currency})`,
+                title: `${displayLabel} (${currency})`,
                 subtitle: `${code}${isDefault ? ' · default' : ''}`,
               }
             },

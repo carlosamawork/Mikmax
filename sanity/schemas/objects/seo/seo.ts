@@ -14,16 +14,14 @@ export default defineField({
     defineField({
       name: 'title',
       title: 'Site title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
-      rows: 2,
-      validation: (Rule) =>
-        Rule.max(150).warning('Longer descriptions may be truncated by search engines'),
+      type: 'internationalizedArrayText',
+      validation: (Rule) => Rule.max(150).warning('Longer descriptions may be truncated by search engines'),
     }),
     defineField({
       name: 'image',

@@ -1,6 +1,7 @@
 // sanity/schemas/objects/blocks/campaignImageVideo.ts
 import {PlayIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {enText} from '../i18n/enText'
 
 export default defineType({
   name: 'block.campaignImageVideo',
@@ -38,7 +39,7 @@ export default defineType({
         defineField({name: 'poster', type: 'image'}),
       ],
     }),
-    defineField({name: 'headline', title: 'Headline (opc)', type: 'string'}),
+    defineField({name: 'headline', title: 'Headline (opc)', type: 'internationalizedArrayString'}),
     defineField({
       name: 'url',
       title: 'URL (opc)',
@@ -77,7 +78,7 @@ export default defineType({
   preview: {
     select: {headline: 'headline', media: 'image'},
     prepare({headline, media}) {
-      return {title: 'Campaña imagen/vídeo', subtitle: headline || '(sin headline)', media}
+      return {title: 'Campaña imagen/vídeo', subtitle: enText(headline as unknown) || '(sin headline)', media}
     },
   },
 })

@@ -1,6 +1,7 @@
-import {buildUrl, siteTitle, siteDescription, BASE_IMAGE_URL, BASE_IMAGE_WIDTH, BASE_IMAGE_HEIGHT} from '@/utils/seoHelper'
+import {buildUrl, siteTitle, siteDescription, BASE_IMAGE_URL, BASE_IMAGE_WIDTH, BASE_IMAGE_HEIGHT, localeAlternates} from '@/utils/seoHelper'
 import {PageBuilder} from '@/components/PageBuilder'
 import {getHome} from '@/sanity/queries/queries/home'
+import {getLocale} from '@/lib/i18n/getLocale'
 
 export const revalidate = 3600
 
@@ -8,7 +9,7 @@ export async function generateMetadata() {
   return {
     title: siteTitle,
     description: siteDescription,
-    alternates: {canonical: buildUrl('/')},
+    alternates: localeAlternates('/'),
     openGraph: {
       title: siteTitle,
       description: siteDescription,
@@ -60,7 +61,8 @@ const webPageSchema = {
 }
 
 export default async function Home() {
-  const data = await getHome()
+  const locale = await getLocale()
+  const data = await getHome(locale)
   return (
     <>
       <script

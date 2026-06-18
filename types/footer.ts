@@ -1,8 +1,11 @@
 // types/footer.ts
 import type {FooterColumnData} from '@/sanity/types'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 
 export interface FooterProps {
   data?: FooterColumnData
+  footerCopy?: Dictionary['footer']
+  newsletterCopy?: Dictionary['newsletter']
 }
 
 export interface NewsletterFormProps {

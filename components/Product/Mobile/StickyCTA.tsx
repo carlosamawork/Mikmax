@@ -1,12 +1,14 @@
 'use client'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 import s from './StickyCTA.module.scss'
 
 interface Props {
   canAddToCart: boolean
   onAddToCart: () => void
+  copy: Pick<Dictionary['pdp'], 'addToCart' | 'selectSizeCta'>
 }
 
-export default function StickyCTA({canAddToCart, onAddToCart}: Props) {
+export default function StickyCTA({canAddToCart, onAddToCart, copy}: Props) {
   return (
     <button
       type="button"
@@ -14,7 +16,7 @@ export default function StickyCTA({canAddToCart, onAddToCart}: Props) {
       onClick={onAddToCart}
       disabled={!canAddToCart}
     >
-      {canAddToCart ? 'Add to Cart' : 'Please Select Size'}
+      {canAddToCart ? copy.addToCart : copy.selectSizeCta}
     </button>
   )
 }

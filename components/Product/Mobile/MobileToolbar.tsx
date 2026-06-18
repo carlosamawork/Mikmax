@@ -5,6 +5,7 @@ import ColorSwatches from '../shared/ColorSwatches'
 import SizeSelector from '../shared/SizeSelector'
 import WishlistButton from '@/components/Account/WishlistButton/WishlistButton'
 import type {ProductView, ProductColor} from '@/types/product'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 import s from './MobileToolbar.module.scss'
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
   onSelectSize: (label: string) => void
   onToggleInfo: () => void
   isInfoOpen: boolean
+  pdpCopy: Dictionary['pdp']
 }
 
 export default function MobileToolbar({
@@ -27,6 +29,7 @@ export default function MobileToolbar({
   onSelectSize,
   onToggleInfo,
   isInfoOpen,
+  pdpCopy,
 }: Props) {
   const [hovered, setHovered] = useState<string | null>(null)
   const hoveredLabel = hovered ? view.colors.find((c) => c.slug === hovered)?.label : undefined
@@ -47,9 +50,9 @@ export default function MobileToolbar({
           />
         </div>
         <div className={s.delivery}>
-          Complimentary gift wrapping
+          {pdpCopy.giftWrapping}
           <br />
-          30- day returns
+          {pdpCopy.returns}
         </div>
       </div>
 
@@ -59,12 +62,13 @@ export default function MobileToolbar({
           selected={selectedSize}
           currency={view.currency}
           onSelect={onSelectSize}
+          copy={pdpCopy}
         />
       </div>
 
       <div className={s.section}>
-        <div className={s.label}>Colors:</div>
-        <div className={s.colorName}>{hoveredLabel ?? ' '}</div>
+        <div className={s.label}>{pdpCopy.colorsLabel}</div>
+        <div className={s.colorName}>{hoveredLabel ?? ' '}</div>
         <ColorSwatches
           colors={view.colors}
           selected={selectedColor}
@@ -74,7 +78,7 @@ export default function MobileToolbar({
       </div>
 
       <button type="button" className={s.infoToggle} onClick={onToggleInfo}>
-        <span>{isInfoOpen ? 'Close Information' : 'Product Information'}</span>
+        <span>{isInfoOpen ? pdpCopy.closeInformation : pdpCopy.productInformation}</span>
         {isInfoOpen ? (
           <span aria-hidden>×</span>
         ) : (

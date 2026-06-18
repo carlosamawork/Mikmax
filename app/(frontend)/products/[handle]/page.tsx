@@ -4,8 +4,12 @@ import {getProductDetail, getProductCards} from '@/lib/shopify'
 import {getSanityProduct} from '@/sanity/queries/queries/product'
 import {buildProductView} from '@/lib/product/buildProductView'
 import {resolveInitialState} from '@/lib/product/resolveInitialState'
-import {BASE_URL, siteTitle} from '@/utils/seoHelper'
+import {siteTitle, localeAlternates, buildUrl} from '@/utils/seoHelper'
 import {getResellerPercent, resellerPrice, applyResellerToCard} from '@/lib/b2b/pricing'
+import {getLocale} from '@/lib/i18n/getLocale'
+import {getDictionary} from '@/lib/i18n/getDictionary'
+import {shopifyLanguage, DEFAULT_COUNTRY} from '@/lib/i18n/shopifyLocale'
+import {DEFAULT_LOCALE} from '@/lib/i18n/config'
 import ProductDetail from '@/components/Product/ProductDetail'
 
 export const revalidate = 300
@@ -25,8 +29,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const {handle} = await params
   const [sanityDoc, shopifyProduct] = await Promise.all([
-    getSanityProduct(handle),
-    getProductDetail(handle),
+    getSanityProduct(handle, DEFAULT_LOCALE),
+    getProductDetail(handle, {language: 'EN', country: DEFAULT_COUNTRY}),
   ])
   if (!shopifyProduct) return {title: `Product not found | ${siteTitle}`}
 
@@ -35,16 +39,14 @@ export async function generateMetadata({
     stripHtml(shopifyProduct.descriptionHtml).slice(0, 160) ||
     shopifyProduct.title
 
-  const canonical = `${BASE_URL.origin}/products/${handle}`
-
   return {
     title: `${shopifyProduct.title} | ${siteTitle}`,
     description: desc,
-    alternates: {canonical},
+    alternates: localeAlternates('/products/' + handle),
     openGraph: {
       title: shopifyProduct.title,
       description: desc,
-      url: canonical,
+      url: buildUrl('/products/' + handle),
       images: shopifyProduct.featuredImage?.url
         ? [
             {
@@ -67,11 +69,13 @@ export default async function ProductPage({
   const {handle} = await params
   const search = await searchParams
 
+  const locale = await getLocale()
   const [sanityDoc, shopifyProduct] = await Promise.all([
-    getSanityProduct(handle),
-    getProductDetail(handle),
+    getSanityProduct(handle, locale),
+    getProductDetail(handle, {language: shopifyLanguage(locale), country: DEFAULT_COUNTRY}),
   ])
   if (!shopifyProduct) notFound()
+  const dict = getDictionary(locale)
 
   const relatedItems = (sanityDoc?.relatedItems ?? []).filter(
     (
@@ -137,5 +141,5 @@ export default async function ProductPage({
         }
       : view
 
-  return <ProductDetail view={viewForDisplay} initial={initial} />
+  return <ProductDetail view={viewForDisplay} initial={initial} pdpCopy={dict.pdp} />
 }

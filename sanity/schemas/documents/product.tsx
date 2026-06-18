@@ -60,19 +60,19 @@ export default defineType({
     defineField({
       name: 'propiedadesMaterial',
       title: 'Propiedades del material',
-      type: 'body',
+      type: 'internationalizedArrayBody',
       group: 'editorial',
     }),
     defineField({
       name: 'recomendacionesLavado',
       title: 'Recomendaciones de lavado',
-      type: 'body',
+      type: 'internationalizedArrayBody',
       group: 'editorial',
     }),
     defineField({
       name: 'usoRecomendado',
       title: 'Uso recomendado',
-      type: 'body',
+      type: 'internationalizedArrayBody',
       group: 'editorial',
     }),
     defineField({
