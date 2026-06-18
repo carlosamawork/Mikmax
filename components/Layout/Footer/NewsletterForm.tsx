@@ -5,13 +5,21 @@ import {FormEvent, useState} from 'react'
 import {useNewsletterSubscribe} from '@/hooks/useNewsletterSubscribe'
 import s from './NewsletterForm.module.scss'
 import type {NewsletterFormProps} from '@/types/footer'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
+
+const DEFAULT_COPY: Dictionary['newsletter'] = {
+  success: 'Thanks for subscribing.',
+  alreadySubscribed: "You're already subscribed.",
+  emailLabel: 'Email',
+}
 
 export default function NewsletterForm({
   title = 'Keep in touch',
   subtitle = 'Subscribe to our newsletter to get the latest updates on new releases, pre-orders, and exclusive content.',
   placeholder = 'Enter your email',
   buttonLabel = 'Subscribe',
-}: NewsletterFormProps) {
+  copy = DEFAULT_COPY,
+}: NewsletterFormProps & {copy?: Dictionary['newsletter']}) {
   const [email, setEmail] = useState('')
   const {status, subscribe} = useNewsletterSubscribe()
 
@@ -27,7 +35,7 @@ export default function NewsletterForm({
       <p className={s.subtitle}>{subtitle}</p>
 
       <label htmlFor="newsletter-email" className={s.srOnly}>
-        Email
+        {copy.emailLabel}
       </label>
       <div className={s.inputWrap}>
         <input
@@ -49,8 +57,8 @@ export default function NewsletterForm({
         </button>
       </div>
 
-      {status === 'success' && <p className={s.feedback}>Thanks for subscribing.</p>}
-      {status === 'already' && <p className={s.feedback}>You&apos;re already subscribed.</p>}
+      {status === 'success' && <p className={s.feedback}>{copy.success}</p>}
+      {status === 'already' && <p className={s.feedback}>{copy.alreadySubscribed}</p>}
       {status === 'error' && <p className={s.feedbackError}>Something went wrong. Try again.</p>}
     </form>
   )

@@ -8,6 +8,7 @@ import {LazyImage} from '@/components/Common'
 import {CartContext} from '@/context/shopContext'
 import s from './Header.module.scss'
 import type {HeaderProps, HeaderVariant} from '@/types/header'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 import MegaMenu from '../MegaMenu/MegaMenu'
 import MegaMenuShop from '../MegaMenu/MegaMenuShop'
 import MobileMenu from '../MobileMenu/MobileMenu'
@@ -20,7 +21,33 @@ type CartCtx = {
   setCartOpen?: (open: boolean) => void
 }
 
-export default function HeaderClient({menu, initialVariant = 'default'}: HeaderProps) {
+const DEFAULT_HEADER_COPY: Dictionary['header'] = {
+  logoAriaLabel: 'Mikmax — home',
+  navAriaLabel: 'Main',
+  search: 'Search',
+  account: 'Account',
+  login: 'Login',
+  myAccount: 'My account',
+  logIn: 'Log in',
+  openMenu: 'Open menu',
+}
+
+const DEFAULT_SEARCH_COPY: Dictionary['search'] = {
+  placeholder: 'Search...',
+  dialogAriaLabel: 'Search products',
+  inputAriaLabel: 'Search products',
+  closeLabel: 'Close',
+  searching: 'Searching…',
+  noResults: 'No results for «{query}».',
+  viewAll: 'View all {total} results →',
+}
+
+export default function HeaderClient({
+  menu,
+  initialVariant = 'default',
+  copy = DEFAULT_HEADER_COPY,
+  searchCopy = DEFAULT_SEARCH_COPY,
+}: HeaderProps) {
   const [variant, setVariant] = useState<HeaderVariant>(initialVariant)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [activeKey, setActiveKey] = useState<string | null>(null)
@@ -107,7 +134,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
   return (
     <header className={`${s.header} ${s[variant] ?? ''}`}>
       <div className={s.inner}>
-        <Link href="/" className={s.logo} aria-label="Mikmax — inicio">
+        <Link href="/" className={s.logo} aria-label={copy.logoAriaLabel}>
           <LazyImage
             src="/icons/mikmax.svg"
             alt="Mikmax"
@@ -118,7 +145,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
           />
         </Link>
 
-        <nav className={s.nav} aria-label="Main">
+        <nav className={s.nav} aria-label={copy.navAriaLabel}>
           {links.map((link) => {
             if (link._type === 'menuShop') {
               const isActive = activeKey === link._key
@@ -192,26 +219,26 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
             <button
               type="button"
               className={s.actionBtn}
-              aria-label="Search"
+              aria-label={copy.search}
               aria-expanded={searchOpen}
               onClick={() => setSearchOpen(true)}
             >
-              Search
+              {copy.search}
             </button>
             <Link
               href={isLoggedIn ? '/account' : '/login'}
               className={s.actionBtn}
-              aria-label={isLoggedIn ? 'My account' : 'Log in'}
+              aria-label={isLoggedIn ? copy.myAccount : copy.logIn}
             >
-              {isLoggedIn ? 'Account' : 'Login'}
+              {isLoggedIn ? copy.account : copy.login}
             </Link>
             <button
               type="button"
               className={s.actionBtn}
-              aria-label="Cart"
+              aria-label={copy.account}
               onClick={() => ctx?.setCartOpen?.(true)}
             >
-              Cart [ {cartCount} ]
+              {copy.account} [ {cartCount} ]
             </button>
           </div>
 
@@ -220,7 +247,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
             <button
               type="button"
               className={s.iconBtn}
-              aria-label="Search"
+              aria-label={copy.search}
               aria-expanded={mobileOpen}
               onClick={() => {
                 setMobileSearchFocus(true)
@@ -239,7 +266,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
             <Link
               href={isLoggedIn ? '/account' : '/login'}
               className={s.iconBtn}
-              aria-label={isLoggedIn ? 'My account' : 'Log in'}
+              aria-label={isLoggedIn ? copy.myAccount : copy.logIn}
             >
               <LazyImage
                 src="/icons/account.svg"
@@ -253,7 +280,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
             <button
               type="button"
               className={s.cartCounter}
-              aria-label="Cart"
+              aria-label={copy.account}
               onClick={() => ctx?.setCartOpen?.(true)}
             >
               [ {cartCount} ]
@@ -261,7 +288,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
             <button
               type="button"
               className={s.burger}
-              aria-label="Abrir menú"
+              aria-label={copy.openMenu}
               aria-expanded={mobileOpen}
               onClick={() => {
                 setMobileSearchFocus(false)
@@ -284,7 +311,7 @@ export default function HeaderClient({menu, initialVariant = 'default'}: HeaderP
         />
       )}
 
-      <SearchOverlay open={searchOpen} onClose={closeSearch} />
+      <SearchOverlay open={searchOpen} onClose={closeSearch} copy={searchCopy} />
 
       {/* Mobile menu drawer (rendered via portal, fixed full-screen) */}
       <MobileMenu

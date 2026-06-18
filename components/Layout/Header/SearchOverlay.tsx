@@ -6,11 +6,13 @@ import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
 import {predictiveSearch} from '@/app/(frontend)/search/actions'
 import type {PredictiveResult} from '@/app/(frontend)/search/actions'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 import s from './SearchOverlay.module.scss'
 
 interface Props {
   open: boolean
   onClose: () => void
+  copy: Dictionary['search']
 }
 
 const EMPTY: PredictiveResult = {cards: [], total: 0}
@@ -26,7 +28,7 @@ function formatPrice(min?: number): string {
   return priceFormatter.format(min)
 }
 
-export default function SearchOverlay({open, onClose}: Props) {
+export default function SearchOverlay({open, onClose, copy}: Props) {
   const router = useRouter()
   const [value, setValue] = useState('')
   const [result, setResult] = useState<PredictiveResult>(EMPTY)
@@ -104,20 +106,25 @@ export default function SearchOverlay({open, onClose}: Props) {
   return (
     <div className={s.overlay}>
       <div className={s.backdrop} onClick={onClose} aria-hidden="true" />
-      <div className={s.panel} role="dialog" aria-modal="true" aria-label="Buscar productos">
+      <div
+        className={s.panel}
+        role="dialog"
+        aria-modal="true"
+        aria-label={copy.dialogAriaLabel}
+      >
         <div className={s.bar}>
           <form className={s.form} onSubmit={onSubmit}>
             <input
               ref={inputRef}
               type="search"
               className={s.input}
-              placeholder="Search..."
-              aria-label="Buscar productos"
+              placeholder={copy.placeholder}
+              aria-label={copy.inputAriaLabel}
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
           </form>
-          <button type="button" className={s.close} onClick={onClose} aria-label="Cerrar">
+          <button type="button" className={s.close} onClick={onClose} aria-label={copy.closeLabel}>
             ×
           </button>
         </div>
@@ -149,17 +156,17 @@ export default function SearchOverlay({open, onClose}: Props) {
               </Link>
             ))}
             <button type="button" className={s.viewAll} onClick={goToResults}>
-              Ver los {result.total} resultados →
+              {copy.viewAll.replace('{total}', String(result.total))}
             </button>
           </div>
         )}
 
         {loading && q.length > 0 && result.cards.length === 0 && (
-          <p className={s.message}>Buscando…</p>
+          <p className={s.message}>{copy.searching}</p>
         )}
 
         {showNoResults && (
-          <p className={s.message}>Sin resultados para «{q}».</p>
+          <p className={s.message}>{copy.noResults.replace('{query}', q)}</p>
         )}
       </div>
     </div>

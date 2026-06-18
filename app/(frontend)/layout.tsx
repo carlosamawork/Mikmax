@@ -21,6 +21,7 @@ import {getFooter} from '@/sanity/queries/common/footer'
 import {getBanner} from '@/sanity/queries/common/banner'
 import {getNewsletterPopup} from '@/sanity/queries/common/newsletterPopup'
 import {getLocale} from '@/lib/i18n/getLocale'
+import {getDictionary} from '@/lib/i18n/getDictionary'
 import {isI18nEnabled} from '@/lib/i18n/config'
 import LanguageSwitcher from '@/components/Layout/LanguageSwitcher/LanguageSwitcher'
 
@@ -34,6 +35,7 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const locale = await getLocale()
+  const dict = getDictionary(locale)
   const [footerData, bannerData, newsletterPopupData] = await Promise.all([
     getFooter(),
     getBanner(),
@@ -46,12 +48,16 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         <Suspense fallback={<div className="loader">Loading...</div>}>
           <ShopProvider>
             <WishlistProvider>
-              <AnnouncementBanner data={bannerData} />
+              <AnnouncementBanner data={bannerData} copy={dict.banner} />
               <Header />
               {isI18nEnabled() && <LanguageSwitcher current={locale} />}
               {children}
-              <FooterGate data={footerData?.footer} />
-              <CartDrawer />
+              <FooterGate
+                data={footerData?.footer}
+                footerCopy={dict.footer}
+                newsletterCopy={dict.newsletter}
+              />
+              <CartDrawer copy={dict.cart} />
               <CookieConsent />
               <NewsletterPopup data={newsletterPopupData} />
               <WhatsAppButton />
