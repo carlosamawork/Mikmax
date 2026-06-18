@@ -4,13 +4,15 @@ import {getLegalPage} from '@/sanity/queries/queries/legal'
 import {siteTitle, siteDescription, localeAlternates, buildUrl} from '@/utils/seoHelper'
 import {urlFor} from '@/sanity/queries'
 import {getLocale} from '@/lib/i18n/getLocale'
+import {DEFAULT_LOCALE} from '@/lib/i18n/config'
 import LegalLayout from '@/components/Legal/LegalLayout'
 
 export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const locale = await getLocale()
-  const data = await getLegalPage(locale)
+  // Build-time: no request scope, so getLocale()/headers() is unavailable here.
+  // Section slugs are locale-independent, so resolve with the default locale.
+  const data = await getLegalPage(DEFAULT_LOCALE)
   return (data?.sections ?? []).map((sec) => ({section: sec.slug}))
 }
 
