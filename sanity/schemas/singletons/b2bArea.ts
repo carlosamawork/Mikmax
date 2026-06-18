@@ -5,7 +5,7 @@ export default defineType({
   title: 'Área profesional B2B',
   type: 'document',
   fields: [
-    defineField({name: 'intro', title: 'Introducción (compartida)', type: 'body'}),
+    defineField({name: 'intro', title: 'Introducción (compartida)', type: 'internationalizedArrayBody'}),
     defineField({name: 'reseller', title: 'Reseller', type: 'b2bAreaGroup'}),
     defineField({name: 'designer', title: 'Interior Designer', type: 'b2bAreaGroup'}),
   ],
