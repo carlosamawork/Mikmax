@@ -20,6 +20,7 @@ import WhatsAppButton from '@/components/Common/WhatsAppButton/WhatsAppButton'
 import {getFooter} from '@/sanity/queries/common/footer'
 import {getBanner} from '@/sanity/queries/common/banner'
 import {getNewsletterPopup} from '@/sanity/queries/common/newsletterPopup'
+import {getLocale} from '@/lib/i18n/getLocale'
 
 export async function generateMetadata() {
   return buildDefaultMetadata()
@@ -30,6 +31,7 @@ export const viewport: Viewport = {
 }
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
+  const locale = await getLocale()
   const [footerData, bannerData, newsletterPopupData] = await Promise.all([
     getFooter(),
     getBanner(),
@@ -37,7 +39,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   ])
 
   return (
-    <html lang="es">
+    <html lang={locale}>
       <body>
         <Suspense fallback={<div className="loader">Loading...</div>}>
           <ShopProvider>
