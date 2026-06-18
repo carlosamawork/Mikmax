@@ -6,6 +6,8 @@ import {buildProductView} from '@/lib/product/buildProductView'
 import {resolveInitialState} from '@/lib/product/resolveInitialState'
 import {BASE_URL, siteTitle} from '@/utils/seoHelper'
 import {getResellerPercent, resellerPrice, applyResellerToCard} from '@/lib/b2b/pricing'
+import {getLocale} from '@/lib/i18n/getLocale'
+import {getDictionary} from '@/lib/i18n/getDictionary'
 import ProductDetail from '@/components/Product/ProductDetail'
 
 export const revalidate = 300
@@ -67,11 +69,13 @@ export default async function ProductPage({
   const {handle} = await params
   const search = await searchParams
 
-  const [sanityDoc, shopifyProduct] = await Promise.all([
+  const [sanityDoc, shopifyProduct, locale] = await Promise.all([
     getSanityProduct(handle),
     getProductDetail(handle),
+    getLocale(),
   ])
   if (!shopifyProduct) notFound()
+  const dict = getDictionary(locale)
 
   const relatedItems = (sanityDoc?.relatedItems ?? []).filter(
     (
@@ -137,5 +141,5 @@ export default async function ProductPage({
         }
       : view
 
-  return <ProductDetail view={viewForDisplay} initial={initial} />
+  return <ProductDetail view={viewForDisplay} initial={initial} pdpCopy={dict.pdp} />
 }

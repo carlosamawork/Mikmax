@@ -2,6 +2,7 @@
 import GalleryHorizontal from './GalleryHorizontal'
 import DesktopToolbar from './DesktopToolbar'
 import type {ProductView, ProductColor} from '@/types/product'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 import s from './DesktopLayout.module.scss'
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
   isInfoOpen: boolean
   onAddToCart: () => void
   onZoom: (index: number) => void
+  pdpCopy: Dictionary['pdp']
 }
 
 export default function DesktopLayout(props: Props) {
@@ -36,6 +38,7 @@ export default function DesktopLayout(props: Props) {
         onToggleInfo={props.onToggleInfo}
         isInfoOpen={props.isInfoOpen}
         onAddToCart={props.onAddToCart}
+        pdpCopy={props.pdpCopy}
       />
     </div>
   )

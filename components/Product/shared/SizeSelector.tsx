@@ -1,6 +1,7 @@
 'use client'
 import {useState} from 'react'
 import type {ColorSize} from '@/types/product'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 import s from './SizeSelector.module.scss'
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
   productSubtitle?: string
   hideLabel?: boolean
   widePanel?: boolean
+  copy: Pick<Dictionary['pdp'], 'sizeLabel' | 'selectSizePlaceholder' | 'selectSize'>
 }
 
 const FMT = new Intl.NumberFormat('es-ES', {
@@ -29,6 +31,7 @@ export default function SizeSelector({
   productSubtitle,
   hideLabel = false,
   widePanel = false,
+  copy,
 }: Props) {
   const [open, setOpen] = useState(false)
   const current = selected ? sizes.find((sz) => sz.label === selected) : undefined
@@ -41,7 +44,7 @@ export default function SizeSelector({
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        {!hideLabel && <span className={s.label}>Size:</span>}
+        {!hideLabel && <span className={s.label}>{copy.sizeLabel}</span>}
         {current ? (
           <>
             <span className={s.value}>{current.label}</span>
@@ -57,7 +60,7 @@ export default function SizeSelector({
             </span>
           </>
         ) : (
-          <span className={s.placeholder}>Please select a size</span>
+          <span className={s.placeholder}>{copy.selectSizePlaceholder}</span>
         )}
         <svg
           className={[s.caret, open ? s.caretOpen : ''].join(' ')}
@@ -117,7 +120,7 @@ export default function SizeSelector({
                   setOpen(false)
                 }}
               >
-                Select
+                {copy.selectSize}
               </button>
             </div>
           ))}
