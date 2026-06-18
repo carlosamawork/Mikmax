@@ -31,7 +31,7 @@ export default defineConfig({
         {id: 'es', title: 'Español'},
       ],
       defaultLanguages: ['en'],
-      fieldTypes: ['string', 'text'],
+      fieldTypes: ['string', 'text', 'body'],
     }),
     ...(isDev ? devOnlyPlugins : []),
   ],

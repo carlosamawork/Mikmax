@@ -91,7 +91,6 @@ import bundleComponent from './objects/bundle/bundleComponent'
 import twoColumnCell from './objects/twoColumnCell'
 import {blockSchemas} from './objects/blocks'
 import b2bAreaGroup from './objects/b2bAreaGroup'
-import {localizedPortableText} from './objects/i18n/localizedPortableText'
 
 // Collections
 import collectionGroup from './objects/collection/group'
@@ -100,7 +99,6 @@ import collectionLinks from './objects/collection/links'
 const objects = [
   bundleComponent,
   b2bAreaGroup,
-  localizedPortableText,
   ...blockSchemas,
   twoColumnCell,
   announcementBanner,
