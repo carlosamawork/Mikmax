@@ -21,14 +21,8 @@ export default defineField({
     defineField({
       name: 'text',
       title: 'Texto',
-      type: 'string',
+      type: 'internationalizedArrayString',
       description: 'Mensaje visible en el banner.',
-      validation: (Rule) =>
-        Rule.custom((value, context) => {
-          const enabled = (context.parent as {enabled?: boolean})?.enabled
-          if (enabled && !value) return 'Texto requerido cuando el banner está activado.'
-          return true
-        }),
     }),
     defineField({
       name: 'url',
@@ -41,9 +35,10 @@ export default defineField({
   preview: {
     select: {enabled: 'enabled', text: 'text'},
     prepare({enabled, text}) {
+      const preview = Array.isArray(text) ? (text[0]?.value ?? '(sin texto)') : (text ?? '(sin texto)')
       return {
         title: 'Banner anuncio',
-        subtitle: enabled ? text || '(sin texto)' : '(desactivado)',
+        subtitle: enabled ? preview : '(desactivado)',
       }
     },
   },

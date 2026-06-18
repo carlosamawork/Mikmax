@@ -22,7 +22,7 @@ export default defineField({
           fields: [
             defineField({
               name: 'label',
-              type: 'string',
+              type: 'internationalizedArrayString',
               validation: (Rule) => Rule.required(),
             }),
             defineField({
@@ -41,7 +41,8 @@ export default defineField({
           preview: {
             select: {title: 'label', count: 'items.length'},
             prepare({title, count}) {
-              return {title: title || '(sin label)', subtitle: `${count || 0} items`}
+              const label = Array.isArray(title) ? (title[0]?.value ?? '(sin label)') : (title ?? '(sin label)')
+              return {title: label, subtitle: `${count || 0} items`}
             },
           },
         },
@@ -53,8 +54,7 @@ export default defineField({
           fields: [
             defineField({
               name: 'label',
-              type: 'string',
-              initialValue: 'Shop',
+              type: 'internationalizedArrayString',
               description: 'Texto visible en el nav superior.',
               validation: (Rule) => Rule.required(),
             }),
@@ -62,8 +62,9 @@ export default defineField({
           preview: {
             select: {label: 'label'},
             prepare({label}) {
+              const title = Array.isArray(label) ? (label[0]?.value ?? 'Shop') : (label ?? 'Shop')
               return {
-                title: label || 'Shop',
+                title,
                 subtitle: 'Mega-menú auto: colecciones padre + hijas',
               }
             },

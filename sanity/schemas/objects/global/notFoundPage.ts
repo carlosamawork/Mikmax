@@ -9,14 +9,13 @@ export default defineField({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'body',
       title: 'Body',
-      type: 'text',
-      rows: 2,
+      type: 'internationalizedArrayText',
     }),
     defineField({
       name: 'collection',
