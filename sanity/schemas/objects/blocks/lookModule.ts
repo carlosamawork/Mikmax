@@ -1,6 +1,7 @@
 // sanity/schemas/objects/blocks/lookModule.ts
 import {StackIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {enText} from '../i18n/enText'
 
 export default defineType({
   name: 'block.lookModule',
@@ -31,7 +32,7 @@ export default defineType({
   preview: {
     select: {title: 'title', count: 'looks.length'},
     prepare({title, count}) {
-      return {title: title || 'Módulo Looks', subtitle: `${count || 0} looks`}
+      return {title: enText(title as unknown) || 'Módulo Looks', subtitle: `${count || 0} looks`}
     },
   },
 })

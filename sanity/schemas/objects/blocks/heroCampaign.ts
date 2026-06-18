@@ -1,6 +1,7 @@
 // sanity/schemas/objects/blocks/heroCampaign.ts
 import {ImagesIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {enText} from '../i18n/enText'
 
 export default defineType({
   name: 'block.heroCampaign',
@@ -79,7 +80,7 @@ export default defineType({
           preview: {
             select: {title: 'title', media: 'image'},
             prepare({title, media}) {
-              return {title: title || '(sin título)', media}
+              return {title: enText(title as unknown) || '(sin título)', media}
             },
           },
         },
@@ -89,7 +90,8 @@ export default defineType({
   preview: {
     select: {first: 'slides.0.title', second: 'slides.1.title', media: 'slides.0.image'},
     prepare({first, second, media}) {
-      const subtitle = [first, second].filter(Boolean).join(' / ') || '(vacío)'
+      const subtitle =
+        [enText(first as unknown), enText(second as unknown)].filter(Boolean).join(' / ') || '(vacío)'
       return {title: 'Hero campaña', subtitle, media}
     },
   },

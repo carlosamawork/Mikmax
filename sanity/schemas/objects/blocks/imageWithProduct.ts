@@ -1,6 +1,7 @@
 // sanity/schemas/objects/blocks/imageWithProduct.ts
 import {SunIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {enText} from '../i18n/enText'
 
 export default defineType({
   name: 'block.imageWithProduct',
@@ -75,7 +76,7 @@ export default defineType({
     },
     prepare({title, productTitle, media}) {
       return {
-        title: title || '(sin título)',
+        title: enText(title as unknown) || '(sin título)',
         subtitle: productTitle ? `+ ${productTitle}` : '+ producto',
         media,
       }

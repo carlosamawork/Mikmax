@@ -1,6 +1,7 @@
 // sanity/schemas/objects/blocks/downloadButton.ts
 import {DownloadIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {enText} from '../i18n/enText'
 
 export default defineType({
   name: 'block.downloadButton',
@@ -38,7 +39,7 @@ export default defineType({
   preview: {
     select: {title: 'title', subtitle: 'description'},
     prepare({title, subtitle}) {
-      return {title: title || 'Botón de descarga', subtitle: subtitle || 'PDF'}
+      return {title: enText(title as unknown) || 'Botón de descarga', subtitle: enText(subtitle as unknown) || 'PDF'}
     },
   },
 })

@@ -1,6 +1,7 @@
 // sanity/schemas/objects/blocks/productModule.ts
 import {PackageIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {enText} from '../i18n/enText'
 
 export default defineType({
   name: 'block.productModule',
@@ -64,7 +65,7 @@ export default defineType({
   preview: {
     select: {title: 'title', layout: 'layout', source: 'source'},
     prepare({title, layout, source}) {
-      return {title: title || 'Módulo de productos', subtitle: `${source} · ${layout}`}
+      return {title: enText(title as unknown) || 'Módulo de productos', subtitle: `${source} · ${layout}`}
     },
   },
 })

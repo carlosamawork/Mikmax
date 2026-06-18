@@ -1,5 +1,6 @@
 import {DocumentTextIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {enText} from '../objects/i18n/enText'
 
 const TITLE = 'Legal Page'
 
@@ -57,6 +58,9 @@ export default defineType({
           ],
           preview: {
             select: {title: 'title', subtitle: 'slug.current'},
+            prepare({title, subtitle}) {
+              return {title: enText(title as unknown) || 'Untitled', subtitle}
+            },
           },
         }),
       ],
