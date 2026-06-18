@@ -1,0 +1,13 @@
+{
+  "cart": {
+    "empty": "Tu carrito está vacío.",
+    "subtotal": "Subtotal"
+  },
+  "common": {
+    "error": "Algo salió mal. Inténtalo de nuevo.",
+    "required": "Obligatorio"
+  },
+  "newsletter": {
+    "success": "Gracias por suscribirte."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cart": {
+    "empty": "Your cart is empty.",
+    "subtotal": "Subtotal"
+  },
+  "common": {
+    "error": "Something went wrong. Try again.",
+    "required": "Required"
+  },
+  "newsletter": {
+    "success": "Thanks for subscribing."
+  }
+}
