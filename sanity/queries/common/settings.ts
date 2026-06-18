@@ -11,6 +11,7 @@ import type {
 } from '@/sanity/types'
 import type {Locale} from '@/lib/i18n/config'
 import {seo} from '../fragments/seo'
+import {localizedField} from '@/lib/i18n/groq'
 
 // Everything below is inlined (no fragment interpolation) on purpose. Once
 // linkResolved/linkInternalHref were interpolated 3-4 levels deep with
@@ -75,7 +76,7 @@ export async function getSettings(lang: Locale = 'en'): Promise<SettingsData> {
           title,
           url,
           newWindow,
-          label,
+          ${localizedField('label')},
           "ref": reference->{ _type, "slug": coalesce(store.slug.current, slug.current) },
           items[]{
             _key,
@@ -95,15 +96,20 @@ export async function getSettings(lang: Locale = 'en'): Promise<SettingsData> {
       },
       banner{
         enabled,
-        text,
+        ${localizedField('text')},
         url
       },
       footer{
-        newsletter,
+        newsletter{
+          ${localizedField('title')},
+          ${localizedField('body')},
+          ${localizedField('placeholder')},
+          ${localizedField('buttonLabel')}
+        },
         columns[]{
           _key,
           _type,
-          title,
+          ${localizedField('title')},
           links[]{
             _key,
             _type,
@@ -124,7 +130,7 @@ export async function getSettings(lang: Locale = 'en'): Promise<SettingsData> {
         regions[]{
           _key,
           code,
-          label,
+          ${localizedField('label')},
           currency,
           isDefault
         }
@@ -132,8 +138,8 @@ export async function getSettings(lang: Locale = 'en'): Promise<SettingsData> {
       newsletterPopup{
         enabled,
         image{ "imageUrl": asset->url, "alt": alt },
-        heading,
-        legalText,
+        ${localizedField('heading')},
+        ${localizedField('legalText')},
         delaySeconds
       },
       seo{ ${seo} }

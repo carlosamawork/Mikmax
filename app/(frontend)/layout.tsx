@@ -37,9 +37,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   const locale = await getLocale()
   const dict = getDictionary(locale)
   const [footerData, bannerData, newsletterPopupData] = await Promise.all([
-    getFooter(),
-    getBanner(),
-    getNewsletterPopup(),
+    getFooter(locale),
+    getBanner(locale),
+    getNewsletterPopup(locale),
   ])
 
   return (
