@@ -18,11 +18,7 @@ export default function PriceDisplay({min, max, compareAt, className, currency}:
   // Server component: locale flag is OFF in production so 'en' is correct today.
   // Locale-threading is deferred to a later pass.
   const code = currency ?? getStoreCurrency()
-  const fmt = (n: number) =>
-    formatMoney({amount: n, currencyCode: code}, 'en', {
-      maximumFractionDigits: 0,
-      minimumFractionDigits: 0,
-    })
+  const fmt = (n: number) => formatMoney({amount: n, currencyCode: code}, 'en')
 
   const range = typeof max === 'number' && max > min ? `${fmt(min)} – ${fmt(max)}` : fmt(min)
   const showCompare = typeof compareAt === 'number' && compareAt > min

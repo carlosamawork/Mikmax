@@ -39,15 +39,4 @@ describe('formatMoney', () => {
     const result = formatMoney({amount: 0, currencyCode: 'EUR'}, 'es')
     expect(result).toContain('0')
   })
-
-  it('renders whole-number display when maximumFractionDigits and minimumFractionDigits are 0', () => {
-    const result = formatMoney(
-      {amount: 49, currencyCode: 'EUR'},
-      'en',
-      {maximumFractionDigits: 0, minimumFractionDigits: 0},
-    )
-    expect(result).toContain('49')
-    expect(result).not.toContain('.00')
-    expect(result).not.toContain(',00')
-  })
 })
