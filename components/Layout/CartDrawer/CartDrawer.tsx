@@ -49,7 +49,11 @@ export default function CartDrawer({copy}: Props) {
   // Locale-threading is deferred to a later pass.
   // Currency comes from cartCost (Shopify) or falls back to getStoreCurrency().
   const currency = ctx?.cartCost?.currency ?? getStoreCurrency()
-  const fmt = (n: number) => formatMoney({amount: n, currencyCode: currency}, 'en')
+  const fmt = (n: number) =>
+    formatMoney({amount: n, currencyCode: currency}, 'en', {
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    })
 
   useEffect(() => {
     if (!open) return

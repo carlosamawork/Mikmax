@@ -33,7 +33,11 @@ export default function SizeSelector({
 
   // Client component: locale flag is OFF in production so 'en' is correct today.
   // Locale-threading is deferred to a later pass.
-  const fmt = (n: number) => formatMoney({amount: n, currencyCode: currency}, 'en')
+  const fmt = (n: number) =>
+    formatMoney({amount: n, currencyCode: currency}, 'en', {
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    })
 
   return (
     <div className={[s.wrap, className].filter(Boolean).join(' ')}>
