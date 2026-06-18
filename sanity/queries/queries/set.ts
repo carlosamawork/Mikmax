@@ -2,8 +2,10 @@
 import {groq} from 'next-sanity'
 import {client} from '..'
 import type {Locale} from '@/lib/i18n/config'
+import {localizedField} from '@/lib/i18n/groq'
 import {image} from '../fragments/image'
 import {seo} from '../fragments/seo'
+import {body} from '../fragments/body'
 import type {SanityLookDoc} from './look'
 
 export type SanitySetDoc = SanityLookDoc & {colorLocked: string | null}
@@ -13,13 +15,13 @@ export const SET_BY_SLUG_QUERY = groq`
      && slug.current == $slug
      && !(_id in path('drafts.**'))][0] {
     _id,
-    title,
+    ${localizedField('title')},
     "slug": slug.current,
     colorLocked,
-    description,
-    propiedadesMaterial,
-    recomendacionesLavado,
-    usoRecomendado,
+    ${localizedField('description')},
+    "propiedadesMaterial": coalesce(propiedadesMaterial[_key == $lang][0].value[]{ ${body} }, propiedadesMaterial[_key == "en"][0].value[]{ ${body} }, propiedadesMaterial[]{ ${body} }),
+    "recomendacionesLavado": coalesce(recomendacionesLavado[_key == $lang][0].value[]{ ${body} }, recomendacionesLavado[_key == "en"][0].value[]{ ${body} }, recomendacionesLavado[]{ ${body} }),
+    "usoRecomendado": coalesce(usoRecomendado[_key == $lang][0].value[]{ ${body} }, usoRecomendado[_key == "en"][0].value[]{ ${body} }, usoRecomendado[]{ ${body} }),
     "seo": seo{ ${seo} },
     editorialImages[]{
       image{
@@ -63,7 +65,7 @@ export async function getSetSlugs(): Promise<string[]> {
 
 export async function getSetSEO(slug: string, lang: Locale) {
   return client.fetch(
-    groq`*[_type == "set" && slug.current == $slug && !(_id in path('drafts.**'))][0]{ "seo": seo{ ${seo} }, title }`,
+    groq`*[_type == "set" && slug.current == $slug && !(_id in path('drafts.**'))][0]{ "seo": seo{ ${seo} }, ${localizedField('title')} }`,
     {slug, lang},
     {next: {tags: ['set', `set:${slug}`], revalidate: 3600}},
   )
@@ -89,7 +91,7 @@ export const ALL_SETS_QUERY = groq`
      && defined(slug.current)
      && !(_id in path('drafts.**'))] | order(coalesce(orderRank, title) asc) {
     _id,
-    title,
+    ${localizedField('title')},
     "slug": slug.current,
     discountStrategy,
     discountValue,
@@ -101,10 +103,10 @@ export const ALL_SETS_QUERY = groq`
   }
 `
 
-export async function getAllSets(): Promise<SanitySetListDoc[]> {
+export async function getAllSets(lang: Locale): Promise<SanitySetListDoc[]> {
   const docs = await client.fetch<SanitySetListDoc[]>(
     ALL_SETS_QUERY,
-    {},
+    {lang},
     // Lee product->store.slug.current en los componentes: suscribirse a `product`.
     {next: {tags: ['set', 'product'], revalidate: 3600}},
   )
