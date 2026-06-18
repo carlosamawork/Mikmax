@@ -38,7 +38,7 @@ export default defineType({
         defineField({name: 'poster', type: 'image'}),
       ],
     }),
-    defineField({name: 'headline', title: 'Headline (opc)', type: 'string'}),
+    defineField({name: 'headline', title: 'Headline (opc)', type: 'internationalizedArrayString'}),
     defineField({
       name: 'url',
       title: 'URL (opc)',

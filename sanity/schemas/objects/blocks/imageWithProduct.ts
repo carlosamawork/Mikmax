@@ -34,7 +34,7 @@ export default defineType({
           title: 'Título overlay',
           description:
             'Texto sobreimpuesto abajo a la izquierda (ej. "Discover our new arrivals").',
-          type: 'string',
+          type: 'internationalizedArrayString',
         }),
         defineField({
           name: 'url',

@@ -23,7 +23,7 @@ export default defineType({
     defineField({
       name: 'body',
       title: 'Texto',
-      type: 'body',
+      type: 'internationalizedArrayBody',
       hidden: ({parent}) => parent?.kind !== 'text',
     }),
     // --- Media ---
@@ -63,7 +63,7 @@ export default defineType({
     defineField({
       name: 'caption',
       title: 'Rótulo (opc)',
-      type: 'string',
+      type: 'internationalizedArrayString',
       description: 'Texto superpuesto sobre la imagen/vídeo. Vacío = sin rótulo.',
       hidden: ({parent}) => parent?.kind !== 'media',
     }),

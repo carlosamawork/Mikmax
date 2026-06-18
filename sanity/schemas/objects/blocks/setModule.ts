@@ -11,12 +11,12 @@ export default defineType({
     defineField({
       name: 'title',
       title: 'Título',
-      type: 'string',
+      type: 'internationalizedArrayString',
     }),
     defineField({
       name: 'subtitle',
       title: 'Subtítulo',
-      type: 'string',
+      type: 'internationalizedArrayString',
     }),
     defineField({
       name: 'product',

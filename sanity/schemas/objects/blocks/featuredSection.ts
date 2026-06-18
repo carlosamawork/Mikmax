@@ -41,7 +41,7 @@ export default defineType({
               title: 'Título',
               description:
                 'Texto sobreimpuesto abajo a la izquierda (ej. "Follow us on Instagram").',
-              type: 'string',
+              type: 'internationalizedArrayString',
             }),
             defineField({
               name: 'url',

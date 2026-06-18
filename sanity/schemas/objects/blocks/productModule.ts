@@ -8,7 +8,7 @@ export default defineType({
   type: 'object',
   icon: PackageIcon,
   fields: [
-    defineField({name: 'title', title: 'Título', type: 'string'}),
+    defineField({name: 'title', title: 'Título', type: 'internationalizedArrayString'}),
     defineField({
       name: 'layout',
       title: 'Layout',

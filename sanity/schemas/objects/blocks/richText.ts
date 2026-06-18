@@ -10,7 +10,7 @@ export default defineType({
   fields: [
     defineField({
       name: 'body',
-      type: 'body', // reuses existing block content schema
+      type: 'internationalizedArrayBody', // reuses existing block content schema
       validation: (Rule) => Rule.required(),
     }),
   ],

@@ -66,7 +66,7 @@ export default defineType({
               title: 'Título',
               description:
                 'Texto sobreimpuesto abajo a la izquierda de la imagen (ej. "Discover our Bedroom collection").',
-              type: 'string',
+              type: 'internationalizedArrayString',
             }),
             defineField({
               name: 'url',

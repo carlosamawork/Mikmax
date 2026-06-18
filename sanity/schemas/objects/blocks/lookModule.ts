@@ -8,7 +8,7 @@ export default defineType({
   type: 'object',
   icon: StackIcon,
   fields: [
-    defineField({name: 'title', type: 'string'}),
+    defineField({name: 'title', type: 'internationalizedArrayString'}),
     defineField({
       name: 'looks',
       type: 'array',

@@ -18,14 +18,14 @@ export default defineType({
     defineField({
       name: 'title',
       title: 'Texto del botón',
-      type: 'string',
+      type: 'internationalizedArrayString',
       initialValue: 'Descargar',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'description',
       title: 'Descripción',
-      type: 'text',
+      type: 'internationalizedArrayText',
     }),
     defineField({
       name: 'file',
