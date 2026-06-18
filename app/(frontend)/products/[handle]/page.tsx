@@ -8,6 +8,7 @@ import {BASE_URL, siteTitle} from '@/utils/seoHelper'
 import {getResellerPercent, resellerPrice, applyResellerToCard} from '@/lib/b2b/pricing'
 import {getLocale} from '@/lib/i18n/getLocale'
 import {getDictionary} from '@/lib/i18n/getDictionary'
+import {shopifyLanguage, DEFAULT_COUNTRY} from '@/lib/i18n/shopifyLocale'
 import ProductDetail from '@/components/Product/ProductDetail'
 
 export const revalidate = 300
@@ -28,7 +29,7 @@ export async function generateMetadata({
   const {handle} = await params
   const [sanityDoc, shopifyProduct] = await Promise.all([
     getSanityProduct(handle),
-    getProductDetail(handle),
+    getProductDetail(handle, {language: 'EN', country: DEFAULT_COUNTRY}),
   ])
   if (!shopifyProduct) return {title: `Product not found | ${siteTitle}`}
 
@@ -69,10 +70,10 @@ export default async function ProductPage({
   const {handle} = await params
   const search = await searchParams
 
-  const [sanityDoc, shopifyProduct, locale] = await Promise.all([
+  const locale = await getLocale()
+  const [sanityDoc, shopifyProduct] = await Promise.all([
     getSanityProduct(handle),
-    getProductDetail(handle),
-    getLocale(),
+    getProductDetail(handle, {language: shopifyLanguage(locale), country: DEFAULT_COUNTRY}),
   ])
   if (!shopifyProduct) notFound()
   const dict = getDictionary(locale)
