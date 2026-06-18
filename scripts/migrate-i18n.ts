@@ -24,7 +24,17 @@
  *   - Only explicit, path-based transforms per type — no global name-based wrapping.
  */
 
+import {existsSync} from 'node:fs'
 import {createClient} from '@sanity/client'
+
+// ---------------------------------------------------------------------------
+// Env loading — Next.js loads .env.local automatically, but a standalone
+// script does not. Node 20.12+/22 exposes process.loadEnvFile(). Run before
+// reading any process.env value below.
+// ---------------------------------------------------------------------------
+
+const loadEnvFile = (process as {loadEnvFile?: (path?: string) => void}).loadEnvFile
+if (loadEnvFile && existsSync('.env.local')) loadEnvFile('.env.local')
 
 // ---------------------------------------------------------------------------
 // CLI flags
@@ -57,8 +67,21 @@ if (!EXECUTE) {
 // Sanity client
 // ---------------------------------------------------------------------------
 
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+if (!projectId) {
+  console.error(
+    'Missing NEXT_PUBLIC_SANITY_PROJECT_ID. Run this script from the repo root so .env.local is found, ' +
+      'or pass the env explicitly (e.g. node --env-file=.env.local).',
+  )
+  process.exit(1)
+}
+if (EXECUTE && !process.env.SANITY_WRITE_TOKEN) {
+  console.error('Missing SANITY_WRITE_TOKEN — required to write with --execute.')
+  process.exit(1)
+}
+
 const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  projectId,
   dataset: DATASET,
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? '2024-01-01',
   token: process.env.SANITY_WRITE_TOKEN,
