@@ -170,7 +170,12 @@ export default function LookDetail({view}: Props) {
         </button>
         {mSizesOpen && (
           <>
-            <LookSizeList components={view.components} selected={selected} onSelect={handleSelect} />
+            <LookSizeList
+              components={view.components}
+              selected={selected}
+              onSelect={handleSelect}
+              currency={view.currency}
+            />
             <button
               type="button"
               className={s.mAddToCart}

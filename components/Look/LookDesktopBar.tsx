@@ -41,7 +41,12 @@ export default function LookDesktopBar({
     <div className={s.bar}>
       {panelOpen && (
         <div className={s.panel}>
-          <LookSizeList components={view.components} selected={selected} onSelect={onSelect} />
+          <LookSizeList
+            components={view.components}
+            selected={selected}
+            onSelect={onSelect}
+            currency={view.currency}
+          />
         </div>
       )}
 

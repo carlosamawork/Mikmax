@@ -8,6 +8,7 @@ import {prepareCheckout} from '@/app/(frontend)/checkout/actions'
 import type {CartCost} from '@/types/cart'
 import {nextTierNudge} from '@/lib/b2b/cartCost'
 import type {Dictionary} from '@/lib/i18n/getDictionary'
+import {formatMoney} from '@/lib/money'
 import s from './CartDrawer.module.scss'
 
 type CartItem = {
@@ -34,12 +35,6 @@ type CartCtx = {
   b2bCartContext?: {isDesigner: boolean; designerTiers: {minSubtotal: number; percent: number}[]}
 }
 
-const FMT = new Intl.NumberFormat('es-ES', {
-  style: 'currency',
-  currency: 'EUR',
-  maximumFractionDigits: 0,
-})
-
 interface Props {
   copy: Dictionary['cart']
 }
@@ -49,6 +44,12 @@ export default function CartDrawer({copy}: Props) {
   const cart = ctx?.cart ?? []
   const open = !!ctx?.cartOpen
   const close = () => ctx?.setCartOpen?.(false)
+
+  // Client component: locale flag is OFF in production so 'en' is correct today.
+  // Locale-threading is deferred to a later pass.
+  // Currency comes from cartCost (Shopify) or falls back to getStoreCurrency().
+  const currency = ctx?.cartCost?.currency ?? getStoreCurrency()
+  const fmt = (n: number) => formatMoney({amount: n, currencyCode: currency}, 'en')
 
   useEffect(() => {
     if (!open) return
@@ -161,7 +162,7 @@ export default function CartDrawer({copy}: Props) {
 
             <div className={s.price}>
               {typeof item.price === 'number'
-                ? FMT.format(item.price * (item.variantQuantity ?? 1))
+                ? fmt(item.price * (item.variantQuantity ?? 1))
                 : '—'}
             </div>
 
@@ -182,12 +183,12 @@ export default function CartDrawer({copy}: Props) {
           <div className={s.summary}>
             <div className={s.summaryRow}>
               <span>{copy.subtotal}</span>
-              <span>{FMT.format(ctx.cartCost.subtotal)}</span>
+              <span>{fmt(ctx.cartCost.subtotal)}</span>
             </div>
             {ctx.cartCost.discount > 0 && (
               <div className={`${s.summaryRow} ${s.summaryDiscount}`}>
                 <span>{ctx.cartCost.discountTitle ?? 'Descuento'}</span>
-                <span>−{FMT.format(ctx.cartCost.discount)}</span>
+                <span>−{fmt(ctx.cartCost.discount)}</span>
               </div>
             )}
             {ctx?.b2bCartContext?.isDesigner &&
@@ -204,14 +205,14 @@ export default function CartDrawer({copy}: Props) {
                 return (
                   <div className={`${s.summaryRow} ${s.nudge}`}>
                     {nudge
-                      ? `Añade ${FMT.format(nudge.gap)} más para alcanzar el ${nudge.percent}%`
+                      ? `Añade ${fmt(nudge.gap)} más para alcanzar el ${nudge.percent}%`
                       : `Tienes el descuento profesional máximo (${maxPercent}%)`}
                   </div>
                 )
               })()}
             <div className={`${s.summaryRow} ${s.summaryTotal}`}>
               <span>{copy.total}</span>
-              <span>{FMT.format(ctx.cartCost.total)}</span>
+              <span>{fmt(ctx.cartCost.total)}</span>
             </div>
           </div>
         )}

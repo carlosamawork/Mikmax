@@ -2,6 +2,7 @@
 import {useState} from 'react'
 import type {ColorSize} from '@/types/product'
 import type {Dictionary} from '@/lib/i18n/getDictionary'
+import {formatMoney} from '@/lib/money'
 import s from './SizeSelector.module.scss'
 
 interface Props {
@@ -15,12 +16,6 @@ interface Props {
   widePanel?: boolean
   copy: Pick<Dictionary['pdp'], 'sizeLabel' | 'selectSizePlaceholder' | 'selectSize'>
 }
-
-const FMT = new Intl.NumberFormat('es-ES', {
-  style: 'currency',
-  currency: 'EUR',
-  maximumFractionDigits: 0,
-})
 
 export default function SizeSelector({
   sizes,
@@ -36,6 +31,10 @@ export default function SizeSelector({
   const [open, setOpen] = useState(false)
   const current = selected ? sizes.find((sz) => sz.label === selected) : undefined
 
+  // Client component: locale flag is OFF in production so 'en' is correct today.
+  // Locale-threading is deferred to a later pass.
+  const fmt = (n: number) => formatMoney({amount: n, currencyCode: currency}, 'en')
+
   return (
     <div className={[s.wrap, className].filter(Boolean).join(' ')}>
       <button
@@ -50,13 +49,9 @@ export default function SizeSelector({
             <span className={s.value}>{current.label}</span>
             <span className={s.price}>
               {current.displayPrice !== undefined && current.displayPrice < current.price && (
-                <s style={{opacity: 0.5, marginRight: 6}}>
-                  {currency === 'EUR' ? FMT.format(current.price) : `${current.price} ${currency}`}
-                </s>
+                <s style={{opacity: 0.5, marginRight: 6}}>{fmt(current.price)}</s>
               )}
-              {currency === 'EUR'
-                ? FMT.format(current.displayPrice ?? current.price)
-                : `${current.displayPrice ?? current.price} ${currency}`}
+              {fmt(current.displayPrice ?? current.price)}
             </span>
           </>
         ) : (
@@ -103,13 +98,9 @@ export default function SizeSelector({
               <span className={s.rowLabel}>{sz.label}</span>
               <span className={s.rowPrice}>
                 {sz.displayPrice !== undefined && sz.displayPrice < sz.price && (
-                  <s style={{opacity: 0.5, marginRight: 6}}>
-                    {currency === 'EUR' ? FMT.format(sz.price) : `${sz.price} ${currency}`}
-                  </s>
+                  <s style={{opacity: 0.5, marginRight: 6}}>{fmt(sz.price)}</s>
                 )}
-                {currency === 'EUR'
-                  ? FMT.format(sz.displayPrice ?? sz.price)
-                  : `${sz.displayPrice ?? sz.price} ${currency}`}
+                {fmt(sz.displayPrice ?? sz.price)}
               </span>
               <button
                 type="button"

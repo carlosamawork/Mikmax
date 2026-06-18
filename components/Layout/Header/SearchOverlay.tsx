@@ -7,6 +7,8 @@ import {LazyImage} from '@/components/Common'
 import {predictiveSearch} from '@/app/(frontend)/search/actions'
 import type {PredictiveResult} from '@/app/(frontend)/search/actions'
 import type {Dictionary} from '@/lib/i18n/getDictionary'
+import {formatMoney} from '@/lib/money'
+import {getStoreCurrency} from '@/lib/analytics/item'
 import s from './SearchOverlay.module.scss'
 
 interface Props {
@@ -17,15 +19,11 @@ interface Props {
 
 const EMPTY: PredictiveResult = {cards: [], total: 0}
 
-const priceFormatter = new Intl.NumberFormat('es-ES', {
-  style: 'currency',
-  currency: 'EUR',
-  maximumFractionDigits: 2,
-})
-
+// Client component: locale flag is OFF in production so 'en' is correct today.
+// currencyCode comes from getStoreCurrency() (env-based); locale-threading deferred.
 function formatPrice(min?: number): string {
   if (typeof min !== 'number') return ''
-  return priceFormatter.format(min)
+  return formatMoney({amount: min, currencyCode: getStoreCurrency()}, 'en')
 }
 
 export default function SearchOverlay({open, onClose, copy}: Props) {
