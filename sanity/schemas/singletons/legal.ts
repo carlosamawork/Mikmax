@@ -16,9 +16,7 @@ export default defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
-      initialValue: 'Legal',
-      validation: (Rule) => Rule.required(),
+      type: 'internationalizedArrayString',
       group: 'editorial',
     }),
     defineField({
@@ -37,8 +35,7 @@ export default defineType({
             defineField({
               name: 'title',
               title: 'Title',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
+              type: 'internationalizedArrayString',
             }),
             defineField({
               name: 'slug',
@@ -50,7 +47,7 @@ export default defineType({
             defineField({
               name: 'body',
               title: 'Body',
-              type: 'body',
+              type: 'internationalizedArrayBody',
             }),
             defineField({
               name: 'seo',
