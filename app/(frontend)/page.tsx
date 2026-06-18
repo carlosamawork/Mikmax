@@ -1,4 +1,4 @@
-import {buildUrl, siteTitle, siteDescription, BASE_IMAGE_URL, BASE_IMAGE_WIDTH, BASE_IMAGE_HEIGHT} from '@/utils/seoHelper'
+import {buildUrl, siteTitle, siteDescription, BASE_IMAGE_URL, BASE_IMAGE_WIDTH, BASE_IMAGE_HEIGHT, localeAlternates} from '@/utils/seoHelper'
 import {PageBuilder} from '@/components/PageBuilder'
 import {getHome} from '@/sanity/queries/queries/home'
 
@@ -8,7 +8,7 @@ export async function generateMetadata() {
   return {
     title: siteTitle,
     description: siteDescription,
-    alternates: {canonical: buildUrl('/')},
+    alternates: localeAlternates('/'),
     openGraph: {
       title: siteTitle,
       description: siteDescription,

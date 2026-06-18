@@ -4,7 +4,7 @@ import {getProductDetail, getProductCards} from '@/lib/shopify'
 import {getSanityProduct} from '@/sanity/queries/queries/product'
 import {buildProductView} from '@/lib/product/buildProductView'
 import {resolveInitialState} from '@/lib/product/resolveInitialState'
-import {BASE_URL, siteTitle} from '@/utils/seoHelper'
+import {siteTitle, localeAlternates, buildUrl} from '@/utils/seoHelper'
 import {getResellerPercent, resellerPrice, applyResellerToCard} from '@/lib/b2b/pricing'
 import {getLocale} from '@/lib/i18n/getLocale'
 import {getDictionary} from '@/lib/i18n/getDictionary'
@@ -38,16 +38,14 @@ export async function generateMetadata({
     stripHtml(shopifyProduct.descriptionHtml).slice(0, 160) ||
     shopifyProduct.title
 
-  const canonical = `${BASE_URL.origin}/products/${handle}`
-
   return {
     title: `${shopifyProduct.title} | ${siteTitle}`,
     description: desc,
-    alternates: {canonical},
+    alternates: localeAlternates('/products/' + handle),
     openGraph: {
       title: shopifyProduct.title,
       description: desc,
-      url: canonical,
+      url: buildUrl('/products/' + handle),
       images: shopifyProduct.featuredImage?.url
         ? [
             {

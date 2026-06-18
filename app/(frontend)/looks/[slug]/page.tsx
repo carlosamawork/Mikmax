@@ -3,7 +3,7 @@ import {notFound} from 'next/navigation'
 import {getLook, getLookSlugs, getLookSEO} from '@/sanity/queries/queries/look'
 import {getProductDetail, getProductCards} from '@/lib/shopify'
 import {buildLookView} from '@/lib/look/buildLookView'
-import {BASE_URL, siteTitle} from '@/utils/seoHelper'
+import {siteTitle, localeAlternates, buildUrl} from '@/utils/seoHelper'
 import LookDetail from '@/components/Look/LookDetail'
 
 export const revalidate = 300
@@ -23,12 +23,12 @@ export async function generateMetadata({
   if (!data) return {title: `Look not found | ${siteTitle}`}
   const seo = (data.seo ?? {}) as {title?: string; description?: string}
   const title = seo.title || data.title
-  const canonical = `${BASE_URL.origin}/looks/${slug}`
+  const lookPath = '/looks/' + slug
   return {
     title: `${title} | ${siteTitle}`,
     description: seo.description,
-    alternates: {canonical},
-    openGraph: {title, description: seo.description, url: canonical},
+    alternates: localeAlternates(lookPath),
+    openGraph: {title, description: seo.description, url: buildUrl(lookPath)},
   }
 }
 

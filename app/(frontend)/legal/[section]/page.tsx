@@ -1,7 +1,7 @@
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 import {getLegalPage} from '@/sanity/queries/queries/legal'
-import {BASE_URL, siteTitle, siteDescription} from '@/utils/seoHelper'
+import {siteTitle, siteDescription, localeAlternates, buildUrl} from '@/utils/seoHelper'
 import {urlFor} from '@/sanity/queries'
 import LegalLayout from '@/components/Legal/LegalLayout'
 
@@ -25,7 +25,7 @@ export async function generateMetadata({
   const title = section.seo?.title || section.title
   const description =
     section.seo?.description || data?.seo?.description || siteDescription
-  const canonical = `${BASE_URL.origin}/legal/${section.slug}`
+  const legalPath = '/legal/' + section.slug
 
   const ogImageSource = section.seo?.image || data?.seo?.image
   const ogImageUrl = ogImageSource ? urlFor(ogImageSource).width(1200).url() : undefined
@@ -33,11 +33,11 @@ export async function generateMetadata({
   return {
     title: `${title} | ${siteTitle}`,
     description,
-    alternates: {canonical},
+    alternates: localeAlternates(legalPath),
     openGraph: {
       title,
       description,
-      url: canonical,
+      url: buildUrl(legalPath),
       ...(ogImageUrl ? {images: [{url: ogImageUrl}]} : {}),
     },
   }
