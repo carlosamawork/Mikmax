@@ -1,5 +1,6 @@
 import {image} from './image'
 import {productCardProjection, setCardProjection} from './cards'
+import {localizedField} from '@/lib/i18n/groq'
 
 // Proyección de un slot imagen/vídeo (heroCampaign, campaignImageVideo, twoColumnCell)
 export const mediaProjection = `
@@ -24,13 +25,13 @@ export const pageBuilderProjection = `
     slides[]{
       _key,
       ${mediaProjection},
-      title,
+      ${localizedField('title')},
       url
     }
   },
   _type == "block.campaignImageVideo" => {
     ${mediaProjection},
-    headline,
+    ${localizedField('headline')},
     url,
     aspectRatio,
     fullBleed,
@@ -43,7 +44,7 @@ export const pageBuilderProjection = `
         ${image},
         "alt": alt
       },
-      title,
+      ${localizedField('title')},
       url
     }
   },
@@ -53,14 +54,14 @@ export const pageBuilderProjection = `
         ${image},
         "alt": alt
       },
-      title,
+      ${localizedField('title')},
       url
     },
     "product": product->{ ${productCardProjection} },
     imagePosition
   },
   _type == "block.productModule" => {
-    title,
+    ${localizedField('title')},
     layout,
     source,
     "products": select(
@@ -72,13 +73,13 @@ export const pageBuilderProjection = `
     )
   },
   _type == "block.lookModule" => {
-    title,
+    ${localizedField('title')},
     layout,
     "looks": looks[]->{ ${setCardProjection} }
   },
   _type == "block.setModule" => {
-    title,
-    subtitle,
+    ${localizedField('title')},
+    ${localizedField('subtitle')},
     "product": product->{ ${productCardProjection} },
     images[]{
       ${image},
@@ -86,15 +87,15 @@ export const pageBuilderProjection = `
     }
   },
   _type == "block.richText" => {
-    body
+    ${localizedField('body')}
   },
   _type == "block.twoColumn" => {
-    left{ kind, body, ${mediaProjection}, caption, captionTheme, url },
-    right{ kind, body, ${mediaProjection}, caption, captionTheme, url }
+    left{ kind, ${localizedField('body')}, ${mediaProjection}, ${localizedField('caption')}, captionTheme, url },
+    right{ kind, ${localizedField('body')}, ${mediaProjection}, ${localizedField('caption')}, captionTheme, url }
   },
   _type == "block.downloadButton" => {
-    title,
-    description,
+    ${localizedField('title')},
+    ${localizedField('description')},
     image{ ${image}, "alt": alt },
     "fileUrl": file.asset->url,
     "fileName": file.asset->originalFilename
