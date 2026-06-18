@@ -90,7 +90,10 @@ function isAlreadyWrapped(value: unknown): boolean {
     value.length > 0 &&
     typeof value[0] === 'object' &&
     value[0] !== null &&
-    '_key' in (value[0] as object)
+    '_key' in (value[0] as object) &&
+    // PortableText blocks also have _key, but NOT value. Only wrapped i18n
+    // items have top-level value, so we require it to distinguish wrapped from raw.
+    'value' in (value[0] as object)
   )
 }
 
