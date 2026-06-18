@@ -26,6 +26,7 @@ const DEFAULT_HEADER_COPY: Dictionary['header'] = {
   navAriaLabel: 'Main',
   search: 'Search',
   account: 'Account',
+  cart: 'Cart',
   login: 'Login',
   myAccount: 'My account',
   logIn: 'Log in',
@@ -235,10 +236,10 @@ export default function HeaderClient({
             <button
               type="button"
               className={s.actionBtn}
-              aria-label={copy.account}
+              aria-label={copy.cart}
               onClick={() => ctx?.setCartOpen?.(true)}
             >
-              {copy.account} [ {cartCount} ]
+              {copy.cart} [ {cartCount} ]
             </button>
           </div>
 
@@ -280,7 +281,7 @@ export default function HeaderClient({
             <button
               type="button"
               className={s.cartCounter}
-              aria-label={copy.account}
+              aria-label={copy.cart}
               onClick={() => ctx?.setCartOpen?.(true)}
             >
               [ {cartCount} ]

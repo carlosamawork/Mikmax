@@ -3,7 +3,6 @@
     "empty": "Tu carrito está vacío.",
     "subtotal": "Subtotal",
     "title": "Cart",
-    "titleWithCount": "Cart [ {count} ]",
     "closeLabel": "Close cart",
     "close": "Close",
     "decreaseQuantity": "Decrease quantity",
@@ -20,13 +19,15 @@
   "newsletter": {
     "success": "Gracias por suscribirte.",
     "alreadySubscribed": "You're already subscribed.",
-    "emailLabel": "Email"
+    "emailLabel": "Email",
+    "error": "Something went wrong. Try again."
   },
   "header": {
     "logoAriaLabel": "Mikmax — home",
     "navAriaLabel": "Main",
     "search": "Search",
     "account": "Account",
+    "cart": "Cart",
     "login": "Login",
     "myAccount": "My account",
     "logIn": "Log in",

@@ -11,6 +11,7 @@ const DEFAULT_COPY: Dictionary['newsletter'] = {
   success: 'Thanks for subscribing.',
   alreadySubscribed: "You're already subscribed.",
   emailLabel: 'Email',
+  error: 'Something went wrong. Try again.',
 }
 
 export default function NewsletterForm({
@@ -59,7 +60,7 @@ export default function NewsletterForm({
 
       {status === 'success' && <p className={s.feedback}>{copy.success}</p>}
       {status === 'already' && <p className={s.feedback}>{copy.alreadySubscribed}</p>}
-      {status === 'error' && <p className={s.feedbackError}>Something went wrong. Try again.</p>}
+      {status === 'error' && <p className={s.feedbackError}>{copy.error}</p>}
     </form>
   )
 }
