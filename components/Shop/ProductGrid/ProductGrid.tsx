@@ -25,6 +25,8 @@ export function toCardProps(p: ProductCardData) {
     tags: p.tags,
     availableForSale: p.availableForSale,
     colorSlug: p.colorSlug,
+    colorLabel: p.colorLabel,
+    imageAlt: p.imageAlt,
   }
 }
 

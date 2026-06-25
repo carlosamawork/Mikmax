@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
 import type {SetArchiveItem} from '@/types/set'
+import {buildImageAlt} from '@/lib/seo/imageAlt'
 import s from './SetRow.module.scss'
 
 function formatPrice(min: number, max: number): string {
@@ -18,7 +19,7 @@ export default function SetRow({item}: {item: SetArchiveItem}) {
             {c.imageUrl && (
               <LazyImage
                 src={c.imageUrl}
-                alt={c.imageAlt ?? item.title}
+                alt={c.imageAlt || buildImageAlt({title: item.title})}
                 width={358}
                 height={444}
                 className={s.img}

@@ -24,7 +24,9 @@ import {getLocale} from '@/lib/i18n/getLocale'
 import {getDictionary} from '@/lib/i18n/getDictionary'
 
 export async function generateMetadata() {
-  return buildDefaultMetadata()
+  const locale = await getLocale()
+  const dict = getDictionary(locale)
+  return buildDefaultMetadata({title: dict.meta.title, description: dict.meta.description})
 }
 
 export const viewport: Viewport = {

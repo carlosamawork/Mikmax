@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
 import type {SetCardData} from '@/sanity/types'
+import {buildImageAlt} from '@/lib/seo/imageAlt'
 import s from './SetCard.module.scss'
 
 interface Props {
@@ -22,7 +23,7 @@ export default function SetCard({set, kind = 'set', className}: Props) {
           <div key={i} className={s.media}>
             <LazyImage
               src={c.imageUrl as string}
-              alt={c.label ?? c.variantTitle ?? set.title ?? ''}
+              alt={c.label ?? c.variantTitle ?? buildImageAlt({title: set.title})}
               width={357}
               height={476}
               className={s.img}

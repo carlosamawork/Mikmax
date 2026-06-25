@@ -2,6 +2,7 @@
 import {groq} from 'next-sanity'
 import {client} from '..'
 import {localizedField} from '@/lib/i18n/groq'
+import {seo} from '@/sanity/queries/fragments/seo'
 import type {Locale} from '@/lib/i18n/config'
 
 export const PRODUCT_BY_HANDLE_QUERY = groq`
@@ -28,7 +29,10 @@ export const PRODUCT_BY_HANDLE_QUERY = groq`
       }
     },
     "title": store.title,
-    "slug": store.slug.current
+    "slug": store.slug.current,
+    seo{
+      ${seo}
+    }
   }
 `
 
@@ -44,6 +48,12 @@ export type SanityRelatedColorGroup = {
   products: SanityRelatedItem[] | null
 }
 
+export type SanityProductSeo = {
+  title: string | null
+  description: string | null
+  image: {imageUrl?: string | null; alt?: string | null} | null
+}
+
 export type SanityProductDoc = {
   _id: string
   propiedadesMaterial: unknown[] | null
@@ -53,6 +63,7 @@ export type SanityProductDoc = {
   relatedByColor: SanityRelatedColorGroup[] | null
   title: string
   slug: string
+  seo: SanityProductSeo | null
 }
 
 export async function getSanityProduct(

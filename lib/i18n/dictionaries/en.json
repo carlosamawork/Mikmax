@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "title": "Mikmax",
+    "description": "High-quality home textiles in linen, silk and organic cotton. Discover Mikmax — design and comfort for your home or hotel."
+  },
   "cart": {
     "empty": "Your cart is empty.",
     "subtotal": "Subtotal",

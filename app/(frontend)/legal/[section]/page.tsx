@@ -6,6 +6,7 @@ import {urlFor} from '@/sanity/queries'
 import {getLocale} from '@/lib/i18n/getLocale'
 import {DEFAULT_LOCALE} from '@/lib/i18n/config'
 import LegalLayout from '@/components/Legal/LegalLayout'
+import JsonLd from '@/components/Common/JsonLd/JsonLd'
 
 export const revalidate = 3600
 
@@ -45,6 +46,12 @@ export async function generateMetadata({
       url: buildUrl(legalPath),
       ...(ogImageUrl ? {images: [{url: ogImageUrl}]} : {}),
     },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title,
+      description,
+      ...(ogImageUrl ? {images: [ogImageUrl]} : {}),
+    },
   }
 }
 
@@ -59,5 +66,21 @@ export default async function LegalSectionPage({
   if (!data) notFound()
   const section = data.sections.find((sec) => sec.slug === slug)
   if (!section) notFound()
-  return <LegalLayout data={data} activeSlug={section.slug} />
+
+  const legalPath = '/legal/' + section.slug
+  const webPage = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: section.seo?.title || section.title,
+    description: section.seo?.description || data.seo?.description || siteDescription,
+    url: buildUrl(legalPath),
+    isPartOf: {'@type': 'WebSite', url: buildUrl('/')},
+  }
+
+  return (
+    <>
+      <JsonLd data={webPage} />
+      <LegalLayout data={data} activeSlug={section.slug} />
+    </>
+  )
 }

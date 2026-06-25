@@ -3,7 +3,14 @@ import {notFound} from 'next/navigation'
 import {getLook, getLookSlugs, getLookSEO} from '@/sanity/queries/queries/look'
 import {getProductDetail, getProductCards} from '@/lib/shopify'
 import {buildLookView} from '@/lib/look/buildLookView'
-import {siteTitle, localeAlternates, buildUrl} from '@/utils/seoHelper'
+import {
+  siteTitle,
+  localeAlternates,
+  buildUrl,
+  BASE_IMAGE_URL,
+  BASE_IMAGE_WIDTH,
+  BASE_IMAGE_HEIGHT,
+} from '@/utils/seoHelper'
 import {getLocale} from '@/lib/i18n/getLocale'
 import LookDetail from '@/components/Look/LookDetail'
 
@@ -23,14 +30,45 @@ export async function generateMetadata({
   const locale = await getLocale()
   const data = await getLookSEO(slug, locale)
   if (!data) return {title: `Look not found | ${siteTitle}`}
-  const seo = (data.seo ?? {}) as {title?: string; description?: string}
+  const seo = (data.seo ?? {}) as {
+    title?: string
+    description?: string
+    image?: {
+      imageUrl?: string | null
+      alt?: string | null
+      metadata?: {dimensions?: {width?: number; height?: number} | null} | null
+    } | null
+  }
   const title = seo.title || data.title
   const lookPath = '/looks/' + slug
+
+  const seoImageUrl = seo.image?.imageUrl
+  const dims = seo.image?.metadata?.dimensions
+  const ogImage = seoImageUrl
+    ? {
+        url: seoImageUrl,
+        width: dims?.width ?? BASE_IMAGE_WIDTH,
+        height: dims?.height ?? BASE_IMAGE_HEIGHT,
+        alt: seo.image?.alt || title,
+      }
+    : {url: BASE_IMAGE_URL, width: BASE_IMAGE_WIDTH, height: BASE_IMAGE_HEIGHT, alt: title}
+
   return {
     title: `${title} | ${siteTitle}`,
     description: seo.description,
     alternates: localeAlternates(lookPath),
-    openGraph: {title, description: seo.description, url: buildUrl(lookPath)},
+    openGraph: {
+      title,
+      description: seo.description,
+      url: buildUrl(lookPath),
+      images: [ogImage],
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title,
+      description: seo.description,
+      images: [ogImage.url],
+    },
   }
 }
 
