@@ -1,6 +1,7 @@
 'use client'
 import type {SortKey} from '@/types/shop'
 import {SORT_LABELS} from '@/types/shop'
+import FilterOptionGrid from './FilterOptionGrid'
 
 interface Props {
   value: SortKey
@@ -13,30 +14,14 @@ const ORDER: SortKey[] = ['featured', 'newest', 'best-selling', 'price-asc', 'pr
 export default function SortRadios({value, onChange, options}: Props) {
   const list = options ?? ORDER
   return (
-    <ul
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 8,
-        padding: 0,
-        margin: 0,
-        listStyle: 'none',
-      }}
-    >
-      {list.map((sk) => (
-        <li key={sk}>
-          <label style={{display: 'flex', gap: 8, alignItems: 'center', cursor: 'pointer'}}>
-            <input
-              type="radio"
-              name="sort"
-              value={sk}
-              checked={value === sk}
-              onChange={() => onChange(sk)}
-            />
-            {SORT_LABELS[sk]}
-          </label>
-        </li>
-      ))}
-    </ul>
+    <FilterOptionGrid
+      ariaLabel="Sort"
+      options={list.map((sk) => ({
+        key: sk,
+        label: SORT_LABELS[sk],
+        selected: value === sk,
+      }))}
+      onSelect={(k) => onChange(k as SortKey)}
+    />
   )
 }

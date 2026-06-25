@@ -5,9 +5,9 @@ import s from './AuthLayout.module.scss'
 // desktop 2 columnas (form + imagen a sangre), mobile 1 columna sin imagen.
 export default function AuthLayout({children}: {children: ReactNode}) {
   return (
-    <main className={s.page}>
+    <div className={s.page}>
       <section className={s.formCol}>{children}</section>
       <aside className={s.imageCol} aria-hidden="true" />
-    </main>
+    </div>
   )
 }

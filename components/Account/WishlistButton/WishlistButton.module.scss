@@ -1,4 +1,5 @@
 @use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
 
 .wrap {
   position: relative;
@@ -16,11 +17,16 @@
   background: none;
   color: #d9d9d9; // bookmark sin guardar (Figma)
   cursor: pointer;
+  transition: color 0.2s ease;
 
   svg {
     display: block;
     width: px(25);
     height: px(25);
+  }
+
+  @include hover() {
+    color: map-get($colors, 'black-border'); // hover → marcador negro
   }
 
   &.active {

@@ -6,9 +6,17 @@ import type {Locale} from '@/lib/i18n/config'
 import {localizedHref} from '@/lib/i18n/localizedHref'
 import styles from './LanguageSwitcher.module.scss'
 
-export default function LanguageSwitcher({current}: {current: Locale}) {
+export default function LanguageSwitcher({
+  current,
+  className,
+}: {
+  current: Locale
+  className?: string
+}) {
   const pathname = usePathname()
   const router = useRouter()
+
+  const target: Locale = current === 'en' ? 'es' : 'en'
 
   function switchTo(locale: Locale) {
     if (locale === current) return
@@ -18,12 +26,9 @@ export default function LanguageSwitcher({current}: {current: Locale}) {
   }
 
   return (
-    <div className={styles.switcher}>
-      <button aria-pressed={current === 'en'} onClick={() => switchTo('en')}>
-        EN
-      </button>
-      <button aria-pressed={current === 'es'} onClick={() => switchTo('es')}>
-        ES
+    <div className={className ? `${styles.switcher} ${className}` : styles.switcher}>
+      <button onClick={() => switchTo(target)} aria-label={`Switch to ${target.toUpperCase()}`}>
+        {target.toUpperCase()}
       </button>
     </div>
   )

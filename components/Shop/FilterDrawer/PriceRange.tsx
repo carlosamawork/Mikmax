@@ -24,7 +24,7 @@ export default function PriceRange({min, max, onChange}: Props) {
   }
 
   return (
-    <div style={{display: 'flex', gap: 12, alignItems: 'center'}}>
+    <div style={{display: 'flex', gap: 12, alignItems: 'center', padding: '16px 10px'}}>
       <label style={{display: 'flex', flexDirection: 'column', fontSize: 11}}>
         Min €
         <input

@@ -144,6 +144,22 @@ export default function FilterDrawer({
     [state],
   )
 
+  const hasFilters = useMemo(
+    () =>
+      Boolean(
+        state.productType ||
+          state.color ||
+          state.size ||
+          state.pattern ||
+          state.material ||
+          state.priceMin ||
+          state.priceMax ||
+          state.available ||
+          (state.sort && state.sort !== defaultSort),
+      ),
+    [state, defaultSort],
+  )
+
   const facet = (id: string) => facets.find((f) => f.id === id)
   const materialValues = useMemo(() => getMaterialFacetValues(facets), [facets])
 
@@ -153,11 +169,18 @@ export default function FilterDrawer({
     <>
       <div className={s.backdrop} onClick={closeFromButton} aria-hidden="true" />
       <aside className={s.aside} role="dialog" aria-modal="true" aria-label="Filter & Sort">
+        <button type="button" className={s.close} onClick={closeFromButton} aria-label="Close">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+            <path d="M1 1 13 13M13 1 1 13" stroke="currentColor" strokeWidth="1" />
+          </svg>
+        </button>
         <div className={s.header}>
           <h2>Filter &amp; Sort</h2>
-          <button type="button" onClick={closeFromButton} aria-label="Close">
-            ×
-          </button>
+          {hasFilters && (
+            <button type="button" onClick={clearAll} className={s.clear}>
+              Clear filters
+            </button>
+          )}
         </div>
         <div className={s.body}>
           <FilterAccordion
@@ -224,11 +247,8 @@ export default function FilterDrawer({
           </FilterAccordion>
         </div>
         <div className={s.footer}>
-          <button type="button" onClick={clearAll} className={s.clear}>
-            Clear all
-          </button>
           <button type="button" onClick={apply} className={s.primary}>
-            View products ({count})
+            View Products {count}
           </button>
         </div>
       </aside>

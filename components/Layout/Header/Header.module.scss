@@ -103,10 +103,15 @@
 .actions {
   display: flex;
   align-items: center;
+  gap: px(14);
   font-family: $MonumentGrotesk;
   font-size: px(11);
   line-height: px(15);
   letter-spacing: 0.5px;
+}
+
+.language {
+  flex-shrink: 0;
 }
 
 // Desktop: text labels

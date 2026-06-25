@@ -49,7 +49,7 @@ export default function RegionSelector({regions, regionLabel}: Props) {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        <span>{formatRegionLabel(regionLabel, current.label, current.currency)}</span>
+        <span className={s.country}>{formatRegionLabel(regionLabel, current.label, current.currency)}</span>
         <span className={s.icon} aria-hidden>
           {open ? '−' : '+'}
         </span>

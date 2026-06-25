@@ -4,8 +4,8 @@
 
 .fab {
   position: fixed;
-  right: px(16);
-  bottom: px(16);
+  right: 0;
+  bottom: 0;
   z-index: $z-whatsapp-fab;
   display: flex;
   align-items: center;
@@ -13,7 +13,7 @@
   width: px(44);
   height: px(44);
   border: $border;
-  border-radius: 50%;
+  border-radius: 0;
   background: map-get($colors, 'white');
   color: map-get($colors, 'black');
   box-shadow: 0 px(2) px(12) rgba(#000, 0.12);
@@ -21,8 +21,6 @@
   transition-property: transform, box-shadow;
 
   @include from(sm) {
-    right: px(24);
-    bottom: px(24);
     width: px(52);
     height: px(52);
   }
