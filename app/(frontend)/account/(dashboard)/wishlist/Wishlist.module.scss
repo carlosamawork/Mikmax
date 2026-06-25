@@ -1,6 +1,27 @@
 @use '@/styles/common/variables' as *;
 @use '@/styles/mixins/mixins' as *;
 
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: px(48);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: px(16);
+}
+
+.heading {
+  font-family: $MonumentGrotesk;
+  font-size: px(13);
+  line-height: px(17);
+  letter-spacing: px(0.5);
+  text-transform: uppercase;
+  color: map-get($colors, 'black');
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -9,6 +30,13 @@
   @include from(sm) {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+// SetRow es una fila full-width; las apilamos verticalmente.
+.sets {
+  display: flex;
+  flex-direction: column;
+  gap: px(1);
 }
 
 .empty {

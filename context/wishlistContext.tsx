@@ -23,7 +23,7 @@ export default function WishlistProvider({children}: {children: ReactNode}) {
 
   useEffect(() => {
     let active = true
-    fetch('/api/wishlist')
+    fetch('/api/wishlist/')
       .then((r) => r.json())
       .then((d) => {
         if (!active) return
@@ -53,13 +53,13 @@ export default function WishlistProvider({children}: {children: ReactNode}) {
         return next
       })
       try {
-        const r = await fetch('/api/wishlist', {
+        const r = await fetch('/api/wishlist/', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({handle}),
         })
+        const d = await r.json().catch(() => null)
         if (!r.ok) throw new Error('failed')
-        const d = await r.json()
         if (Array.isArray(d?.handles)) setHandles(new Set(d.handles))
       } catch {
         // Revertir si falla
@@ -89,13 +89,15 @@ export function useWishlist(): WishlistCtx {
   return ctx
 }
 
-// Hook por ítem: identidad = handle + color (guarda el producto en el color elegido).
-// Devuelve estado + handler de click + flag de "hay que loguearse". Lo usan el corazón
-// de las tarjetas y el botón favorito del PDP (cada uno con su propio markup).
-export function useWishlistItem(handle: string, color?: string | null) {
+// Hook genérico por entrada de wishlist. La identidad (`id`) es el string guardado
+// en el metafield. Esquema de ids:
+//   - producto:  `handle` o `handle::color`
+//   - set:       `set:<slug>`
+//   - lookbook:  `look:<slug>`
+// Devuelve estado + handler de click + flag de "hay que loguearse".
+export function useWishlistEntry(id: string) {
   const {has, toggle} = useWishlist()
   const [hint, setHint] = useState(false)
-  const id = color ? `${handle}::${color}` : handle
   const active = has(id)
 
   const onClick = useCallback(
@@ -112,4 +114,10 @@ export function useWishlistItem(handle: string, color?: string | null) {
   )
 
   return {active, hint, onClick}
+}
+
+// Hook por producto: identidad = handle + color (guarda el producto en el color elegido).
+export function useWishlistItem(handle: string, color?: string | null) {
+  const id = color ? `${handle}::${color}` : handle
+  return useWishlistEntry(id)
 }

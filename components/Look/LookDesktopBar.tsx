@@ -2,12 +2,15 @@
 
 import {useState} from 'react'
 import type {LookView} from '@/types/look'
+import WishlistButton from '@/components/Account/WishlistButton/WishlistButton'
 import LookPrice from './LookPrice'
 import LookSizeList from './LookSizeList'
 import s from './LookDesktopBar.module.scss'
 
 interface Props {
   view: LookView
+  // Wishlist entry id (`look:<slug>`). Ausente en sets → sin botón de favorito.
+  entryId?: string
   selected: (string | undefined)[]
   onSelect: (componentIndex: number, size: string) => void
   allSelected: boolean
@@ -25,6 +28,7 @@ interface Props {
 // expands above the bar; Product Information opens the shared ProductInfoPanel.
 export default function LookDesktopBar({
   view,
+  entryId,
   selected,
   onSelect,
   allSelected,
@@ -51,7 +55,10 @@ export default function LookDesktopBar({
       )}
 
       <div className={s.colTitle}>
-        <h1 className={s.title}>{view.title}</h1>
+        <h1 className={s.title}>
+          <span className={s.titleText}>{view.title}</span>
+          {entryId && <WishlistButton entryId={entryId} className={s.favorite} />}
+        </h1>
         <div className={s.price}>
           <LookPrice
             allSelected={allSelected}

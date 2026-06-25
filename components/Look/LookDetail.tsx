@@ -11,6 +11,7 @@ import GallerySwiper from '@/components/Product/Mobile/GallerySwiper'
 import ImageLightbox from '@/components/Product/shared/ImageLightbox'
 import RelatedGrid from '@/components/Product/Mobile/RelatedGrid'
 import ProductInfoPanel from '@/components/Product/shared/ProductInfoPanel'
+import WishlistButton from '@/components/Account/WishlistButton/WishlistButton'
 import LookDesktopBar from './LookDesktopBar'
 import LookSizeList from './LookSizeList'
 import LookPrice from './LookPrice'
@@ -18,9 +19,11 @@ import s from './LookDetail.module.scss'
 
 interface Props {
   view: LookView
+  // Wishlist entry id (`look:<slug>`). Ausente en sets → sin botón de favorito.
+  entryId?: string
 }
 
-export default function LookDetail({view}: Props) {
+export default function LookDetail({view, entryId}: Props) {
   const {addLookToCart} = useContext(CartContext)
   const [selected, setSelected] = useState<(string | undefined)[]>(
     () => view.components.map(() => undefined),
@@ -124,6 +127,7 @@ export default function LookDetail({view}: Props) {
       <div className={s.desktopOnly}>
         <LookDesktopBar
           view={view}
+          entryId={entryId}
           selected={selected}
           onSelect={handleSelect}
           allSelected={allSelected}
@@ -138,7 +142,10 @@ export default function LookDetail({view}: Props) {
 
       {/* Mobile: stacked flow */}
       <div className={s.mobileOnly}>
-        <h1 className={s.mTitle}>{view.title}</h1>
+        <h1 className={s.mTitle}>
+          <span className={s.mTitleText}>{view.title}</span>
+          {entryId && <WishlistButton entryId={entryId} className={s.mFavorite} />}
+        </h1>
         <div className={s.mPrice}>{price}</div>
         <p className={s.mMeta}>
           Complimentary gift wrapping

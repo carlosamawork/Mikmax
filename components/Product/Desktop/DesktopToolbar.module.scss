@@ -171,7 +171,9 @@
 
 .favoriteHint {
   position: absolute;
-  top: calc(100% + #{px(6)});
+  // Encima del botón: la toolbar está fixed al borde inferior, así que debajo
+  // quedaría fuera de la pantalla.
+  bottom: calc(100% + #{px(6)});
   right: 0;
   z-index: 2;
   padding: px(6) px(10);

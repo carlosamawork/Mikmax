@@ -80,6 +80,7 @@ $row: 38;
   height: px($row);
   display: flex;
   align-items: center;
+  gap: px(8);
   padding: 0 px(10);
   background-color: map-get($colors, 'white');
   font-size: px(11);
@@ -87,9 +88,18 @@ $row: 38;
   letter-spacing: px(0.5);
   font-weight: 400;
   color: map-get($colors, 'black');
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+  .titleText {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .favorite {
+    flex-shrink: 0;
+  }
 }
 
 .price {

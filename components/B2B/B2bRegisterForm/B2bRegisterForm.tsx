@@ -56,7 +56,7 @@ export default function B2bRegisterForm() {
 
     setLoading(true)
     try {
-      const res = await fetch('/api/b2b/register', {
+      const res = await fetch('/api/b2b/register/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(form),

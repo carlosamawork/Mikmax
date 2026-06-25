@@ -14,7 +14,6 @@ import MegaMenuShop from '../MegaMenu/MegaMenuShop'
 import MobileMenu from '../MobileMenu/MobileMenu'
 import {getInternalHref} from '@/sanity/queries/fragments/links'
 import SearchOverlay from './SearchOverlay'
-import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher'
 
 type CartItem = {variantQuantity?: number}
 type CartCtx = {
@@ -49,8 +48,6 @@ export default function HeaderClient({
   initialVariant = 'default',
   copy = DEFAULT_HEADER_COPY,
   searchCopy = DEFAULT_SEARCH_COPY,
-  locale,
-  showLanguageSwitcher = false,
 }: HeaderProps) {
   const [variant, setVariant] = useState<HeaderVariant>(initialVariant)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -80,7 +77,7 @@ export default function HeaderClient({
   // estático de las páginas. Reconsulta al cambiar de ruta (login/logout).
   useEffect(() => {
     let active = true
-    fetch('/api/auth/status')
+    fetch('/api/auth/status/')
       .then((r) => r.json())
       .then((d) => {
         if (active) setIsLoggedIn(Boolean(d?.loggedIn))
@@ -114,7 +111,7 @@ export default function HeaderClient({
       const y = window.scrollY
       const bannerH = readBannerHeight()
       const top = Math.max(3, bannerH - y)
-      root.style.setProperty('--header-top', `${top}px`)
+      root.style.setProperty('--header-top', `${top - 1}px`)
       if (y < 16) setVariant('default')
       else if (y < 240) setVariant('variant2')
       else setVariant('variant3')
@@ -218,10 +215,6 @@ export default function HeaderClient({
         </nav>
 
         <div className={s.actions}>
-          {showLanguageSwitcher && locale && (
-            <LanguageSwitcher current={locale} className={s.language} />
-          )}
-
           {/* Desktop: text labels */}
           <div className={s.actionsDesktop}>
             <button
