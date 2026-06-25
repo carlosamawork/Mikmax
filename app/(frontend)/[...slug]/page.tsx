@@ -5,6 +5,7 @@ import {PageBuilder} from '@/components/PageBuilder'
 import {getPage, getPageSlugs} from '@/sanity/queries/queries/page'
 import {siteTitle, siteDescription, localeAlternates, buildUrl} from '@/utils/seoHelper'
 import {getLocale} from '@/lib/i18n/getLocale'
+import JsonLd from '@/components/Common/JsonLd/JsonLd'
 
 export const revalidate = 3600
 
@@ -43,6 +44,12 @@ export async function generateMetadata({
       url: buildUrl(pagePath),
       ...(ogImageUrl ? {images: [{url: ogImageUrl}]} : {}),
     },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title,
+      description,
+      ...(ogImageUrl ? {images: [ogImageUrl]} : {}),
+    },
   }
 }
 
@@ -55,8 +62,19 @@ export default async function CatchAllPage({params}: {params: Promise<{slug: str
   // Slug desconocido → conserva el comportamiento previo (redirección a home).
   if (!page) permanentRedirect('/')
 
+  const pagePath = '/' + page.slug
+  const webPage = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: page.seo?.title || page.title,
+    description: page.seo?.description || siteDescription,
+    url: buildUrl(pagePath),
+    isPartOf: {'@type': 'WebSite', url: buildUrl('/')},
+  }
+
   return (
     <>
+      <JsonLd data={webPage} />
       <Breadcrumb items={[{label: 'Home', href: '/'}, {label: page.title}]} />
       <PageBuilder blocks={page.pageBuilder} />
     </>

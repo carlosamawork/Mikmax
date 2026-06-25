@@ -1,70 +1,76 @@
-import {buildUrl, siteTitle, siteDescription, BASE_IMAGE_URL, BASE_IMAGE_WIDTH, BASE_IMAGE_HEIGHT, localeAlternates} from '@/utils/seoHelper'
+import {buildUrl, BASE_IMAGE_URL, BASE_IMAGE_WIDTH, BASE_IMAGE_HEIGHT, localeAlternates} from '@/utils/seoHelper'
 import {PageBuilder} from '@/components/PageBuilder'
 import {getHome} from '@/sanity/queries/queries/home'
 import {getLocale} from '@/lib/i18n/getLocale'
+import {getDictionary} from '@/lib/i18n/getDictionary'
 
 export const revalidate = 3600
 
 export async function generateMetadata() {
+  const locale = await getLocale()
+  const {meta} = getDictionary(locale)
   return {
-    title: siteTitle,
-    description: siteDescription,
+    title: meta.title,
+    description: meta.description,
     alternates: localeAlternates('/'),
     openGraph: {
-      title: siteTitle,
-      description: siteDescription,
+      title: meta.title,
+      description: meta.description,
       url: buildUrl('/'),
-      siteName: siteTitle,
+      siteName: meta.title,
       type: 'website' as const,
       images: [{url: BASE_IMAGE_URL, width: BASE_IMAGE_WIDTH, height: BASE_IMAGE_HEIGHT}],
     },
     twitter: {
       card: 'summary_large_image' as const,
-      title: siteTitle,
-      description: siteDescription,
+      title: meta.title,
+      description: meta.description,
       images: [BASE_IMAGE_URL],
     },
   }
 }
 
-const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: siteTitle,
-  url: buildUrl('/'),
-  logo: buildUrl('/icons/mikmax.svg'),
-  description: siteDescription,
-  foundingLocation: {
-    '@type': 'Place',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Barcelona',
-      addressCountry: 'ES',
-    },
-  },
-}
-
-const webSiteSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: siteTitle,
-  url: buildUrl('/'),
-}
-
-const webPageSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: siteTitle,
-  description: siteDescription,
-  url: buildUrl('/'),
-  isPartOf: {'@type': 'WebSite', url: buildUrl('/')},
-}
-
 export default async function Home() {
   const locale = await getLocale()
+  const {meta} = getDictionary(locale)
   const data = await getHome(locale)
+
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: meta.title,
+    url: buildUrl('/'),
+    logo: buildUrl('/icons/mikmax.svg'),
+    description: meta.description,
+    foundingLocation: {
+      '@type': 'Place',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Barcelona',
+        addressCountry: 'ES',
+      },
+    },
+  }
+
+  const webSiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: meta.title,
+    url: buildUrl('/'),
+  }
+
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: meta.title,
+    description: meta.description,
+    url: buildUrl('/'),
+    isPartOf: {'@type': 'WebSite', url: buildUrl('/')},
+  }
+
   return (
     <>
+      <h1 className="sr-only">{meta.title}</h1>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{__html: JSON.stringify(organizationSchema)}}

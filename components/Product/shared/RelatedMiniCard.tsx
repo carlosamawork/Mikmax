@@ -2,6 +2,7 @@ import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
 import PriceLabel from './PriceLabel'
 import type {ProductMiniCard} from '@/types/product'
+import {buildImageAlt} from '@/lib/seo/imageAlt'
 import s from './RelatedMiniCard.module.scss'
 
 interface Props {
@@ -19,7 +20,7 @@ export default function RelatedMiniCard({product, currency}: Props) {
         {product.imageUrl ? (
           <LazyImage
             src={product.imageUrl}
-            alt={product.imageAlt ?? product.title}
+            alt={product.imageAlt || buildImageAlt({title: product.title})}
             fill
             sizes="(min-width: 1024px) 25vw, 50vw"
             wrapperClassName={s.imageWrapper}

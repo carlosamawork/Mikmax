@@ -54,6 +54,10 @@ export type ProductView = {
   id: string
   handle: string
   title: string
+  /** Shopify productType (categoría) — usado para alt/SEO. */
+  productType?: string
+  /** Etiqueta de material principal (cover/fabric/filler) — usado para alt/SEO. */
+  material?: string
   currency: string
   minPrice: number
   maxPrice: number

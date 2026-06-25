@@ -4,6 +4,7 @@ import {LazyImage} from '@/components/Common'
 import WishlistButton from '@/components/Account/WishlistButton/WishlistButton'
 import PriceDisplay from '../PriceDisplay/PriceDisplay'
 import type {ProductCardData} from '@/sanity/types'
+import {buildImageAlt} from '@/lib/seo/imageAlt'
 import s from './ProductCard.module.scss'
 
 interface Props {
@@ -55,7 +56,7 @@ export default function ProductCard({
         {imageUrl && (
           <LazyImage
             src={imageUrl}
-            alt={product.title ?? ''}
+            alt={product.imageAlt || buildImageAlt({title: product.title, color: product.colorLabel})}
             width={357}
             height={476}
             sizes={fill ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 50vw, 25vw'}
