@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
+import WishlistButton from '@/components/Account/WishlistButton/WishlistButton'
 import PriceDisplay from '@/components/PageBuilder/PriceDisplay/PriceDisplay'
 import type {LookArchiveItem} from '@/types/look'
 import {buildImageAlt} from '@/lib/seo/imageAlt'
@@ -18,6 +19,7 @@ export default function LookCard({look}: {look: LookArchiveItem}) {
             className={s.img}
           />
         )}
+        <WishlistButton entryId={`look:${look.slug}`} className={s.wishlist} />
       </div>
       <div className={s.info}>
         <p className={s.title}>{look.title}</p>
