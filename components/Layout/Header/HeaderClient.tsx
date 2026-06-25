@@ -111,7 +111,7 @@ export default function HeaderClient({
       const y = window.scrollY
       const bannerH = readBannerHeight()
       const top = Math.max(3, bannerH - y)
-      root.style.setProperty('--header-top', `${top - 1}px`)
+      root.style.setProperty('--header-top', `${top - 2}px`)
       if (y < 16) setVariant('default')
       else if (y < 240) setVariant('variant2')
       else setVariant('variant3')
