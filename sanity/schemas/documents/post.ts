@@ -13,7 +13,11 @@ export default defineField({
       default: true,
       name: 'editorial',
       title: 'Editorial',
-    }
+    },
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
   ],
   fields: [
     // Title
@@ -100,6 +104,12 @@ export default defineField({
           to: [{ type: "post" }],
         },
       ],
+    }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo.page',
+      group: 'seo',
     }),
   ],
   preview: {

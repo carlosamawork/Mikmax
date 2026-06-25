@@ -1,8 +1,12 @@
 import Link from 'next/link'
 import type {CSSProperties} from 'react'
 import {LazyImage} from '@/components/Common'
+import JsonLd from '@/components/Common/JsonLd/JsonLd'
+import {buildUrl} from '@/utils/seoHelper'
 import type {EditorialImage} from '@/types/shop'
 import s from './EditorialCard.module.scss'
+
+const absUrl = (url: string) => (/^https?:\/\//.test(url) ? url : buildUrl(url))
 
 interface Props {
   image: EditorialImage
@@ -15,8 +19,22 @@ interface Props {
 // Imagen editorial a sangre intercalada en el grid de productos (Vista 2).
 // Ocupa la tile destacada 2×2; opcionalmente enlaza a una ruta y muestra un caption.
 export default function EditorialCard({image, className, fill = false, style}: Props) {
+  const caption = image.caption?.trim() || image.alt?.trim()
   const media = (
     <div className={`${s.media} ${fill ? s.mediaFill : ''}`.trim()}>
+      {image.imageUrl && caption && (
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'ImageObject',
+            contentUrl: absUrl(image.imageUrl),
+            url: absUrl(image.imageUrl),
+            caption,
+            ...(image.width ? {width: image.width} : {}),
+            ...(image.height ? {height: image.height} : {}),
+          }}
+        />
+      )}
       <LazyImage
         src={image.imageUrl}
         alt={image.alt ?? ''}

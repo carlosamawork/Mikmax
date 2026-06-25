@@ -2,6 +2,7 @@ import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
 import PriceDisplay from '@/components/PageBuilder/PriceDisplay/PriceDisplay'
 import type {LookArchiveItem} from '@/types/look'
+import {buildImageAlt} from '@/lib/seo/imageAlt'
 import s from './LookCard.module.scss'
 
 export default function LookCard({look}: {look: LookArchiveItem}) {
@@ -11,7 +12,7 @@ export default function LookCard({look}: {look: LookArchiveItem}) {
         {look.imageUrl && (
           <LazyImage
             src={look.imageUrl}
-            alt={look.imageAlt ?? look.title}
+            alt={look.imageAlt || buildImageAlt({title: look.title})}
             width={357}
             height={476}
             className={s.img}

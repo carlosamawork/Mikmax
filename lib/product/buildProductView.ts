@@ -7,6 +7,7 @@ import type {
   ProductMiniCard,
 } from '@/types/product'
 import type {SanityProductDoc} from '@/sanity/queries/queries/product'
+import {buildImageAlt} from '@/lib/seo/imageAlt'
 
 function slugify(label: string): string {
   return label
@@ -112,7 +113,26 @@ type ShopifyProductDetail = {
   colorPattern?: {
     references?: {nodes: MetaobjectNode[]} | null
   } | null
+  coverMaterial?: MaterialMetafield
+  fillerMaterial?: MaterialMetafield
+  fabric?: MaterialMetafield
   variants: {nodes: ShopifyVariant[]}
+}
+
+type MaterialMetafield = {
+  references?: {nodes: Array<{fields?: MetaobjectField[]}>} | null
+} | null
+
+// Etiqueta de material principal (cover → fabric → filler), ya localizada por Shopify.
+function primaryMaterialLabel(shopify: ShopifyProductDetail): string | undefined {
+  const sources = [shopify.coverMaterial, shopify.fabric, shopify.fillerMaterial]
+  for (const mf of sources) {
+    for (const node of mf?.references?.nodes ?? []) {
+      const label = node.fields?.find((f) => f.key === 'label')?.value
+      if (label) return label
+    }
+  }
+  return undefined
 }
 
 type RelatedShopifyCard = {
@@ -235,6 +255,18 @@ export function buildProductView(
   }
 
   const colors = Array.from(colorsMap.values())
+  const productType = shopify.productType?.trim() || undefined
+  const material = primaryMaterialLabel(shopify)
+  // SEO/a11y: alt descriptivo (tipo + material + color + marca) cuando Shopify
+  // no trae altText propio.
+  for (const c of colors) {
+    const color = c.label && c.label !== 'Default' ? c.label : undefined
+    c.images = c.images.map((img) => ({
+      ...img,
+      altText:
+        img.altText || buildImageAlt({type: productType, material, color, title: shopify.title}),
+    }))
+  }
   const defaultColor =
     colors.find((c) => c.sizes.some((s) => s.availableForSale))?.slug ?? colors[0]?.slug ?? ''
 
@@ -300,6 +332,8 @@ export function buildProductView(
     id: shopify.id,
     handle: shopify.handle,
     title: shopify.title,
+    productType,
+    material,
     currency: shopify.priceRange.minVariantPrice.currencyCode,
     minPrice: Number(shopify.priceRange.minVariantPrice.amount),
     maxPrice: Number(shopify.priceRange.maxVariantPrice.amount),

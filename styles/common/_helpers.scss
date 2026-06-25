@@ -124,3 +124,17 @@
 .not-bold {
   font-weight: normal;
 }
+
+// Accesible para lectores de pantalla, oculto visualmente.
+// Uso típico: <h1 class="sr-only"> en páginas sin título visible (listados, home).
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

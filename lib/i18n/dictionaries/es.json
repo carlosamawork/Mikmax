@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "title": "Mikmax",
+    "description": "Textiles del hogar de alta calidad en lino, seda y algodón orgánico. Descubre Mikmax, diseño y confort para tu hogar o hotel."
+  },
   "cart": {
     "empty": "Tu carrito está vacío.",
     "subtotal": "Subtotal",

@@ -1,11 +1,15 @@
 import Link from 'next/link'
 import {LazyImage, LazyVideo} from '@/components/Common'
+import JsonLd from '@/components/Common/JsonLd/JsonLd'
+import {buildUrl} from '@/utils/seoHelper'
 import type {HeroCampaignBlock, HeroCampaignSlide} from '@/sanity/types'
 import s from './HeroCampaign.module.scss'
 
 interface Props {
   block: HeroCampaignBlock
 }
+
+const absUrl = (url: string) => (/^https?:\/\//.test(url) ? url : buildUrl(url))
 
 function SlideMedia({slide}: {slide: HeroCampaignSlide}) {
   if (slide.mediaType === 'video' && slide.video?.src) {
@@ -25,16 +29,33 @@ function SlideMedia({slide}: {slide: HeroCampaignSlide}) {
   if (slide.image?.imageUrl) {
     const w = slide.image.metadata?.dimensions?.width ?? 1440
     const h = slide.image.metadata?.dimensions?.height ?? 1920
+    const alt = slide.image.alt?.trim()
+    const dims = slide.image.metadata?.dimensions
     return (
-      <LazyImage
-        src={slide.image.imageUrl}
-        alt={slide.image.alt ?? ''}
-        width={w}
-        height={h}
-        className={s.mediaImg}
-        wrapperClassName={s.media}
-        priority
-      />
+      <>
+        {alt && (
+          <JsonLd
+            data={{
+              '@context': 'https://schema.org',
+              '@type': 'ImageObject',
+              contentUrl: absUrl(slide.image.imageUrl),
+              url: absUrl(slide.image.imageUrl),
+              caption: alt,
+              ...(dims?.width ? {width: dims.width} : {}),
+              ...(dims?.height ? {height: dims.height} : {}),
+            }}
+          />
+        )}
+        <LazyImage
+          src={slide.image.imageUrl}
+          alt={slide.image.alt ?? ''}
+          width={w}
+          height={h}
+          className={s.mediaImg}
+          wrapperClassName={s.media}
+          priority
+        />
+      </>
     )
   }
   return null

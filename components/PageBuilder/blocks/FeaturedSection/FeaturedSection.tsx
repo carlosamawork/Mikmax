@@ -1,6 +1,8 @@
 // components/PageBuilder/blocks/FeaturedSection/FeaturedSection.tsx
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
+import JsonLd from '@/components/Common/JsonLd/JsonLd'
+import {buildUrl} from '@/utils/seoHelper'
 import type {FeaturedSectionBlock, FeaturedSectionSlide} from '@/sanity/types'
 import s from './FeaturedSection.module.scss'
 
@@ -8,19 +10,38 @@ interface Props {
   block: FeaturedSectionBlock
 }
 
+const absUrl = (url: string) => (/^https?:\/\//.test(url) ? url : buildUrl(url))
+
 function SlideMedia({slide}: {slide: FeaturedSectionSlide}) {
   if (!slide.image?.imageUrl) return null
   const w = slide.image.metadata?.dimensions?.width ?? 1440
   const h = slide.image.metadata?.dimensions?.height ?? 900
+  const alt = slide.image.alt?.trim()
+  const dims = slide.image.metadata?.dimensions
   return (
-    <LazyImage
-      src={slide.image.imageUrl}
-      alt={slide.image.alt ?? ''}
-      width={w}
-      height={h}
-      className={s.mediaImg}
-      wrapperClassName={s.media}
-    />
+    <>
+      {alt && (
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'ImageObject',
+            contentUrl: absUrl(slide.image.imageUrl),
+            url: absUrl(slide.image.imageUrl),
+            caption: alt,
+            ...(dims?.width ? {width: dims.width} : {}),
+            ...(dims?.height ? {height: dims.height} : {}),
+          }}
+        />
+      )}
+      <LazyImage
+        src={slide.image.imageUrl}
+        alt={slide.image.alt ?? ''}
+        width={w}
+        height={h}
+        className={s.mediaImg}
+        wrapperClassName={s.media}
+      />
+    </>
   )
 }
 

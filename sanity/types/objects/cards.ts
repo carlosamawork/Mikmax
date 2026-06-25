@@ -11,6 +11,9 @@ export type ProductCardData = {
   availableForSale?: boolean
   // Optional: set when the card represents a specific color variant — used to deep-link to the PDP with that color preselected.
   colorSlug?: string
+  // Optional: color label (e.g. 'CARDON SEED') and image alt — used to build a descriptive alt.
+  colorLabel?: string
+  imageAlt?: string
   // Optional: 2nd image of the variant gallery (fallback featured). Used by the
   // editorial Vista 2 featured tile to show a different shot.
   secondaryImageUrl?: string

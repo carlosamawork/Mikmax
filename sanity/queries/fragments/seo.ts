@@ -7,6 +7,7 @@ export const seo = `
     ${localizedField('description')},
     image{
         ${imageData},
-        ${imageSize}
+        ${imageSize},
+        "alt": alt
     }
 `

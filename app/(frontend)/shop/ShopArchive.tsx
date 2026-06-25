@@ -5,7 +5,7 @@ import InfiniteScrollSentinel from '@/components/Shop/InfiniteScrollSentinel/Inf
 import EditorialGrid from '@/components/Shop/EditorialGrid/EditorialGrid'
 import FilterDrawer from '@/components/Shop/FilterDrawer/FilterDrawer'
 import {parseSearchParams} from '@/lib/shop/searchParams'
-import {buildAllCards} from '@/lib/shop/buildCards'
+import {getCardsForRequest, searchKeyFor} from '@/lib/shop/cards'
 import {getCollectionEditorialImages} from '@/sanity/queries/queries/shop'
 import {ALL_HANDLE, CHUNK_SIZE, type ProductCardData, type ShopSearchParams} from '@/types/shop'
 import {getResellerPercent, applyResellerToCard} from '@/lib/b2b/pricing'
@@ -18,7 +18,7 @@ interface Props {
 export default async function ShopArchive({handle, searchParams}: Props) {
   const params: ShopSearchParams = parseSearchParams(searchParams)
 
-  const {cards, facets} = await buildAllCards(handle, params)
+  const {cards, facets} = await getCardsForRequest(handle, searchKeyFor(searchParams))
   // Editoriales solo en páginas de colección; /shop ('all') no tiene documento
   // collection. La vista 2 (editorial) está SIEMPRE disponible: sin imágenes de
   // colección el grid editorial se compone únicamente de productos destacados.

@@ -36,12 +36,15 @@ export const canonicalHome = buildUrl("/");
 export const canonicalAbout = buildUrl("/about"); // example if needed
 
 // 🖼️ Images & favicons
-export const BASE_IMAGE_URL = buildUrl("/images/mikmax_fbshare_1200x800.jpg"); // TODO: reemplazar con la imagen OG real de Mikmax
+// Imagen OG por defecto, servida desde /public (estable, 1200×900).
+export const BASE_IMAGE_URL = buildUrl("/images/mikmax-og.jpg");
 export const BASE_IMAGE_WIDTH = 1200;
-export const BASE_IMAGE_HEIGHT = 800;
+export const BASE_IMAGE_HEIGHT = 900;
 
-export const FAVICON_CLEAR = buildUrl("/favicon/favicon_clear.png");
-export const FAVICON_DARK = buildUrl("/favicon/favicon_dark.png");
+// Único favicon disponible en /public/favicon.png (las variantes light/dark
+// /favicon/*.png no existían y devolvían 404).
+export const FAVICON_CLEAR = buildUrl("/favicon.png");
+export const FAVICON_DARK = buildUrl("/favicon.png");
 
 export function getFavicons() {
 	return {
@@ -55,23 +58,25 @@ export function getFavicons() {
 	};
 }
 
-export function buildDefaultMetadata(): Metadata {
+export function buildDefaultMetadata(opts?: {title?: string; description?: string}): Metadata {
+	const title = opts?.title || siteTitle;
+	const description = opts?.description || siteDescription;
 	return {
-		title: siteTitle,
-		description: siteDescription,
+		title,
+		description,
 		metadataBase: BASE_URL,
 		openGraph: {
-			title: siteTitle,
-			description: siteDescription,
+			title,
+			description,
 			url: canonicalHome,
-			siteName: siteTitle,
+			siteName: title,
 			type: 'website',
 			images: [{url: BASE_IMAGE_URL, width: BASE_IMAGE_WIDTH, height: BASE_IMAGE_HEIGHT}],
 		},
 		twitter: {
 			card: 'summary_large_image',
-			title: siteTitle,
-			description: siteDescription,
+			title,
+			description,
 			images: [BASE_IMAGE_URL],
 		},
 		robots: {

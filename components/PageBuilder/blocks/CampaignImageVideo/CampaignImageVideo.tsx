@@ -1,11 +1,15 @@
 import Link from 'next/link'
 import {LazyImage, LazyVideo} from '@/components/Common'
+import JsonLd from '@/components/Common/JsonLd/JsonLd'
+import {buildUrl} from '@/utils/seoHelper'
 import type {CampaignImageVideoBlock} from '@/sanity/types'
 import s from './CampaignImageVideo.module.scss'
 
 interface Props {
   block: CampaignImageVideoBlock
 }
+
+const absUrl = (url: string) => (/^https?:\/\//.test(url) ? url : buildUrl(url))
 
 const ratioClass: Record<string, string> = {
   '16:9': 'r-16-9',
@@ -49,14 +53,31 @@ export default function CampaignImageVideo({block}: Props) {
     if (block.image?.imageUrl) {
       const w = block.image.metadata?.dimensions?.width ?? 1440
       const h = block.image.metadata?.dimensions?.height ?? 810
+      const alt = block.image.alt?.trim()
+      const dims = block.image.metadata?.dimensions
       return (
-        <LazyImage
-          src={block.image.imageUrl}
-          alt={block.image.alt ?? ''}
-          width={w}
-          height={h}
-          className={s.img}
-        />
+        <>
+          {alt && (
+            <JsonLd
+              data={{
+                '@context': 'https://schema.org',
+                '@type': 'ImageObject',
+                contentUrl: absUrl(block.image.imageUrl),
+                url: absUrl(block.image.imageUrl),
+                caption: alt,
+                ...(dims?.width ? {width: dims.width} : {}),
+                ...(dims?.height ? {height: dims.height} : {}),
+              }}
+            />
+          )}
+          <LazyImage
+            src={block.image.imageUrl}
+            alt={block.image.alt ?? ''}
+            width={w}
+            height={h}
+            className={s.img}
+          />
+        </>
       )
     }
     return null
