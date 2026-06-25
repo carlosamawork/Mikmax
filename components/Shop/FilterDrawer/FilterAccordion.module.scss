@@ -2,29 +2,47 @@
 @use '../../../styles/common/tokens' as *;
 @use '../../../styles/mixins/mixins' as *;
 
+$row-line: #f0f0f0;
+$row-alt: #f0f0f0;
+
 .accordion {
-  border-bottom: 1px solid map-get($colors, 'lightgray-bg');
+  &:nth-child(even) .header {
+    background: $row-alt;
+  }
 }
 
 .header {
   width: 100%;
+  height: px(60);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: none;
+  background: #fff;
   border: 0;
-  padding: px(16) px(20);
+  border-bottom: 1px solid $row-line;
+  padding: 0 px(10);
   font-family: $MonumentGrotesk;
-  font-size: px(13);
+  font-size: px(11);
   letter-spacing: 0.5px;
   color: map-get($colors, 'darker');
   cursor: pointer;
 }
 
-.body {
-  padding: 0 px(20) px(16);
+.chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
 
-  ul{
-    font-size: px(12)
+.open {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
   }
+}
+
+.body {
+  padding: 0;
 }

@@ -13,8 +13,8 @@
   align-items: center;
   gap: $space-3;
   background: map-get($colors, 'white');
-  border: $border;
-  padding: $space-2 $space-3;
+  
+  padding: 0 0 0 px(10);
   font-family: $MonumentGrotesk;
   font-size: px(10);
   line-height: px(15);
@@ -29,8 +29,8 @@
 
 .icon {
   display: inline-flex;
-  width: px(20);
-  height: px(20);
+  width: px(30);
+  height: px(30);
   align-items: center;
   justify-content: center;
   background: map-get($colors, 'darker');

@@ -9,9 +9,9 @@ export default async function AccountLayout({children}: {children: ReactNode}) {
   if (!session) redirect('/login')
 
   return (
-    <main className={s.account}>
+    <div className={s.account}>
       <AccountNav />
       <div className={s.content}>{children}</div>
-    </main>
+    </div>
   )
 }

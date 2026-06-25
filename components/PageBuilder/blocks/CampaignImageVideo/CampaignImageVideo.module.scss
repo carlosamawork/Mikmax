@@ -13,6 +13,8 @@
   &.bleed { /* 100% width already */ }
   &.contained {
     padding: px(0) px(25);
+    max-width: px(1250);
+    margin: auto;
     @include from(md) {
       padding: px(0) px(30);
     }
