@@ -14,6 +14,7 @@ import MegaMenuShop from '../MegaMenu/MegaMenuShop'
 import MobileMenu from '../MobileMenu/MobileMenu'
 import {getInternalHref} from '@/sanity/queries/fragments/links'
 import SearchOverlay from './SearchOverlay'
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher'
 
 type CartItem = {variantQuantity?: number}
 type CartCtx = {
@@ -48,6 +49,8 @@ export default function HeaderClient({
   initialVariant = 'default',
   copy = DEFAULT_HEADER_COPY,
   searchCopy = DEFAULT_SEARCH_COPY,
+  locale,
+  showLanguageSwitcher = false,
 }: HeaderProps) {
   const [variant, setVariant] = useState<HeaderVariant>(initialVariant)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -215,6 +218,10 @@ export default function HeaderClient({
         </nav>
 
         <div className={s.actions}>
+          {showLanguageSwitcher && locale && (
+            <LanguageSwitcher current={locale} className={s.language} />
+          )}
+
           {/* Desktop: text labels */}
           <div className={s.actionsDesktop}>
             <button
@@ -226,17 +233,12 @@ export default function HeaderClient({
             >
               {copy.search}
             </button>
-            <Link
-              href={isLoggedIn ? '/account' : '/login'}
-              className={s.actionBtn}
-              aria-label={isLoggedIn ? copy.myAccount : copy.logIn}
-            >
+            <Link href={isLoggedIn ? '/account' : '/login'} className={s.actionBtn}>
               {isLoggedIn ? copy.account : copy.login}
             </Link>
             <button
               type="button"
               className={s.actionBtn}
-              aria-label={copy.cart}
               onClick={() => ctx?.setCartOpen?.(true)}
             >
               {copy.cart} [ {cartCount} ]

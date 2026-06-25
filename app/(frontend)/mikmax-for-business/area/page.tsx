@@ -16,7 +16,7 @@ export default async function B2bAreaPage() {
   const contactEmail = group?.contactEmail || 'business@mikmax.com'
 
   return (
-    <main className={s.area}>
+    <div className={s.area}>
       <h1 className={s.title}>Mikmax for Business</h1>
       <dl className={s.meta}>
         <div className={s.row}>
@@ -66,6 +66,6 @@ export default async function B2bAreaPage() {
           Tus condiciones comerciales se aplican automáticamente en el carrito y el checkout.
         </p>
       )}
-    </main>
+    </div>
   )
 }

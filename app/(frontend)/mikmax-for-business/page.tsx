@@ -28,10 +28,10 @@ export default async function B2bLandingPage() {
   const heroAlt = heroImage?.alt || 'Mikmax for Business'
 
   return (
-    <main className={s.page}>
+    <div className={s.page}>
       <B2bHero imageSrc={heroSrc} imageAlt={heroAlt} />
 
       <PageBuilder blocks={data?.pageBuilder} />
-    </main>
+    </div>
   )
 }

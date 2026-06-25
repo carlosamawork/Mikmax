@@ -1,16 +1,16 @@
+@use '@/styles/common/variables' as *;
+
 .switcher {
   display: inline-flex;
-  gap: 8px;
+  align-items: center;
 
   button {
+    padding: 0;
     background: none;
     border: none;
     cursor: pointer;
-    opacity: 0.5;
-
-    &[aria-pressed='true'] {
-      opacity: 1;
-      font-weight: 700;
-    }
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
   }
 }

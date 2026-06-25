@@ -191,7 +191,8 @@ $nlHeading: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: px(11);
   line-height: px(15);
   letter-spacing: px(0.5);
-  color: map-get($colors, 'gray-light');
+  // Gris atenuado con contraste AA sobre la tarjeta blanca (≥4.5:1)
+  color: #767676;
 
   // Desktop: anclado al fondo de la tarjeta (altura fija).
   @media (min-width: 768px) {

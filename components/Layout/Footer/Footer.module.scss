@@ -124,8 +124,8 @@
 
   @include from(md) {
     position: absolute;
-    bottom: px(10);
-    right: px(10);
+    bottom: px(0);
+    right: px(0);
     padding-top: 0;
     grid-column: auto;
   }
