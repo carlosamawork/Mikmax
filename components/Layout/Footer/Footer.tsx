@@ -2,6 +2,7 @@
 import s from './Footer.module.scss'
 import NewsletterForm from './NewsletterForm'
 import RegionSelector from './RegionSelector'
+import LanguageSelector from './LanguageSelector'
 import {LazyImage} from '@/components/Common'
 import type {FooterProps} from '@/types/footer'
 import type {SocialLink, FooterColumnAny, LinkInternalRef} from '@/sanity/types'
@@ -118,7 +119,13 @@ function ShopColumn({
   )
 }
 
-export default function Footer({data, footerCopy, newsletterCopy}: FooterProps) {
+export default function Footer({
+  data,
+  footerCopy,
+  newsletterCopy,
+  locale,
+  showLanguageSwitcher = false,
+}: FooterProps) {
   const newsletter = data?.newsletter
   const columns: FooterColumnAny[] = data?.columns ?? []
   const regions = data?.regions ?? []
@@ -165,6 +172,7 @@ export default function Footer({data, footerCopy, newsletterCopy}: FooterProps) 
 
           <div className={s.regionWrap}>
             <RegionSelector regions={regions} regionLabel={regionLabel} />
+            {showLanguageSwitcher && locale && <LanguageSelector current={locale} />}
           </div>
         </div>
       </div>

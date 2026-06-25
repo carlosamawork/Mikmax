@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server'
-import {getCustomerToken} from '@/lib/auth/session'
+import {getCustomerToken, clearCustomerSession} from '@/lib/auth/session'
 import {getCustomerWishlist} from '@/lib/shopify'
 import {setCustomerWishlist} from '@/lib/shopify-admin'
 
@@ -20,7 +20,13 @@ export async function GET() {
     return NextResponse.json({loggedIn: false, handles: []}, {headers: {'Cache-Control': 'no-store'}})
   }
   const res = await getCustomerWishlist(token)
-  const handles = parseHandles(res?.customer?.metafield?.value)
+  // Token presente pero Shopify no resuelve cliente (caducado/inválido):
+  // tratar como deslogueado y limpiar la cookie para no quedar en estado roto.
+  if (!res?.customer) {
+    await clearCustomerSession()
+    return NextResponse.json({loggedIn: false, handles: []}, {headers: {'Cache-Control': 'no-store'}})
+  }
+  const handles = parseHandles(res.customer.metafield?.value)
   return NextResponse.json({loggedIn: true, handles}, {headers: {'Cache-Control': 'no-store'}})
 }
 
@@ -39,7 +45,10 @@ export async function POST(request: Request) {
   const res = await getCustomerWishlist(token)
   const customerId = res?.customer?.id
   if (!customerId) {
-    return NextResponse.json({error: 'no customer'}, {status: 400})
+    // Token inválido/caducado: limpiar sesión y responder 401 para que la UI
+    // pida re-login, en vez de un 400 que deja el botón "roto".
+    await clearCustomerSession()
+    return NextResponse.json({loggedIn: false, error: 'unauthenticated'}, {status: 401})
   }
 
   const current = parseHandles(res?.customer?.metafield?.value)

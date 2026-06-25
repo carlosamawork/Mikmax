@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
-import {useWishlistItem} from '@/context/wishlistContext'
+import {useRouter} from 'next/navigation'
+import {useWishlistEntry} from '@/context/wishlistContext'
 import s from './WishlistButton.module.scss'
 
 // Icono de marcador (bookmark) del diseño — esquina inferior derecha de la tarjeta.
@@ -17,13 +17,18 @@ function BookmarkIcon() {
 }
 
 type Props = {
-  handle: string
+  // Entrada de wishlist explícita (sets/looks: `set:<slug>` / `look:<slug>`).
+  entryId?: string
+  // Producto: se compone `handle` (+ `color`) si no se pasa `entryId`.
+  handle?: string
   color?: string | null
   className?: string
 }
 
-export default function WishlistButton({handle, color, className}: Props) {
-  const {active, hint, onClick} = useWishlistItem(handle, color)
+export default function WishlistButton({entryId, handle, color, className}: Props) {
+  const id = entryId ?? (color ? `${handle}::${color}` : (handle ?? ''))
+  const {active, hint, onClick} = useWishlistEntry(id)
+  const router = useRouter()
 
   return (
     <span className={className ? `${s.wrap} ${className}` : s.wrap}>
@@ -38,9 +43,17 @@ export default function WishlistButton({handle, color, className}: Props) {
       </button>
       {hint && (
         <span className={s.hint} role="alert">
-          <Link href="/login" className={s.hintLink}>
+          <button
+            type="button"
+            className={s.hintLink}
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              router.push('/login')
+            }}
+          >
             Log in
-          </Link>{' '}
+          </button>{' '}
           to save it
         </span>
       )}

@@ -1,12 +1,11 @@
 import {NextResponse} from 'next/server'
-import {getCustomerToken} from '@/lib/auth/session'
+import {getCurrentCustomer} from '@/lib/auth/customer'
 
 // Estado de sesión para el header (cookie httpOnly → no legible desde el cliente).
 // Mantiene las páginas estáticas: el header lo consulta en cliente, no en el server layout.
+// Valida el token contra Shopify (no solo la presencia de la cookie), para no mostrar
+// "logueado" con un token caducado/inválido.
 export async function GET() {
-  const token = await getCustomerToken()
-  return NextResponse.json(
-    {loggedIn: Boolean(token)},
-    {headers: {'Cache-Control': 'no-store'}},
-  )
+  const session = await getCurrentCustomer()
+  return NextResponse.json({loggedIn: Boolean(session)}, {headers: {'Cache-Control': 'no-store'}})
 }

@@ -1,6 +1,7 @@
 @use '../../../styles/common/variables' as *;
 
 .row {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

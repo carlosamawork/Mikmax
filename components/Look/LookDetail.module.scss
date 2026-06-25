@@ -57,6 +57,7 @@
   height: px(60);
   display: flex;
   align-items: center;
+  gap: px(10);
   padding: 0 px(16);
   background-color: map-get($colors, 'white');
   font-family: $MonumentGrotesk;
@@ -65,6 +66,15 @@
   letter-spacing: px(0.5);
   font-weight: 400;
   color: map-get($colors, 'black');
+
+  .mTitleText {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mFavorite {
+    flex-shrink: 0;
+  }
 }
 
 .mPrice {

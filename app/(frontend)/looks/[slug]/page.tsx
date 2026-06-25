@@ -97,5 +97,5 @@ export default async function LookPage({params}: {params: Promise<{slug: string}
 
   if (view.components.length === 0) notFound()
 
-  return <LookDetail view={view} />
+  return <LookDetail view={view} entryId={`look:${slug}`} />
 }

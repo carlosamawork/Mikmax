@@ -22,6 +22,7 @@ import {getBanner} from '@/sanity/queries/common/banner'
 import {getNewsletterPopup} from '@/sanity/queries/common/newsletterPopup'
 import {getLocale} from '@/lib/i18n/getLocale'
 import {getDictionary} from '@/lib/i18n/getDictionary'
+import {isI18nEnabled} from '@/lib/i18n/config'
 
 export async function generateMetadata() {
   const locale = await getLocale()
@@ -55,6 +56,8 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                 data={footerData?.footer}
                 footerCopy={dict.footer}
                 newsletterCopy={dict.newsletter}
+                locale={locale}
+                showLanguageSwitcher={isI18nEnabled()}
               />
               <CartDrawer copy={dict.cart} />
               <CookieConsent />
