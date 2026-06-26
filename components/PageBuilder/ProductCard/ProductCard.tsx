@@ -41,7 +41,7 @@ export default function ProductCard({
       ? `/products/${product.handle}?color=${product.colorSlug}`
       : `/products/${product.handle}`
     : '#'
-  const tag = showTag && hasNovedadTag(product.tags) ? 'Novedades' : null
+  const tag = showTag && hasNovedadTag(product.tags) ? 'New' : null
   const soldOut = product.availableForSale === false
   const imageUrl =
     preferSecondary && product.secondaryImageUrl ? product.secondaryImageUrl : product.imageUrl
@@ -64,7 +64,7 @@ export default function ProductCard({
           />
         )}
         {tag && <p className={s.tag}>{tag}</p>}
-        {soldOut && <p className={s.soldOut}>Agotado</p>}
+        {soldOut && <p className={s.soldOut}>Sold out</p>}
         {product.handle && (
           <WishlistButton
             handle={product.handle}

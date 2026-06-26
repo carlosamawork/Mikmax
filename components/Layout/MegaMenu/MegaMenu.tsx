@@ -55,7 +55,7 @@ export default function MegaMenu({group}: MegaMenuProps) {
         >
           <LazyImage
             src={group.featuredProduct.image}
-            alt={group.featuredProduct.title || 'Producto destacado'}
+            alt={group.featuredProduct.title || 'Featured product'}
             width={357}
             height={554}
             wrapperClassName={s.featuredImage}
