@@ -13,7 +13,7 @@ import s from './search.module.scss'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Buscar | Mikmax',
+  title: 'Search | Mikmax',
   robots: {index: false, follow: true},
 }
 
@@ -32,8 +32,8 @@ export default async function SearchPage({searchParams}: Props) {
   if (!q) {
     return (
       <div className={s.empty}>
-        <p className={s.emptyTitle}>Busca productos</p>
-        <p className={s.emptyText}>Escribe en el buscador para ver resultados.</p>
+        <p className={s.emptyTitle}>Search products</p>
+        <p className={s.emptyText}>Type in the search bar to see results.</p>
       </div>
     )
   }
@@ -62,8 +62,8 @@ export default async function SearchPage({searchParams}: Props) {
   return (
     <>
       <header className={s.head}>
-        <h1 className={s.title}>Resultados para «{q}»</h1>
-        <p className={s.count}>{total} productos</p>
+        <h1 className={s.title}>Results for «{q}»</h1>
+        <p className={s.count}>{total} products</p>
       </header>
       <ShopToolbar view={view} flush />
       {total > 0 ? (
@@ -79,9 +79,9 @@ export default async function SearchPage({searchParams}: Props) {
         </Suspense>
       ) : (
         <div className={s.empty}>
-          <p className={s.emptyTitle}>Sin resultados</p>
+          <p className={s.emptyTitle}>No results</p>
           <p className={s.emptyText}>
-            No encontramos productos para «{q}»{hasFilters ? ' con esos filtros' : ''}.
+            No products found for «{q}»{hasFilters ? ' with those filters' : ''}.
           </p>
         </div>
       )}
