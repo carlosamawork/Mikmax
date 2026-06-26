@@ -1,8 +1,10 @@
 import {buildUrl, BASE_IMAGE_URL, BASE_IMAGE_WIDTH, BASE_IMAGE_HEIGHT, localeAlternates} from '@/utils/seoHelper'
 import {PageBuilder} from '@/components/PageBuilder'
 import {getHome} from '@/sanity/queries/queries/home'
+import {getSettings} from '@/sanity/queries/common/settings'
 import {getLocale} from '@/lib/i18n/getLocale'
 import {getDictionary} from '@/lib/i18n/getDictionary'
+import type {FooterColumnSocial} from '@/sanity/types'
 
 export const revalidate = 3600
 
@@ -33,7 +35,15 @@ export async function generateMetadata() {
 export default async function Home() {
   const locale = await getLocale()
   const {meta} = getDictionary(locale)
-  const data = await getHome(locale)
+  const [data, settings] = await Promise.all([getHome(locale), getSettings(locale)])
+
+  // Social profile URLs (from the footer "Social Media" column) feed
+  // Organization.sameAs — a strong entity signal for AI engines / knowledge graph.
+  const sameAs = (settings.footer?.columns ?? [])
+    .filter((c): c is FooterColumnSocial => c._type === 'footerColumnSocial')
+    .flatMap((c) => c.links ?? [])
+    .map((l) => l.url)
+    .filter((u): u is string => typeof u === 'string' && u.length > 0)
 
   const organizationSchema = {
     '@context': 'https://schema.org',
@@ -50,6 +60,7 @@ export default async function Home() {
         addressCountry: 'ES',
       },
     },
+    ...(sameAs.length ? {sameAs} : {}),
   }
 
   const webSiteSchema = {
@@ -57,6 +68,14 @@ export default async function Home() {
     '@type': 'WebSite',
     name: meta.title,
     url: buildUrl('/'),
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${buildUrl('/search')}?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   }
 
   const webPageSchema = {
