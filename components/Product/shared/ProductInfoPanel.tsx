@@ -14,10 +14,10 @@ interface Props {
 type TabKey = keyof ProductEditorial
 
 const TABS: {key: TabKey; label: string}[] = [
-  {key: 'descripcion', label: 'Descripción'},
-  {key: 'propiedadesMaterial', label: 'Propiedades del material'},
-  {key: 'recomendacionesLavado', label: 'Recomendaciones de lavado'},
-  {key: 'usoRecomendado', label: 'Uso recomendado'},
+  {key: 'descripcion', label: 'Description'},
+  {key: 'propiedadesMaterial', label: 'Material properties'},
+  {key: 'recomendacionesLavado', label: 'Washing recommendations'},
+  {key: 'usoRecomendado', label: 'Recommended use'},
 ]
 
 function tabHasContent(value: ProductEditorial[TabKey]): boolean {

@@ -148,10 +148,10 @@ export default function MobileMenu({
   }
 
   return createPortal(
-    <div className={s.drawer} role="dialog" aria-modal="true" aria-label="Menú principal">
+    <div className={s.drawer} role="dialog" aria-modal="true" aria-label="Main menu">
       {/* Top bar — same shape as header but with × close instead of burger */}
       <div className={s.topBar}>
-        <Link href="/" onClick={onClose} className={s.logo} aria-label="Mikmax — inicio">
+        <Link href="/" onClick={onClose} className={s.logo} aria-label="Mikmax — home">
           <LazyImage
             src="/icons/mikmax.svg"
             alt="Mikmax"
@@ -184,7 +184,7 @@ export default function MobileMenu({
             type="button"
             className={s.closeBtn}
             onClick={onClose}
-            aria-label="Cerrar menú"
+            aria-label="Close menu"
           >
             <span className={s.closeX} aria-hidden>
               <span />
@@ -202,7 +202,7 @@ export default function MobileMenu({
             className={s.searchInput}
             type="search"
             placeholder="Search"
-            aria-label="Buscar"
+            aria-label="Search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -213,7 +213,7 @@ export default function MobileMenu({
       </form>
 
       {/* Items */}
-      <nav className={s.items} aria-label="Menú móvil">
+      <nav className={s.items} aria-label="Mobile menu">
         {flat.map((item, idx) => {
           const isGrey = idx % 2 === 0
           const rowClass = `${s.row} ${isGrey ? s.rowGrey : s.rowWhite}`
