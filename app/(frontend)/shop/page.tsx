@@ -3,7 +3,14 @@ import ShopArchive from './ShopArchive'
 import JsonLd from '@/components/Common/JsonLd/JsonLd'
 import {ALL_HANDLE, CHUNK_SIZE} from '@/types/shop'
 import {getCardsForRequest, searchKeyFor} from '@/lib/shop/cards'
-import {siteTitle, localeAlternates, buildUrl} from '@/utils/seoHelper'
+import {
+  siteTitle,
+  localeAlternates,
+  buildUrl,
+  BASE_IMAGE_URL,
+  BASE_IMAGE_WIDTH,
+  BASE_IMAGE_HEIGHT,
+} from '@/utils/seoHelper'
 import {getLocale} from '@/lib/i18n/getLocale'
 import {getDictionary} from '@/lib/i18n/getDictionary'
 
@@ -23,6 +30,15 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description: meta.description,
       url: buildUrl('/shop'),
+      siteName: siteTitle,
+      type: 'website',
+      images: [{url: BASE_IMAGE_URL, width: BASE_IMAGE_WIDTH, height: BASE_IMAGE_HEIGHT}],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: meta.description,
+      images: [BASE_IMAGE_URL],
     },
   }
 }

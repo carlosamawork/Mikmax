@@ -20,11 +20,11 @@ export default async function B2bAreaPage() {
       <h1 className={s.title}>Mikmax for Business</h1>
       <dl className={s.meta}>
         <div className={s.row}>
-          <dt>Condición</dt>
+          <dt>Status</dt>
           <dd>{condition}</dd>
         </div>
         <div className={s.row}>
-          <dt>Contacto comercial</dt>
+          <dt>Commercial contact</dt>
           <dd>
             {group?.contactName && <span className={s.contactName}>{group.contactName}</span>}
             <a href={`mailto:${contactEmail}`} className={s.contactLink}>
@@ -42,28 +42,28 @@ export default async function B2bAreaPage() {
 
       {group?.commercialPolicy && (
         <section className={s.section}>
-          <h2 className={s.heading}>Política comercial</h2>
+          <h2 className={s.heading}>Commercial policy</h2>
           <PortableText value={group.commercialPolicy} />
         </section>
       )}
 
       {group?.purchaseConditions && (
         <section className={s.section}>
-          <h2 className={s.heading}>Condiciones de compra</h2>
+          <h2 className={s.heading}>Purchase conditions</h2>
           <PortableText value={group.purchaseConditions} />
         </section>
       )}
 
       {group?.taxInfo && (
         <section className={s.section}>
-          <h2 className={s.heading}>Fiscalidad</h2>
+          <h2 className={s.heading}>Taxation</h2>
           <PortableText value={group.taxInfo} />
         </section>
       )}
 
       {!group && (
         <p className={s.note}>
-          Tus condiciones comerciales se aplican automáticamente en el carrito y el checkout.
+          Your commercial terms are applied automatically in the cart and at checkout.
         </p>
       )}
     </div>

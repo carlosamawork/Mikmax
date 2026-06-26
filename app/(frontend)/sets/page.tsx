@@ -31,6 +31,12 @@ export async function generateMetadata(): Promise<Metadata> {
       type: 'website',
       images: [{url: BASE_IMAGE_URL, width: BASE_IMAGE_WIDTH, height: BASE_IMAGE_HEIGHT}],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: meta.description,
+      images: [BASE_IMAGE_URL],
+    },
   }
 }
 

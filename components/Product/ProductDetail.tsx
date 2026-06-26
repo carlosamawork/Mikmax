@@ -7,7 +7,7 @@ import {CartContext} from '@/context/shopContext'
 import DesktopLayout from './Desktop/DesktopLayout'
 import MobileLayout from './Mobile/MobileLayout'
 import ProductInfoPanel from './shared/ProductInfoPanel'
-import {trackViewItem} from '@/lib/analytics/track'
+import {trackAddToCart, trackViewItem} from '@/lib/analytics/track'
 import type {ProductView, ProductInitialState} from '@/types/product'
 import type {Dictionary} from '@/lib/i18n/getDictionary'
 
@@ -98,6 +98,20 @@ export default function ProductDetail({view, initial, pdpCopy}: Props) {
     const image = currentColor.images[0]?.url
     if (typeof shop?.addToCart === 'function') {
       await shop.addToCart(newItem, 1, view.id, view.title, image)
+      // Mismo id que view_item/begin_checkout (view.id) para que GA4/Meta casen
+      // el producto a lo largo del embudo. Precio real de la variante seleccionada.
+      trackAddToCart([
+        {
+          id: view.id,
+          name: view.title,
+          price: variant.price,
+          quantity: 1,
+          variant:
+            [currentColor.label, selectedSize].filter((x) => x && x !== 'Default').join(' / ') ||
+            undefined,
+          currency: view.currency,
+        },
+      ])
       if (typeof shop.setCartOpen === 'function') {
         shop.setCartOpen(true)
       }
