@@ -11,15 +11,15 @@ type ResultStatus = 'approved' | 'review' | 'rejected'
 const RESULT_COPY: Record<ResultStatus, {title: string; body: string}> = {
   approved: {
     title: 'Welcome to Mikmax for Business',
-    body: 'Tu cuenta ha sido aprobada. Ya puedes iniciar sesión con tu email y contraseña.',
+    body: 'Your account has been approved. You can now sign in with your email and password.',
   },
   review: {
-    title: 'Estamos revisando tu solicitud',
-    body: 'Hemos recibido tus datos. Te escribiremos en cuanto validemos tu empresa.',
+    title: 'We are reviewing your request',
+    body: 'We have received your details. We will get in touch as soon as we validate your company.',
   },
   rejected: {
-    title: 'Necesitamos más información',
-    body: 'No hemos podido validar tu solicitud automáticamente. Revisa tu email para continuar.',
+    title: 'We need more information',
+    body: 'We could not validate your request automatically. Check your email to continue.',
   },
 }
 
@@ -50,7 +50,7 @@ export default function B2bRegisterForm() {
     setError(null)
 
     if (form.password.length < 8) {
-      setError('La contraseña debe tener al menos 8 caracteres.')
+      setError('Password must be at least 8 characters.')
       return
     }
 
@@ -63,13 +63,13 @@ export default function B2bRegisterForm() {
       })
       const data = await res.json()
       if (!res.ok) {
-        setError('No hemos podido procesar la solicitud. Revisa los datos e inténtalo de nuevo.')
+        setError('We could not process your request. Check your details and try again.')
         setLoading(false)
         return
       }
       setResult(data.status as ResultStatus)
     } catch {
-      setError('Error de conexión. Inténtalo de nuevo.')
+      setError('Connection error. Please try again.')
       setLoading(false)
     }
   }
@@ -82,7 +82,7 @@ export default function B2bRegisterForm() {
         <p className={s.resultBody}>{copy.body}</p>
         {result === 'approved' && (
           <Link href="/mikmax-for-business" className={s.resultLink}>
-            Ir a iniciar sesión
+            Go to sign in
           </Link>
         )}
       </div>
@@ -94,7 +94,7 @@ export default function B2bRegisterForm() {
       <p className={s.heading}>Create a business account</p>
 
       <fieldset className={s.clientType}>
-        <legend className={s.srOnly}>Tipo de cliente</legend>
+        <legend className={s.srOnly}>Client type</legend>
         {(['reseller', 'designer'] as B2bClientType[]).map((t) => (
           <label key={t} className={s.radio}>
             <input
@@ -114,7 +114,7 @@ export default function B2bRegisterForm() {
           className={s.select}
           value={form.country}
           onChange={(e) => set('country', e.target.value)}
-          aria-label="País"
+          aria-label="Country"
           required
         >
           {COUNTRIES.map((c) => (

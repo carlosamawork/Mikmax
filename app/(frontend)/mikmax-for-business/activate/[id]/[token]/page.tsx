@@ -5,7 +5,7 @@ import ResetForm from '@/components/Account/ResetForm/ResetForm'
 import {B2B_ENABLED} from '@/lib/b2b/flag'
 
 export const metadata: Metadata = {
-  title: 'Crear contraseña — Mikmax for Business',
+  title: 'Create password — Mikmax for Business',
   robots: {index: false, follow: false},
 }
 

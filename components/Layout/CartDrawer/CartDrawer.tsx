@@ -187,7 +187,7 @@ export default function CartDrawer({copy}: Props) {
             </div>
             {ctx.cartCost.discount > 0 && (
               <div className={`${s.summaryRow} ${s.summaryDiscount}`}>
-                <span>{ctx.cartCost.discountTitle ?? 'Descuento'}</span>
+                <span>{ctx.cartCost.discountTitle ?? copy.discount}</span>
                 <span>−{fmt(ctx.cartCost.discount)}</span>
               </div>
             )}
@@ -205,8 +205,10 @@ export default function CartDrawer({copy}: Props) {
                 return (
                   <div className={`${s.summaryRow} ${s.nudge}`}>
                     {nudge
-                      ? `Añade ${fmt(nudge.gap)} más para alcanzar el ${nudge.percent}%`
-                      : `Tienes el descuento profesional máximo (${maxPercent}%)`}
+                      ? copy.tierNudge
+                          .replace('{amount}', fmt(nudge.gap))
+                          .replace('{percent}', String(nudge.percent))
+                      : copy.maxDiscount.replace('{percent}', String(maxPercent))}
                   </div>
                 )
               })()}

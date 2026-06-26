@@ -14,7 +14,10 @@
     "removeItem": "Remove item",
     "total": "Total",
     "viewItems": "View Items",
-    "goToCheckout": "Go to Checkout"
+    "goToCheckout": "Go to Checkout",
+    "discount": "Descuento",
+    "tierNudge": "Añade {amount} más para alcanzar el {percent}%",
+    "maxDiscount": "Tienes el descuento profesional máximo ({percent}%)"
   },
   "common": {
     "error": "Algo salió mal. Inténtalo de nuevo.",

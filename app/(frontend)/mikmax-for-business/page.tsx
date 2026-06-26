@@ -6,17 +6,41 @@ import {getMikmaxForBusiness} from '@/sanity/queries/queries/mikmaxForBusiness'
 import {urlFor} from '@/sanity/queries'
 import {getLocale} from '@/lib/i18n/getLocale'
 import {B2B_ENABLED} from '@/lib/b2b/flag'
-import {buildUrl} from '@/utils/seoHelper'
+import {
+  buildUrl,
+  siteTitle,
+  localeAlternates,
+  BASE_IMAGE_URL,
+  BASE_IMAGE_WIDTH,
+  BASE_IMAGE_HEIGHT,
+} from '@/utils/seoHelper'
 import JsonLd from '@/components/Common/JsonLd/JsonLd'
 import s from './B2b.module.scss'
 
 const B2B_TITLE = 'Mikmax for Business'
 const B2B_DESCRIPTION =
-  'Cuenta profesional Mikmax: textil de hostelería para revendedores e interioristas.'
+  'Mikmax professional account: hospitality textiles for resellers and interior designers.'
 
-export const metadata: Metadata = {
-  title: B2B_TITLE,
-  description: B2B_DESCRIPTION,
+export function generateMetadata(): Metadata {
+  return {
+    title: B2B_TITLE,
+    description: B2B_DESCRIPTION,
+    alternates: localeAlternates('/mikmax-for-business'),
+    openGraph: {
+      title: B2B_TITLE,
+      description: B2B_DESCRIPTION,
+      url: buildUrl('/mikmax-for-business'),
+      siteName: siteTitle,
+      type: 'website',
+      images: [{url: BASE_IMAGE_URL, width: BASE_IMAGE_WIDTH, height: BASE_IMAGE_HEIGHT}],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: B2B_TITLE,
+      description: B2B_DESCRIPTION,
+      images: [BASE_IMAGE_URL],
+    },
+  }
 }
 
 // Fallback estático para el hero cuando aún no se ha cargado imagen en Sanity.
