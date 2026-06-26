@@ -18,7 +18,7 @@ export default function ViewToggle({value}: {value: ViewMode}) {
   }
 
   return (
-    <div className={s.viewGroup} role="group" aria-label="Vista">
+    <div className={s.viewGroup} role="group" aria-label="View">
       <span className={s.viewLabel}>Views</span>
       <button
         type="button"
