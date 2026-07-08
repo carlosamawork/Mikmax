@@ -2,6 +2,7 @@
 'use client'
 
 import {FormEvent, useState} from 'react'
+import {LegalConsent, DEFAULT_LEGAL_COPY} from '@/components/Common'
 import {useNewsletterSubscribe} from '@/hooks/useNewsletterSubscribe'
 import s from './NewsletterForm.module.scss'
 import type {NewsletterFormProps} from '@/types/footer'
@@ -20,8 +21,13 @@ export default function NewsletterForm({
   placeholder,
   buttonLabel,
   copy = DEFAULT_COPY,
-}: NewsletterFormProps & {copy?: Dictionary['newsletter']}) {
+  legalCopy = DEFAULT_LEGAL_COPY,
+}: NewsletterFormProps & {
+  copy?: Dictionary['newsletter']
+  legalCopy?: Dictionary['legalConsent']
+}) {
   const [email, setEmail] = useState('')
+  const [legalAccepted, setLegalAccepted] = useState(false)
   const {status, subscribe} = useNewsletterSubscribe()
 
   // Fall back when the CMS value is null/empty (a JS default param only covers undefined,
@@ -35,7 +41,7 @@ export default function NewsletterForm({
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (status === 'submitting' || status === 'success') return
+    if (status === 'submitting' || status === 'success' || !legalAccepted) return
     await subscribe(email)
   }
 
@@ -61,11 +67,19 @@ export default function NewsletterForm({
         <button
           type="submit"
           className={s.button}
-          disabled={status === 'submitting' || status === 'success' || !email}
+          disabled={status === 'submitting' || status === 'success' || !email || !legalAccepted}
         >
           {status === 'submitting' ? '…' : buttonText}
         </button>
       </div>
+
+      <LegalConsent
+        id="newsletter-footer-legal"
+        checked={legalAccepted}
+        onChange={setLegalAccepted}
+        purpose={legalCopy.purposeNewsletter}
+        copy={legalCopy}
+      />
 
       {status === 'success' && <p className={s.feedback}>{copy.success}</p>}
       {status === 'already' && <p className={s.feedback}>{copy.alreadySubscribed}</p>}

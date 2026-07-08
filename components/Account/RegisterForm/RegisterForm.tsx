@@ -4,6 +4,7 @@ import Link from 'next/link'
 import {useRouter} from 'next/navigation'
 import {FormEvent, useState} from 'react'
 import AuthField from '@/components/Account/AuthField/AuthField'
+import {LegalConsent, DEFAULT_LEGAL_COPY} from '@/components/Common'
 import {registerAction} from '@/app/(frontend)/register/actions'
 import s from '../authForm.module.scss'
 
@@ -12,12 +13,13 @@ export default function RegisterForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
+  const [legalAccepted, setLegalAccepted] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (loading) return
+    if (loading || !legalAccepted) return
     setError(null)
 
     if (password !== confirm) {
@@ -82,7 +84,14 @@ export default function RegisterForm() {
           </p>
         )}
 
-        <button type="submit" className={s.submit} disabled={loading}>
+        <LegalConsent
+          id="register-legal"
+          checked={legalAccepted}
+          onChange={setLegalAccepted}
+          purpose={DEFAULT_LEGAL_COPY.purposeAccount}
+        />
+
+        <button type="submit" className={s.submit} disabled={loading || !legalAccepted}>
           {loading ? '…' : 'Continue'}
         </button>
 

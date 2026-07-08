@@ -16,7 +16,8 @@ type Preferences = {
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false)
   const [showManage, setShowManage] = useState(false)
-  const [prefs, setPrefs] = useState<Preferences>({analytics: true, marketing: true})
+  // RGPD/LSSI: las categorías opcionales nunca pueden aparecer pre-marcadas.
+  const [prefs, setPrefs] = useState<Preferences>({analytics: false, marketing: false})
   const {updateConsent} = useConsent()
 
   const clientId = process.env.NEXT_PUBLIC_CLIENT_ID || 'site'
@@ -57,8 +58,8 @@ export default function CookieConsent() {
               analyse our traffic. We also share information about your use of our site with our
               social media, advertising, and analytics partners. To learn more about how we use
               cookies and how you can manage them, view our{' '}
-              <Link href="/legal/privacy-policy" className={s.link}>
-                Cookie Notice
+              <Link href="/legal/cookie-policy" className={s.link}>
+                Cookie Policy
               </Link>
             </p>
 

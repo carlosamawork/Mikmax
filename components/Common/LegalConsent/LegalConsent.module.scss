@@ -1,0 +1,60 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/mixins' as *;
+
+// Bloque de consentimiento legal bajo los formularios: checkbox (mismo diseño
+// que el gestor de cookies) + información de primera capa en cuerpo pequeño.
+.legalConsent {
+  display: flex;
+  flex-direction: column;
+  gap: px(6);
+  width: 100%;
+  margin: px(16) 0 px(12);
+  text-align: left;
+
+  .checkboxWrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: px(8);
+    cursor: pointer;
+
+    input {
+      display: none;
+    }
+
+    .checkboxSquare {
+      width: px(11);
+      height: px(11);
+      border: 1px solid map-get($colors, 'black-border');
+      flex-shrink: 0;
+      margin-top: px(2);
+      transition: background-color 0.2s ease;
+
+      &.checked {
+        background-color: map-get($colors, 'black-border');
+      }
+    }
+
+    .checkboxLabel {
+      font-family: $MonumentGrotesk;
+      font-size: px(11);
+      line-height: px(15);
+      letter-spacing: px(0.5);
+      color: map-get($colors, 'primary-text');
+
+      .link {
+        color: map-get($colors, 'gray-light');
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // La tipografía va sobre clase+elemento para ganar al `p` global de _base.scss.
+  p.firstLayer {
+    margin: 0;
+    font-family: $MonumentGrotesk;
+    font-size: px(10);
+    line-height: px(14);
+    letter-spacing: px(0.3);
+    color: map-get($colors, 'secondary-text');
+  }
+}

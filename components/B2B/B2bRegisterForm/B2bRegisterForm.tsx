@@ -2,6 +2,7 @@
 
 import {FormEvent, useState} from 'react'
 import Link from 'next/link'
+import {LegalConsent, DEFAULT_LEGAL_COPY} from '@/components/Common'
 import type {B2bClientType, B2bRegisterInput} from '@/types/b2b'
 import {COUNTRIES} from '@/lib/b2b/countries'
 import s from './B2bRegisterForm.module.scss'
@@ -39,6 +40,7 @@ export default function B2bRegisterForm() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<ResultStatus | null>(null)
+  const [legalAccepted, setLegalAccepted] = useState(false)
 
   function set<K extends keyof B2bRegisterInput>(key: K, value: B2bRegisterInput[K]) {
     setForm((f) => ({...f, [key]: value}))
@@ -46,7 +48,7 @@ export default function B2bRegisterForm() {
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (loading) return
+    if (loading || !legalAccepted) return
     setError(null)
 
     if (form.password.length < 8) {
@@ -181,7 +183,14 @@ export default function B2bRegisterForm() {
         </p>
       )}
 
-      <button type="submit" className={s.submit} disabled={loading}>
+      <LegalConsent
+        id="b2b-register-legal"
+        checked={legalAccepted}
+        onChange={setLegalAccepted}
+        purpose={DEFAULT_LEGAL_COPY.purposeB2bRegister}
+      />
+
+      <button type="submit" className={s.submit} disabled={loading || !legalAccepted}>
         {loading ? '…' : 'Create account'}
       </button>
 

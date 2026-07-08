@@ -29,6 +29,17 @@
     "emailLabel": "Email",
     "error": "Something went wrong. Try again."
   },
+  "legalConsent": {
+    "accept": "I have read and accept the",
+    "privacyPolicy": "Privacy Policy",
+    "controller": "Data controller: Mikmax.",
+    "purposeLabel": "Purpose",
+    "legitimation": "Legal basis: the data subject's consent.",
+    "rights": "Rights: access, rectification, erasure and other rights, as explained in the Privacy Policy.",
+    "purposeNewsletter": "sending you our newsletter with news and offers",
+    "purposeAccount": "creating and managing your customer account",
+    "purposeB2bRegister": "managing your business account request"
+  },
   "header": {
     "logoAriaLabel": "Mikmax — home",
     "navAriaLabel": "Main",

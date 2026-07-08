@@ -56,18 +56,21 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                 data={footerData?.footer}
                 footerCopy={dict.footer}
                 newsletterCopy={dict.newsletter}
+                legalCopy={dict.legalConsent}
                 locale={locale}
                 showLanguageSwitcher={isI18nEnabled()}
               />
               <CartDrawer copy={dict.cart} />
               <CookieConsent />
-              <NewsletterPopup data={newsletterPopupData} />
+              <NewsletterPopup data={newsletterPopupData} legalCopy={dict.legalConsent} />
               <WhatsAppButton />
               {process.env.NODE_ENV === 'production' ? (
                 <>
-                  <Analytics />
                   <AnalyticsRouteTracker />
+                  {/* RGPD/LSSI: ningún script de terceros (tampoco gtag.js) se carga
+                      antes de que el usuario acepte o rechace en el banner. */}
                   <ConsentGate category="analytics">
+                    <Analytics />
                     <Hotjar />
                   </ConsentGate>
                   <ConsentGate category="marketing">

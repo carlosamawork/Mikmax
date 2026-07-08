@@ -7,6 +7,7 @@ export interface FooterProps {
   data?: FooterColumnData
   footerCopy?: Dictionary['footer']
   newsletterCopy?: Dictionary['newsletter']
+  legalCopy?: Dictionary['legalConsent']
   locale?: Locale
   showLanguageSwitcher?: boolean
 }

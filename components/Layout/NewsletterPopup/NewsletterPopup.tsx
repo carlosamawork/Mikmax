@@ -3,14 +3,22 @@
 import {hasCookie} from 'cookies-next'
 import Link from 'next/link'
 import {FormEvent, useEffect, useState} from 'react'
-import {LazyImage} from '@/components/Common'
+import {LazyImage, LegalConsent, DEFAULT_LEGAL_COPY} from '@/components/Common'
 import {useNewsletterSubscribe} from '@/hooks/useNewsletterSubscribe'
 import type {NewsletterPopup as NewsletterPopupData} from '@/sanity/types'
+import type {Dictionary} from '@/lib/i18n/getDictionary'
 import s from './NewsletterPopup.module.scss'
 
-export default function NewsletterPopup({data}: {data?: NewsletterPopupData}) {
+export default function NewsletterPopup({
+  data,
+  legalCopy = DEFAULT_LEGAL_COPY,
+}: {
+  data?: NewsletterPopupData
+  legalCopy?: Dictionary['legalConsent']
+}) {
   const [visible, setVisible] = useState(false)
   const [email, setEmail] = useState('')
+  const [legalAccepted, setLegalAccepted] = useState(false)
   const {status, subscribe} = useNewsletterSubscribe()
 
   const clientId = process.env.NEXT_PUBLIC_CLIENT_ID || 'site'
@@ -70,7 +78,7 @@ export default function NewsletterPopup({data}: {data?: NewsletterPopupData}) {
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (status === 'submitting' || status === 'success') return
+    if (status === 'submitting' || status === 'success' || !legalAccepted) return
     // El hook marca la cookie del pop-up al tener éxito.
     void subscribe(email)
   }
@@ -111,11 +119,19 @@ export default function NewsletterPopup({data}: {data?: NewsletterPopupData}) {
             <button
               type="submit"
               className={s.send}
-              disabled={status === 'submitting' || status === 'success' || !email}
+              disabled={status === 'submitting' || status === 'success' || !email || !legalAccepted}
             >
               {status === 'submitting' ? '…' : 'Send'}
             </button>
           </form>
+
+          <LegalConsent
+            id="newsletter-popup-legal"
+            checked={legalAccepted}
+            onChange={setLegalAccepted}
+            purpose={legalCopy.purposeNewsletter}
+            copy={legalCopy}
+          />
 
           {status === 'success' && <p className={s.feedback}>Thanks for subscribing.</p>}
           {status === 'already' && <p className={s.feedback}>You&apos;re already subscribed.</p>}

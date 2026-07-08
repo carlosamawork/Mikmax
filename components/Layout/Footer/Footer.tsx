@@ -123,6 +123,7 @@ export default function Footer({
   data,
   footerCopy,
   newsletterCopy,
+  legalCopy,
   locale,
   showLanguageSwitcher = false,
 }: FooterProps) {
@@ -141,6 +142,7 @@ export default function Footer({
             placeholder={newsletter?.placeholder}
             buttonLabel={newsletter?.buttonLabel}
             copy={newsletterCopy}
+            legalCopy={legalCopy}
           />
           <span className={s.copyright}>© {new Date().getFullYear()} Mikmax</span>
         </div>
