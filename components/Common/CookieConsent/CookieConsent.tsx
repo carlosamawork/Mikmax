@@ -6,8 +6,6 @@ import {useEffect, useState} from 'react'
 import {useConsent} from '@/hooks/useConsent'
 import s from './CookieConsent.module.scss'
 
-const POPUP_DELAY = 5000
-
 type Preferences = {
   analytics: boolean
   marketing: boolean
@@ -23,15 +21,21 @@ export default function CookieConsent() {
   const clientId = process.env.NEXT_PUBLIC_CLIENT_ID || 'site'
   const cookieName = `${clientId}_localConsent_25`
 
+  // Bloqueante: aparece de inmediato y no se puede navegar hasta responder.
   useEffect(() => {
     if (hasCookie(cookieName)) return
-
-    const timer = setTimeout(() => {
-      setVisible(true)
-    }, POPUP_DELAY)
-
-    return () => clearTimeout(timer)
+    setVisible(true)
   }, [cookieName])
+
+  // Mientras el banner está abierto, bloquea el scroll de la página.
+  useEffect(() => {
+    if (!visible) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [visible])
 
   // Pasa por useConsent: escribe la cookie, aplica Consent Mode v2 a gtag y
   // notifica a los ConsentGate (montan/ocultan pixels en la misma sesión).
@@ -47,7 +51,7 @@ export default function CookieConsent() {
   if (!visible) return null
 
   return (
-    <div className={s.wrap}>
+    <div className={s.wrap} role="dialog" aria-modal="true" aria-label="Cookie consent">
       <div className={s.card}>
         <p className={s.title}>At Mikmax, we respect your privacy</p>
 

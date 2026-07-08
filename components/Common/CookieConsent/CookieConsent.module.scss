@@ -2,18 +2,19 @@
 
 $cookieFont: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
+// Overlay bloqueante: cubre toda la página hasta que el usuario responde.
+// La tarjeta conserva su posición: a lo ancho abajo en móvil, abajo-derecha en desktop.
 .wrap {
   position: fixed;
   z-index: 120;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 
-  // Desktop: tarjeta anclada abajo-derecha.
   @media (min-width: 768px) {
-    left: auto;
-    right: 0;
-    width: px(300);
+    align-items: flex-end;
   }
 }
 
@@ -21,11 +22,13 @@ $cookieFont: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   display: flex;
   flex-direction: column;
   gap: px(19);
+  width: 100%;
   background: map-get($colors, 'white');
   padding: px(15) px(10) 0;
   box-shadow: 0 px(-2) px(12) rgba(0, 0, 0, 0.08);
 
   @media (min-width: 768px) {
+    width: px(300);
     box-shadow: px(-2) px(-2) px(12) rgba(0, 0, 0, 0.08);
   }
 }
