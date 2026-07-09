@@ -40,16 +40,40 @@
   }
 }
 
-.copyright {
-  font-family: $MonumentGrotesk;
-  font-size: px(13);
-  line-height: px(17);
-  letter-spacing: 0.5px;
-  color: #2d2926;
+.legalRow {
+  display: flex;
+  align-items: baseline;
+  gap: px(15);
 
-  @include from(md) {
-    font-size: px(11);
-    line-height: px(15);
+  .copyright {
+    font-family: $MonumentGrotesk;
+    font-size: px(13);
+    line-height: px(17);
+    letter-spacing: 0.5px;
+    color: #2d2926;
+
+    @include from(md) {
+      font-size: px(11);
+      line-height: px(15);
+    }
+  }
+
+  .cookieSettings {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: $MonumentGrotesk;
+    font-size: px(13);
+    line-height: px(17);
+    letter-spacing: 0.5px;
+    color: #2d2926;
+    text-decoration: underline;
+
+    @include from(md) {
+      font-size: px(11);
+      line-height: px(15);
+    }
   }
 }
 

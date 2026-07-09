@@ -4,6 +4,7 @@ import NewsletterForm from './NewsletterForm'
 import RegionSelector from './RegionSelector'
 import LanguageSelector from './LanguageSelector'
 import {LazyImage} from '@/components/Common'
+import CookieSettingsButton from '@/components/Common/CookieConsent/CookieSettingsButton'
 import type {FooterProps} from '@/types/footer'
 import type {SocialLink, FooterColumnAny, LinkInternalRef} from '@/sanity/types'
 import {getInternalHref} from '@/sanity/queries/fragments/links'
@@ -144,7 +145,10 @@ export default function Footer({
             copy={newsletterCopy}
             legalCopy={legalCopy}
           />
-          <span className={s.copyright}>© {new Date().getFullYear()} Mikmax</span>
+          <div className={s.legalRow}>
+            <span className={s.copyright}>© {new Date().getFullYear()} Mikmax</span>
+            <CookieSettingsButton className={s.cookieSettings} />
+          </div>
         </div>
 
         <div className={s.columns}>

@@ -2,13 +2,13 @@
 
 $cookieFont: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-// Overlay bloqueante: cubre toda la página hasta que el usuario responde.
-// La tarjeta conserva su posición: a lo ancho abajo en móvil, abajo-derecha en desktop.
+// No bloqueante: el wrap solo posiciona la tarjeta (a lo ancho abajo en móvil,
+// abajo-derecha en desktop) y deja pasar los clics al resto de la página.
 .wrap {
   position: fixed;
   z-index: 120;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  pointer-events: none;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -19,6 +19,7 @@ $cookieFont: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .card {
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
   gap: px(19);

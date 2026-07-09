@@ -1,6 +1,6 @@
 'use client'
 
-import {hasCookie} from 'cookies-next'
+import {getCookie, hasCookie} from 'cookies-next'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
 import {useConsent} from '@/hooks/useConsent'
@@ -10,6 +10,10 @@ type Preferences = {
   analytics: boolean
   marketing: boolean
 }
+
+// Reabre el banner en modo "Manage settings" (p. ej. desde el footer) para
+// que el usuario pueda modificar o retirar su consentimiento en todo momento.
+export const OPEN_COOKIE_SETTINGS_EVENT = 'mikmax:opencookiesettings'
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false)
@@ -21,21 +25,30 @@ export default function CookieConsent() {
   const clientId = process.env.NEXT_PUBLIC_CLIENT_ID || 'site'
   const cookieName = `${clientId}_localConsent_25`
 
-  // Bloqueante: aparece de inmediato y no se puede navegar hasta responder.
+  // Aparece de inmediato si aún no hay respuesta, pero no bloquea la página:
+  // sin respuesta explícita solo se usan cookies necesarias (los ConsentGate
+  // no montan ningún pixel opcional hasta que exista consentimiento).
   useEffect(() => {
     if (hasCookie(cookieName)) return
     setVisible(true)
   }, [cookieName])
 
-  // Mientras el banner está abierto, bloquea el scroll de la página.
+  // Reapertura desde fuera (botón "Cookie settings" del footer): muestra el
+  // panel de preferencias con las categorías que el usuario tenga guardadas.
   useEffect(() => {
-    if (!visible) return
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = previous
+    const onOpen = () => {
+      try {
+        const stored = JSON.parse((getCookie(cookieName) as string) || '{}') as Partial<Preferences>
+        setPrefs({analytics: !!stored.analytics, marketing: !!stored.marketing})
+      } catch {
+        setPrefs({analytics: false, marketing: false})
+      }
+      setShowManage(true)
+      setVisible(true)
     }
-  }, [visible])
+    window.addEventListener(OPEN_COOKIE_SETTINGS_EVENT, onOpen)
+    return () => window.removeEventListener(OPEN_COOKIE_SETTINGS_EVENT, onOpen)
+  }, [cookieName])
 
   // Pasa por useConsent: escribe la cookie, aplica Consent Mode v2 a gtag y
   // notifica a los ConsentGate (montan/ocultan pixels en la misma sesión).
@@ -51,7 +64,7 @@ export default function CookieConsent() {
   if (!visible) return null
 
   return (
-    <div className={s.wrap} role="dialog" aria-modal="true" aria-label="Cookie consent">
+    <div className={s.wrap} role="dialog" aria-label="Cookie consent">
       <div className={s.card}>
         <p className={s.title}>At Mikmax, we respect your privacy</p>
 
