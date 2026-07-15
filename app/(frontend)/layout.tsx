@@ -42,6 +42,17 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   return (
     <html lang={locale}>
       <body>
+        {process.env.NODE_ENV === 'production' ? (
+          <>
+            {/* RGPD: CookieFirst (CMP) gestiona banner y Consent Mode v2. Script
+                síncrono servido en el HTML, SIEMPRE antes que GTM. GTM es el único
+                hub de tags: los pixels los configura la agencia en el contenedor.
+                Fuera del Suspense y sin next/script: la inyección vía React se
+                perdía en cargas directas de PDP. */}
+            <CookieFirst />
+            <GoogleTagManager />
+          </>
+        ) : null}
         <Suspense fallback={<div className="loader">Loading...</div>}>
           <ShopProvider>
             <WishlistProvider>
@@ -59,31 +70,24 @@ export default async function RootLayout({children}: {children: React.ReactNode}
               <CartDrawer copy={dict.cart} />
               <NewsletterPopup data={newsletterPopupData} legalCopy={dict.legalConsent} />
               <WhatsAppButton />
-              {process.env.NODE_ENV === 'production' ? (
-                <>
-                  {/* RGPD: CookieFirst (CMP) gestiona banner y Consent Mode v2, y debe
-                      cargar antes que GTM. GTM es el único hub de tags: los pixels
-                      (GA4, Meta, etc.) los configura la agencia en el contenedor. */}
-                  <CookieFirst />
-                  <GoogleTagManager />
-                  {/* Replica el consentimiento en la cookie de Shopify para que el
-                      custom pixel del checkout (shop.mikmax.com) pueda dispararse.
-                      El token Storefront es público por diseño (API de navegador). */}
-                  <ShopifyConsentSync
-                    storefrontAccessToken={process.env.SHOPIFY_STOREFRONT_ACCESSTOKEN ?? ''}
-                    checkoutRootDomain={process.env.SHOPIFY_STORE_DOMAIN ?? ''}
-                    storefrontRootDomain={new URL(
-                      process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.mikmax.com',
-                    ).hostname
-                      .split('.')
-                      .slice(-2)
-                      .join('.')}
-                  />
-                </>
-              ) : null}
             </WishlistProvider>
           </ShopProvider>
         </Suspense>
+        {process.env.NODE_ENV === 'production' ? (
+          /* Replica el consentimiento en la cookie de Shopify para que el
+             custom pixel del checkout (shop.mikmax.com) pueda dispararse.
+             El token Storefront es público por diseño (API de navegador). */
+          <ShopifyConsentSync
+            storefrontAccessToken={process.env.SHOPIFY_STOREFRONT_ACCESSTOKEN ?? ''}
+            checkoutRootDomain={process.env.SHOPIFY_STORE_DOMAIN ?? ''}
+            storefrontRootDomain={new URL(
+              process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.mikmax.com',
+            ).hostname
+              .split('.')
+              .slice(-2)
+              .join('.')}
+          />
+        ) : null}
       </body>
     </html>
   )
