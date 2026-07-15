@@ -11,6 +11,7 @@ import FacebookPixel from '@/components/Common/Analytics/facebook'
 import Hotjar from '@/components/Common/Analytics/hotjar'
 import PinterestTag from '@/components/Common/Analytics/pinterest'
 import AnalyticsRouteTracker from '@/components/Common/Analytics/AnalyticsRouteTracker'
+import GoogleTagManager from '@/components/Common/Analytics/gtm'
 import CookieConsent from '@/components/Common/CookieConsent/CookieConsent'
 import {Header, AnnouncementBanner} from '@/components/Layout'
 import FooterGate from '@/components/Layout/Footer/FooterGate'
@@ -69,6 +70,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                   <AnalyticsRouteTracker />
                   {/* RGPD/LSSI: ningún script de terceros (tampoco gtag.js) se carga
                       antes de que el usuario acepte o rechace en el banner. */}
+                  {/* GTM se auto-gatea con useConsent (analytics O marketing) porque
+                      el contenedor puede alojar tags de ambas categorías. */}
+                  <GoogleTagManager />
                   <ConsentGate category="analytics">
                     <Analytics />
                     <Hotjar />
