@@ -1,5 +1,5 @@
 export type AnalyticsItem = {
-  id: string // variant GID o product handle/id
+  id: string // item_id final (ver formatItemId en item.ts) — debe casar con feeds/checkout
   name: string
   price: number
   quantity: number

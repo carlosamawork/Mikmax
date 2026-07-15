@@ -5,14 +5,9 @@ import '../../styles/main.scss'
 import React, {Suspense} from 'react'
 import ShopProvider from '../../context/shopContext'
 import WishlistProvider from '../../context/wishlistContext'
-import Analytics from '@/components/Common/Analytics/google'
-import ConsentGate from '@/components/Common/Analytics/consentGate'
-import FacebookPixel from '@/components/Common/Analytics/facebook'
-import Hotjar from '@/components/Common/Analytics/hotjar'
-import PinterestTag from '@/components/Common/Analytics/pinterest'
-import AnalyticsRouteTracker from '@/components/Common/Analytics/AnalyticsRouteTracker'
+import CookieFirst from '@/components/Common/Analytics/cookieFirst'
 import GoogleTagManager from '@/components/Common/Analytics/gtm'
-import CookieConsent from '@/components/Common/CookieConsent/CookieConsent'
+import ShopifyConsentSync from '@/components/Common/Analytics/ShopifyConsentSync'
 import {Header, AnnouncementBanner} from '@/components/Layout'
 import FooterGate from '@/components/Layout/Footer/FooterGate'
 import CartDrawer from '@/components/Layout/CartDrawer/CartDrawer'
@@ -62,25 +57,28 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                 showLanguageSwitcher={isI18nEnabled()}
               />
               <CartDrawer copy={dict.cart} />
-              <CookieConsent />
               <NewsletterPopup data={newsletterPopupData} legalCopy={dict.legalConsent} />
               <WhatsAppButton />
               {process.env.NODE_ENV === 'production' ? (
                 <>
-                  <AnalyticsRouteTracker />
-                  {/* RGPD/LSSI: ningún script de terceros (tampoco gtag.js) se carga
-                      antes de que el usuario acepte o rechace en el banner. */}
-                  {/* GTM se auto-gatea con useConsent (analytics O marketing) porque
-                      el contenedor puede alojar tags de ambas categorías. */}
+                  {/* RGPD: CookieFirst (CMP) gestiona banner y Consent Mode v2, y debe
+                      cargar antes que GTM. GTM es el único hub de tags: los pixels
+                      (GA4, Meta, etc.) los configura la agencia en el contenedor. */}
+                  <CookieFirst />
                   <GoogleTagManager />
-                  <ConsentGate category="analytics">
-                    <Analytics />
-                    <Hotjar />
-                  </ConsentGate>
-                  <ConsentGate category="marketing">
-                    <FacebookPixel />
-                    <PinterestTag />
-                  </ConsentGate>
+                  {/* Replica el consentimiento en la cookie de Shopify para que el
+                      custom pixel del checkout (shop.mikmax.com) pueda dispararse.
+                      El token Storefront es público por diseño (API de navegador). */}
+                  <ShopifyConsentSync
+                    storefrontAccessToken={process.env.SHOPIFY_STOREFRONT_ACCESSTOKEN ?? ''}
+                    checkoutRootDomain={process.env.SHOPIFY_STORE_DOMAIN ?? ''}
+                    storefrontRootDomain={new URL(
+                      process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.mikmax.com',
+                    ).hostname
+                      .split('.')
+                      .slice(-2)
+                      .join('.')}
+                  />
                 </>
               ) : null}
             </WishlistProvider>

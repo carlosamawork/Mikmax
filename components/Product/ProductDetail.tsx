@@ -8,6 +8,7 @@ import DesktopLayout from './Desktop/DesktopLayout'
 import MobileLayout from './Mobile/MobileLayout'
 import ProductInfoPanel from './shared/ProductInfoPanel'
 import {trackAddToCart, trackViewItem} from '@/lib/analytics/track'
+import {formatItemId} from '@/lib/analytics/item'
 import type {ProductView, ProductInitialState} from '@/types/product'
 import type {Dictionary} from '@/lib/i18n/getDictionary'
 
@@ -56,10 +57,14 @@ export default function ProductDetail({view, initial, pdpCopy}: Props) {
   }, [selectedColor, selectedSize, pathname, router, view.defaultColorSlug])
 
   useEffect(() => {
+    // Mismo item_id (formatItemId) en todo el embudo y que en los feeds, para
+    // que GA4/remarketing casen el mismo producto de view_item a purchase.
+    // Fallback a la primera talla del color: el item_id necesita variante siempre.
+    const initialVariant =
+      findVariant(view, initial.color, initial.size) ??
+      view.colors.find((c) => c.slug === initial.color)?.sizes[0]
     trackViewItem({
-      // Mismo id que add_to_cart/begin_checkout (productId = view.id) para que
-      // GA4/Meta casen el mismo producto a lo largo del embudo.
-      id: view.id,
+      id: formatItemId({productGid: view.id, variantGid: initialVariant?.variantId}),
       name: view.title,
       price: view.compareMinPrice ?? view.minPrice,
       quantity: 1,
@@ -98,11 +103,9 @@ export default function ProductDetail({view, initial, pdpCopy}: Props) {
     const image = currentColor.images[0]?.url
     if (typeof shop?.addToCart === 'function') {
       await shop.addToCart(newItem, 1, view.id, view.title, image)
-      // Mismo id que view_item/begin_checkout (view.id) para que GA4/Meta casen
-      // el producto a lo largo del embudo. Precio real de la variante seleccionada.
       trackAddToCart([
         {
-          id: view.id,
+          id: formatItemId({productGid: view.id, variantGid: variant.variantId}),
           name: view.title,
           price: variant.price,
           quantity: 1,

@@ -4,6 +4,7 @@ import ProductGrid, {ProductGridSkeleton} from '@/components/Shop/ProductGrid/Pr
 import InfiniteScrollSentinel from '@/components/Shop/InfiniteScrollSentinel/InfiniteScrollSentinel'
 import EditorialGrid from '@/components/Shop/EditorialGrid/EditorialGrid'
 import FilterDrawer from '@/components/Shop/FilterDrawer/FilterDrawer'
+import TrackViewItemList from '@/components/Common/Analytics/TrackViewItemList'
 import {parseSearchParams} from '@/lib/shop/searchParams'
 import {getCardsForRequest, searchKeyFor} from '@/lib/shop/cards'
 import {getCollectionEditorialImages} from '@/sanity/queries/queries/shop'
@@ -35,6 +36,7 @@ export default async function ShopArchive({handle, searchParams}: Props) {
 
   return (
     <>
+      <TrackViewItemList products={products} listName={handle === ALL_HANDLE ? 'shop' : handle} />
       <ShopToolbar view={view} />
       {view === 'editorial' ? (
         <EditorialGrid
