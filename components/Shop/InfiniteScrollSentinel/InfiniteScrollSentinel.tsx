@@ -3,7 +3,9 @@ import {useEffect, useRef, useState} from 'react'
 import ProductCard from '@/components/PageBuilder/ProductCard/ProductCard'
 import {toCardProps} from '@/components/Shop/ProductGrid/ProductGrid'
 import {fetchShopChunk} from '@/app/(frontend)/shop/actions'
-import type {ProductCardData, ShopSearchParams} from '@/types/shop'
+import {ALL_HANDLE, type ProductCardData, type ShopSearchParams} from '@/types/shop'
+import {cardToAnalyticsItem} from '@/lib/analytics/item'
+import {trackViewItemList} from '@/lib/analytics/track'
 
 interface Props {
   handle: string
@@ -43,6 +45,12 @@ export default function InfiniteScrollSentinel({
         if (!entries[0].isIntersecting || loading || !hasMore) return
         setLoading(true)
         const res = await fetchShopChunk({handle, params, offset, cursor})
+        // Cada chunk nuevo del scroll infinito es un view_item_list adicional
+        // (mismo list name que el push inicial de TrackViewItemList).
+        trackViewItemList(
+          res.products.map(cardToAnalyticsItem),
+          handle === ALL_HANDLE ? 'shop' : handle,
+        )
         setItems((prev) => [...prev, ...res.products])
         setOffset(res.nextOffset)
         setCursor(res.nextCursor)

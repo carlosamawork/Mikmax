@@ -2,8 +2,9 @@
 import {useContext, useEffect} from 'react'
 import {LazyImage} from '@/components/Common'
 import {CartContext} from '@/context/shopContext'
-import {trackBeginCheckout} from '@/lib/analytics/track'
-import {getStoreCurrency} from '@/lib/analytics/item'
+import {trackViewCart} from '@/lib/analytics/track'
+import {getStoreCurrency, formatItemId} from '@/lib/analytics/item'
+import type {AnalyticsItem} from '@/lib/analytics/types'
 import {prepareCheckout} from '@/app/(frontend)/checkout/actions'
 import type {CartCost} from '@/types/cart'
 import {nextTierNudge} from '@/lib/b2b/cartCost'
@@ -39,6 +40,17 @@ interface Props {
   copy: Dictionary['cart']
 }
 
+function toAnalyticsItem(it: CartItem): AnalyticsItem {
+  return {
+    id: formatItemId({productGid: it.productId, variantGid: it.store.gid}),
+    name: it.title || '',
+    price: typeof it.price === 'number' ? it.price : 0,
+    quantity: it.variantQuantity ?? 1,
+    variant: [it.color, it.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
+    currency: getStoreCurrency(),
+  }
+}
+
 export default function CartDrawer({copy}: Props) {
   const ctx = useContext<CartCtx>(CartContext as unknown as React.Context<CartCtx>)
   const cart = ctx?.cart ?? []
@@ -61,6 +73,13 @@ export default function CartDrawer({copy}: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
+  // view_cart al abrir el drawer (una vez por apertura, no por cambio de líneas).
+  useEffect(() => {
+    if (!open || cart.length === 0) return
+    trackViewCart(cart.map(toAnalyticsItem), ctx?.cartCost?.total)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
+
   if (!open) return null
 
   const itemCount = cart.reduce((acc, it) => acc + (it.variantQuantity ?? 0), 0)
@@ -76,16 +95,7 @@ export default function CartDrawer({copy}: Props) {
 
   async function goCheckout() {
     if (!ctx?.checkoutUrl) return
-    trackBeginCheckout(
-      cart.map((it) => ({
-        id: it.productId || it.store.gid,
-        name: it.title || '',
-        price: typeof it.price === 'number' ? it.price : 0,
-        quantity: it.variantQuantity ?? 1,
-        variant: [it.color, it.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
-        currency: getStoreCurrency(),
-      })),
-    )
+    // begin_checkout lo emite el custom pixel del checkout (agencia), no el storefront.
     // Si hay sesión, asocia el carrito al cliente para que el checkout salga logueado
     // y con la dirección precargada. Si no, redirige tal cual.
     const {checkoutUrl} = await prepareCheckout(ctx.cartId ?? '', ctx.checkoutUrl)

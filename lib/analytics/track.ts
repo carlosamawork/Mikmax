@@ -1,88 +1,63 @@
 import type {AnalyticsItem} from './types'
-import {itemsValue, toGa4Item, toMetaContents, getStoreCurrency} from './item'
+import {itemsValue, toGa4Item, getStoreCurrency} from './item'
 
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void
-    fbq?: (...args: unknown[]) => void
-  }
+// Capa única de tracking del storefront: solo dataLayer.push en formato
+// ecommerce estándar de GA4. GTM (gestionado por la agencia) enruta estos
+// eventos a GA4, Meta y el resto de plataformas; aquí no se llama a ningún
+// SDK de terceros directamente.
+function push(payload: Record<string, unknown>) {
+  if (typeof window === 'undefined') return
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push(payload)
 }
 
-let counter = 0
-function newEventId(): string {
-  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID()
-  counter += 1
-  return `${Date.now()}-${counter}`
+// GTM mergea los pushes de forma acumulativa: sin este reset, los items de un
+// evento anterior contaminan el siguiente.
+function pushEcommerce(event: string, ecommerce: Record<string, unknown>) {
+  push({ecommerce: null})
+  push({event, ecommerce})
 }
 
-function ga4(name: string, params: Record<string, unknown>) {
-  if (typeof window === 'undefined' || !window.gtag) return
-  window.gtag('event', name, params)
-}
-
-function meta(name: string, params: Record<string, unknown>, eventId: string) {
-  if (typeof window === 'undefined' || !window.fbq) return
-  window.fbq('track', name, params, {eventID: eventId})
-}
-
-export function trackPageView(path: string, location: string) {
-  ga4('page_view', {page_path: path, page_location: location})
-  meta('PageView', {}, newEventId())
+export function trackViewItemList(items: AnalyticsItem[], listName: string) {
+  if (!items.length) return
+  pushEcommerce('view_item_list', {
+    item_list_name: listName,
+    items: items.map((it, i) => ({...toGa4Item(it), index: i})),
+  })
 }
 
 export function trackViewItem(item: AnalyticsItem) {
-  ga4('view_item', {currency: item.currency, value: item.price, items: [toGa4Item(item)]})
-  meta(
-    'ViewContent',
-    {
-      content_type: 'product',
-      content_ids: [item.id],
-      content_name: item.name,
-      value: item.price,
-      currency: item.currency,
-    },
-    newEventId(),
-  )
+  pushEcommerce('view_item', {
+    currency: item.currency,
+    value: item.price,
+    items: [toGa4Item(item)],
+  })
 }
 
 export function trackAddToCart(items: AnalyticsItem[]) {
   if (!items.length) return
   const currency = items[0].currency || getStoreCurrency()
-  const value = itemsValue(items)
-  ga4('add_to_cart', {currency, value, items: items.map(toGa4Item)})
-  meta(
-    'AddToCart',
-    {
-      content_type: 'product',
-      content_ids: items.map((it) => it.id),
-      contents: toMetaContents(items),
-      value,
-      currency,
-    },
-    newEventId(),
-  )
+  pushEcommerce('add_to_cart', {
+    currency,
+    value: itemsValue(items),
+    items: items.map(toGa4Item),
+  })
 }
 
-export function trackWhatsAppClick(location: string) {
-  ga4('whatsapp_click', {method: 'whatsapp', location})
-  meta('Contact', {contact_method: 'whatsapp'}, newEventId())
-}
-
-export function trackBeginCheckout(items: AnalyticsItem[]) {
+export function trackViewCart(items: AnalyticsItem[], total?: number) {
   if (!items.length) return
   const currency = items[0].currency || getStoreCurrency()
-  const value = itemsValue(items)
-  ga4('begin_checkout', {currency, value, items: items.map(toGa4Item)})
-  meta(
-    'InitiateCheckout',
-    {
-      content_type: 'product',
-      content_ids: items.map((it) => it.id),
-      contents: toMetaContents(items),
-      value,
-      currency,
-      num_items: items.reduce((n, it) => n + it.quantity, 0),
-    },
-    newEventId(),
-  )
+  pushEcommerce('view_cart', {
+    currency,
+    value: total ?? itemsValue(items),
+    items: items.map(toGa4Item),
+  })
+}
+
+// begin_checkout NO se emite desde el storefront: lo empuja el custom pixel
+// del checkout de Shopify (gestionado por la agencia) al entrar en el checkout.
+// Emitirlo también aquí duplicaría el evento en GA4.
+
+export function trackWhatsAppClick(location: string) {
+  push({event: 'whatsapp_click', click_location: location})
 }

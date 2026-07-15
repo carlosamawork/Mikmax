@@ -4,6 +4,7 @@ import ShopToolbar from '@/components/Shop/ShopToolbar/ShopToolbar'
 import ProductGrid, {ProductGridSkeleton} from '@/components/Shop/ProductGrid/ProductGrid'
 import InfiniteScrollSentinel from '@/components/Shop/InfiniteScrollSentinel/InfiniteScrollSentinel'
 import FilterDrawer from '@/components/Shop/FilterDrawer/FilterDrawer'
+import TrackViewItemList from '@/components/Common/Analytics/TrackViewItemList'
 import {parseSearchParams} from '@/lib/shop/searchParams'
 import {buildAllCards} from '@/lib/shop/buildCards'
 import {ALL_HANDLE, CHUNK_SIZE, type ProductCardData, type SortKey} from '@/types/shop'
@@ -61,6 +62,7 @@ export default async function SearchPage({searchParams}: Props) {
 
   return (
     <>
+      <TrackViewItemList products={products} listName="search" />
       <header className={s.head}>
         <h1 className={s.title}>Results for «{q}»</h1>
         <p className={s.count}>{total} products</p>
