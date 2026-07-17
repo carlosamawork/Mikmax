@@ -11,11 +11,11 @@ type LineSelection = {checked: boolean; quantity: number; returnReason: string}
 
 export default function ReturnRequestForm({
   orderId,
-  onDone,
+  onRequested,
   onCancel,
 }: {
   orderId: string
-  onDone: () => void
+  onRequested: () => void
   onCancel?: () => void
 }) {
   const [loading, setLoading] = useState(true)
@@ -29,24 +29,31 @@ export default function ReturnRequestForm({
 
   useEffect(() => {
     let active = true
-    getReturnableItemsAction(orderId).then((res) => {
-      if (!active) return
-      if (res.error || !res.items || res.items.length === 0) {
-        setLoadError(res.error ?? 'empty')
+    getReturnableItemsAction(orderId)
+      .then((res) => {
+        if (!active) return
+        if (res.error || !res.items || res.items.length === 0) {
+          setLoadError(res.error ?? 'empty')
+          setItems([])
+        } else {
+          setItems(res.items)
+          setSelections(
+            Object.fromEntries(
+              res.items.map((item) => [
+                item.fulfillmentLineItemId,
+                {checked: false, quantity: 1, returnReason: ''},
+              ]),
+            ),
+          )
+        }
+        setLoading(false)
+      })
+      .catch(() => {
+        if (!active) return
+        setLoadError('load-failed')
         setItems([])
-      } else {
-        setItems(res.items)
-        setSelections(
-          Object.fromEntries(
-            res.items.map((item) => [
-              item.fulfillmentLineItemId,
-              {checked: false, quantity: 1, returnReason: ''},
-            ]),
-          ),
-        )
-      }
-      setLoading(false)
-    })
+        setLoading(false)
+      })
     return () => {
       active = false
     }
@@ -80,21 +87,35 @@ export default function ReturnRequestForm({
       quantity: sel.quantity,
       returnReason: sel.returnReason,
     }))
-    const res = await requestOrderReturn(orderId, payload, note)
-    setSubmitting(false)
-    if (res.error) {
-      setSubmitError(res.error)
-      return
+    try {
+      const res = await requestOrderReturn(orderId, payload, note)
+      setSubmitting(false)
+      if (res.error) {
+        setSubmitError(res.error)
+        return
+      }
+      setDone(true)
+      onRequested()
+    } catch {
+      setSubmitting(false)
+      setSubmitError('Something went wrong. Please try again.')
     }
-    setDone(true)
-    onDone()
   }
 
   if (done) {
     return (
-      <p className={s.returnSuccess}>
-        Return requested — we&apos;ll email you once it&apos;s reviewed.
-      </p>
+      <div className={s.returnForm}>
+        <p className={s.returnSuccess}>
+          Return requested — we&apos;ll email you once it&apos;s reviewed.
+        </p>
+        {onCancel && (
+          <div className={s.returnFormActions}>
+            <button type="button" className={s.returnCancelBtn} onClick={onCancel}>
+              Close
+            </button>
+          </div>
+        )}
+      </div>
     )
   }
 

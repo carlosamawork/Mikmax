@@ -126,10 +126,7 @@ export default function OrderCard({order}: {order: Order}) {
           ) : returning ? (
             <ReturnRequestForm
               orderId={order.id}
-              onDone={() => {
-                setReturning(false)
-                setReturnStatus('RETURN_REQUESTED')
-              }}
+              onRequested={() => setReturnStatus('RETURN_REQUESTED')}
               onCancel={() => setReturning(false)}
             />
           ) : (

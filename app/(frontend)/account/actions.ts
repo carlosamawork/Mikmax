@@ -8,10 +8,15 @@ import {
   logoutToken,
 } from '@/lib/shopify'
 // @ts-ignore — lib/shopify-admin.js no tiene tipos
-import {setCustomerBirthday, getReturnableItems, createReturnRequest} from '@/lib/shopify-admin'
+import {
+  setCustomerBirthday,
+  getReturnableItems,
+  createReturnRequest,
+  getOrdersReturnStatus,
+} from '@/lib/shopify-admin'
 import {clearCustomerSession, getCustomerToken, setCustomerSession} from '@/lib/auth/session'
 import {getCurrentCustomer} from '@/lib/auth/customer'
-import {adminOrderGid, validateSelections} from '@/lib/account/returns'
+import {adminOrderGid, isReturnEligible, validateSelections} from '@/lib/account/returns'
 import {returnRequestInternalEmail} from '@/lib/account/returnEmail'
 import {sendEmail} from '@/lib/b2b/email/mailgun'
 import type {AccountInfoInput, ActionResult, ShippingInput} from '@/types/account'
@@ -110,7 +115,9 @@ export async function getReturnableItemsAction(
   if (!owned) return {error: 'Order not found'}
   const gid = adminOrderGid(orderId)
   if (!gid) return {error: 'Order not found'}
-  return getReturnableItems(gid)
+  const result = await getReturnableItems(gid)
+  if (result.error) console.error('[returns] getReturnableItems:', result.error)
+  return result
 }
 
 export async function requestOrderReturn(
@@ -125,6 +132,14 @@ export async function requestOrderReturn(
   const gid = adminOrderGid(orderId)
   if (!gid) return {error: 'Order not found'}
 
+  const statuses = (await getOrdersReturnStatus([gid])) as Record<string, string | null>
+  const eligible = isReturnEligible({
+    processedAt: order.processedAt || '',
+    financialStatus: order.financialStatus ?? null,
+    returnStatus: statuses[gid] ?? null,
+  })
+  if (!eligible) return {error: 'Order not eligible for return'}
+
   const returnable = await getReturnableItems(gid)
   if (returnable.error || !returnable.items) return {error: returnable.error ?? 'Unavailable'}
   const valid = validateSelections(selections, returnable.items)
@@ -135,7 +150,10 @@ export async function requestOrderReturn(
     orderGid: gid,
     lineItems: valid.map((v) => ({...v, ...(cleanNote ? {customerNote: cleanNote} : {})})),
   })
-  if (result.error) return {error: result.error}
+  if (result.error) {
+    console.error('[returns] createReturnRequest:', result.error)
+    return {error: result.error}
+  }
 
   const titleById = new Map(
     returnable.items.map((i: ReturnableItem) => [i.fulfillmentLineItemId, i.title]),
@@ -150,6 +168,7 @@ export async function requestOrderReturn(
     })),
     note: cleanNote || undefined,
   })
-  await sendEmail({to: process.env.INTERNAL_NOTIFICATION_EMAIL || '', ...mail})
+  const r = await sendEmail({to: process.env.INTERNAL_NOTIFICATION_EMAIL || '', ...mail})
+  if (r?.error) console.error('[returns] internal email failed:', r.error)
   return {ok: true}
 }
