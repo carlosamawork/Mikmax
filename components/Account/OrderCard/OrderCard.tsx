@@ -121,14 +121,14 @@ export default function OrderCard({order}: {order: Order}) {
 
       {(order.returnEligible || returnPending) && (
         <div className={s.returnRow}>
-          {returnPending ? (
-            <span className={s.returnLabel}>Return requested</span>
-          ) : returning ? (
+          {returning ? (
             <ReturnRequestForm
               orderId={order.id}
               onRequested={() => setReturnStatus('RETURN_REQUESTED')}
               onCancel={() => setReturning(false)}
             />
+          ) : returnPending ? (
+            <span className={s.returnLabel}>Return requested</span>
           ) : (
             <button type="button" className={s.returnBtn} onClick={() => setReturning(true)}>
               Request return
