@@ -68,10 +68,13 @@ export default function ShopProvider({children}) {
           .then((r) => setCartCost(r.cost))
           .catch(() => {})
       }
-      getB2bCartContext()
-        .then(setB2bCartContext)
-        .catch(() => {})
     }
+
+    // Siempre, haya o no carrito guardado: si la sesión es B2B con tramos, el nudge
+    // debe aparecer ya con el primer artículo añadido en esta sesión (sin recargar).
+    getB2bCartContext()
+      .then(setB2bCartContext)
+      .catch(() => {})
 
     document.addEventListener('click', handleDocumentClick, true)
     return () => document.removeEventListener('click', handleDocumentClick, true)
