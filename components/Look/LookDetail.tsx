@@ -85,7 +85,7 @@ export default function LookDetail({view, entryId}: Props) {
         title: comp.label,
         image: comp.imageUrl,
         price: opt.price,
-        productId: opt.variantGid,
+        productId: comp.productGid,
         quantity: 1,
       }
     })

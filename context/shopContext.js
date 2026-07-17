@@ -10,7 +10,7 @@ import {
   cartDiscountCodesUpdate,
 } from '../lib/shopify'
 import {trackAddToCart} from '@/lib/analytics/track'
-import {getStoreCurrency} from '@/lib/analytics/item'
+import {cartLineToAnalyticsItem} from '@/lib/analytics/item'
 import {syncCartBuyer, getCartCost, getB2bCartContext} from '@/app/(frontend)/cart/actions'
 import {parseCartCost} from '@/lib/b2b/cartCost'
 
@@ -76,15 +76,17 @@ export default function ShopProvider({children}) {
   async function addToCart(newItem, quantity, productId, title, image) {
     const itemData = {...newItem, title, productId, variantQuantity: quantity, image}
 
-    const atcItem = {
-      id: productId || newItem.store.gid,
-      name: title || '',
-      price: typeof newItem.price === 'number' ? newItem.price : 0,
+    // Único push de add_to_cart del flujo PDP: se emite aquí (tras éxito de la
+    // Cart API) y en ningún componente, o el evento llega duplicado a GTM.
+    const atcItem = cartLineToAnalyticsItem({
+      productGid: productId,
+      variantGid: newItem.store.gid,
+      title,
+      price: newItem.price,
       quantity,
-      variant:
-        [newItem.color, newItem.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
-      currency: getStoreCurrency(),
-    }
+      color: newItem.color,
+      size: newItem.size,
+    })
 
     if (cart.length === 0) {
       setCartOpen(quantity === 1)
@@ -186,13 +188,15 @@ export default function ShopProvider({children}) {
       saveToStorage(synced, meta)
       setCartCost(parseCartCost(apiCart))
       trackAddToCart(
-        lookLines.map((l) => ({
-          id: l.productId || l.store.gid,
-          name: l.title || '',
-          price: typeof l.price === 'number' ? l.price : 0,
-          quantity: l.quantity ?? 1,
-          currency: getStoreCurrency(),
-        })),
+        lookLines.map((l) =>
+          cartLineToAnalyticsItem({
+            productGid: l.productId,
+            variantGid: l.store.gid,
+            title: l.title,
+            price: l.price,
+            quantity: l.quantity ?? 1,
+          }),
+        ),
       )
     } catch (err) {
       console.error('addLookToCart failed', err)

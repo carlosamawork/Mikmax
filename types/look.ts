@@ -12,6 +12,8 @@ export type LookSizeOption = {
 export type LookComponentView = {
   label: string
   imageUrl?: string
+  /** GID del producto Shopify — necesario para el item_id de analytics. */
+  productGid?: string
   sizes: LookSizeOption[]
 }
 

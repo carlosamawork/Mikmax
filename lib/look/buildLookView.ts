@@ -19,6 +19,7 @@ type ShopifyVariant = {
 }
 
 type ShopifyProductDetail = {
+  id: string
   handle: string
   options?: {name: string; values: string[]}[]
   priceRange: {minVariantPrice: {currencyCode: string}}
@@ -82,6 +83,7 @@ export function buildLookView(
       return {
         label: comp.label ?? comp.productTitle ?? 'Pieza',
         imageUrl,
+        productGid: detail?.id,
         sizes,
       }
     })

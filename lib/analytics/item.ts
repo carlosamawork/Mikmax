@@ -38,6 +38,28 @@ export function cardToAnalyticsItem(p: ProductCardData): AnalyticsItem {
   }
 }
 
+// Construye el AnalyticsItem de una línea de carrito (add_to_cart). Único
+// camino permitido: el item_id SIEMPRE pasa por formatItemId — nunca GIDs crudos.
+export function cartLineToAnalyticsItem(line: {
+  productGid?: string
+  variantGid?: string
+  title?: string
+  price?: number
+  quantity: number
+  color?: string
+  size?: string
+}): AnalyticsItem {
+  return {
+    id: formatItemId({productGid: line.productGid, variantGid: line.variantGid}),
+    name: line.title || '',
+    price: typeof line.price === 'number' ? line.price : 0,
+    quantity: line.quantity,
+    variant:
+      [line.color, line.size].filter((x) => x && x !== 'Default').join(' / ') || undefined,
+    currency: getStoreCurrency(),
+  }
+}
+
 export function toGa4Item(it: AnalyticsItem) {
   return {
     item_id: it.id,
