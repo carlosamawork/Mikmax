@@ -24,6 +24,9 @@ describe('parseDiscountSpec', () => {
       tiers: TIERS,
     })
   })
+  it('legacy sin designerTiers -> null', () => {
+    expect(parseDiscountSpec(JSON.stringify({resellerPercent: 50}))).toBeNull()
+  })
   it('invalido -> null', () => {
     expect(parseDiscountSpec(null)).toBeNull()
     expect(parseDiscountSpec('{}')).toBeNull()

@@ -61,7 +61,7 @@ async function main() {
   }
   const nodes = (defs?.data?.metafieldDefinitions?.edges ?? []).map((e) => e.node)
   console.log(`Definiciones de metafield Customer en namespace "b2b": ${nodes.length}`)
-  const wanted = ['client_type', 'validated', 'discount_group']
+  const wanted = ['client_type', 'validated', 'discount_group', 'discount']
   for (const key of wanted) {
     const n = nodes.find((x) => x.key === key)
     if (!n) {

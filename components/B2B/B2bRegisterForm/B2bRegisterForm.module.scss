@@ -123,11 +123,3 @@
   font-family: $MonumentGrotesk;
   font-size: px(12);
 }
-
-.srOnly {
-  position: absolute;
-  width: px(1);
-  height: px(1);
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-}
