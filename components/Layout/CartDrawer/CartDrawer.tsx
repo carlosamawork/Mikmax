@@ -7,7 +7,7 @@ import {getStoreCurrency, formatItemId} from '@/lib/analytics/item'
 import type {AnalyticsItem} from '@/lib/analytics/types'
 import {prepareCheckout} from '@/app/(frontend)/checkout/actions'
 import type {CartCost} from '@/types/cart'
-import {nextTierNudge} from '@/lib/b2b/cartCost'
+import {nextTierNudge, professionalDiscountPercent} from '@/lib/b2b/cartCost'
 import type {Dictionary} from '@/lib/i18n/getDictionary'
 import {formatMoney} from '@/lib/money'
 import s from './CartDrawer.module.scss'
@@ -107,17 +107,16 @@ export default function CartDrawer({copy}: Props) {
       <header className={s.header}>
         <span className={s.title}>
           <span className={s.titleDesktop}>{copy.title}</span>
-          <span className={s.titleMobile}>{copy.title} [ {itemCount} ]</span>
+          <span className={s.titleMobile}>
+            {copy.title} [ {itemCount} ]
+          </span>
         </span>
         <button type="button" className={s.close} onClick={close} aria-label={copy.closeLabel}>
           {copy.close}
         </button>
       </header>
 
-      <ul
-        className={s.items}
-        aria-label={`${itemCount} item${itemCount === 1 ? '' : 's'} in cart`}
-      >
+      <ul className={s.items} aria-label={`${itemCount} item${itemCount === 1 ? '' : 's'} in cart`}>
         {cart.length === 0 && <li className={s.empty}>{copy.empty}</li>}
         {cart.map((item, idx) => (
           <li
@@ -171,9 +170,7 @@ export default function CartDrawer({copy}: Props) {
             </div>
 
             <div className={s.price}>
-              {typeof item.price === 'number'
-                ? fmt(item.price * (item.variantQuantity ?? 1))
-                : '—'}
+              {typeof item.price === 'number' ? fmt(item.price * (item.variantQuantity ?? 1)) : '—'}
             </div>
 
             <button
@@ -197,7 +194,16 @@ export default function CartDrawer({copy}: Props) {
             </div>
             {ctx.cartCost.discount > 0 && (
               <div className={`${s.summaryRow} ${s.summaryDiscount}`}>
-                <span>{ctx.cartCost.discountTitle ?? copy.discount}</span>
+                <span>
+                  {(() => {
+                    // El título de la Function llega en el idioma del atributo del
+                    // carrito; se re-renderiza localizado por si va desfasado.
+                    const pct = professionalDiscountPercent(ctx.cartCost!.discountTitle)
+                    if (pct !== null)
+                      return copy.professionalDiscount.replace('{percent}', String(pct))
+                    return ctx.cartCost!.discountTitle ?? copy.discount
+                  })()}
+                </span>
                 <span>−{fmt(ctx.cartCost.discount)}</span>
               </div>
             )}

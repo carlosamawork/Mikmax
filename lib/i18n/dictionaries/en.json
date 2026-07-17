@@ -16,6 +16,7 @@
     "viewItems": "View Items",
     "goToCheckout": "Go to Checkout",
     "discount": "Discount",
+    "professionalDiscount": "Professional discount {percent}%",
     "tierNudge": "Add {amount} more to reach {percent}%",
     "maxDiscount": "You have the maximum professional discount ({percent}%)"
   },

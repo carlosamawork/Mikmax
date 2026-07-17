@@ -1,5 +1,6 @@
 'use client'
 import {createContext, useState, useEffect} from 'react'
+import {usePathname} from 'next/navigation'
 import {
   cartCreate,
   cartCreateMultiple,
@@ -8,7 +9,9 @@ import {
   cartLinesUpdate,
   cartLinesRemove,
   cartDiscountCodesUpdate,
+  cartLocaleUpdate,
 } from '../lib/shopify'
+import {localeFromPathname} from '@/lib/i18n/localizedHref'
 import {trackAddToCart} from '@/lib/analytics/track'
 import {cartLineToAnalyticsItem} from '@/lib/analytics/item'
 import {syncCartBuyer, getCartCost, getB2bCartContext} from '@/app/(frontend)/cart/actions'
@@ -35,6 +38,15 @@ export default function ShopProvider({children}) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [cartCost, setCartCost] = useState(null)
   const [b2bCartContext, setB2bCartContext] = useState({hasTiers: false, tiers: []})
+  const locale = localeFromPathname(usePathname() ?? '/')
+
+  // La Function B2B lee el atributo `locale` del carrito para emitir el mensaje del
+  // descuento en el idioma del comprador. Se sincroniza al montar (carritos previos
+  // sin atributo) y al cambiar de idioma con carrito ya creado.
+  useEffect(() => {
+    if (!cartId) return
+    cartLocaleUpdate(cartId, locale)
+  }, [cartId, locale])
 
   function handleDocumentClick(e) {
     const cartEl = document.getElementById('cart-slide')
@@ -93,7 +105,7 @@ export default function ShopProvider({children}) {
       setIsOpen(quantity > 1)
 
       try {
-        const apiCart = await cartCreate(newItem.store.gid, quantity)
+        const apiCart = await cartCreate(newItem.store.gid, quantity, locale)
         if (!apiCart || apiCart.error) return
 
         const lines = apiCart.lines.edges.map((e) => e.node)
@@ -157,7 +169,7 @@ export default function ShopProvider({children}) {
     try {
       let apiCart
       if (cart.length === 0) {
-        apiCart = await cartCreateMultiple(apiLines)
+        apiCart = await cartCreateMultiple(apiLines, locale)
       } else {
         apiCart = await cartLinesAddMultiple(cartId, apiLines)
       }

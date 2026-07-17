@@ -16,6 +16,14 @@ export function nextTierNudge(
   return {gap: next.minSubtotal - subtotal, percent: next.percent}
 }
 
+// Si el título del descuento es el de la Function B2B (en cualquier idioma), extrae
+// el % para que el drawer lo re-renderice localizado; otros títulos (códigos) -> null.
+export function professionalDiscountPercent(title: string | null | undefined): number | null {
+  if (!title) return null
+  const m = title.match(/^(?:Professional discount|Descuento profesional) (\d+)%$/)
+  return m ? Number(m[1]) : null
+}
+
 // Extrae el coste de un carrito de Shopify (con cost + discountAllocations en el fragment).
 export function parseCartCost(cart: unknown): CartCost | null {
   const c = cart as
