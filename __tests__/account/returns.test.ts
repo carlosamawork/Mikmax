@@ -102,6 +102,25 @@ describe('validateSelections', () => {
       ),
     ).toBeNull()
   })
+  it('mismo id repetido -> null (evita multiplicar cantidad)', () => {
+    expect(
+      validateSelections(
+        [
+          {
+            fulfillmentLineItemId: available[0].fulfillmentLineItemId,
+            quantity: 1,
+            returnReason: 'DEFECTIVE',
+          },
+          {
+            fulfillmentLineItemId: available[0].fulfillmentLineItemId,
+            quantity: 1,
+            returnReason: 'DEFECTIVE',
+          },
+        ],
+        available,
+      ),
+    ).toBeNull()
+  })
 })
 
 describe('RETURN_REASONS', () => {

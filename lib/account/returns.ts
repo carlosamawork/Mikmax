@@ -45,10 +45,13 @@ export function validateSelections(
 ): ReturnSelection[] | null {
   if (!Array.isArray(selections) || selections.length === 0) return null
   const maxById = new Map(available.map((a) => [a.fulfillmentLineItemId, a.maxQuantity]))
+  const seen = new Set<string>()
   const out: ReturnSelection[] = []
   for (const sel of selections) {
     const s = sel as Partial<ReturnSelection>
     if (typeof s?.fulfillmentLineItemId !== 'string') return null
+    if (seen.has(s.fulfillmentLineItemId)) return null
+    seen.add(s.fulfillmentLineItemId)
     const max = maxById.get(s.fulfillmentLineItemId)
     if (max === undefined) return null
     if (typeof s.quantity !== 'number' || !Number.isInteger(s.quantity)) return null
