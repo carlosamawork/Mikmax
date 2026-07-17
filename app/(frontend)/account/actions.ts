@@ -7,10 +7,16 @@ import {
   customerUpdate,
   logoutToken,
 } from '@/lib/shopify'
-import {setCustomerBirthday} from '@/lib/shopify-admin'
+// @ts-ignore — lib/shopify-admin.js no tiene tipos
+import {setCustomerBirthday, getReturnableItems, createReturnRequest} from '@/lib/shopify-admin'
 import {clearCustomerSession, getCustomerToken, setCustomerSession} from '@/lib/auth/session'
 import {getCurrentCustomer} from '@/lib/auth/customer'
+import {adminOrderGid, validateSelections} from '@/lib/account/returns'
+import {returnRequestInternalEmail} from '@/lib/account/returnEmail'
+import {sendEmail} from '@/lib/b2b/email/mailgun'
 import type {AccountInfoInput, ActionResult, ShippingInput} from '@/types/account'
+
+type ReturnableItem = {fulfillmentLineItemId: string; title: string; maxQuantity: number}
 
 // 'DD/MM/AAAA' → 'YYYY-MM-DD' (o null si no es válida).
 function toIsoDate(value: string): string | null {
@@ -93,4 +99,57 @@ export async function logout(): Promise<void> {
   const token = await getCustomerToken()
   if (token) await logoutToken(token)
   await clearCustomerSession()
+}
+
+export async function getReturnableItemsAction(
+  orderId: string,
+): Promise<{items?: ReturnableItem[]; error?: string}> {
+  const session = await getCurrentCustomer()
+  if (!session) return {error: 'No session'}
+  const owned = (session.customer.orders?.edges ?? []).some(({node}) => node.id === orderId)
+  if (!owned) return {error: 'Order not found'}
+  const gid = adminOrderGid(orderId)
+  if (!gid) return {error: 'Order not found'}
+  return getReturnableItems(gid)
+}
+
+export async function requestOrderReturn(
+  orderId: string,
+  selections: unknown,
+  note: string,
+): Promise<{ok?: boolean; error?: string}> {
+  const session = await getCurrentCustomer()
+  if (!session) return {error: 'No session'}
+  const order = (session.customer.orders?.edges ?? []).find(({node}) => node.id === orderId)?.node
+  if (!order) return {error: 'Order not found'}
+  const gid = adminOrderGid(orderId)
+  if (!gid) return {error: 'Order not found'}
+
+  const returnable = await getReturnableItems(gid)
+  if (returnable.error || !returnable.items) return {error: returnable.error ?? 'Unavailable'}
+  const valid = validateSelections(selections, returnable.items)
+  if (!valid) return {error: 'Invalid selection'}
+
+  const cleanNote = String(note ?? '').slice(0, 500)
+  const result = await createReturnRequest({
+    orderGid: gid,
+    lineItems: valid.map((v) => ({...v, ...(cleanNote ? {customerNote: cleanNote} : {})})),
+  })
+  if (result.error) return {error: result.error}
+
+  const titleById = new Map(
+    returnable.items.map((i: ReturnableItem) => [i.fulfillmentLineItemId, i.title]),
+  )
+  const mail = returnRequestInternalEmail({
+    orderNumber: order.name || String(order.orderNumber ?? ''),
+    customerEmail: session.customer.email ?? '',
+    lines: valid.map((v) => ({
+      title: titleById.get(v.fulfillmentLineItemId) ?? '',
+      quantity: v.quantity,
+      reason: v.returnReason,
+    })),
+    note: cleanNote || undefined,
+  })
+  await sendEmail({to: process.env.INTERNAL_NOTIFICATION_EMAIL || '', ...mail})
+  return {ok: true}
 }
