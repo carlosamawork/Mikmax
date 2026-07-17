@@ -16,8 +16,7 @@ export async function getB2bArea(lang: Locale): Promise<B2bAreaData | null> {
   return client.fetch<B2bAreaData | null>(
     groq`*[_type == "b2bArea"][0]{
       ${localizedField('intro')},
-      "reseller": reseller${groupProjection},
-      "designer": designer${groupProjection}
+      "content": content${groupProjection}
     }`,
     {lang},
     {next: {tags: ['b2bArea'], revalidate: 3600}},

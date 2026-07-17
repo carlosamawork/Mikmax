@@ -10,6 +10,5 @@ export interface B2bAreaGroupData {
 
 export interface B2bAreaData {
   intro?: PortableTextBlock[]
-  reseller?: B2bAreaGroupData
-  designer?: B2bAreaGroupData
+  content?: B2bAreaGroupData
 }

@@ -1,28 +1,18 @@
-import {getCurrentCustomer} from '@/lib/auth/customer'
 import {getB2bArea} from '@/sanity/queries/queries/b2bArea'
 import {getLocale} from '@/lib/i18n/getLocale'
 import PortableText from '@/components/PageBuilder/PortableText/PortableText'
 import s from './Area.module.scss'
 
 export default async function B2bAreaPage() {
-  const session = await getCurrentCustomer()
-  const clientType = session?.customer.b2bClientType?.value
-  const isDesigner = clientType === 'designer'
-  const condition = isDesigner ? 'Interior Designer' : 'Reseller'
-
   const locale = await getLocale()
   const data = await getB2bArea(locale)
-  const group = isDesigner ? data?.designer : data?.reseller
+  const group = data?.content
   const contactEmail = group?.contactEmail || 'business@mikmax.com'
 
   return (
     <div className={s.area}>
       <h1 className={s.title}>Mikmax for Business</h1>
       <dl className={s.meta}>
-        <div className={s.row}>
-          <dt>Status</dt>
-          <dd>{condition}</dd>
-        </div>
         <div className={s.row}>
           <dt>Commercial contact</dt>
           <dd>
