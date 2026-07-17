@@ -52,29 +52,54 @@ describe('validateSelections', () => {
   it('seleccion valida -> normalizada', () => {
     expect(
       validateSelections(
-        [{fulfillmentLineItemId: available[0].fulfillmentLineItemId, quantity: 2, returnReason: 'DEFECTIVE'}],
+        [
+          {
+            fulfillmentLineItemId: available[0].fulfillmentLineItemId,
+            quantity: 2,
+            returnReason: 'DEFECTIVE',
+          },
+        ],
         available,
       ),
     ).toEqual([
-      {fulfillmentLineItemId: 'gid://shopify/FulfillmentLineItem/1', quantity: 2, returnReason: 'DEFECTIVE'},
+      {
+        fulfillmentLineItemId: 'gid://shopify/FulfillmentLineItem/1',
+        quantity: 2,
+        returnReason: 'DEFECTIVE',
+      },
     ])
   })
   it('vacia, cantidad fuera de rango, motivo invalido o id desconocido -> null', () => {
     expect(validateSelections([], available)).toBeNull()
     expect(
       validateSelections(
-        [{fulfillmentLineItemId: available[0].fulfillmentLineItemId, quantity: 3, returnReason: 'DEFECTIVE'}],
+        [
+          {
+            fulfillmentLineItemId: available[0].fulfillmentLineItemId,
+            quantity: 3,
+            returnReason: 'DEFECTIVE',
+          },
+        ],
         available,
       ),
     ).toBeNull()
     expect(
       validateSelections(
-        [{fulfillmentLineItemId: available[0].fulfillmentLineItemId, quantity: 1, returnReason: 'NOPE'}],
+        [
+          {
+            fulfillmentLineItemId: available[0].fulfillmentLineItemId,
+            quantity: 1,
+            returnReason: 'NOPE',
+          },
+        ],
         available,
       ),
     ).toBeNull()
     expect(
-      validateSelections([{fulfillmentLineItemId: 'gid://x/9', quantity: 1, returnReason: 'OTHER'}], available),
+      validateSelections(
+        [{fulfillmentLineItemId: 'gid://x/9', quantity: 1, returnReason: 'OTHER'}],
+        available,
+      ),
     ).toBeNull()
   })
 })

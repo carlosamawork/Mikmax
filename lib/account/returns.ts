@@ -54,7 +54,11 @@ export function validateSelections(
     if (typeof s.quantity !== 'number' || !Number.isInteger(s.quantity)) return null
     if (s.quantity < 1 || s.quantity > max) return null
     if (typeof s.returnReason !== 'string' || !VALID_REASONS.has(s.returnReason)) return null
-    out.push({fulfillmentLineItemId: s.fulfillmentLineItemId, quantity: s.quantity, returnReason: s.returnReason})
+    out.push({
+      fulfillmentLineItemId: s.fulfillmentLineItemId,
+      quantity: s.quantity,
+      returnReason: s.returnReason,
+    })
   }
   return out
 }
