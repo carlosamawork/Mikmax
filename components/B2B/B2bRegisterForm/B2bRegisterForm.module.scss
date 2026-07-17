@@ -20,24 +20,6 @@
   text-align: center;
 }
 
-.clientType {
-  display: flex;
-  gap: px(16);
-  justify-content: center;
-  width: 100%;
-  margin-top: px(20);
-  border: none;
-  padding: 0;
-}
-
-.radio {
-  display: flex;
-  align-items: center;
-  gap: px(6);
-  font-family: $MonumentGrotesk;
-  font-size: px(12);
-}
-
 .fields {
   display: flex;
   flex-direction: column;

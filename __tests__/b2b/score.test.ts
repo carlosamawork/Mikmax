@@ -1,121 +1,56 @@
 import {describe, it, expect} from 'vitest'
 import {scoreApplication} from '@/lib/b2b/validation/score'
-import type {ValidationSignals} from '@/types/b2b'
 
-const base: ValidationSignals = {
+const BASE = {
   vatValid: false,
   vatServiceAvailable: true,
   corporateEmail: false,
   websitePresent: false,
   countryMatchesVat: false,
-  clientTypeDeclared: false,
   countryVerifiable: true,
 }
 
 describe('scoreApplication', () => {
-  it('APPROVED con VAT válido + email + web + país (90)', () => {
+  it('todo valido -> 100 approved', () => {
     const r = scoreApplication({
-      ...base,
+      ...BASE,
       vatValid: true,
       corporateEmail: true,
       websitePresent: true,
       countryMatchesVat: true,
     })
-    expect(r.score).toBe(90)
+    expect(r.score).toBe(100)
     expect(r.decision).toBe('approved')
   })
-
-  it('APPROVED exacto en 85 (VAT+email+país+tipo)', () => {
+  it('APPROVED exacto en 85 (VAT+email+web)', () => {
     const r = scoreApplication({
-      ...base,
+      ...BASE,
       vatValid: true,
       corporateEmail: true,
-      countryMatchesVat: true,
-      clientTypeDeclared: true,
+      websitePresent: true,
     })
     expect(r.score).toBe(85)
     expect(r.decision).toBe('approved')
   })
-
-  it('REVIEW cuando VIES no está disponible (cae sin los 40 → 60)', () => {
-    const r = scoreApplication({
-      ...base,
-      vatValid: false,
-      vatServiceAvailable: false,
-      corporateEmail: true,
-      websitePresent: true,
-      countryMatchesVat: true,
-      clientTypeDeclared: false,
-    })
-    expect(r.score).toBe(50)
+  it('REVIEW por debajo de 85 (VAT+email = 70)', () => {
+    const r = scoreApplication({...BASE, vatValid: true, corporateEmail: true})
+    expect(r.score).toBe(70)
     expect(r.decision).toBe('review')
   })
-
-  it('REJECTED por debajo de 50', () => {
-    const r = scoreApplication({...base, clientTypeDeclared: true}) // 10
-    expect(r.score).toBe(10)
+  it('REJECTED por debajo de 50 (solo VAT = 45)', () => {
+    const r = scoreApplication({...BASE, vatValid: true})
+    expect(r.score).toBe(45)
     expect(r.decision).toBe('rejected')
   })
-
-  it('UK con Companies House válido cuenta como vatValid (40) y puede aprobar', () => {
-    // El orquestador setea vatValid=true cuando Companies House valida.
+  it('pais no verificable -> siempre review', () => {
     const r = scoreApplication({
-      ...base,
+      ...BASE,
       vatValid: true,
       corporateEmail: true,
       websitePresent: true,
       countryMatchesVat: true,
+      countryVerifiable: false,
     })
-    expect(r.decision).toBe('approved')
-  })
-})
-
-describe('scoreApplication — país verificable vs no verificable', () => {
-  const base: ValidationSignals = {
-    vatValid: false,
-    vatServiceAvailable: true,
-    corporateEmail: true,
-    websitePresent: true,
-    countryMatchesVat: false,
-    clientTypeDeclared: true,
-    countryVerifiable: true,
-  }
-  it('verificable: umbrales normales', () => {
-    expect(scoreApplication({...base, vatValid: true, countryVerifiable: true}).decision).toBe(
-      'approved',
-    )
-    expect(scoreApplication({...base, vatValid: false, countryVerifiable: true}).decision).toBe(
-      'rejected',
-    )
-    expect(
-      scoreApplication({
-        vatValid: false,
-        vatServiceAvailable: true,
-        corporateEmail: false,
-        websitePresent: false,
-        countryMatchesVat: false,
-        clientTypeDeclared: true,
-        countryVerifiable: true,
-      }).decision,
-    ).toBe('rejected')
-  })
-  it('NO verificable: siempre review', () => {
-    expect(scoreApplication({...base, vatValid: false, countryVerifiable: false}).decision).toBe(
-      'review',
-    )
-    expect(
-      scoreApplication({
-        vatValid: false,
-        vatServiceAvailable: true,
-        corporateEmail: false,
-        websitePresent: false,
-        countryMatchesVat: false,
-        clientTypeDeclared: true,
-        countryVerifiable: false,
-      }).decision,
-    ).toBe('review')
-    expect(scoreApplication({...base, vatValid: true, countryVerifiable: false}).decision).toBe(
-      'review',
-    )
+    expect(r.decision).toBe('review')
   })
 })

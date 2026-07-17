@@ -22,7 +22,6 @@ export const runtime = 'nodejs'
 function isValidPayload(b: Partial<B2bRegisterInput>): b is B2bRegisterInput {
   return Boolean(
     b &&
-    (b.clientType === 'reseller' || b.clientType === 'designer') &&
     b.country &&
     b.legalCompanyName &&
     b.vatNumber &&
@@ -63,7 +62,6 @@ export async function POST(req: Request) {
     corporateEmail: isCorporateEmail(input.corporateEmail),
     websitePresent: Boolean(input.companyWebsite),
     countryMatchesVat: countryMatchesVat(input.country, input.vatNumber),
-    clientTypeDeclared: Boolean(input.clientType),
     countryVerifiable: verifiable,
   }
 
@@ -78,7 +76,6 @@ export async function POST(req: Request) {
       email: input.corporateEmail,
       password: input.password,
       companyName: input.legalCompanyName,
-      clientType: input.clientType,
     })
     if (result.error || !result.customerId) {
       // Fallback seguro: no perder la solicitud → pasa a revisión.
@@ -92,7 +89,6 @@ export async function POST(req: Request) {
         companyName: input.legalCompanyName,
         vatNumber: input.vatNumber,
         country: input.country,
-        clientType: input.clientType,
         corporateEmail: input.corporateEmail,
         companyWebsite: input.companyWebsite,
         fiscalAddress: input.fiscalAddress,
@@ -127,7 +123,6 @@ export async function POST(req: Request) {
       companyName: input.legalCompanyName,
       vatNumber: input.vatNumber,
       country: input.country,
-      clientType: input.clientType,
       corporateEmail: input.corporateEmail,
       companyWebsite: input.companyWebsite,
       fiscalAddress: input.fiscalAddress,

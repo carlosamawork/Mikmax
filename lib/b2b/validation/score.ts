@@ -1,11 +1,13 @@
 import type {ValidationSignals, ScoreResult, B2bDecision} from '@/types/b2b'
 
+// Rebalanceado al quitar clientTypeDeclared (+10): su peso se reparte en
+// vatValid (+5) y corporateEmail (+5) para que las combinaciones que antes
+// aprobaban con el tipo declarado sigan sumando 85.
 const POINTS = {
-  vatValid: 40,
-  corporateEmail: 20,
+  vatValid: 45,
+  corporateEmail: 25,
   websitePresent: 15,
   countryMatchesVat: 15,
-  clientTypeDeclared: 10,
 }
 
 const APPROVE_AT = 85
@@ -17,7 +19,6 @@ export function scoreApplication(signals: ValidationSignals): ScoreResult {
   if (signals.corporateEmail) score += POINTS.corporateEmail
   if (signals.websitePresent) score += POINTS.websitePresent
   if (signals.countryMatchesVat) score += POINTS.countryMatchesVat
-  if (signals.clientTypeDeclared) score += POINTS.clientTypeDeclared
 
   let decision: B2bDecision = 'rejected'
   if (score >= APPROVE_AT) decision = 'approved'

@@ -3,7 +3,7 @@
 import {FormEvent, useState} from 'react'
 import Link from 'next/link'
 import {LegalConsent, DEFAULT_LEGAL_COPY} from '@/components/Common'
-import type {B2bClientType, B2bRegisterInput} from '@/types/b2b'
+import type {B2bRegisterInput} from '@/types/b2b'
 import {COUNTRIES} from '@/lib/b2b/countries'
 import s from './B2bRegisterForm.module.scss'
 
@@ -25,7 +25,6 @@ const RESULT_COPY: Record<ResultStatus, {title: string; body: string}> = {
 }
 
 const EMPTY: B2bRegisterInput = {
-  clientType: 'reseller',
   country: 'ES',
   legalCompanyName: '',
   vatNumber: '',
@@ -94,22 +93,6 @@ export default function B2bRegisterForm() {
   return (
     <form className={s.form} onSubmit={onSubmit} noValidate>
       <p className={s.heading}>Create a business account</p>
-
-      <fieldset className={s.clientType}>
-        <legend className={s.srOnly}>Client type</legend>
-        {(['reseller', 'designer'] as B2bClientType[]).map((t) => (
-          <label key={t} className={s.radio}>
-            <input
-              type="radio"
-              name="clientType"
-              value={t}
-              checked={form.clientType === t}
-              onChange={() => set('clientType', t)}
-            />
-            {t === 'reseller' ? 'Reseller' : 'Interior Designer'}
-          </label>
-        ))}
-      </fieldset>
 
       <div className={s.fields}>
         <select

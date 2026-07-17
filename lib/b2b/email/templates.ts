@@ -142,7 +142,6 @@ export function internalReviewEmail(data: {
   companyName: string
   vatNumber: string
   country: string
-  clientType: string
   corporateEmail: string
   companyWebsite?: string
   fiscalAddress: string
@@ -162,7 +161,6 @@ export function internalReviewEmail(data: {
            ${row('Empresa', data.companyName)}
            ${row('VAT', data.vatNumber)}
            ${row('País', data.country)}
-           ${row('Tipo', data.clientType)}
            ${row('Email', data.corporateEmail)}
            ${row('Web', data.companyWebsite || '—')}
            ${row('Dirección fiscal', data.fiscalAddress)}

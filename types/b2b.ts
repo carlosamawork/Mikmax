@@ -8,7 +8,6 @@ export type B2bDecision = 'approved' | 'review' | 'rejected'
 export type B2bStatus = 'pending' | 'approved' | 'rejected' | 'more_info'
 
 export interface B2bRegisterInput {
-  clientType: B2bClientType
   country: string // ISO-2, ej. 'ES'
   legalCompanyName: string
   vatNumber: string
@@ -25,7 +24,6 @@ export interface ValidationSignals {
   corporateEmail: boolean
   websitePresent: boolean
   countryMatchesVat: boolean
-  clientTypeDeclared: boolean
   countryVerifiable: boolean // true si el país es UE o UK (VIES/Companies House disponible)
 }
 
