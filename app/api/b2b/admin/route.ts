@@ -6,7 +6,6 @@ import {createReviewedB2bCustomer} from '@/lib/b2b/shopify'
 import {customerRecover} from '@/lib/shopify'
 import {sendEmail} from '@/lib/b2b/email/mailgun'
 import {approvedWithActivationEmail, rejectedEmail, moreInfoEmail} from '@/lib/b2b/email/templates'
-import type {B2bClientType} from '@/types/b2b'
 
 export const runtime = 'nodejs'
 
@@ -60,7 +59,6 @@ export async function POST(req: NextRequest) {
     const result = await createReviewedB2bCustomer({
       email: app.corporateEmail,
       companyName: app.companyName,
-      clientType: app.clientType as B2bClientType,
     })
     if (result.error || !result.customerId) {
       // No perder la solicitud: registra el error y limpia el flag.

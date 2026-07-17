@@ -9,12 +9,6 @@ export default defineType({
     defineField({name: 'companyName', title: 'Empresa', type: 'string'}),
     defineField({name: 'vatNumber', title: 'VAT / NIF', type: 'string'}),
     defineField({name: 'country', title: 'País', type: 'string'}),
-    defineField({
-      name: 'clientType',
-      title: 'Tipo de cliente',
-      type: 'string',
-      options: {list: ['reseller', 'designer']},
-    }),
     defineField({name: 'corporateEmail', title: 'Email corporativo', type: 'string'}),
     defineField({name: 'companyWebsite', title: 'Web', type: 'url'}),
     defineField({name: 'fiscalAddress', title: 'Dirección fiscal', type: 'text'}),

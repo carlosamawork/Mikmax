@@ -7,14 +7,10 @@ import {
   adminCustomerCreate,
   findCustomerIdByEmail,
 } from '@/lib/shopify-admin'
-import type {B2bClientType} from '@/types/b2b'
-
-const discountGroupFor = (t: B2bClientType) => (t === 'reseller' ? 'wholesale' : 'designer')
-
-// Aplica el rol B2B a un customer existente: tags + metafields b2b.
-async function applyB2bRole(customerId: string, clientType: B2bClientType) {
-  await customerTagsAdd(customerId, ['b2b-approved', clientType])
-  await setCustomerB2bData(customerId, {clientType, discountGroup: discountGroupFor(clientType)})
+// Aplica el rol B2B a un customer existente: tag + metafield de validacion.
+async function applyB2bRole(customerId: string) {
+  await customerTagsAdd(customerId, ['b2b-approved'])
+  await setCustomerB2bData(customerId)
 }
 
 // Flujo AUTO-APPROVED. Si el email ya es cliente (caso común: ya tenía cuenta B2C),
@@ -24,7 +20,6 @@ export async function createApprovedB2bCustomer(args: {
   email: string
   password: string
   companyName: string
-  clientType: B2bClientType
 }): Promise<{customerId?: string; existed?: boolean; error?: string}> {
   const found = await findCustomerIdByEmail(args.email)
   if (found?.error) return {error: found.error}
@@ -41,7 +36,7 @@ export async function createApprovedB2bCustomer(args: {
     if (!customerId) return {error: 'no_customer_id'}
   }
 
-  await applyB2bRole(customerId, args.clientType)
+  await applyB2bRole(customerId)
   return {customerId, existed}
 }
 
@@ -50,7 +45,6 @@ export async function createApprovedB2bCustomer(args: {
 export async function createReviewedB2bCustomer(args: {
   email: string
   companyName: string
-  clientType: B2bClientType
 }): Promise<{customerId?: string; existed?: boolean; error?: string}> {
   const found = await findCustomerIdByEmail(args.email)
   if (found?.error) return {error: found.error}
@@ -65,6 +59,6 @@ export async function createReviewedB2bCustomer(args: {
     if (!customerId) return {error: 'no_customer_id'}
   }
 
-  await applyB2bRole(customerId, args.clientType)
+  await applyB2bRole(customerId)
   return {customerId, existed}
 }

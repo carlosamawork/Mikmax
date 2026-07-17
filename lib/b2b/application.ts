@@ -20,7 +20,6 @@ export async function createB2bApplication(args: CreateArgs): Promise<{_id: stri
     companyName: input.legalCompanyName,
     vatNumber: input.vatNumber,
     country: input.country,
-    clientType: input.clientType,
     corporateEmail: input.corporateEmail,
     companyWebsite: input.companyWebsite || undefined,
     fiscalAddress: input.fiscalAddress,
@@ -46,11 +45,11 @@ export async function updateB2bApplication(
     .commit()
 }
 
-// Lee una aplicación (para la route admin: necesita email/clientType + el flag adminAction).
+// Lee una aplicación (para la route admin: necesita email + el flag adminAction).
 export async function getB2bApplication(id: string) {
   return sanityWriteClient.fetch(
     `*[_type == "b2bApplication" && _id == $id][0]{
-      _id, corporateEmail, companyName, clientType, country, status, shopifyCustomerId, adminAction
+      _id, corporateEmail, companyName, country, status, shopifyCustomerId, adminAction
     }`,
     {id},
   )
@@ -60,7 +59,7 @@ export async function getB2bApplication(id: string) {
 export async function getB2bCompanyInfo(shopifyCustomerId: string): Promise<B2bCompanyInfo | null> {
   return sanityWriteClient.fetch(
     `*[_type == "b2bApplication" && shopifyCustomerId == $id && status == "approved"][0]{
-      companyName, vatNumber, country, clientType, fiscalAddress, companyWebsite
+      companyName, vatNumber, country, fiscalAddress, companyWebsite
     }`,
     {id: shopifyCustomerId},
   )
