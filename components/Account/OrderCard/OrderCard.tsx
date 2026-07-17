@@ -4,14 +4,19 @@ import {useState} from 'react'
 import Link from 'next/link'
 import {LazyImage} from '@/components/Common'
 import type {Order} from '@/types/account'
+import ReturnRequestForm from './ReturnRequestForm'
 import s from './OrderCard.module.scss'
+
+const PENDING_RETURN_STATUSES = new Set(['RETURN_REQUESTED', 'IN_PROGRESS'])
 
 function formatDate(iso: string): string {
   if (!iso) return ''
   try {
-    return new Intl.DateTimeFormat('es-ES', {day: 'numeric', month: 'long', year: 'numeric'}).format(
-      new Date(iso),
-    )
+    return new Intl.DateTimeFormat('es-ES', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date(iso))
   } catch {
     return iso
   }
@@ -35,8 +40,11 @@ function Pair({label, value, className}: {label: string; value: string; classNam
 
 export default function OrderCard({order}: {order: Order}) {
   const [open, setOpen] = useState(false)
+  const [returning, setReturning] = useState(false)
+  const [returnStatus, setReturnStatus] = useState(order.returnStatus)
   const date = formatDate(order.processedAt)
   const status = prettyStatus(order.financialStatus)
+  const returnPending = Boolean(returnStatus && PENDING_RETURN_STATUSES.has(returnStatus))
 
   return (
     <article className={s.order}>
@@ -110,6 +118,27 @@ export default function OrderCard({order}: {order: Order}) {
           </div>
         </div>
       ))}
+
+      {(order.returnEligible || returnPending) && (
+        <div className={s.returnRow}>
+          {returnPending ? (
+            <span className={s.returnLabel}>Return requested</span>
+          ) : returning ? (
+            <ReturnRequestForm
+              orderId={order.id}
+              onDone={() => {
+                setReturning(false)
+                setReturnStatus('RETURN_REQUESTED')
+              }}
+              onCancel={() => setReturning(false)}
+            />
+          ) : (
+            <button type="button" className={s.returnBtn} onClick={() => setReturning(true)}>
+              Request return
+            </button>
+          )}
+        </div>
+      )}
     </article>
   )
 }

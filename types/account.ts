@@ -97,4 +97,6 @@ export type Order = {
   financialStatus: string | null
   statusUrl: string
   lineItems: OrderLineItem[]
+  returnStatus?: string | null
+  returnEligible?: boolean
 }
