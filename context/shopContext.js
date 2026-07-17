@@ -34,7 +34,7 @@ export default function ShopProvider({children}) {
   const [pageIsLoaded, setPageIsLoaded] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [cartCost, setCartCost] = useState(null)
-  const [b2bCartContext, setB2bCartContext] = useState({isDesigner: false, designerTiers: []})
+  const [b2bCartContext, setB2bCartContext] = useState({hasTiers: false, tiers: []})
 
   function handleDocumentClick(e) {
     const cartEl = document.getElementById('cart-slide')

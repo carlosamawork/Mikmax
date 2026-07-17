@@ -4,7 +4,7 @@ import {cartBuyerIdentityUpdate, getCart} from '@/lib/shopify'
 import {getCurrentCustomer} from '@/lib/auth/customer'
 import {isB2bApproved} from '@/lib/b2b/isB2bApproved'
 import {parseCartCost} from '@/lib/b2b/cartCost'
-import {getB2bPricingConfig} from '@/lib/b2b/pricing'
+import {getEffectiveDiscountSpec} from '@/lib/b2b/pricing'
 import type {CartCost} from '@/types/cart'
 
 // Descarta el objeto de error {error} que devuelven los helpers de carrito en fallo.
@@ -20,20 +20,15 @@ export async function getCartCost(cartId: string): Promise<{cost: CartCost | nul
 }
 
 export interface B2bCartContext {
-  isDesigner: boolean
-  designerTiers: {minSubtotal: number; percent: number}[]
+  hasTiers: boolean
+  tiers: {minSubtotal: number; percent: number}[]
 }
 
-// Si la sesión es un designer validado, devuelve sus tramos (para el nudge del carrito).
+// Si el spec efectivo del cliente es por tramos, los devuelve (para el nudge del carrito).
 export async function getB2bCartContext(): Promise<B2bCartContext> {
-  const session = await getCurrentCustomer()
-  const isDesigner =
-    !!session &&
-    isB2bApproved(session.customer) &&
-    session.customer.b2bClientType?.value === 'designer'
-  if (!isDesigner) return {isDesigner: false, designerTiers: []}
-  const cfg = await getB2bPricingConfig()
-  return {isDesigner: true, designerTiers: cfg?.designerTiers ?? []}
+  const spec = await getEffectiveDiscountSpec()
+  if (spec?.type !== 'tiers' || spec.tiers.length === 0) return {hasTiers: false, tiers: []}
+  return {hasTiers: true, tiers: spec.tiers}
 }
 
 // Muta el buyerIdentity del carrito según la sesión (SOLO en login/logout):

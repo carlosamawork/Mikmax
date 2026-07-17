@@ -33,7 +33,7 @@ type CartCtx = {
   cartId?: string
   checkoutUrl?: string
   cartCost?: CartCost | null
-  b2bCartContext?: {isDesigner: boolean; designerTiers: {minSubtotal: number; percent: number}[]}
+  b2bCartContext?: {hasTiers: boolean; tiers: {minSubtotal: number; percent: number}[]}
 }
 
 interface Props {
@@ -201,14 +201,11 @@ export default function CartDrawer({copy}: Props) {
                 <span>−{fmt(ctx.cartCost.discount)}</span>
               </div>
             )}
-            {ctx?.b2bCartContext?.isDesigner &&
+            {ctx?.b2bCartContext?.hasTiers &&
               ctx?.cartCost &&
               (() => {
-                const nudge = nextTierNudge(
-                  ctx.cartCost.subtotal,
-                  ctx.b2bCartContext!.designerTiers,
-                )
-                const maxPercent = ctx.b2bCartContext!.designerTiers.reduce(
+                const nudge = nextTierNudge(ctx.cartCost.subtotal, ctx.b2bCartContext!.tiers)
+                const maxPercent = ctx.b2bCartContext!.tiers.reduce(
                   (m, t) => Math.max(m, t.percent),
                   0,
                 )
