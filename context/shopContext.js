@@ -119,6 +119,11 @@ export default function ShopProvider({children}) {
         setCheckoutUrl(apiCart.checkoutUrl)
         saveToStorage([synced], {id: apiCart.id, checkoutUrl: apiCart.checkoutUrl})
         setCartCost(parseCartCost(apiCart))
+        // Carrito recién creado: asócialo a la sesión (si la hay) para que la
+        // Function aplique el descuento B2B ya en el drawer, no solo tras login.
+        syncCartBuyer(apiCart.id)
+          .then((r) => r.cost && setCartCost(r.cost))
+          .catch(() => {})
         trackAddToCart([atcItem])
       } catch (err) {
         console.error('cartCreate failed', err)
@@ -202,6 +207,12 @@ export default function ShopProvider({children}) {
       setCheckoutUrl(meta.checkoutUrl)
       saveToStorage(synced, meta)
       setCartCost(parseCartCost(apiCart))
+      if (cart.length === 0) {
+        // Igual que en addToCart: carrito nuevo → asociarlo a la sesión.
+        syncCartBuyer(currentCartId)
+          .then((r) => r.cost && setCartCost(r.cost))
+          .catch(() => {})
+      }
       trackAddToCart(
         lookLines.map((l) =>
           cartLineToAnalyticsItem({
