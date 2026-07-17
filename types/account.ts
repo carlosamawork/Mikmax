@@ -40,7 +40,11 @@ export type RawOrderNode = {
   totalPrice?: {amount: string; currencyCode: string} | null
   processedAt?: string | null
   statusUrl?: string | null
-  shippingAddress?: {name?: string | null; firstName?: string | null; lastName?: string | null} | null
+  shippingAddress?: {
+    name?: string | null
+    firstName?: string | null
+    lastName?: string | null
+  } | null
   lineItems?: {edges: {node: RawOrderLineItemNode}[]} | null
 }
 
@@ -55,6 +59,7 @@ export type Customer = {
   metafield?: {value: string} | null
   b2bValidated?: {value: string} | null
   b2bClientType?: {value: string} | null
+  b2bDiscount?: {value: string} | null
   orders?: {edges: {node: RawOrderNode}[]} | null
 }
 

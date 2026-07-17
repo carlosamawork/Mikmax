@@ -5,7 +5,7 @@ import {getSanityProduct} from '@/sanity/queries/queries/product'
 import {buildProductView} from '@/lib/product/buildProductView'
 import {resolveInitialState} from '@/lib/product/resolveInitialState'
 import {siteTitle, localeAlternates, buildUrl} from '@/utils/seoHelper'
-import {getResellerPercent, resellerPrice, applyResellerToCard} from '@/lib/b2b/pricing'
+import {getDisplayPercent, discountedPrice, applyDiscountToCard} from '@/lib/b2b/pricing'
 import {getLocale} from '@/lib/i18n/getLocale'
 import {getDictionary} from '@/lib/i18n/getDictionary'
 import {shopifyLanguage, DEFAULT_COUNTRY} from '@/lib/i18n/shopifyLocale'
@@ -131,22 +131,22 @@ export default async function ProductPage({
   )
   const initial = resolveInitialState(view, search)
 
-  const resellerPercent = await getResellerPercent()
+  const displayPct = await getDisplayPercent()
   const viewForDisplay =
-    resellerPercent && typeof view.minPrice === 'number'
+    displayPct && typeof view.minPrice === 'number'
       ? {
           ...view,
           compareMinPrice: view.minPrice,
           compareMaxPrice: view.maxPrice,
-          minPrice: resellerPrice(view.minPrice, resellerPercent),
-          maxPrice: resellerPrice(view.maxPrice, resellerPercent),
-          related: view.related.map((card) => applyResellerToCard(card, resellerPercent)),
+          minPrice: discountedPrice(view.minPrice, displayPct),
+          maxPrice: discountedPrice(view.maxPrice, displayPct),
+          related: view.related.map((card) => applyDiscountToCard(card, displayPct)),
           colors: view.colors.map((color) => ({
             ...color,
-            related: color.related?.map((card) => applyResellerToCard(card, resellerPercent)),
+            related: color.related?.map((card) => applyDiscountToCard(card, displayPct)),
             sizes: color.sizes?.map((size) => ({
               ...size,
-              displayPrice: resellerPrice(size.price, resellerPercent),
+              displayPrice: discountedPrice(size.price, displayPct),
             })),
           })),
         }
@@ -155,7 +155,7 @@ export default async function ProductPage({
   // --- Structured data (Product + BreadcrumbList) ---
   const productUrl = buildUrl('/products/' + handle)
 
-  // Use the PUBLIC base price (view.minPrice/maxPrice are pre-reseller).
+  // Use the PUBLIC base price (view.minPrice/maxPrice are pre-discount).
   const minPrice = view.minPrice
   const maxPrice = view.maxPrice
   const priceCurrency = view.currency
@@ -194,9 +194,7 @@ export default async function ProductPage({
   const sku = skus.length === 1 ? skus[0] : undefined
 
   const anyAvailable = variants.some((v) => v.availableForSale)
-  const availability = anyAvailable
-    ? 'https://schema.org/InStock'
-    : 'https://schema.org/OutOfStock'
+  const availability = anyAvailable ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
 
   const offers =
     minPrice !== maxPrice

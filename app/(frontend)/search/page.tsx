@@ -8,7 +8,7 @@ import TrackViewItemList from '@/components/Common/Analytics/TrackViewItemList'
 import {parseSearchParams} from '@/lib/shop/searchParams'
 import {buildAllCards} from '@/lib/shop/buildCards'
 import {ALL_HANDLE, CHUNK_SIZE, type ProductCardData, type SortKey} from '@/types/shop'
-import {getResellerPercent, applyResellerToCard} from '@/lib/b2b/pricing'
+import {getDisplayPercent, applyDiscountToCard} from '@/lib/b2b/pricing'
 import s from './search.module.scss'
 
 export const dynamic = 'force-dynamic'
@@ -42,9 +42,9 @@ export default async function SearchPage({searchParams}: Props) {
   const {cards, facets} = await buildAllCards(ALL_HANDLE, params)
   const total = cards.length
   const rawProducts: ProductCardData[] = cards.slice(0, CHUNK_SIZE)
-  const resellerPercent = await getResellerPercent()
-  const products = resellerPercent
-    ? rawProducts.map((c) => applyResellerToCard(c, resellerPercent))
+  const displayPct = await getDisplayPercent()
+  const products = displayPct
+    ? rawProducts.map((c) => applyDiscountToCard(c, displayPct))
     : rawProducts
   const hasMore = total > CHUNK_SIZE
   const isOpen = params.filters === 'open'
