@@ -216,3 +216,167 @@
   background: map-get($colors, 'black-border');
   color: map-get($colors, 'white');
 }
+
+// Bloque de devolución: debajo de las líneas de la card (etiqueta, botón o formulario).
+.returnRow {
+  margin-top: px(4);
+
+  @include from(sm) {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.returnLabel {
+  display: inline-flex;
+  align-items: center;
+  height: px(36);
+  padding: 0 px(10);
+  background: map-get($colors, 'lightgray-bg');
+  color: map-get($colors, 'black-border');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+}
+
+.returnBtn {
+  width: 100%;
+  height: px(36);
+  border: px(1) solid map-get($colors, 'black-border');
+  background: map-get($colors, 'white');
+  color: map-get($colors, 'black-border');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  cursor: pointer;
+
+  @include from(sm) {
+    width: px(146);
+  }
+}
+
+// Formulario de devolución.
+.returnForm {
+  display: flex;
+  flex-direction: column;
+  gap: px(12);
+  width: 100%;
+  padding: px(16) px(12);
+  background: map-get($colors, 'lightgray-bg');
+
+  @include from(sm) {
+    width: px(360);
+  }
+}
+
+.returnLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: px(8);
+
+  .returnLineCheck {
+    display: flex;
+    flex: 1 0 100%;
+    align-items: center;
+    gap: px(8);
+    font-family: $MonumentGrotesk;
+    font-size: px(11);
+    letter-spacing: px(0.5);
+    line-height: px(15);
+    color: map-get($colors, 'black-border');
+    cursor: pointer;
+  }
+}
+
+.returnSelect {
+  flex: 1;
+  min-width: 0;
+  height: px(36);
+  padding: 0 px(8);
+  border: px(1) solid map-get($colors, 'black-border');
+  background: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  color: map-get($colors, 'black-border');
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.returnNote {
+  width: 100%;
+  min-height: px(64);
+  padding: px(8) px(10);
+  border: px(1) solid map-get($colors, 'black-border');
+  background: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  color: map-get($colors, 'black-border');
+  resize: vertical;
+
+  &::placeholder {
+    color: map-get($colors, 'gray-light');
+  }
+}
+
+.error {
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  color: map-get($colors, 'red');
+}
+
+.returnFormActions {
+  display: flex;
+  gap: px(1);
+}
+
+.returnCancelBtn {
+  flex: 1;
+  height: px(36);
+  border: px(1) solid map-get($colors, 'black-border');
+  background: map-get($colors, 'white');
+  color: map-get($colors, 'black-border');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  cursor: pointer;
+}
+
+.returnSubmitBtn {
+  flex: 1;
+  height: px(36);
+  border: none;
+  background: map-get($colors, 'black-border');
+  color: map-get($colors, 'white');
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.returnSuccess,
+.returnStatusMsg {
+  font-family: $MonumentGrotesk;
+  font-size: px(11);
+  letter-spacing: px(0.5);
+  line-height: px(15);
+  color: map-get($colors, 'gray-light');
+}
